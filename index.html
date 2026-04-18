@@ -217,6 +217,9 @@ const PaperCompass = ({ onBack }) => {
     '개인환경적합성': '개인의 가치·능력이 조직·직무 환경과 잘 맞는 정도',
     '고객만족': '고객이 제품이나 서비스에 만족하는 정도',
     '고객지향성': '고객의 필요를 파악하고 충족시키려는 태도와 행동',
+    'CEO브랜드이미지': 'CEO의 퍼스널브랜드 관점에서 인식되는 이미지 (능력, 자질, 성품, 커뮤니케이션, 외적조건)',
+    'CEO평판': 'CEO의 경영 활동에 대한 대중과 소비자의 종합적 평가',
+    '기업평판': '기업이 대중과 소비자에게 보내는 다양한 신호에 대해 누적되어온 판단이자 평가',
     '고객충성도': '특정 브랜드나 조직에 대한 고객의 지속적 선호와 재이용 의도',
     '공직동기(PSM)': '공공의 이익을 위해 봉사하려는 공직자의 내적 동기',
     '교사임파워먼트': '교사가 교육 현장에서 자율권과 영향력을 갖는 정도',
@@ -1113,6 +1116,11 @@ const PaperCompass = ({ onBack }) => {
     '혁신행동→직무성과': { count: 2, sources: 'SVU: 홍재일(2025), 남승하·정종원(2017)', verdict: 'emerging' },
     '직무만족→직무만족': { count: 1, sources: 'SVU: 유병선(2025)', verdict: 'emerging' },
     '고객만족→고객충성도': { count: 4, sources: 'SVU: 남상민(2025) / 곽진희(2024) / 김천욱(2023) / 유병선(2024)', verdict: 'weak' },
+    'CEO브랜드이미지→고객충성도': { count: 1, sources: 'SVU: 안영노(2025)', verdict: 'emerging' },
+    'CEO브랜드이미지→CEO평판': { count: 1, sources: 'SVU: 안영노(2025)', verdict: 'emerging' },
+    'CEO브랜드이미지→기업평판': { count: 1, sources: 'SVU: 안영노(2025)', verdict: 'emerging' },
+    'CEO평판→고객충성도': { count: 1, sources: 'SVU: 안영노(2025)', verdict: 'emerging' },
+    '기업평판→고객충성도': { count: 1, sources: 'SVU: 안영노(2025)', verdict: 'emerging' },
     '변혁적리더십→직원몰입': { count: 1, sources: 'SVU: 정용희(2024)', verdict: 'emerging' },
     '직원몰입→혁신과업행동': { count: 1, sources: 'SVU: 정용희(2024)', verdict: 'emerging' },
     '조직시민행동→혁신과업행동': { count: 1, sources: 'SVU: 정용희(2024)', verdict: 'emerging' },
@@ -2214,6 +2222,608 @@ const PaperCompass = ({ onBack }) => {
       ],
       defaultSelected: [0, 1, 2],
     },
+    'CEO브랜드이미지': {
+      options: [
+        { name: '능력과전문성', scholar: '이경렬(2004)', scale: '연구자 재구성(이경렬 2004, 최현정 2023)', answer: '이경렬(2004)의 CEO이미지 구성요인(능력, 자질, 성품, 외적조건)과 최현정(2023)의 퍼스널브랜드 구성요인을 결합하여 5개 하위차원으로 구성하였습니다.' },
+        { name: '자질과리더십', scholar: '이경렬(2004)', scale: '연구자 재구성', answer: '' },
+        { name: '성품과인간미', scholar: '이경렬(2004)', scale: '연구자 재구성', answer: '' },
+        { name: '커뮤니케이션역량', scholar: '최현정(2023)', scale: '연구자 재구성', answer: '' },
+        { name: '이미지와외적조건', scholar: '이경렬(2004)', scale: '연구자 재구성', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3, 4],
+    },
+    'CEO평판': {
+      options: [
+        { name: 'CEO평판(단일차원)', scholar: 'Burson-Marsteller(2003)', scale: '연구자 재구성(Burson-Marsteller 2003, 문효진 2004, 박영실 2024)', answer: 'Reputation Institute(2018)의 CEO평판 개념과 Burson-Marsteller(2003), 문효진(2004), 박영실(2024)의 선행연구를 바탕으로 신뢰도, 비전, 위기관리, 고객관리, 종업원관리, 소통능력 등 5개 구성요소를 단일차원 12문항으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '기업평판': {
+      options: [
+        { name: '기업평판(단일차원)', scholar: 'Fombrun(1996)', scale: '연구자 재구성(Fombrun 1996, 문효진 2004, 최현정 2023)', answer: 'Fombrun(1996)의 기업평판 개념을 기반으로 제품과 서비스, 경영실적과 재무성과, 비전과 시장선도 능력, 근무환경과 인적자원, 감성적 어필, 사회적 책임 등 6개 하위차원을 단일차원 11문항으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '고객충성도': {
+      options: [
+        { name: '고객충성도(단일차원)', scholar: 'Tellis(1988)', scale: '연구자 재구성(Tellis 1988, Chadhuri&Holbrook 2001, 최현정 2023)', answer: 'Tellis(1988)의 재구매, 추가구매, 반복구매, 지속구매 개념과 Chadhuri&Holbrook(2001)의 행동적·태도적 충성도를 바탕으로 단일차원 8문항으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    // ── 자동 등록: researchPairDB 기반 변수 ──
+    '지속사용의도': {
+      options: [
+        { name: '지속사용의도(단일차원)', scholar: 'Bhattacherjee(2001)', scale: 'IS Continuance Model', answer: 'Bhattacherjee(2001)의 정보시스템 지속사용 모델(ECM-IT)에 기반하여 지속사용의도를 단일차원으로 측정하였습니다. 기대확인, 만족, 지각된 유용성이 지속사용의도에 미치는 영향을 설명합니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '고객만족': {
+      options: [
+        { name: '고객만족(단일차원)', scholar: 'Oliver(1980)', scale: '고객만족 척도(Oliver 1980, Fornell 1992)', answer: 'Oliver(1980)의 기대불일치 이론과 Fornell(1992)의 고객만족지수(ACSI)를 바탕으로 전반적 만족, 기대 대비 만족, 이상적 서비스 대비 만족 등을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '이용의도': {
+      options: [
+        { name: '이용의도(단일차원)', scholar: 'Davis(1989)', scale: 'TAM(Technology Acceptance Model)', answer: 'Davis(1989)의 기술수용모델(TAM)에 기반하여 특정 기술이나 서비스를 이용하고자 하는 행동 의도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '유용성': {
+      options: [
+        { name: '지각된 유용성', scholar: 'Davis(1989)', scale: 'TAM 유용성 척도', answer: 'Davis(1989)의 기술수용모델에서 제시한 지각된 유용성(Perceived Usefulness) 개념을 채택하였으며, 업무 성과 향상, 생산성 증가, 효과성 등의 항목으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '지각된가치': {
+      options: [
+        { name: '기능적 가치', scholar: 'Zeithaml(1988)', scale: 'PERVAL(Sweeney & Soutar 2001)', answer: 'Zeithaml(1988)의 지각된 가치 개념과 Sweeney & Soutar(2001)의 PERVAL 척도를 바탕으로 기능적 가치, 감정적 가치, 사회적 가치, 경제적 가치의 하위차원으로 측정하였습니다.' },
+        { name: '감정적 가치', scholar: 'Sweeney & Soutar(2001)', scale: 'PERVAL', answer: '' },
+        { name: '사회적 가치', scholar: 'Sweeney & Soutar(2001)', scale: 'PERVAL', answer: '' },
+        { name: '경제적 가치', scholar: 'Zeithaml(1988)', scale: 'PERVAL', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '지각된유용성': {
+      options: [
+        { name: '지각된유용성(단일차원)', scholar: 'Davis(1989)', scale: 'TAM(Technology Acceptance Model)', answer: 'Davis(1989)의 기술수용모델(TAM)에서 제시한 지각된 유용성 개념을 채택하였으며, 특정 시스템을 사용하는 것이 업무 성과를 향상시킬 것이라고 믿는 정도를 측정합니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '태도': {
+      options: [
+        { name: '태도(단일차원)', scholar: 'Ajzen(1991)', scale: '계획행동이론(TPB) 태도 척도', answer: 'Ajzen(1991)의 계획행동이론(Theory of Planned Behavior)에 기반하여 특정 행동에 대한 개인의 긍정적 또는 부정적 평가를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '직무교육': {
+      options: [
+        { name: '교육내용', scholar: 'Noe(2010)', scale: '직무교육 효과성 척도', answer: 'Noe(2010)의 교육훈련 이론에 기반하여 교육내용의 적절성, 교육방법, 교육환경 등의 하위차원으로 직무교육을 측정하였습니다.' },
+        { name: '교육방법', scholar: 'Noe(2010)', scale: '직무교육 효과성 척도', answer: '' },
+        { name: '교육환경', scholar: 'Kirkpatrick(1994)', scale: '교육훈련 평가모델', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '지각된용이성': {
+      options: [
+        { name: '지각된용이성(단일차원)', scholar: 'Davis(1989)', scale: 'TAM(Technology Acceptance Model)', answer: 'Davis(1989)의 기술수용모델(TAM)에서 제시한 지각된 용이성(Perceived Ease of Use) 개념을 채택하였으며, 특정 시스템을 사용하는 데 노력이 필요하지 않을 것이라고 믿는 정도를 측정합니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '행위의도': {
+      options: [
+        { name: '행위의도(단일차원)', scholar: 'Ajzen(1991)', scale: '계획행동이론(TPB)', answer: 'Ajzen(1991)의 계획행동이론에 기반하여 특정 행위를 수행하고자 하는 개인의 의도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '학업성취도': {
+      options: [
+        { name: '인지적 성취', scholar: 'Bloom(1956)', scale: 'Bloom의 교육목표 분류체계', answer: 'Bloom(1956)의 교육목표 분류체계를 바탕으로 인지적 영역(지식, 이해, 적용)과 정의적 영역(태도, 흥미)의 학업성취를 측정하였습니다.' },
+        { name: '정의적 성취', scholar: 'Bloom(1956)', scale: 'Bloom의 교육목표 분류체계', answer: '' },
+      ],
+      defaultSelected: [0, 1],
+    },
+    '몰입': {
+      options: [
+        { name: '인지몰입', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도', answer: 'Csikszentmihalyi(1990)의 몰입(Flow) 이론에 기반하여 인지적 몰입과 감정적 몰입으로 구분하여 측정하였습니다. 활동에 완전히 집중하고 시간 감각을 잃는 최적 경험 상태를 의미합니다.' },
+        { name: '감정몰입', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1],
+    },
+    '창업의도': {
+      options: [
+        { name: '창업의도(단일차원)', scholar: 'Ajzen(1991)', scale: 'Liñán & Chen(2009) EIQ', answer: 'Ajzen(1991)의 계획행동이론을 바탕으로 Liñán & Chen(2009)이 개발한 창업의도 설문(Entrepreneurial Intention Questionnaire)을 활용하여 창업에 대한 행동 의도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '게임충성도': {
+      options: [
+        { name: '행동적 충성도', scholar: 'Oliver(1999)', scale: '충성도 척도(Oliver 1999)', answer: 'Oliver(1999)의 충성도 이론에 기반하여 게임에 대한 행동적 충성도(재이용, 지속이용)와 태도적 충성도(선호, 추천의향)로 구분하여 측정하였습니다.' },
+        { name: '태도적 충성도', scholar: 'Oliver(1999)', scale: '충성도 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1],
+    },
+    '조직성과': {
+      options: [
+        { name: '재무적 성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC(Balanced Scorecard)', answer: 'Kaplan & Norton(1992)의 균형성과표(BSC)에 기반하여 재무적 성과와 비재무적 성과(고객, 내부프로세스, 학습/성장)의 하위차원으로 조직성과를 측정하였습니다.' },
+        { name: '비재무적 성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC', answer: '' },
+      ],
+      defaultSelected: [0, 1],
+    },
+    '사회적지지': {
+      options: [
+        { name: '정서적 지지', scholar: 'House(1981)', scale: 'House(1981) 사회적 지지 척도', answer: 'House(1981)의 사회적 지지 이론에 기반하여 정서적 지지, 정보적 지지, 도구적 지지, 평가적 지지의 4개 하위차원으로 측정하였습니다.' },
+        { name: '정보적 지지', scholar: 'House(1981)', scale: 'House(1981) 사회적 지지 척도', answer: '' },
+        { name: '도구적 지지', scholar: 'House(1981)', scale: 'House(1981) 사회적 지지 척도', answer: '' },
+        { name: '평가적 지지', scholar: 'House(1981)', scale: 'House(1981) 사회적 지지 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '성격특성': {
+      options: [
+        { name: '외향성', scholar: 'Costa & McCrae(1992)', scale: 'Big Five(NEO-PI-R)', answer: 'Costa & McCrae(1992)의 Big Five 성격 모델에 기반하여 외향성, 친화성, 성실성, 신경증, 개방성의 5개 하위차원으로 성격특성을 측정하였습니다.' },
+        { name: '친화성', scholar: 'Costa & McCrae(1992)', scale: 'Big Five(NEO-PI-R)', answer: '' },
+        { name: '성실성', scholar: 'Costa & McCrae(1992)', scale: 'Big Five(NEO-PI-R)', answer: '' },
+        { name: '신경증', scholar: 'Costa & McCrae(1992)', scale: 'Big Five(NEO-PI-R)', answer: '' },
+        { name: '개방성', scholar: 'Costa & McCrae(1992)', scale: 'Big Five(NEO-PI-R)', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3, 4],
+    },
+    '컨설턴트역량': {
+      options: [
+        { name: '전문지식', scholar: 'Spencer & Spencer(1993)', scale: '역량모델(Competency Model)', answer: 'Spencer & Spencer(1993)의 역량모델에 기반하여 전문지식, 문제해결능력, 의사소통능력 등의 하위차원으로 컨설턴트 역량을 측정하였습니다.' },
+        { name: '문제해결능력', scholar: 'Spencer & Spencer(1993)', scale: '역량모델', answer: '' },
+        { name: '의사소통능력', scholar: 'Spencer & Spencer(1993)', scale: '역량모델', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '임파워먼트': {
+      options: [
+        { name: '의미성', scholar: 'Spreitzer(1995)', scale: '심리적 임파워먼트 척도(Spreitzer 1995)', answer: 'Spreitzer(1995)의 심리적 임파워먼트 이론에 기반하여 의미성, 역량, 자기결정력, 영향력의 4개 하위차원으로 측정하였습니다.' },
+        { name: '역량', scholar: 'Spreitzer(1995)', scale: '심리적 임파워먼트 척도', answer: '' },
+        { name: '자기결정력', scholar: 'Spreitzer(1995)', scale: '심리적 임파워먼트 척도', answer: '' },
+        { name: '영향력', scholar: 'Spreitzer(1995)', scale: '심리적 임파워먼트 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '게임특성': {
+      options: [
+        { name: '게임성', scholar: 'Malone(1981)', scale: '게임특성 척도', answer: 'Malone(1981)의 내재적 동기 이론을 바탕으로 게임성, 상호작용성, 도전성 등의 하위차원으로 게임특성을 측정하였습니다.' },
+        { name: '상호작용성', scholar: 'Malone(1981)', scale: '게임특성 척도', answer: '' },
+        { name: '도전성', scholar: 'Malone(1981)', scale: '게임특성 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '사용자만족도': {
+      options: [
+        { name: '사용자만족도(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델 만족도 척도', answer: 'DeLone & McLean(2003)의 정보시스템 성공모델에 기반하여 시스템에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '공공성': {
+      options: [
+        { name: '공익성', scholar: 'Bozeman(2007)', scale: '공공가치 척도', answer: 'Bozeman(2007)의 공공가치 이론에 기반하여 공익성, 형평성, 투명성 등의 하위차원으로 공공성을 측정하였습니다.' },
+        { name: '형평성', scholar: 'Bozeman(2007)', scale: '공공가치 척도', answer: '' },
+        { name: '투명성', scholar: 'Bozeman(2007)', scale: '공공가치 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '서비스품질': {
+      options: [
+        { name: '유형성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: 'Parasuraman, Zeithaml & Berry(1988)의 SERVQUAL 모델에 기반하여 유형성, 신뢰성, 응답성, 확신성, 공감성의 5개 하위차원으로 서비스품질을 측정하였습니다.' },
+        { name: '신뢰성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: '' },
+        { name: '응답성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: '' },
+        { name: '확신성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: '' },
+        { name: '공감성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3, 4],
+    },
+    '시스템품질': {
+      options: [
+        { name: '시스템품질(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 정보시스템 성공모델에 기반하여 시스템의 적응성, 가용성, 신뢰성, 응답시간, 사용편의성 등을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '리더십': {
+      options: [
+        { name: '리더십(단일차원)', scholar: 'Northouse(2018)', scale: '리더십 척도(연구자 구성)', answer: 'Northouse(2018)의 리더십 이론을 바탕으로 조직 목표 달성을 위해 구성원에게 영향을 미치는 과정과 능력을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '문화적가치': {
+      options: [
+        { name: '권력거리', scholar: 'Hofstede(1980)', scale: 'Hofstede 문화차원 척도', answer: 'Hofstede(1980)의 문화차원 이론에 기반하여 권력거리, 개인주의/집단주의, 불확실성 회피, 남성성/여성성 등의 하위차원으로 문화적 가치를 측정하였습니다.' },
+        { name: '개인주의/집단주의', scholar: 'Hofstede(1980)', scale: 'Hofstede 문화차원 척도', answer: '' },
+        { name: '불확실성 회피', scholar: 'Hofstede(1980)', scale: 'Hofstede 문화차원 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '스트레스': {
+      options: [
+        { name: '스트레스(단일차원)', scholar: 'Cohen et al.(1983)', scale: 'PSS(Perceived Stress Scale)', answer: 'Cohen, Kamarck & Mermelstein(1983)의 지각된 스트레스 척도(PSS)를 활용하여 개인이 경험하는 전반적 스트레스 수준을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '분산적지도성': {
+      options: [
+        { name: '학교비전', scholar: 'Spillane(2006)', scale: '분산적 지도성 척도(Spillane 2006)', answer: 'Spillane(2006)의 분산적 지도성 이론에 기반하여 학교비전, 교사전문성 개발, 학교문화, 수업지도성 등의 하위차원으로 측정하였습니다.' },
+        { name: '교사전문성 개발', scholar: 'Spillane(2006)', scale: '분산적 지도성 척도', answer: '' },
+        { name: '학교문화', scholar: 'Spillane(2006)', scale: '분산적 지도성 척도', answer: '' },
+        { name: '수업지도성', scholar: 'Spillane(2006)', scale: '분산적 지도성 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '재계약의도': {
+      options: [
+        { name: '재계약의도(단일차원)', scholar: 'Zeithaml et al.(1996)', scale: '행동의도 척도', answer: 'Zeithaml, Berry & Parasuraman(1996)의 행동의도 척도를 바탕으로 서비스에 대한 재계약(재이용) 의도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    'ARCS동기이론': {
+      options: [
+        { name: '주의력(Attention)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계모델', answer: 'Keller(1987)의 ARCS 동기설계모델에 기반하여 주의력(A), 관련성(R), 자신감(C), 만족감(S)의 4개 하위차원으로 학습동기를 측정하였습니다.' },
+        { name: '관련성(Relevance)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계모델', answer: '' },
+        { name: '자신감(Confidence)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계모델', answer: '' },
+        { name: '만족감(Satisfaction)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계모델', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '창업의지': {
+      options: [
+        { name: '창업의지(단일차원)', scholar: 'Bird(1988)', scale: '창업의지 척도(Bird 1988, Krueger 2000)', answer: 'Bird(1988)와 Krueger(2000)의 창업의지 모델에 기반하여 창업에 대한 의지와 결심의 정도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '개인역량': {
+      options: [
+        { name: '지식역량', scholar: 'Spencer & Spencer(1993)', scale: '역량모델', answer: 'Spencer & Spencer(1993)의 역량모델에 기반하여 지식역량, 기술역량, 태도역량의 하위차원으로 개인역량을 측정하였습니다.' },
+        { name: '기술역량', scholar: 'Spencer & Spencer(1993)', scale: '역량모델', answer: '' },
+        { name: '태도역량', scholar: 'Spencer & Spencer(1993)', scale: '역량모델', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '주관적규범': {
+      options: [
+        { name: '주관적규범(단일차원)', scholar: 'Ajzen(1991)', scale: '계획행동이론(TPB)', answer: 'Ajzen(1991)의 계획행동이론에 기반하여 주요 타인들이 특정 행동을 수행해야 한다고 생각하는지에 대한 개인의 지각을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '지각된행동통제': {
+      options: [
+        { name: '지각된행동통제(단일차원)', scholar: 'Ajzen(1991)', scale: '계획행동이론(TPB)', answer: 'Ajzen(1991)의 계획행동이론에 기반하여 특정 행동을 수행하는 것이 얼마나 쉽거나 어려운지에 대한 개인의 지각을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '경력지향성': {
+      options: [
+        { name: '관리지향성', scholar: 'Schein(1978)', scale: '경력닻(Career Anchors) 척도', answer: 'Schein(1978)의 경력닻 이론에 기반하여 관리지향성, 전문지향성, 안정지향성 등의 하위차원으로 경력지향성을 측정하였습니다.' },
+        { name: '전문지향성', scholar: 'Schein(1978)', scale: '경력닻 척도', answer: '' },
+        { name: '안정지향성', scholar: 'Schein(1978)', scale: '경력닻 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '이용자만족도': {
+      options: [
+        { name: '이용자만족도(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 정보시스템 성공모델에 기반하여 시스템/서비스 이용에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '이해관계자협력': {
+      options: [
+        { name: '이해관계자협력(단일차원)', scholar: 'Freeman(1984)', scale: '이해관계자 이론 척도', answer: 'Freeman(1984)의 이해관계자 이론에 기반하여 다양한 이해관계자 간의 협력 수준을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '직무효능감': {
+      options: [
+        { name: '직무효능감(단일차원)', scholar: 'Bandura(1997)', scale: '직무 자기효능감 척도', answer: 'Bandura(1997)의 자기효능감 이론에 기반하여 특정 직무를 성공적으로 수행할 수 있다는 자신감을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '성과몰입': {
+      options: [
+        { name: '성과몰입(단일차원)', scholar: 'Locke & Latham(1990)', scale: '목표설정이론 척도', answer: 'Locke & Latham(1990)의 목표설정이론에 기반하여 목표 달성에 대한 몰입과 헌신의 정도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '교육서비스품질': {
+      options: [
+        { name: '교육내용', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형(교육 맥락)', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 교육 맥락에 맞게 변형하여 교육내용, 교수법, 교육환경, 행정서비스 등의 하위차원으로 교육서비스품질을 측정하였습니다.' },
+        { name: '교수법', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: '' },
+        { name: '교육환경', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: '' },
+        { name: '행정서비스', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '자살생각': {
+      options: [
+        { name: '자살생각(단일차원)', scholar: 'Beck(1979)', scale: 'SSI(Scale for Suicide Ideation)', answer: 'Beck(1979)의 자살사고 척도(SSI)를 바탕으로 자살에 대한 생각과 계획의 정도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '성과': {
+      options: [
+        { name: '과업성과', scholar: 'Campbell(1990)', scale: '직무성과 척도', answer: 'Campbell(1990)의 직무성과 모델에 기반하여 과업성과와 맥락성과의 하위차원으로 측정하였습니다.' },
+        { name: '맥락성과', scholar: 'Borman & Motowidlo(1993)', scale: '맥락성과 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1],
+    },
+    '참여행동': {
+      options: [
+        { name: '참여행동(단일차원)', scholar: 'Van Dyne & LePine(1998)', scale: '참여행동 척도', answer: 'Van Dyne & LePine(1998)의 참여행동 이론에 기반하여 조직 활동에 적극적으로 참여하는 행동을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '보상인식': {
+      options: [
+        { name: '내재적 보상', scholar: 'Lawler(1971)', scale: '보상인식 척도', answer: 'Lawler(1971)의 기대이론에 기반하여 내재적 보상(성취감, 자율성)과 외재적 보상(급여, 승진, 복리후생)으로 구분하여 보상인식을 측정하였습니다.' },
+        { name: '외재적 보상', scholar: 'Lawler(1971)', scale: '보상인식 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1],
+    },
+    '상사지원': {
+      options: [
+        { name: '상사지원(단일차원)', scholar: 'Eisenberger et al.(2002)', scale: 'PSS(Perceived Supervisor Support)', answer: 'Eisenberger et al.(2002)의 지각된 상사지원 척도(PSS)를 활용하여 상사가 부하직원의 기여를 가치 있게 여기고 복지에 관심을 갖는 정도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '성격5요인': {
+      options: [
+        { name: '외향성', scholar: 'Goldberg(1993)', scale: 'Big Five Inventory(BFI)', answer: 'Goldberg(1993)의 Big Five 모델에 기반하여 외향성, 친화성, 성실성, 신경증, 개방성의 5개 하위차원으로 측정하였습니다.' },
+        { name: '친화성', scholar: 'Goldberg(1993)', scale: 'BFI', answer: '' },
+        { name: '성실성', scholar: 'Goldberg(1993)', scale: 'BFI', answer: '' },
+        { name: '신경증', scholar: 'Goldberg(1993)', scale: 'BFI', answer: '' },
+        { name: '개방성', scholar: 'Goldberg(1993)', scale: 'BFI', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3, 4],
+    },
+    '보상공정성': {
+      options: [
+        { name: '보상공정성(단일차원)', scholar: 'Adams(1965)', scale: '형평이론 척도', answer: 'Adams(1965)의 형평이론에 기반하여 조직에서 받는 보상이 기여도에 비해 공정하다고 인식하는 정도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '고객지향성': {
+      options: [
+        { name: '고객지향성(단일차원)', scholar: 'Saxe & Weitz(1982)', scale: 'SOCO(Selling Orientation-Customer Orientation)', answer: 'Saxe & Weitz(1982)의 SOCO 척도를 바탕으로 고객의 욕구를 파악하고 충족시키려는 태도와 행동을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '진성리더십': {
+      options: [
+        { name: '자아인식', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ(Authentic Leadership Questionnaire)', answer: 'Walumbwa et al.(2008)의 진성리더십 설문(ALQ)에 기반하여 자아인식, 내면화된 도덕관, 균형잡힌 정보처리, 관계적 투명성의 4개 하위차원으로 측정하였습니다.' },
+        { name: '내면화된 도덕관', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
+        { name: '균형잡힌 정보처리', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
+        { name: '관계적 투명성', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '컨설팅만족도': {
+      options: [
+        { name: '컨설팅만족도(단일차원)', scholar: 'Oliver(1980)', scale: '고객만족도 척도 변형', answer: 'Oliver(1980)의 기대불일치 이론을 컨설팅 맥락에 적용하여 컨설팅 서비스에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '분배공정성': {
+      options: [
+        { name: '분배공정성(단일차원)', scholar: 'Adams(1965)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Adams(1965)의 형평이론에 기반하여 성과에 대한 보상의 분배가 공정한 정도를 Colquitt(2001) 척도로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    'NCS교수자상호작용성': {
+      options: [
+        { name: 'NCS교수자상호작용성(단일차원)', scholar: 'Moore(1989)', scale: '교수-학습 상호작용 척도', answer: 'Moore(1989)의 교류적 거리 이론에 기반하여 NCS 교육에서 교수자와 학습자 간의 상호작용 정도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    'NCS학습자학습몰입': {
+      options: [
+        { name: 'NCS학습자학습몰입(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: '학습몰입 척도', answer: 'Csikszentmihalyi(1990)의 몰입이론을 NCS 학습 맥락에 적용하여 학습 활동에 대한 몰입 정도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '학습전이': {
+      options: [
+        { name: '학습전이(단일차원)', scholar: 'Baldwin & Ford(1988)', scale: '학습전이 척도', answer: 'Baldwin & Ford(1988)의 학습전이 모델에 기반하여 교육훈련에서 학습한 지식과 기술을 실제 업무에 적용하는 정도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    'POS품질': {
+      options: [
+        { name: 'POS품질(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델 변형', answer: 'DeLone & McLean(2003)의 IS 성공모델을 POS(Point of Sale) 시스템에 적용하여 시스템 품질을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '가치지향성': {
+      options: [
+        { name: '가치지향성(단일차원)', scholar: 'Rokeach(1973)', scale: '가치관 척도(Rokeach Value Survey)', answer: 'Rokeach(1973)의 가치관 조사를 바탕으로 개인이 추구하는 가치의 방향성을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '갈등결과만족': {
+      options: [
+        { name: '갈등결과만족(단일차원)', scholar: 'Thomas & Kilmann(1974)', scale: '갈등관리 결과 척도', answer: 'Thomas & Kilmann(1974)의 갈등관리 모델에 기반하여 갈등 해결 결과에 대한 만족 정도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '갈등원인': {
+      options: [
+        { name: '과업갈등', scholar: 'Jehn(1995)', scale: '조직갈등 척도(Jehn 1995)', answer: 'Jehn(1995)의 조직갈등 이론에 기반하여 과업갈등과 관계갈등, 과정갈등의 하위차원으로 갈등원인을 측정하였습니다.' },
+        { name: '관계갈등', scholar: 'Jehn(1995)', scale: '조직갈등 척도', answer: '' },
+        { name: '과정갈등', scholar: 'Jehn(1997)', scale: '조직갈등 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '감성지능': {
+      options: [
+        { name: '자기감정 인식', scholar: 'Salovey & Mayer(1990)', scale: 'Wong & Law(2002) WLEIS', answer: 'Salovey & Mayer(1990)의 감성지능 이론과 Wong & Law(2002)의 WLEIS 척도에 기반하여 자기감정 인식, 타인감정 인식, 감정 활용, 감정 조절의 4개 하위차원으로 측정하였습니다.' },
+        { name: '타인감정 인식', scholar: 'Salovey & Mayer(1990)', scale: 'WLEIS', answer: '' },
+        { name: '감정 활용', scholar: 'Salovey & Mayer(1990)', scale: 'WLEIS', answer: '' },
+        { name: '감정 조절', scholar: 'Salovey & Mayer(1990)', scale: 'WLEIS', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '건강가치성': {
+      options: [
+        { name: '건강가치성(단일차원)', scholar: 'Rosenstock(1974)', scale: '건강신념모델(HBM)', answer: 'Rosenstock(1974)의 건강신념모델에 기반하여 건강에 대한 가치 부여 정도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '건강신념': {
+      options: [
+        { name: '지각된 감수성', scholar: 'Rosenstock(1974)', scale: '건강신념모델(HBM)', answer: 'Rosenstock(1974)의 건강신념모델(HBM)에 기반하여 지각된 감수성, 지각된 심각성, 지각된 이익, 지각된 장애의 4개 하위차원으로 측정하였습니다.' },
+        { name: '지각된 심각성', scholar: 'Rosenstock(1974)', scale: 'HBM', answer: '' },
+        { name: '지각된 이익', scholar: 'Rosenstock(1974)', scale: 'HBM', answer: '' },
+        { name: '지각된 장애', scholar: 'Rosenstock(1974)', scale: 'HBM', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '게임만족도': { options: [{ name: '게임만족도(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도(게임 맥락)', answer: 'Oliver(1980)의 기대불일치 이론을 게임 맥락에 적용하여 게임 이용에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '경제성': { options: [{ name: '경제성(단일차원)', scholar: 'Zeithaml(1988)', scale: '지각된 가치 척도', answer: 'Zeithaml(1988)의 가치이론에 기반하여 투입 대비 산출의 경제적 효율성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '채널충성도': { options: [{ name: '채널충성도(단일차원)', scholar: 'Oliver(1999)', scale: '충성도 척도', answer: 'Oliver(1999)의 충성도 이론을 유통채널에 적용하여 특정 채널에 대한 지속이용 의도와 선호도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '기관이미지': { options: [{ name: '기관이미지(단일차원)', scholar: 'Keller(1993)', scale: '브랜드 이미지 척도 변형', answer: 'Keller(1993)의 브랜드 이미지 이론을 기관 맥락에 적용하여 기관에 대한 전반적 인상과 이미지를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '기업가정신': {
+      options: [
+        { name: '혁신성', scholar: 'Miller(1983)', scale: '기업가적 지향성 척도(EO)', answer: 'Miller(1983)와 Covin & Slevin(1989)의 기업가적 지향성(EO) 이론에 기반하여 혁신성, 진취성, 위험감수성의 3개 하위차원으로 기업가정신을 측정하였습니다.' },
+        { name: '진취성', scholar: 'Covin & Slevin(1989)', scale: 'EO 척도', answer: '' },
+        { name: '위험감수성', scholar: 'Miller(1983)', scale: 'EO 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '사회적자본': {
+      options: [
+        { name: '구조적 자본', scholar: 'Nahapiet & Ghoshal(1998)', scale: '사회적 자본 척도', answer: 'Nahapiet & Ghoshal(1998)의 사회적 자본 이론에 기반하여 구조적 자본(네트워크), 관계적 자본(신뢰), 인지적 자본(공유비전)의 3개 하위차원으로 측정하였습니다.' },
+        { name: '관계적 자본', scholar: 'Nahapiet & Ghoshal(1998)', scale: '사회적 자본 척도', answer: '' },
+        { name: '인지적 자본', scholar: 'Nahapiet & Ghoshal(1998)', scale: '사회적 자본 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '생성형AI서비스특성': { options: [{ name: '생성형AI서비스특성(단일차원)', scholar: 'Venkatesh et al.(2003)', scale: 'UTAUT 변형', answer: 'Venkatesh et al.(2003)의 UTAUT 모델을 생성형 AI 서비스 맥락에 적용하여 서비스 특성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '수퍼리더십': {
+      options: [
+        { name: '모델링', scholar: 'Manz & Sims(2001)', scale: '수퍼리더십 척도', answer: 'Manz & Sims(2001)의 수퍼리더십 이론에 기반하여 모델링, 목표설정, 격려/안내, 보상/건설적 질책의 하위차원으로 측정하였습니다.' },
+        { name: '목표설정', scholar: 'Manz & Sims(2001)', scale: '수퍼리더십 척도', answer: '' },
+        { name: '격려/안내', scholar: 'Manz & Sims(2001)', scale: '수퍼리더십 척도', answer: '' },
+        { name: '보상/건설적질책', scholar: 'Manz & Sims(2001)', scale: '수퍼리더십 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '스마트워크시스템만족': { options: [{ name: '스마트워크시스템만족(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 IS 성공모델에 기반하여 스마트워크 시스템에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '연주몰입경험': { options: [{ name: '연주몰입경험(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도(연주 맥락)', answer: 'Csikszentmihalyi(1990)의 몰입이론을 음악 연주 맥락에 적용하여 연주 활동에 완전히 몰입하는 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '공연만족도': { options: [{ name: '공연만족도(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도(공연 맥락)', answer: 'Oliver(1980)의 기대불일치 이론을 공연 맥락에 적용하여 공연 관람에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지속참여의도': { options: [{ name: '지속참여의도(단일차원)', scholar: 'Bhattacherjee(2001)', scale: 'ECM 변형', answer: 'Bhattacherjee(2001)의 지속사용 모델을 참여 맥락에 적용하여 활동에 지속적으로 참여하고자 하는 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '유튜버특성': { options: [{ name: '매력성', scholar: 'Ohanian(1990)', scale: '정보원 신뢰도 척도 변형', answer: 'Ohanian(1990)의 정보원 신뢰도 모델을 유튜버에 적용하여 매력성, 전문성, 신뢰성의 하위차원으로 측정하였습니다.' }, { name: '전문성', scholar: 'Ohanian(1990)', scale: '정보원 신뢰도 척도', answer: '' }, { name: '신뢰성', scholar: 'Ohanian(1990)', scale: '정보원 신뢰도 척도', answer: '' }], defaultSelected: [0, 1, 2] },
+    '경영성과': { options: [{ name: '재무성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC', answer: 'Kaplan & Norton(1992)의 BSC에 기반하여 재무성과와 비재무성과의 하위차원으로 경영성과를 측정하였습니다.' }, { name: '비재무성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC', answer: '' }], defaultSelected: [0, 1] },
+    '재창업의지': { options: [{ name: '재창업의지(단일차원)', scholar: 'Krueger(2000)', scale: '창업의지 척도 변형', answer: 'Krueger(2000)의 창업의지 모델에 기반하여 실패 이후 다시 창업하고자 하는 의지를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '참여동기': { options: [{ name: '내재적 동기', scholar: 'Deci & Ryan(1985)', scale: '자기결정이론 동기 척도', answer: 'Deci & Ryan(1985)의 자기결정이론에 기반하여 내재적 동기와 외재적 동기의 하위차원으로 참여동기를 측정하였습니다.' }, { name: '외재적 동기', scholar: 'Deci & Ryan(1985)', scale: '자기결정이론 동기 척도', answer: '' }], defaultSelected: [0, 1] },
+    '창업정책환경': { options: [{ name: '창업정책환경(단일차원)', scholar: 'GEM(2001)', scale: 'GEM 창업환경 척도', answer: 'GEM(Global Entrepreneurship Monitor)의 창업환경 프레임워크에 기반하여 정부의 창업 지원 정책과 제도적 환경을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '특별교통서비스품질': { options: [{ name: '특별교통서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 특별교통 서비스에 적용하여 서비스 품질을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '한류스타활동': { options: [{ name: '한류스타활동(단일차원)', scholar: '연구자 구성', scale: '한류 콘텐츠 척도', answer: '한류 스타의 미디어 노출, 팬 소통, 공연 활동 등을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '접근성': { options: [{ name: '접근성(단일차원)', scholar: 'Davis(1989)', scale: '접근성/용이성 척도', answer: '시스템이나 서비스에 접근하는 용이성 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '통합성': { options: [{ name: '통합성(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델 변형', answer: '시스템 간 데이터 연동 및 통합 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '유희성': { options: [{ name: '유희성(단일차원)', scholar: 'Moon & Kim(2001)', scale: '유희성 척도', answer: 'Moon & Kim(2001)의 유희성 개념에 기반하여 시스템 사용 시 느끼는 즐거움과 재미를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '개인화': { options: [{ name: '개인화(단일차원)', scholar: 'Peppers & Rogers(1997)', scale: '개인화 서비스 척도', answer: 'Peppers & Rogers(1997)의 1:1 마케팅 이론에 기반하여 개인 맞춤형 서비스 제공 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '맥락인지': { options: [{ name: '맥락인지(단일차원)', scholar: 'Dey(2001)', scale: '맥락인지 컴퓨팅 척도', answer: 'Dey(2001)의 맥락인지 컴퓨팅 개념에 기반하여 사용자의 상황과 맥락을 인식하는 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '보안성': { options: [{ name: '보안성(단일차원)', scholar: 'Salisbury et al.(2001)', scale: '정보보안 척도', answer: 'Salisbury et al.(2001)의 지각된 보안성 개념에 기반하여 시스템의 보안 수준에 대한 인식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '정확성': { options: [{ name: '정확성(단일차원)', scholar: 'DeLone & McLean(2003)', scale: '정보품질 하위차원', answer: '정보나 서비스의 정확성 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '의인화수준': { options: [{ name: '의인화수준(단일차원)', scholar: 'Epley et al.(2007)', scale: '의인화 척도', answer: 'Epley et al.(2007)의 의인화 이론에 기반하여 비인간 대상에 인간적 특성을 부여하는 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '쾌락적동기': { options: [{ name: '쾌락적동기(단일차원)', scholar: 'Venkatesh et al.(2012)', scale: 'UTAUT2', answer: 'Venkatesh et al.(2012)의 UTAUT2에서 제시한 쾌락적 동기 개념을 채택하여 기술 사용의 즐거움과 재미를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '습관적이용': { options: [{ name: '습관적이용(단일차원)', scholar: 'Venkatesh et al.(2012)', scale: 'UTAUT2', answer: 'Venkatesh et al.(2012)의 UTAUT2에서 제시한 습관 개념에 기반하여 기술 사용의 습관적 반복 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '촉진조건': { options: [{ name: '촉진조건(단일차원)', scholar: 'Venkatesh et al.(2003)', scale: 'UTAUT', answer: 'Venkatesh et al.(2003)의 UTAUT에서 제시한 촉진조건 개념에 기반하여 기술 사용을 지원하는 인프라와 자원의 존재를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '사회적압박': { options: [{ name: '사회적압박(단일차원)', scholar: 'Venkatesh et al.(2003)', scale: 'UTAUT 사회적 영향', answer: 'Venkatesh et al.(2003)의 UTAUT 모델의 사회적 영향 개념에 기반하여 주변의 기대와 압력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '공정성인식': { options: [{ name: '공정성인식(단일차원)', scholar: 'Colquitt(2001)', scale: '조직공정성 척도', answer: 'Colquitt(2001)의 조직공정성 척도에 기반하여 분배, 절차, 상호작용 공정성에 대한 전반적 인식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '교사임파워먼트': { options: [{ name: '의사결정 참여', scholar: 'Short & Rinehart(1992)', scale: 'SES(School Participant Empowerment Scale)', answer: 'Short & Rinehart(1992)의 학교참여자 임파워먼트 척도(SES)에 기반하여 의사결정 참여, 전문성 개발, 자율성 등의 하위차원으로 측정하였습니다.' }, { name: '전문성 개발', scholar: 'Short & Rinehart(1992)', scale: 'SES', answer: '' }, { name: '자율성', scholar: 'Short & Rinehart(1992)', scale: 'SES', answer: '' }], defaultSelected: [0, 1, 2] },
+    '지속근무의도': { options: [{ name: '지속근무의도(단일차원)', scholar: 'Price & Mueller(1981)', scale: '이직의도 역코딩', answer: 'Price & Mueller(1981)의 이직의도 모델을 역으로 적용하여 현 직장에서 계속 근무하고자 하는 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '상사신뢰': { options: [{ name: '상사신뢰(단일차원)', scholar: 'Mayer et al.(1995)', scale: '조직신뢰 척도(상사 맥락)', answer: 'Mayer, Davis & Schoorman(1995)의 신뢰 모델에 기반하여 상사의 능력, 선의, 진실성에 대한 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '직무착근도': { options: [{ name: '연결', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: 'Mitchell et al.(2001)의 직무착근도 이론에 기반하여 연결(links), 적합(fit), 희생(sacrifice)의 3개 하위차원으로 측정하였습니다.' }, { name: '적합', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: '' }, { name: '희생', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: '' }], defaultSelected: [0, 1, 2] },
+    '사회적책임': { options: [{ name: '경제적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: 'Carroll(1991)의 CSR 피라미드에 기반하여 경제적, 법적, 윤리적, 자선적 책임의 4개 하위차원으로 측정하였습니다.' }, { name: '법적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: '' }, { name: '윤리적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: '' }, { name: '자선적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: '' }], defaultSelected: [0, 1, 2, 3] },
+    '직무태도': { options: [{ name: '직무태도(단일차원)', scholar: 'Judge et al.(2001)', scale: '직무태도 척도', answer: 'Judge et al.(2001)의 연구에 기반하여 직무에 대한 전반적 태도(만족, 몰입, 애착)를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '직무역량': { options: [{ name: '직무역량(단일차원)', scholar: 'Spencer & Spencer(1993)', scale: '역량모델', answer: 'Spencer & Spencer(1993)의 역량모델에 기반하여 직무 수행에 필요한 지식, 기술, 능력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '활용도': { options: [{ name: '활용도(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델 사용(Use)', answer: 'DeLone & McLean(2003)의 IS 성공모델 중 시스템 사용(Use) 개념에 기반하여 활용 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '학습동기유발요인': { options: [{ name: '학습동기유발요인(단일차원)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계모델', answer: 'Keller(1987)의 ARCS 모델에 기반하여 학습동기를 유발하는 요인을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '절차공정성': { options: [{ name: '절차공정성(단일차원)', scholar: 'Leventhal(1980)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Leventhal(1980)의 절차공정성 이론에 기반하여 의사결정 과정의 공정성을 Colquitt(2001) 척도로 측정하였습니다.' }], defaultSelected: [0] },
+    'FM서비스품질': { options: [{ name: 'FM서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형(FM 맥락)', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 시설관리(FM) 서비스에 적용하여 서비스 품질을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '관계지향성': { options: [{ name: '관계지향성(단일차원)', scholar: 'Morgan & Hunt(1994)', scale: '관계마케팅 척도', answer: 'Morgan & Hunt(1994)의 관계마케팅 이론에 기반하여 장기적 관계 유지를 중시하는 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '고객만족도': { options: [{ name: '고객만족도(단일차원)', scholar: 'Oliver(1980)', scale: '고객만족도 척도', answer: 'Oliver(1980)의 기대불일치 이론에 기반하여 고객의 전반적 만족 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '고객신뢰': { options: [{ name: '고객신뢰(단일차원)', scholar: 'Morgan & Hunt(1994)', scale: '신뢰 척도', answer: 'Morgan & Hunt(1994)의 신뢰-몰입 이론에 기반하여 서비스 제공자에 대한 고객의 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '갈등관리': { options: [{ name: '경쟁', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI(Thomas-Kilmann Conflict Mode Instrument)', answer: 'Thomas & Kilmann(1974)의 갈등관리 모델에 기반하여 경쟁, 협력, 회피, 수용, 타협의 5개 전략으로 측정하였습니다.' }, { name: '협력', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }, { name: '회피', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }, { name: '수용', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }, { name: '타협', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }], defaultSelected: [0, 1, 2, 3, 4] },
+    '갈등수준': { options: [{ name: '갈등수준(단일차원)', scholar: 'Jehn(1995)', scale: '조직갈등 척도', answer: 'Jehn(1995)의 조직갈등 이론에 기반하여 조직 내 갈등의 전반적 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '개최지역태도': { options: [{ name: '개최지역태도(단일차원)', scholar: 'Getz(1997)', scale: '이벤트 영향 인식 척도', answer: 'Getz(1997)의 이벤트 연구에 기반하여 행사 개최지역에 대한 태도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '축제성과': { options: [{ name: '축제성과(단일차원)', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: 'Getz(1997)의 축제이벤트 이론에 기반하여 축제의 경제적·사회문화적 성과를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '대응성': { options: [{ name: '대응성(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 하위차원', answer: 'Parasuraman et al.(1988)의 SERVQUAL 중 대응성(Responsiveness) 차원을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '병원예방행동': { options: [{ name: '병원예방행동(단일차원)', scholar: 'Rosenstock(1974)', scale: 'HBM 변형', answer: 'Rosenstock(1974)의 건강신념모델에 기반하여 질병 예방을 위한 병원 방문 행동을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '게임만족': { options: [{ name: '게임만족(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도', answer: 'Oliver(1980)의 만족이론을 게임에 적용하여 게임 이용 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '게임몰입': { options: [{ name: '게임몰입(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도(게임 맥락)', answer: 'Csikszentmihalyi(1990)의 몰입이론을 게임에 적용하여 게임 몰입 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '관계만족': { options: [{ name: '관계만족(단일차원)', scholar: 'Rusbult(1983)', scale: '관계투자모델 척도', answer: 'Rusbult(1983)의 관계투자모델에 기반하여 관계에 대한 전반적 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지속구매의도': { options: [{ name: '지속구매의도(단일차원)', scholar: 'Oliver(1999)', scale: '충성도 척도', answer: 'Oliver(1999)의 충성도 이론에 기반하여 제품/서비스의 지속적 구매 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '전시성과': { options: [{ name: '전시성과(단일차원)', scholar: '연구자 구성', scale: '전시회 성과 척도', answer: '전시회의 경제적·사회적 성과를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '교육만족도': { options: [{ name: '교육만족도(단일차원)', scholar: 'Kirkpatrick(1994)', scale: '교육훈련 평가모델 1단계', answer: 'Kirkpatrick(1994)의 4단계 교육평가모델 중 반응(Reaction) 단계에 기반하여 교육에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '구독자만족': { options: [{ name: '구독자만족(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도(구독 맥락)', answer: 'Oliver(1980)의 만족이론을 구독 서비스에 적용하여 구독자 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '기관신뢰': { options: [{ name: '기관신뢰(단일차원)', scholar: 'Mayer et al.(1995)', scale: '조직신뢰 척도(기관 맥락)', answer: 'Mayer et al.(1995)의 신뢰 모델에 기반하여 기관에 대한 전반적 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '노조몰입': { options: [{ name: '노조몰입(단일차원)', scholar: 'Gordon et al.(1980)', scale: '노조몰입 척도', answer: 'Gordon et al.(1980)의 노조몰입 이론에 기반하여 노동조합에 대한 충성심과 몰입을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '구전의도': { options: [{ name: '구전의도(단일차원)', scholar: 'Zeithaml et al.(1996)', scale: '행동의도 척도', answer: 'Zeithaml et al.(1996)의 행동의도 척도에 기반하여 타인에게 추천하고 긍정적으로 이야기하려는 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '스타동일시욕구': { options: [{ name: '스타동일시욕구(단일차원)', scholar: 'Kelman(1958)', scale: '동일시 척도', answer: 'Kelman(1958)의 사회적 영향 이론에 기반하여 스타와 자신을 동일시하고자 하는 욕구를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '스타충성도': { options: [{ name: '스타충성도(단일차원)', scholar: 'Oliver(1999)', scale: '충성도 척도(스타 맥락)', answer: 'Oliver(1999)의 충성도 이론을 스타에 적용하여 특정 스타에 대한 지속적 선호와 지지를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '자기유능감': { options: [{ name: '자기유능감(단일차원)', scholar: 'Deci & Ryan(1985)', scale: '기본심리욕구 척도', answer: 'Deci & Ryan(1985)의 자기결정이론에서 제시한 유능감(Competence) 개념에 기반하여 자신의 능력에 대한 지각을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '자아존중감': { options: [{ name: '자아존중감(단일차원)', scholar: 'Rosenberg(1965)', scale: 'RSES(Rosenberg Self-Esteem Scale)', answer: 'Rosenberg(1965)의 자아존중감 척도(RSES)를 활용하여 자기 자신에 대한 전반적 가치 평가를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '운동만족': { options: [{ name: '운동만족(단일차원)', scholar: 'Kenyon(1968)', scale: '운동만족 척도', answer: '운동 참여에 대한 전반적 만족 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '운동몰입': { options: [{ name: '운동몰입(단일차원)', scholar: 'Scanlan et al.(1993)', scale: 'Sport Commitment Model', answer: 'Scanlan et al.(1993)의 스포츠 몰입 모델에 기반하여 운동에 대한 몰입을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '혁신역량': { options: [{ name: '혁신역량(단일차원)', scholar: 'Lawson & Samson(2001)', scale: '혁신역량 척도', answer: 'Lawson & Samson(2001)의 혁신역량 모델에 기반하여 조직의 혁신 능력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '전환장벽': { options: [{ name: '전환장벽(단일차원)', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: 'Jones et al.(2000)의 전환비용 이론에 기반하여 서비스 전환 시 인지되는 장벽을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '정보품질': { options: [{ name: '정보품질(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 IS 성공모델에 기반하여 정보의 정확성, 적시성, 완전성, 관련성 등을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지역축제브랜드자산': { options: [{ name: '인지도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도(축제 맥락)', answer: 'Aaker(1991)의 브랜드자산 모델을 축제에 적용하여 인지도, 이미지, 충성도의 하위차원으로 측정하였습니다.' }, { name: '이미지', scholar: 'Keller(1993)', scale: '브랜드자산 척도', answer: '' }, { name: '충성도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }], defaultSelected: [0, 1, 2] },
+    '인간적친밀성': { options: [{ name: '인간적친밀성(단일차원)', scholar: '연구자 구성', scale: '친밀성 척도', answer: '서비스 제공자의 인간적 친밀감과 따뜻함을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '기술적우월성': { options: [{ name: '기술적우월성(단일차원)', scholar: 'Rogers(2003)', scale: '혁신확산이론 상대적 이점', answer: 'Rogers(2003)의 혁신확산이론 중 상대적 이점 개념에 기반하여 기술의 우월성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '조직학습역량': { options: [{ name: '조직학습역량(단일차원)', scholar: 'Senge(1990)', scale: '학습조직 척도', answer: 'Senge(1990)의 학습조직 이론에 기반하여 조직의 학습 역량을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '심리자본': { options: [{ name: '자기효능감', scholar: 'Luthans et al.(2007)', scale: 'PCQ(Psychological Capital Questionnaire)', answer: 'Luthans et al.(2007)의 심리적 자본 이론에 기반하여 자기효능감, 희망, 회복탄력성, 낙관주의의 4개 하위차원으로 측정하였습니다.' }, { name: '희망', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' }, { name: '회복탄력성', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' }, { name: '낙관주의', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' }], defaultSelected: [0, 1, 2, 3] },
+    '개선노력': { options: [{ name: '개선노력(단일차원)', scholar: '연구자 구성', scale: '조직개선 척도', answer: '조직이나 개인의 업무 프로세스 개선을 위한 노력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '기업성과': { options: [{ name: '기업성과(단일차원)', scholar: 'Kaplan & Norton(1992)', scale: 'BSC 변형', answer: 'Kaplan & Norton(1992)의 BSC에 기반하여 기업의 전반적 성과를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '발언행동': { options: [{ name: '발언행동(단일차원)', scholar: 'Van Dyne & LePine(1998)', scale: '발언행동 척도', answer: 'Van Dyne & LePine(1998)의 발언행동(Voice Behavior) 이론에 기반하여 조직 개선을 위해 의견을 적극적으로 개진하는 행동을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '조직변화': { options: [{ name: '조직변화(단일차원)', scholar: 'Lewin(1947)', scale: '조직변화 척도', answer: 'Lewin(1947)의 변화 모델(해빙-변화-재결빙)에 기반하여 조직변화의 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '팀성과': { options: [{ name: '팀성과(단일차원)', scholar: 'Hackman(1987)', scale: '팀 효과성 척도', answer: 'Hackman(1987)의 팀 효과성 모델에 기반하여 팀의 과업 성과와 팀원 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '학습': { options: [{ name: '학습(단일차원)', scholar: 'Kirkpatrick(1994)', scale: '교육훈련 평가모델 2단계', answer: 'Kirkpatrick(1994)의 4단계 교육평가모델 중 학습(Learning) 단계에 기반하여 지식과 기술의 습득 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '혁신': { options: [{ name: '혁신(단일차원)', scholar: 'Rogers(2003)', scale: '혁신확산이론 척도', answer: 'Rogers(2003)의 혁신확산이론에 기반하여 새로운 아이디어나 기술의 도입과 확산 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '직무정체성': { options: [{ name: '직무정체성(단일차원)', scholar: 'Hackman & Oldham(1975)', scale: 'JDS(Job Diagnostic Survey)', answer: 'Hackman & Oldham(1975)의 직무특성모델 중 과업정체성(Task Identity) 개념에 기반하여 직무의 완결성 인식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '적응성과': { options: [{ name: '적응성과(단일차원)', scholar: 'Pulakos et al.(2000)', scale: '적응적 수행 척도', answer: 'Pulakos et al.(2000)의 적응적 수행 이론에 기반하여 변화하는 환경에 적응하여 성과를 내는 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '진로적응성': { options: [{ name: '관심', scholar: 'Savickas(2005)', scale: 'CAAS(Career Adapt-Abilities Scale)', answer: 'Savickas(2005)의 진로적응성 이론에 기반하여 관심, 통제, 호기심, 자신감의 4개 하위차원으로 측정하였습니다.' }, { name: '통제', scholar: 'Savickas(2005)', scale: 'CAAS', answer: '' }, { name: '호기심', scholar: 'Savickas(2005)', scale: 'CAAS', answer: '' }, { name: '자신감', scholar: 'Savickas(2005)', scale: 'CAAS', answer: '' }], defaultSelected: [0, 1, 2, 3] },
+    '직무자원': { options: [{ name: '직무자원(단일차원)', scholar: 'Bakker & Demerouti(2007)', scale: 'JD-R Model 척도', answer: 'Bakker & Demerouti(2007)의 직무요구-자원 모델(JD-R)에 기반하여 직무 수행을 지원하는 물리적·심리적·조직적 자원을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '간호근무환경': { options: [{ name: '간호근무환경(단일차원)', scholar: 'Lake(2002)', scale: 'PES-NWI(Practice Environment Scale)', answer: 'Lake(2002)의 간호실무환경 척도(PES-NWI)에 기반하여 간호사의 업무환경(인력, 자율성, 의사소통 등)을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '일과삶균형': { options: [{ name: '일과삶균형(단일차원)', scholar: 'Greenhaus et al.(2003)', scale: 'WLB 척도', answer: 'Greenhaus et al.(2003)의 일-생활 균형 이론에 기반하여 일과 삶 사이의 균형 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    'SNS사용빈도': { options: [{ name: 'SNS사용빈도(단일차원)', scholar: 'Ellison et al.(2007)', scale: 'SNS 사용 척도', answer: 'Ellison et al.(2007)의 SNS 사용 연구에 기반하여 SNS 이용 빈도와 시간을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    'SNS일상성': { options: [{ name: 'SNS일상성(단일차원)', scholar: 'Ellison et al.(2007)', scale: 'SNS 사용 척도', answer: 'SNS가 일상생활에서 차지하는 비중과 습관적 사용 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '공공기관신뢰': { options: [{ name: '공공기관신뢰(단일차원)', scholar: 'Mayer et al.(1995)', scale: '기관신뢰 척도', answer: 'Mayer et al.(1995)의 신뢰 모델에 기반하여 공공기관에 대한 시민의 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '관람만족': { options: [{ name: '관람만족(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도(관람 맥락)', answer: '관람 경험에 대한 전반적 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '관람몰입': { options: [{ name: '관람몰입(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도(관람 맥락)', answer: '관람 활동에 대한 몰입 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '사회적실재감': { options: [{ name: '사회적실재감(단일차원)', scholar: 'Short et al.(1976)', scale: '사회적 실재감 척도', answer: 'Short et al.(1976)의 사회적 실재감 이론에 기반하여 매체를 통한 상호작용에서 상대방의 존재감을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '쇼핑가치': { options: [{ name: '실용적 가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: 'Babin et al.(1994)의 쇼핑가치 이론에 기반하여 실용적 가치와 쾌락적 가치의 하위차원으로 측정하였습니다.' }, { name: '쾌락적 가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }], defaultSelected: [0, 1] },
+    '개인성과': { options: [{ name: '개인성과(단일차원)', scholar: 'Campbell(1990)', scale: '직무성과 척도', answer: 'Campbell(1990)의 성과 모델에 기반하여 개인 수준의 업무 성과를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '시스템사용': { options: [{ name: '시스템사용(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 IS 성공모델 중 사용(Use) 개념에 기반하여 시스템 활용 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지속적사용의도': { options: [{ name: '지속적사용의도(단일차원)', scholar: 'Bhattacherjee(2001)', scale: 'ECM-IT', answer: 'Bhattacherjee(2001)의 ECM-IT 모델에 기반하여 시스템의 지속적 사용 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '인적자원중시': { options: [{ name: '인적자원중시(단일차원)', scholar: 'Pfeffer(1998)', scale: '인적자원관리 척도', answer: 'Pfeffer(1998)의 인적자원 경영 이론에 기반하여 조직의 인적자원 중시 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지각된사용성': { options: [{ name: '지각된사용성(단일차원)', scholar: 'Davis(1989)', scale: 'TAM', answer: 'Davis(1989)의 TAM에 기반하여 시스템 사용의 용이성에 대한 지각을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '측정분석및지식관리': { options: [{ name: '측정분석및지식관리(단일차원)', scholar: 'MBNQA(2019)', scale: '말콤볼드리지 기준 4범주', answer: '말콤볼드리지 국가품질상(MBNQA) 기준의 측정·분석 및 지식관리 범주에 기반하여 조직의 데이터 관리 역량을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '프로세스관리': { options: [{ name: '프로세스관리(단일차원)', scholar: 'MBNQA(2019)', scale: '말콤볼드리지 기준 6범주', answer: '말콤볼드리지 국가품질상(MBNQA) 기준의 프로세스 관리 범주에 기반하여 조직의 핵심 프로세스 관리 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '혁신성': { options: [{ name: '혁신성(단일차원)', scholar: 'Rogers(2003)', scale: '개인혁신성 척도', answer: 'Rogers(2003)의 혁신확산이론에 기반하여 새로운 것을 수용하려는 개인의 성향을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '감정고갈': { options: [{ name: '감정고갈(단일차원)', scholar: 'Maslach & Jackson(1981)', scale: 'MBI(Maslach Burnout Inventory)', answer: 'Maslach & Jackson(1981)의 MBI 중 감정고갈(Emotional Exhaustion) 하위차원을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    'LMX(상사-부하 교환관계)': { options: [{ name: 'LMX(다차원)', scholar: 'Graen & Uhl-Bien(1995)', scale: 'LMX-7', answer: 'Graen & Uhl-Bien(1995)의 LMX-7 척도를 활용하여 상사-부하 교환관계의 질을 측정하였습니다.' }], defaultSelected: [0] },
+    'U-공공서비스품질': { options: [{ name: 'U-공공서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: 'Parasuraman et al.(1988)의 SERVQUAL 모델을 유비쿼터스 공공서비스 환경에 맞게 변형하여 서비스품질을 측정하였습니다.' }], defaultSelected: [0] },
+    'U-교통시스템품질': { options: [{ name: 'U-교통시스템품질(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS Success Model 변형', answer: 'DeLone & McLean(2003)의 정보시스템 성공모형을 유비쿼터스 교통시스템에 맞게 변형하여 시스템품질을 측정하였습니다.' }], defaultSelected: [0] },
+    'e-서비스품질': { options: [{ name: 'e-서비스품질(다차원)', scholar: 'Parasuraman et al.(2005)', scale: 'E-S-QUAL', answer: 'Parasuraman et al.(2005)의 E-S-QUAL 척도를 활용하여 전자서비스품질을 효율성, 시스템가용성, 이행성, 프라이버시 등의 차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '감정반응(PAD)': { options: [{ name: '즐거움(Pleasure)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'Mehrabian & Russell(1974)의 PAD 모델 중 즐거움 차원입니다.' }, { name: '각성(Arousal)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 각성 차원입니다.' }, { name: '지배(Dominance)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 지배 차원입니다.' }], defaultSelected: [0,1,2] },
+    '감정반응요인(PAD)': { options: [{ name: '즐거움(Pleasure)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'Mehrabian & Russell(1974)의 PAD 모델 중 즐거움 차원입니다.' }, { name: '각성(Arousal)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 각성 차원입니다.' }, { name: '지배(Dominance)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 지배 차원입니다.' }], defaultSelected: [0,1,2] },
+    '개인적 몰입': { options: [{ name: '개인적 몰입(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도', answer: 'Csikszentmihalyi(1990)의 몰입이론에 기반하여 개인이 특정 활동에 완전히 몰입하는 심리적 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '기술적요인(정보품질/시스템품질/서비스품질)': { options: [{ name: '정보품질', scholar: 'DeLone & McLean(2003)', scale: 'IS Success Model', answer: 'DeLone & McLean(2003) 정보시스템 성공모형의 정보품질 차원입니다.' }, { name: '시스템품질', scholar: 'DeLone & McLean(2003)', scale: 'IS Success Model', answer: '정보시스템 성공모형의 시스템품질 차원입니다.' }, { name: '서비스품질', scholar: 'DeLone & McLean(2003)', scale: 'IS Success Model', answer: '정보시스템 성공모형의 서비스품질 차원입니다.' }], defaultSelected: [0,1,2] },
+    '리더 포용성': { options: [{ name: '리더 포용성(단일차원)', scholar: 'Carmeli et al.(2010)', scale: 'Leader Inclusiveness Scale', answer: 'Carmeli et al.(2010)의 리더 포용성 척도를 활용하여 리더가 구성원의 다양성을 수용하고 참여를 촉진하는 정도를 측정하였습니다.' }], defaultSelected: [0] },
+    '리더십(Malcolm Baldrige)': { options: [{ name: '리더십(Malcolm Baldrige)', scholar: 'MBNQA(2019)', scale: '말콤볼드리지 기준 1범주', answer: '말콤볼드리지 국가품질상(MBNQA)의 리더십 범주에 기반하여 조직 리더십의 수준을 측정하였습니다.' }], defaultSelected: [0] },
+    '사회적요인(SW관리체계/공유가치)': { options: [{ name: 'SW관리체계', scholar: 'DeLone & McLean(2003)', scale: 'IS Success Model 확장', answer: '소프트웨어 관리체계 측면의 사회적 요인입니다.' }, { name: '공유가치', scholar: 'Morgan & Hunt(1994)', scale: '관계마케팅 이론', answer: '조직 구성원 간 공유하는 가치 수준입니다.' }], defaultSelected: [0,1] },
+    '성격 특성': { options: [{ name: '외향성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Costa & McCrae(1992)의 Big Five 성격모형 중 외향성 차원입니다.' }, { name: '신경증', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 신경증(정서적 불안정성) 차원입니다.' }, { name: '개방성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 경험에 대한 개방성 차원입니다.' }, { name: '친화성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 친화성 차원입니다.' }, { name: '성실성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 성실성 차원입니다.' }], defaultSelected: [0,1,2,3,4] },
+    '성격특성(Big5)': { options: [{ name: '외향성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Costa & McCrae(1992)의 Big Five 성격모형 중 외향성 차원입니다.' }, { name: '신경증', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 신경증 차원입니다.' }, { name: '개방성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 개방성 차원입니다.' }, { name: '친화성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 친화성 차원입니다.' }, { name: '성실성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 성실성 차원입니다.' }], defaultSelected: [0,1,2,3,4] },
+    '일의 의미': { options: [{ name: '일의 의미(단일차원)', scholar: 'Steger et al.(2012)', scale: 'WAMI(Work as Meaning Inventory)', answer: 'Steger et al.(2012)의 WAMI 척도를 활용하여 직무에서 느끼는 의미와 목적의식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '자기결정성(개인특성)': { options: [{ name: '자율성', scholar: 'Deci & Ryan(2000)', scale: 'SDT(자기결정성이론)', answer: 'Deci & Ryan(2000)의 자기결정성이론 중 자율성 욕구입니다.' }, { name: '유능성', scholar: 'Deci & Ryan(2000)', scale: 'SDT(자기결정성이론)', answer: '자기결정성이론 중 유능성 욕구입니다.' }, { name: '관계성', scholar: 'Deci & Ryan(2000)', scale: 'SDT(자기결정성이론)', answer: '자기결정성이론 중 관계성 욕구입니다.' }], defaultSelected: [0,1,2] },
+    '자기표현(외면적/내면적)': { options: [{ name: '외면적 자기표현', scholar: 'Kim & Ko(2012)', scale: '자기표현 척도', answer: '외적으로 드러나는 자기표현(패션, 스타일 등)을 측정합니다.' }, { name: '내면적 자기표현', scholar: 'Kim & Ko(2012)', scale: '자기표현 척도', answer: '내적 가치나 신념의 표현을 측정합니다.' }], defaultSelected: [0,1] },
+    '조직후원인식(POS)': { options: [{ name: '조직후원인식(단일차원)', scholar: 'Eisenberger et al.(1986)', scale: 'SPOS(Survey of Perceived Organizational Support)', answer: 'Eisenberger et al.(1986)의 SPOS 척도를 활용하여 조직이 구성원의 기여를 인정하고 복지를 배려한다고 지각하는 정도를 측정하였습니다.' }], defaultSelected: [0] },
+    '팀 다양성': { options: [{ name: '팀 다양성(단일차원)', scholar: 'Harrison & Klein(2007)', scale: '다양성 척도', answer: 'Harrison & Klein(2007)의 다양성 유형론에 기반하여 팀 내 구성원의 인구통계적·기능적 다양성을 측정하였습니다.' }], defaultSelected: [0] },
+    '학습동기(ARCS)': { options: [{ name: '주의집중(Attention)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'Keller(1987)의 ARCS 모형 중 주의집중 차원입니다.' }, { name: '관련성(Relevance)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 관련성 차원입니다.' }, { name: '자신감(Confidence)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 자신감 차원입니다.' }, { name: '만족감(Satisfaction)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 만족감 차원입니다.' }], defaultSelected: [0,1,2,3] },
   };
 
   // 선택된 하위요인 상태 (변수명 → 인덱스 배열)
@@ -2413,6 +3023,7 @@ const PaperCompass = ({ onBack }) => {
     '오준환(2017)': { title: '중소 정보통신공사업체 현장근무자의 공정성인식과 직무스트레스, 직무소진 및 이직의도의 관계', source: 'SVU', type: '석사' },
     '심민선(2022)': { title: '대형 건설기업 종사자의 직무특성이 직무열의와 조직몰입을 통하여 혁신행동에 미치는 영향', source: 'SVU', type: '박사' },
     '안병찬(2023)': { title: '소프트웨어개발기업의 근무환경이 지속근무의도에 미치는 영향: 조직몰입의 매개효과와 직무만족의 조절효과', source: 'SVU', type: '석사' },
+    '안영노(2025)': { title: 'CEO브랜드이미지가 기업의 고객충성도에 미치는 영향과 CEO평판 및 기업평판의 매개효과', source: 'SVU', type: '박사' },
     '우성주(2021)': { title: '중소제조업 CEO의 진정성리더십이 신뢰를 통해 직무만족에 미치는 영향', source: 'SVU', type: '박사' },
     '최상구(2020)': { title: '직업능력개발훈련기관 교사의 분산적지도성이 직무만족과 교사임파워먼트에 따른 조직시민행동에 미치는 영향', source: 'SVU', type: '박사' },
     '최재영(2020)': { title: '중소건설기업 종사자의 성격5요인이 심리적 임파워먼트와 셀프리더십에 따른 조직시민행동에 미치는 영향', source: 'SVU', type: '박사' },
@@ -2429,6 +3040,7 @@ const PaperCompass = ({ onBack }) => {
   '김진태(2025)': { type: 'svu', title: '기계경비 기업 구성원의 직무특성, 보상인식과 성격특성이 조직 유효성에 미치는 영향 연구', author: '김진태', year: '2025', source: '서울벤처대학원대학교 박사학위논문' },
   '홍재일(2025)': { type: 'svu', title: '공공·민간 직업능력개발훈련기관 교사의 셀프리더십과 직무성과 관계에서 교사효능감과 혁신행동의 매개효과 연구', author: '홍재일', year: '2025', source: '서울벤처대학원대학교 박사학위논문' },
   '유병선(2025)': { type: 'svu', title: '소방분야 종사자의 직무특성과 조직몰입 관계에서 심리적주인의식과 직무만족의 매개효과 연구 : 소방엔지니어와 소방공무원의 비교', author: '유병선', year: '2025', source: '서울벤처대학원대학교 박사학위논문' },
+  '안영노(2025)': { type: 'svu', title: 'CEO브랜드이미지가 기업의 고객충성도에 미치는 영향과 CEO평판 및 기업평판의 매개효과', author: '안영노', year: '2025', source: '서울벤처대학원대학교 박사학위논문', iv: 'CEO브랜드이미지', mv: 'CEO평판, 기업평판', dv: '고객충성도', subject: '일반인(소비자+사업가)', sample: '440명', method: '다중회귀분석, Baron&Kenny 매개효과', result: 'CEO브랜드이미지→고객충성도 부분채택(자질β=.230 성품β=.293 외적조건β=.166 유의), CEO평판(β=.652) 기업평판(β=.782)→고객충성도 채택, CEO평판 매개효과 부분채택(자질 부분매개 성품 완전매개), 기업평판 매개효과 부분채택(자질·성품 완전매개 외적조건 부분매개)', industry: '전체' },
   '남상민(2025)': { type: 'journal', title: '독립형 베이커리카페의 고객경험가치가 고객충성도에 미치는 영향과 고객만족, 브랜드 신뢰의 매개효과 분석', author: '남상민', year: '2025', source: 'Studies on Humanities and Social Science' },
   '김종길(2025)': { type: 'svu', title: '중소 소방기업의 보상공정성과 조직유효성 관계에서  보상만족 매개효과 연구', author: '김종길', year: '2025', source: '서울벤처대학원대학교 박사학위논문' },
   '박종석(2025)': { type: 'svu', title: '한국폴리텍대학 산업설비 교수의 변혁적 리더십이 학습성과에 미치는 영향 : 학위과정과 비학위과정 비교 분석', author: '박종석', year: '2025', source: '서울벤처대학원대학교 박사학위논문' },
@@ -2746,6 +3358,14 @@ const PaperCompass = ({ onBack }) => {
     '혁신과업행동': ['정용희(2024)'],
     '감성지능': ['김태학(2023)', '도철구(2019)'],
     '학습지원환경': ['최민석(2024)'],
+    'CEO브랜드이미지': ['안영노(2025)'],
+    'CEO평판': ['안영노(2025)'],
+    '기업평판': ['안영노(2025)'],
+    '고객충성도': ['안영노(2025)'],
+    '안영노(2025)_CEO브랜드이미지': { scholar: '이경렬(2004), 최현정(2023)', scale: '연구자 재구성 24문항', items: 'CEO는 사업의 추진과 운영에 집중한다 / CEO는 재무 상태를 잘 관리한다 / CEO는 해내는 능력(결과)을 중요시한다 / CEO는 조직을 경영하는 역량이 뛰어나다 / CEO는 인화와 조직 융화 능력이 뛰어나다 외 19항목' },
+    '안영노(2025)_CEO평판': { scholar: 'Burson-Marsteller(2003), 문효진(2004), 박영실(2024)', scale: '연구자 재구성 12문항', items: 'CEO는 기업목표를 위한 명확한 비전을 제시한다 / CEO는 제시한 정책과 약속을 성실히 이행할 것이라고 생각된다 / CEO는 위기관리 능력이 뛰어나다 외 9항목' },
+    '안영노(2025)_기업평판': { scholar: 'Fombrun(1996), 문효진(2004), 최현정(2023)', scale: '연구자 재구성 11문항', items: '이 기업은 미래에 대한 명확한 비전을 제시하고 있다 / 이 기업은 가격에 걸맞는 제품과 서비스를 생산하고 있다 / 이 기업은 수익성이 높은 기업이다 외 8항목' },
+    '안영노(2025)_고객충성도': { scholar: 'Tellis(1988), Chadhuri&Holbrook(2001), 최현정(2023)', scale: '연구자 재구성 8문항', items: '이 기업의 제품을 다음 번에도 재구매하고 반복 구매할 것이다 / 이 기업에서 생산되는 제품은 무조건 구입하고 지속적으로 이용할 것이다 외 6항목' },
   };
 
 
@@ -2816,6 +3436,7 @@ const PaperCompass = ({ onBack }) => {
       "심민섭(2018)": "건설업",
       "안병찬(2022)": "IT/SW",
       "안병찬(2025)": "IT/SW",
+      "안영노(2025)": "기타",
       "어영미(2018)": "공공/교육",
       "엄재규(2016)": "제조업",
       "오희영(2025)": "서비스업",
@@ -3065,6 +3686,7 @@ const PaperCompass = ({ onBack }) => {
     '안병찬(2024)': 'SVU 논문 원본/소프트웨어개발기업의 근무환경이 지속근무의도에 미치는 영향 연구 안병찬 2022.pdf',
     '안병찬(2025)': 'SVU 논문 원본/IoT 기반 실시간 좌식 행동 교정 시스템 개발에 관한 연구 안병찬 2025.pdf',
     '안병찬(2026)': 'SVU 논문 원본/IoT 기반 실시간 좌식 행동 교정 시스템 개발에 관한 연구 안병찬 2025.pdf',
+    '안영노(2025)': 'SVU 논문 원본/CEO브랜드이미지가 기업의 고객충성도에 미치는 영향과 CEO평판 및 기업평판의 매개효과 연 안영노 2025.pdf',
     '안상준(2020)': '타학교 논문 원본/19.조직시민행동이 임파워먼트를 매개로 직무만족에 미치는 영향.pdf',
     '안정원(2016)': '인용수 논문 원본/2.조직몰입 구성개념의 개념화와 타당화 은행 정규직 종사자 중심.pdf',
     '안정원, 이순묵(2015)': '인용수 논문 원본/3.조직몰입 3요소 모형의 내적구조 검토 탐색적 구조방정식 모형(ESEM) 적용.pdf',
@@ -4798,6 +5420,85 @@ const PaperCompass = ({ onBack }) => {
         '나는 혁신적인 아이디어의 실용적 가치를 꼼꼼하게 따진다',
       ],
     },
+    'CEO브랜드이미지': {
+      '능력': [
+        'CEO는 사업의 추진과 운영에 집중한다',
+        'CEO는 재무 상태를 잘 관리한다',
+        'CEO는 해내는 능력(결과)을 중요시한다',
+        'CEO는 조직을 경영하는 능력이 뛰어나다',
+        'CEO는 인화와 조직 융화 능력이 뛰어나다',
+        'CEO는 조직 커뮤니케이션 능력이 뛰어나다',
+      ],
+      '자질': [
+        'CEO는 도전적이다',
+        'CEO는 카리스마 기질의 매력이 있다',
+        'CEO는 사람을 이끄는 지도력이 있다',
+        'CEO는 사업 추진에서 결단력이 있다',
+        'CEO는 비전이 탁월하다',
+      ],
+      '성품': [
+        'CEO는 정직하다',
+        'CEO는 다른 사람을 존중한다',
+        'CEO는 성실하게 일한다',
+        'CEO는 청렴하게 관리한다',
+        'CEO는 신뢰성이 강하다',
+      ],
+      '커뮤니케이션': [
+        'CEO는 미디어 대응과 인터뷰에 능숙하다',
+        'CEO는 언변이 좋고 스피치를 잘한다',
+        'CEO는 미디어를 활용한 소통을 잘한다',
+        'CEO는 대외 교섭 능력이 우수하다',
+      ],
+      '외적조건': [
+        'CEO는 경력 및 배경이 뛰어나다',
+        'CEO는 외모를 잘 관리한다',
+        'CEO는 인상이 좋고 호감이 간다',
+        'CEO는 사교적이고 사회참여 활동을 잘 한다',
+      ],
+    },
+    'CEO평판': {
+      'CEO평판': [
+        'CEO는 기업목표를 위한 명확한 비전을 제시한다',
+        'CEO는 제시한 정책과 약속을 성실히 이행할 것이라고 생각된다',
+        'CEO는 위기관리 능력이 우수하다',
+        'CEO는 위기에 처했을 때 잘 극복할 것이다',
+        'CEO는 믿음이 간다',
+        'CEO는 고객을 먼저 생각한다',
+        'CEO는 고객의 불만에 귀를 기울인다',
+        'CEO는 고객에게 회사의 비전과 목표를 명확하게 이해시키고 소통한다',
+        'CEO는 전략적 비전에 대해 조직에 잘 전달하고 이해시킨다',
+        'CEO는 고급 인력을 끌어들이는 매력이 있다',
+        'CEO의 능력 위주로 직원을 대한다',
+        'CEO는 직원의 동기부여 및 사기를 높이는 커뮤니케이션 능력이 있다',
+      ],
+    },
+    '기업평판': {
+      '기업평판': [
+        '이 기업은 미래에 대한 명확한 비전을 제시하고 있다',
+        '이 기업은 가격에 걸맞는 제품과 서비스를 생산하고 있다',
+        '이 기업은 수익성이 높은 기업이다',
+        '이 기업은 혁신적인 제품과 서비스를 개발한다',
+        '이 기업은 인간의 가치를 존중하고 사회기여에 관심이 있다',
+        '이 기업은 업계에서 뛰어난 리더십을 갖추고 있다',
+        '이 기업은 좋은 느낌을 준다',
+        '이 기업은 향후 성장 가능성이 높다',
+        '이 기업은 경영이 원활하다',
+        '이 기업은 우수한 직원을 보유한 회사라고 생각된다',
+        '이 기업은 고객만족 경영이 잘 되고 있다',
+      ],
+    },
+    '고객충성도': {
+      '고객충성도': [
+        '이 기업의 제품을 다음 번에도 재구매하고 반복적으로 구매할 것이다',
+        '이 기업에서 생산되는 제품은 무조건 구입하고 지속적으로 이용할 것이다',
+        '이 기업 제품을 구매하는 것을 우선적으로 고려하고 출시될 신제품에 기꺼이 지불할 것이다',
+        '앞으로도 이 기업에서 어떤 제품이 시판되는지 관심을 갖고 주목할 것이다',
+        '이 기업에 애착이 간다',
+        '이 기업에 친밀감을 느낀다',
+        '이 기업 브랜드를 타 브랜드보다 선호한다',
+        '이 기업 브랜드에 대해 주변에 추천할 의사가 있고 타인에게 구전할 의사가 있다',
+      ],
+    },
   };
 
   // 인구통계학적 문항: customDemographics state로 관리
@@ -5225,6 +5926,7 @@ const PaperCompass = ({ onBack }) => {
     '우성주(2020)': { subject: '중소제조업 CEO의 진정성리더십이 신뢰를 통해 직무만족에 미치는 영향', sample: '중소제조업 구성원 317명', region: '국내', iv: '진정성리더십', mv: '신뢰', dv: '직무만족', result: '진정성리더십 → 신뢰 → 직무만족 부분 지지: (+)1, (-)1' },
     '황남연(2020)': { subject: '금형·성형 제조기업 구성원이 지각한 상사의 변혁적리더쉽이 조직몰입에 미치는 영향', sample: '금형·성형 제조기업 구성원 275부 중 260부 유효', region: '국내', iv: '변혁적리더십', mv: '조직문화', dv: '조직몰입', result: '변혁적리더십 → 조직문화 → 조직몰입 부분 지지: (+)28, (-)14, n.s.1, 매개효과 확인' },
     '안병찬(2022)': { subject: '소프트웨어개발기업의 근무환경이 지속근무의도에 미치는 영향 연구', sample: '소프트웨어 개발회사 근무자 220명', region: '국내', iv: '근무환경', mv: '조직몰입', dv: '지속근무의도', result: '근무환경 → 조직몰입 → 지속근무의도 대체로 (+), 일부 (-), 조직몰입의 매개효과 확인' },
+    '안영노(2025)': { subject: 'CEO브랜드이미지가 기업의 고객충성도에 미치는 영향과 CEO평판 및 기업평판의 매개효과', sample: '일반인(소비자+사업가) 440명', region: '국내', iv: 'CEO브랜드이미지', mv: 'CEO평판,기업평판', dv: '고객충성도', result: 'CEO브랜드이미지→고객충성도 부분채택(자질β=.230 성품β=.293 외적조건β=.166 유의), CEO평판(β=.652) 기업평판(β=.782)→고객충성도 채택, CEO평판 매개효과 부분채택(자질 부분매개 성품 완전매개), 기업평판 매개효과 부분채택(자질·성품 완전매개 외적조건 부분매개)' },
     '황준호(2014)': { subject: 'U-City환경의 U-교통지능형시스템품질이 지각된 유용성과 혁신성을 통해 이용자 만족...', sample: 'U-City 교통시스템 이용자 450부 중 345부 유효', region: '국내', iv: 'U-교통시스템품질', mv: '지각된유용성,혁신성', dv: '이용자만족도', result: 'U-교통시스템품질 → 지각된유용성 등 → 이용자만족도 (+), 지각된유용성/혁신성의 매개효과 확인' },
     '정수형(2018)': { subject: '전시문화디자인기업 구성원의 마음챙김이 직무성과에 미치는 영향', sample: '수도권 전시문화디자인기업 구성원 334부 중 319부 유효', region: '국내', iv: '마음챙김', mv: '직무만족,자기효능감', dv: '직무성과', result: '마음챙김 → 직무만족 등 → 직무성과 부분 지지: (+)6, n.s.3' },
     '김태섭(2020)': { subject: '다중사용자 온라인 전투게임의 게임특성과 자기효능감이 몰입과 게임만족도를 통해 게임충성...', sample: '온라인 전투게임 이용자 250명', region: '국내', iv: '게임특성,자기효능감', mv: '몰입,게임만족도', dv: '게임충성도', result: '게임특성 등 → 몰입 등 → 게임충성도 부분 지지: (+)11, (-)1, n.s.3, 조절효과 확인' },
@@ -6053,22 +6755,49 @@ const PaperCompass = ({ onBack }) => {
     const dvCount = selectedDVs.length;
     const dvTotalH = dvCount > 0 ? dvCount * boxH + (dvCount - 1) * dvGap + dvSubsList.reduce((s, arr) => s + (arr.length > 0 ? arr.length * 13 + 6 : 0), 0) : boxH;
     const medGap = 24;
-    const medTotalH = hasMeds ? medCount * medBoxH + (medCount - 1) * medGap + medSubs.reduce((s, arr) => s + (arr.length > 0 ? arr.length * 13 + 6 : 0), 0) : 0;
+    const medSubHeights = medSubs.map(arr => arr.length > 0 ? arr.length * 13 + 6 : 0);
+
+    // 다이아몬드 레이아웃: 매개변수 위/아래 분산 배치
+    const diamondGap = hasMeds ? 30 : 0; // IV/DV 중심에서 매개변수까지 최소 간격
+    const bracketPad = hasMeds ? 30 : 0; // ㄷ자 매개경로선 공간
+
+    // 위/아래 매개변수 높이 계산
+    let topMedTotalH = 0, botMedTotalH = 0;
+    if (hasMeds) {
+      let topIdx = 0, botIdx = 0;
+      meds.forEach((m, i) => {
+        const mh = medBoxH + medSubHeights[i];
+        if (medCount === 1 || i % 2 === 0) {
+          topMedTotalH += mh + (topIdx > 0 ? medGap : 0);
+          topIdx++;
+        } else {
+          botMedTotalH += mh + (botIdx > 0 ? medGap : 0);
+          botIdx++;
+        }
+      });
+    }
+
+    // 전체 높이: 위쪽(bracket + 위 매개변수 + gap) + IV/DV + 아래쪽(gap + 아래 매개변수 + bracket)
+    const aboveCenter = Math.max(boxH / 2 + ivSubH, diamondGap + topMedTotalH + bracketPad, dvTotalH / 2);
+    const belowCenter = Math.max(boxH / 2 + ivSubH, diamondGap + botMedTotalH + bracketPad, dvTotalH / 2);
+    const contentH = aboveCenter + belowCenter;
 
     const topPad = 50;
-    const contentH = Math.max(boxH + ivSubH, medTotalH, dvTotalH);
-    const svgH = contentH + topPad + 100;
+    let svgH = contentH + topPad + 60;
+
+    // 기준 중심선 Y (IV와 DV의 수직 중심이 만나는 지점)
+    const centerY = topPad + aboveCenter;
 
     // Positions
     const ivX = 40;
-    const ivY = topPad + (contentH - boxH - ivSubH) / 2;
+    const ivY = centerY - boxH / 2;
     const dvX = svgW - boxW - 40;
-    const dvY = topPad + (contentH - boxH - dvSubH) / 2;
+    const dvY = centerY - boxH / 2;
 
-    // DV positions (multiple DVs stacked vertically)
+    // DV positions (multiple DVs stacked vertically, centered on centerY)
     let dvPositions = [];
     if (dvCount > 0) {
-      let dvStartY = topPad + (contentH - dvTotalH) / 2;
+      let dvStartY = centerY - dvTotalH / 2;
       selectedDVs.forEach((dv, i) => {
         const dsubs = dvSubsList[i] || [];
         dvPositions.push({ x: dvX, y: dvStartY, name: dv, subs: dsubs });
@@ -6076,26 +6805,26 @@ const PaperCompass = ({ onBack }) => {
       });
     }
 
-    // Mediator positions (centered vertically)
+    // Mediator positions (다이아몬드 배치 - 논문 스타일)
     const medX = (svgW - medBoxW) / 2;
     let medPositions = [];
     if (hasMeds) {
-      // Calculate total block height for mediators including sub-factors
-      let totalMedBlock = 0;
-      meds.forEach((m, i) => {
-        totalMedBlock += medBoxH;
-        const msubs = medSubs[i];
-        if (msubs.length > 0) totalMedBlock += msubs.length * 13 + 6;
-        if (i < medCount - 1) totalMedBlock += medGap;
-      });
-      let curY = topPad + (contentH - totalMedBlock) / 2;
-      meds.forEach((m, i) => {
-        medPositions.push({ x: medX, y: curY });
-        curY += medBoxH;
-        const msubs = medSubs[i];
-        if (msubs.length > 0) curY += msubs.length * 13 + 6;
-        if (i < medCount - 1) curY += medGap;
-      });
+      if (medCount === 1) {
+        // 1개: 위에 배치
+        medPositions.push({ x: medX, y: centerY - diamondGap - medBoxH });
+      } else {
+        // 2+개: 짝수 인덱스 위, 홀수 인덱스 아래 (다이아몬드)
+        let topOff = 0, botOff = 0;
+        meds.forEach((m, i) => {
+          if (i % 2 === 0) {
+            medPositions.push({ x: medX, y: centerY - diamondGap - medBoxH - topOff });
+            topOff += medBoxH + medSubHeights[i] + medGap;
+          } else {
+            medPositions.push({ x: medX, y: centerY + diamondGap + botOff });
+            botOff += medBoxH + medSubHeights[i] + medGap;
+          }
+        });
+      }
     }
 
     // Arrow helper
@@ -6139,16 +6868,25 @@ const PaperCompass = ({ onBack }) => {
         });
       });
 
-      // IV → DV direct (dashed, bottom)
-      const lastDvp = dvPositions[dvPositions.length - 1] || { x: dvX, y: dvY, subs: [] };
-      const lastDvSubH = lastDvp.subs ? lastDvp.subs.length * 13 + 6 : 0;
-      const directY = Math.max(ivY + boxH + ivSubH, lastDvp.y + boxH + lastDvSubH, ...medPositions.map((p, i) => p.y + medBoxH + (medSubs[i].length > 0 ? medSubs[i].length * 13 + 6 : 0))) + 30;
-      const directFromX = ivX + boxW / 2;
-      const directToX = dvX + boxW / 2;
-      const firstDvBottom = (dvPositions[0] || { y: dvY }).y + boxH + (dvSubsList[0] || []).length * 13 + 8;
-      arrows.push(
-        React.createElement("g", {key: "direct-path"}, React.createElement("path", {d: `M ${directFromX} ${ivY + boxH + ivSubH + 5} L ${directFromX} ${directY} L ${directToX} ${directY} L ${directToX} ${firstDvBottom + 5}`, fill: "none", stroke: "#666", strokeWidth: 1.5, strokeDasharray: "6,4"}), React.createElement("polygon", {points: `${directToX},${firstDvBottom + 5} ${directToX - 5},${firstDvBottom + 15} ${directToX + 5},${firstDvBottom + 15}`, fill: "#666"}), React.createElement("text", {x: (directFromX + directToX) / 2, y: directY - 6, textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#666"}, dvCount > 1 ? ` H1~H${dvCount} ` : " H1 "), React.createElement("text", {x: (directFromX + directToX) / 2, y: directY + 14, textAnchor: "middle", fontSize: 9, fill: "#999"}, " (직접효과) "))
-      );
+      // IV → DV direct (dashed, 논문 스타일 직선 화살표)
+      dvPositions.forEach((dvp, di) => {
+        const dFromX = ivX + boxW;
+        const dFromY = ivY + boxH / 2;
+        const dToX = dvp.x;
+        const dToY = dvp.y + boxH / 2;
+        const dMidX = (dFromX + dToX) / 2;
+        const dMidY = (dFromY + dToY) / 2;
+        const dAngle = Math.atan2(dToY - dFromY, dToX - dFromX);
+        const dHeadLen = 8;
+        const hLabel = dvCount > 1 ? `H${di + 1}` : 'H1';
+        arrows.push(
+          React.createElement("g", {key: `direct-path-${di}`},
+            React.createElement("line", {x1: dFromX, y1: dFromY, x2: dToX, y2: dToY, stroke: "#666", strokeWidth: 1.5, strokeDasharray: "6,4"}),
+            React.createElement("polygon", {points: `${dToX},${dToY} ${dToX - dHeadLen * Math.cos(dAngle - 0.4)},${dToY - dHeadLen * Math.sin(dAngle - 0.4)} ${dToX - dHeadLen * Math.cos(dAngle + 0.4)},${dToY - dHeadLen * Math.sin(dAngle + 0.4)}`, fill: "#666"}),
+            React.createElement("text", {x: dMidX, y: dMidY - 6, textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#666"}, hLabel)
+          )
+        );
+      });
     } else {
       // No mediators: IV → each DV direct
       dvPositions.forEach((dvp, di) => {
@@ -6156,29 +6894,61 @@ const PaperCompass = ({ onBack }) => {
       });
     }
 
-    // Mediation hypothesis labels (매개효과 가설번호 표시)
+    // Mediation bracket lines (매개효과 ㄷ자 경로선 - 논문 스타일)
     if (hasMeds) {
-      // 매개가설 시작 번호: IV→DV(dvCount) + IV→MV(medCount) + MV→DV(medCount*dvCount)
       const medHypStart = dvCount + medCount + medCount * dvCount + 1;
+      const firstDvp = dvPositions[0] || { x: dvX, y: dvY };
+      const lastDvp = dvPositions[dvPositions.length - 1] || { x: dvX, y: dvY };
+      const lastDvSubH = (dvSubsList[dvPositions.length - 1] || []).length > 0 ? (dvSubsList[dvPositions.length - 1] || []).length * 13 + 8 : 0;
+
       meds.forEach((med, i) => {
-        const mp = medPositions[i];
-        // 각 매개변수의 가설 번호 계산 (DV가 여러개면 여러 가설)
         const hNums = [];
         for (let j = 0; j < dvCount; j++) {
           hNums.push(medHypStart + j * medCount + i);
         }
         const hLabel = hNums.length === 1 ? `H${hNums[0]}` : hNums.map(n => `H${n}`).join(',');
-        arrows.push(
-          React.createElement("text", {
-            key: `med-label-${i}`,
-            x: mp.x + medBoxW / 2,
-            y: mp.y - 8,
-            textAnchor: "middle",
-            fontSize: 10,
-            fontWeight: "bold",
-            fill: "#7B1FA2"
-          }, `${hLabel} (매개)`)
-        );
+
+        const mp = medPositions[i];
+        const isAbove = mp.y + medBoxH / 2 < centerY;
+
+        if (isAbove) {
+          // ⊓ 형태: IV 위 → 가로선 → DV 위
+          const bracketY = mp.y - 15;
+          const leftX = ivX + boxW * 0.35;
+          const rightX = firstDvp.x + boxW * 0.65;
+          arrows.push(
+            React.createElement("g", {key: `med-bracket-${i}`},
+              React.createElement("path", {
+                d: `M ${leftX} ${ivY} L ${leftX} ${bracketY} L ${rightX} ${bracketY} L ${rightX} ${firstDvp.y}`,
+                fill: "none", stroke: "#7B1FA2", strokeWidth: 1.2
+              }),
+              React.createElement("text", {
+                x: (leftX + rightX) / 2, y: bracketY - 6,
+                textAnchor: "middle", fontSize: 10, fontWeight: "bold", fill: "#7B1FA2"
+              }, `${hLabel} (매개)`)
+            )
+          );
+        } else {
+          // ⊔ 형태: IV 아래 → 가로선 → DV 아래
+          const mSubH = medSubHeights[i];
+          const bracketY = mp.y + medBoxH + mSubH + 15;
+          const leftX = ivX + boxW * 0.35;
+          const rightX = lastDvp.x + boxW * 0.65;
+          const ivBottom = ivY + boxH + ivSubH;
+          const dvBottom = lastDvp.y + boxH + lastDvSubH;
+          arrows.push(
+            React.createElement("g", {key: `med-bracket-${i}`},
+              React.createElement("path", {
+                d: `M ${leftX} ${ivBottom} L ${leftX} ${bracketY} L ${rightX} ${bracketY} L ${rightX} ${dvBottom}`,
+                fill: "none", stroke: "#7B1FA2", strokeWidth: 1.2
+              }),
+              React.createElement("text", {
+                x: (leftX + rightX) / 2, y: bracketY + 14,
+                textAnchor: "middle", fontSize: 10, fontWeight: "bold", fill: "#7B1FA2"
+              }, `${hLabel} (매개)`)
+            )
+          );
+        }
       });
     }
 
@@ -6272,7 +7042,29 @@ const PaperCompass = ({ onBack }) => {
     return merged;
   };
   const getDVs = () => {
-    const base = dataSource === 'svu' ? (svuDVMapping[selectedIV] || svuDefaultDVs) : (allDVMapping[selectedIV] || allDefaultDVs);
+    const manualBase = dataSource === 'svu' ? svuDVMapping[selectedIV] : allDVMapping[selectedIV];
+    // researchPairDB에서 IV→* 경로 자동 탐색
+    const autoFromPairDB = [];
+    if (selectedIV) {
+      const manualNames = new Set((manualBase || []).map(v => v.name));
+      for (const pairKey of Object.keys(researchPairDB)) {
+        const parts = pairKey.split('→');
+        if (parts.length === 2 && parts[0] === selectedIV && !manualNames.has(parts[1])) {
+          const pair = researchPairDB[pairKey];
+          const dvName = parts[1];
+          const svuCount = (pair.sources?.match(/SVU/g) || []).length;
+          const extCount = Math.max(0, pair.count - svuCount);
+          if (dataSource === 'svu') {
+            if (svuCount > 0) autoFromPairDB.push({ name: dvName, count: svuCount, aiRecommended: true });
+          } else {
+            autoFromPairDB.push({ name: dvName, svuCount, extCount, total: pair.count, aiRecommended: true });
+          }
+        }
+      }
+      autoFromPairDB.sort((a, b) => (b.total || b.count || 0) - (a.total || a.count || 0));
+    }
+    const defaultDVs = dataSource === 'svu' ? svuDefaultDVs : allDefaultDVs;
+    const base = manualBase ? [...manualBase, ...autoFromPairDB] : (autoFromPairDB.length > 0 ? autoFromPairDB : defaultDVs);
     // 사용자 DB에서 DV 병합 (기존 변수 카운트 합산 + 신규 변수 추가)
     const userData = getUserDBVariableData();
     const userDVs = userData.dvMapping[selectedIV] || [];
@@ -7196,12 +7988,12 @@ const PaperCompass = ({ onBack }) => {
                   ...(dv.extCount > 0 ? [{ label: `외부 ${dv.extCount}`, color: '#43A047' }] : []),
                   ...(dv.aiRecommended ? [{ label: 'AI추천', color: '#9333EA', type: 'tag' }] : []),
                   ...(dv.userDB ? [{ label: '📂 사용자DB', color: '#6B3FA0' }] : []),
-                ], extraRight: ivToDvResult.exists ? (
+                ], extraRight: React.createElement(React.Fragment, null, ivToDvResult.exists ? (
                   React.createElement("span", {className: "px-1.5 py-0.5 rounded text-xs font-bold", style: {
                     backgroundColor: ivToDvResult.verdict === 'strong' ? '#E8F5E9' : '#E3F2FD',
                     color: ivToDvResult.verdict === 'strong' ? '#2E7D32' : '#1565C0',
                   }}, ivToDvResult.verdict === 'strong' ? '✅' : '🔵', ivToDvResult.count, "편 ")
-                ) : null})
+                ) : null, !subFactorTheory[dv.name] && React.createElement("span", {className: "px-1.5 py-0.5 rounded text-xs", style: { backgroundColor: '#FFF3E0', color: '#E65100', border: '1px solid #FFB74D', marginLeft: '4px' }, title: '이 변수는 측정도구(설문항)가 등록되어 있지 않아 Step 7에서 직접 구성해야 합니다.'}, "⚠설문항 미등록"))})
             );
           })), React.createElement("div", {className: "mt-6 p-5 bg-white rounded-lg border-2 border-dashed border-gray-300"}, React.createElement("h4", {className: "font-semibold text-sm mb-2", style: { color: '#1F3864' }}, "직접 입력"), React.createElement("div", {className: "flex gap-2"}, React.createElement("input", {type: "text", value: customDVInput, onChange: e => setCustomDVInput(e.target.value), placeholder: "예: 직무성과, 교육성과, 고객만족...", className: "flex-1 px-3 py-2 border-2 border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-400", onKeyDown: e => {
                 if (e.key === 'Enter' && customDVInput.trim()) { if (!selectedDVs.includes(customDVInput.trim())) setSelectedDVs([...selectedDVs, customDVInput.trim()]); setCustomDVInput(''); }
@@ -7265,8 +8057,8 @@ const PaperCompass = ({ onBack }) => {
                     ...(med.extCount > 0 ? [{ label: `외부 ${med.extCount}`, color: '#43A047' }] : []),
                     ...(med.aiRecommended ? [{ label: 'AI추천', color: '#9333EA', type: 'tag' }] : []),
                     ...(med.userDB ? [{ label: '📂 사용자DB', color: '#6B3FA0' }] : []),
-                  ], extraRight: 
-                    React.createElement("span", {className: "px-2 py-0.5 rounded text-xs font-bold cursor-pointer", style: { backgroundColor: v.bgColor, color: v.color, border: `1px solid ${v.color}` }, onClick: (e) => { e.stopPropagation(); setShowVerification(showVerification === med.name ? null : med.name); }}, v.label)
+                  ], extraRight:
+                    React.createElement(React.Fragment, null, React.createElement("span", {className: "px-2 py-0.5 rounded text-xs font-bold cursor-pointer", style: { backgroundColor: v.bgColor, color: v.color, border: `1px solid ${v.color}` }, onClick: (e) => { e.stopPropagation(); setShowVerification(showVerification === med.name ? null : med.name); }}, v.label), !subFactorTheory[med.name] && v.overall !== 'impossible' && React.createElement("span", {className: "px-1.5 py-0.5 rounded text-xs", style: { backgroundColor: '#FFF3E0', color: '#E65100', border: '1px solid #FFB74D', marginLeft: '4px' }, title: '이 변수는 측정도구(설문항)가 등록되어 있지 않아 Step 7에서 직접 구성해야 합니다.'}, "⚠설문항 미등록"))
                   }), showVerification === med.name && React.createElement(VerificationDetail, {mediatorName: med.name}))
             );
           })), React.createElement("div", {className: "mt-6 p-5 bg-white rounded-lg border-2 border-dashed border-gray-300"}, React.createElement("h4", {className: "font-semibold text-sm mb-2", style: { color: '#1F3864' }}, "직접 입력"), React.createElement("div", {className: "flex gap-2"}, React.createElement("input", {type: "text", value: customMediatorInput, onChange: e => setCustomMediatorInput(e.target.value), placeholder: "예: 교육만족, 직무자율성, 심리적 자본...", className: "flex-1 px-3 py-2 border-2 border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-400", onKeyDown: e => {
@@ -7479,12 +8271,21 @@ const PaperCompass = ({ onBack }) => {
             const defenseAnswer = getDefenseAnswer(v);
             const hasTheory = !!theory;
 
+            // 산업 매칭 유형 계산
+            const _indFilter = selectedIndustry !== '전체' ? getIndustryFilteredSvuPapers(v) : null;
+            const _simGroups = selectedIndustry !== '전체' ? (similarIndustryGroups[selectedIndustry] || []).join(', ') : '';
+            const _indMatchBadge = _indFilter ? (
+              _indFilter.matchType === '동일' ? { label: `★동일 ${selectedIndustry} ${_indFilter.matched.length}편`, bg: '#E8F5E9', color: '#1B5E20', tip: `${selectedIndustry} 산업군 선배논문 ${_indFilter.matched.length}편의 측정도구를 우선 표시 중` } :
+              _indFilter.matchType === '유사' ? { label: `☆유사 산업군 ${_indFilter.matched.length}편`, bg: '#FFF8E1', color: '#F57F17', tip: `${selectedIndustry} 동일 산업군 논문 없음 → 유사 산업군(${_simGroups}) ${_indFilter.matched.length}편 적용 중` } :
+              { label: '범용 (전체 표시)', bg: '#F5F5F5', color: '#757575', tip: `${selectedIndustry} 및 유사 산업군(${_simGroups}) 모두 해당 없음 → 전체 ${_indFilter.total}편 표시` }
+            ) : null;
+
             return (
-              React.createElement("div", {key: v, className: "border rounded-lg overflow-hidden", style: { borderColor: hasTheory ? '#BBDEFB' : '#FFE082' }}, React.createElement("div", {className: "flex items-center justify-between p-3 cursor-pointer transition-all", style: { backgroundColor: isExpanded ? '#E3F2FD' : '#FAFAFA' }, onClick: () => setExpandedSubFactor(isExpanded ? null : v)}, React.createElement("div", {className: "flex items-center gap-2"}, React.createElement("span", {className: "font-semibold text-gray-800"}, v), hasTheory ? (
+              React.createElement("div", {key: v, className: "border rounded-lg overflow-hidden", style: { borderColor: hasTheory ? '#BBDEFB' : '#FFE082' }}, React.createElement("div", {className: "flex items-center justify-between p-3 cursor-pointer transition-all", style: { backgroundColor: isExpanded ? '#E3F2FD' : '#FAFAFA' }, onClick: () => setExpandedSubFactor(isExpanded ? null : v)}, React.createElement("div", {className: "flex items-center gap-2 flex-wrap"}, React.createElement("span", {className: "font-semibold text-gray-800"}, v), hasTheory ? (
                       React.createElement("span", {className: "px-2 py-0.5 rounded-full text-xs font-medium", style: { backgroundColor: '#E8F5E9', color: '#2E7D32' }}, " 이론 근거 있음 ")
                     ) : (
                       React.createElement("span", {className: "px-2 py-0.5 rounded-full text-xs font-medium", style: { backgroundColor: '#FFF3E0', color: '#E65100' }}, " 커스텀 변수 ")
-                    )), React.createElement("div", {className: "flex items-center gap-3"}, subs && React.createElement("span", {className: "text-xs text-gray-500 hidden sm:inline"}, subs.join(', ')), React.createElement("span", {className: "text-sm font-medium", style: { color: '#2E75B6' }}, getAutoSurveyItemsByFactor(v).reduce((sum, f) => sum + f.items.length, 0), "문항"), React.createElement(ChevronRight, {size: 16, className: `text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`}))), isExpanded && theory && (
+                    ), _indMatchBadge && React.createElement("span", {className: "px-2 py-0.5 rounded-full text-xs font-medium", style: { backgroundColor: _indMatchBadge.bg, color: _indMatchBadge.color, cursor: 'help' }, title: _indMatchBadge.tip}, _indMatchBadge.label)), React.createElement("div", {className: "flex items-center gap-3"}, subs && React.createElement("span", {className: "text-xs text-gray-500 hidden sm:inline"}, subs.join(', ')), React.createElement("span", {className: "text-sm font-medium", style: { color: '#2E75B6' }}, getAutoSurveyItemsByFactor(v).reduce((sum, f) => sum + f.items.length, 0), "문항"), React.createElement(ChevronRight, {size: 16, className: `text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`}))), isExpanded && theory && (
                   React.createElement("div", {className: "p-4 border-t", style: { borderColor: '#E3F2FD', backgroundColor: '#FAFBFF' }}, React.createElement("div", {className: "mb-4"}, React.createElement("div", {className: "flex items-center gap-2 mb-2"}, React.createElement("span", {className: "text-xs font-bold", style: { color: '#1565C0' }}, "✨ 추천 하위요인"), React.createElement("span", {className: "text-xs text-gray-400"}, "(선행논문 기반 — 기본 선택됨)"), React.createElement("span", {className: "ml-auto text-xs", style: { color: '#1565C0' }}, (() => {
                             const cur = selectedSubFactors[v] || theory.defaultSelected;
                             return `${cur.length}개 선택 / 전체 ${theory.options.length}개`;
@@ -11116,7 +11917,7 @@ setTimeout(() => { updateDBStats(); window.dispatchEvent(new Event('paperDB_upda
 
 
 // ── 내장 DB (user_paper_db.json 데이터 압축 내장 — fetch 불필요) ──
-const _embeddedPaperDB = [{"t": "간호사의 조직공정성, 공감피로 및 공감만족이 직무배태성에 미치는 영향", "a": "하희정", "y": "2024", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "공감피로", "r": "독립"}, {"n": "공감만족", "r": "독립"}, {"n": "직무배태성", "r": "종속"}], "si": [], "j": "청주대학교 석사학위논문"}, {"t": "요양병원 간호사의 조직공정성, 직무만족도, 간호근무환경이 직무배태성에 미치는 영향", "a": "김미현", "y": "2024", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무만족", "r": "독립"}, {"n": "간호근무환경", "r": "독립"}, {"n": "직무배태성", "r": "종속"}], "si": [], "j": "경운대학교 석사학위논문"}, {"t": "입대시 병사의 가치관이 분대장 리더십 형성에 미치는 영향에 관한 연구", "a": "노중균, 정병천, 김영춘", "y": "2007", "c": "국내인용논문", "v": [{"n": "가치관", "r": "독립"}, {"n": "리더십", "r": "종속"}, {"n": "조직문화", "r": "조절"}], "si": [], "j": "한국인사조직학회 학술대회"}, {"t": "양성평등 조직문화가 사회복지사의 직무몰입에 미치는 영향: 심리적 임파워먼트의 매개효과와 성인지 리더십의 조절효과", "a": "백재환, 박현환", "y": "2026", "c": "국내인용논문", "v": [{"n": "양성평등 조직문화", "r": "독립"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "직무몰입", "r": "종속"}, {"n": "성인지 리더십", "r": "조절"}], "si": [], "j": "한국행정논집 제38권 제1호"}, {"t": "혁신지향 조직문화와 이직의도 간의 비선형 관계 및 구조적 경력정체의 조절역할: 과학기술 연구개발직을 중심으로", "a": "정우영, 손승연", "y": "2025", "c": "국내인용논문", "v": [{"n": "혁신지향 조직문화", "r": "독립"}, {"n": "이직의도", "r": "종속"}, {"n": "구조적 경력정체", "r": "조절"}], "si": [], "j": "인적자원개발연구 제28권 제4호"}, {"t": "인사관리강도가 이직의도에 미치는 영향 연구: 혁신적 조직문화 및 조직효과성의 매개효과와 인적자본수준의 조절효과", "a": "김미가, 안수진, 옥지호", "y": "2025", "c": "국내인용논문", "v": [{"n": "인사관리강도", "r": "독립"}, {"n": "혁신적 조직문화", "r": "매개"}, {"n": "조직효과성", "r": "매개"}, {"n": "이직의도", "r": "종속"}, {"n": "인적자본수준", "r": "조절"}], "si": [], "j": "문화산업연구 제25권 제3호"}, {"t": "조직문화가 업무몰입에 미치는 영향: 상사 지지 조절효과", "a": "최은희", "y": "2025", "c": "국내인용논문", "v": [{"n": "조직문화", "r": "독립"}, {"n": "업무몰입", "r": "종속"}, {"n": "상사 지지", "r": "조절"}], "si": [], "j": "한국데이터정보과학회지"}, {"t": "공공부문의 양면성조직문화와 조직시민행동의 관계에서 공공봉사동기의 매개효과와 세대의 조절효과", "a": "윤주영", "y": "2025", "c": "국내인용논문", "v": [{"n": "양면성조직문화", "r": "독립"}, {"n": "공공봉사동기", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}, {"n": "세대", "r": "조절"}], "si": [], "j": "한국행정논집 제37권 제3호"}, {"t": "지방자치단체의 서번트 리더십이 효과적 팔로어십 형성에 미치는 영향 연구: 조직목표 명확성과 혁신·개방적 조직문화의 조절효과를 중심으로", "a": "김정인", "y": "2024", "c": "국내인용논문", "v": [{"n": "서번트리더십", "r": "독립"}, {"n": "효과적 팔로어십", "r": "종속"}, {"n": "조직목표 명확성", "r": "조절"}, {"n": "혁신·개방적 조직문화", "r": "조절"}], "si": [], "j": "한국사회와 행정연구 제35권 제1호"}, {"t": "공공봉사동기가 혁신행동에 미치는 영향: 조직문화 조절효과를 중심으로", "a": "박정인", "y": "2023", "c": "국내인용논문", "v": [{"n": "공공봉사동기", "r": "독립"}, {"n": "혁신행동", "r": "종속"}, {"n": "조직문화", "r": "조절"}], "si": [], "j": "지방정부연구 제26권 제4호"}, {"t": "중간관리자의 혁신행동지향성 및 의사소통능력이 MZ세대 신입사원의 조직몰입에 미치는 영향: 디지털조직문화의 조절효과를 중심으로", "a": "양세련, 김유빈, Shuglya Ksenia, 조재희", "y": "2022", "c": "국내인용논문", "v": [{"n": "혁신행동지향성", "r": "독립"}, {"n": "의사소통능력", "r": "독립"}, {"n": "조직몰입", "r": "종속"}, {"n": "디지털조직문화", "r": "조절"}], "si": [], "j": "한국언론학보 66권 6호"}, {"t": "와인소매업체 조직문화와 구매관리자의 역량이 친환경 구매와 환경성과에 미치는 영향: 윤리적 태도의 조절효과", "a": "원상훈, 전용성, 조미희", "y": "2022", "c": "국내인용논문", "v": [{"n": "조직문화", "r": "독립"}, {"n": "구매관리자 역량", "r": "독립"}, {"n": "친환경 구매", "r": "매개"}, {"n": "환경성과", "r": "종속"}, {"n": "윤리적 태도", "r": "조절"}], "si": [], "j": "호텔경영학연구 제31권 제4호"}, {"t": "중국 유학 귀국자의 문화지능과 글로벌역량이 조직적응에 미치는 영향: 위계적 조직문화의 조절효과", "a": "임체리, 박윤희", "y": "2021", "c": "국내인용논문", "v": [{"n": "문화지능", "r": "독립"}, {"n": "글로벌역량", "r": "독립"}, {"n": "조직적응", "r": "종속"}, {"n": "위계적 조직문화", "r": "조절"}], "si": [], "j": "한국산학기술학회논문지 22(12)"}, {"t": "지방공무원의 공공봉사동기가 혁신행동에 미치는 영향: 직무자율성과 조직문화 인식의 매개효과, 조절효과분석", "a": "진윤희", "y": "2021", "c": "국내인용논문", "v": [{"n": "공공봉사동기", "r": "독립"}, {"n": "직무자율성", "r": "매개"}, {"n": "혁신행동", "r": "종속"}, {"n": "조직문화 인식", "r": "조절"}], "si": [], "j": "한국행정논집 제33권 제2호"}, {"t": "직무배태성의 형성 및 결과에 대한 연구: 구성원의 인식을 중심으로", "a": "대호", "y": "2020", "c": "타대학논문", "v": [{"n": "직무배태성", "r": "종속"}], "si": [], "j": "경기대학교 박사학위논문"}, {"t": "대기업 Z세대 근로자가 인식하는 조직공정성과 직무배태성의 관계에서 경력개발지원인식의 매개효과", "a": "김아민", "y": "2026", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "경력개발지원인식", "r": "매개"}, {"n": "직무배태성", "r": "종속"}], "si": [], "j": "고려대학교 석사학위논문"}, {"t": "MZ세대 호텔 종사원이 인식한 조직공정성, 직무배태성, 조직시민행동, 이직의도의 관계: 지각된 과잉자격의 조절된 매개효과를 중심으로", "a": "이승연", "y": "2024", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무배태성", "r": "매개"}, {"n": "조직시민행동", "r": "매개"}, {"n": "이직의도", "r": "종속"}, {"n": "지각된 과잉자격", "r": "조절"}], "si": [], "j": "경기대학교 박사학위논문"}, {"t": "간호사의 조직공정성이 직무배태성에 미치는 영향", "a": "이윤신,김희영", "y": "2022", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무배태성", "r": "종속"}], "si": [], "j": "간호행정학회지"}, {"t": "조직공정성이 직원몰입을 매개로 구성원의 직무배태성에 미치는 영향과 심리적 안전감의 조절효과", "a": "최의인", "y": "2022", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직원몰입", "r": "매개"}, {"n": "직무배태성", "r": "종속"}, {"n": "심리적안전감", "r": "조절"}], "si": [], "j": "중앙대학교 석사학위논문"}, {"t": "임상간호사의 긍정심리자본과 조직공정성이 직무배태성에 미치는 영향", "a": "윤신", "y": "2021", "c": "타대학논문", "v": [{"n": "긍정심리자본", "r": "독립"}, {"n": "조직공정성", "r": "독립"}, {"n": "직무배태성", "r": "종속"}], "si": [], "j": "동신대학교 석사학위논문"}, {"t": "전문가 지향성이 연구성과와 이직의도에 미치는 영향: 전문가 지향성의 영향 요인과 심리적 임파워먼트의 조절효과", "a": "김남규, 고유미, 김경석", "y": "2025", "c": "국내인용논문", "v": [{"n": "전문가 지향성", "r": "독립"}, {"n": "개인-직무 적합성", "r": "매개"}, {"n": "고용가능성", "r": "매개"}, {"n": "연구성과", "r": "종속"}, {"n": "이직의도", "r": "종속"}, {"n": "심리적 임파워먼트", "r": "조절"}], "si": [], "j": "한국혁신학회지 제20권 제1호"}, {"t": "공유리더십이 직무성과에 미치는 영향: 심리적 안전감과 심리적 임파워먼트의 이중 매개역할", "a": "윤하성, 이종건", "y": "2025", "c": "국내인용논문", "v": [{"n": "공유리더십", "r": "독립"}, {"n": "심리적안전감", "r": "매개"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "si": [], "j": "산업경제연구 제38권 제1호"}, {"t": "관료적 조직문화가 공공 연구개발 인력의 직무스트레스에 미치는 영향: 심리적 임파워먼트의 매개효과와 변혁적 리더십의 조절효과", "a": "김남규, 김경석", "y": "2025", "c": "국내인용논문", "v": [{"n": "관료적 조직문화", "r": "독립"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "직무스트레스", "r": "종속"}, {"n": "변혁적리더십", "r": "조절"}], "si": [], "j": "대한경영학회지 제38권 제4호"}, {"t": "조리전공 대학생들의 심리적 임파워먼트가 직무착근도, 현장실습만족 및 실습성과에 미치는 영향", "a": "김정은", "y": "2025", "c": "국내인용논문", "v": [{"n": "심리적 임파워먼트", "r": "독립"}, {"n": "직무착근도", "r": "종속"}, {"n": "현장실습만족", "r": "종속"}, {"n": "실습성과", "r": "종속"}], "si": [], "j": "외식경영연구"}, {"t": "MZ세대에서 조직공정성이 조직성과에 미치는 영향 연구: 직무만족과 조직몰입의 매개효과 및 심리적 임파워먼트의 조절효과", "a": "김지혜", "y": "2025", "c": "국내인용논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "조직성과", "r": "종속"}, {"n": "심리적 임파워먼트", "r": "조절"}], "si": [], "j": "학술발표대회"}, {"t": "조직지원인식이 직무열의에 미치는 영향: LMX와 심리적 임파워먼트의 직렬다중매개를 중심으로", "a": "김연주, 정기수", "y": "2026", "c": "국내인용논문", "v": [{"n": "조직후원인식", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "직무열의", "r": "종속"}], "si": [], "j": "대한경영학회지 제39권 제1호"}, {"t": "호텔리어의 심리적 임파워먼트가 고객지향성에 미치는 영향에 관한 연구: 특1급 호텔 서비스 접점부서를 중심으로", "a": "임재희", "y": "2016", "c": "국내인용논문", "v": [{"n": "심리적 임파워먼트", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "고객지향성", "r": "종속"}], "si": [], "j": "관광레저연구 제28권 제4호"}, {"t": "외식프랜차이즈 조직구성원의 셀프리더십이 혁신행동에 미치는 영향: 심리적임파워먼트의 조절효과", "a": "조준상", "y": "2019", "c": "국내인용논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "혁신행동", "r": "종속"}, {"n": "심리적 임파워먼트", "r": "조절"}], "si": [], "j": "외식경영연구 제22권 제1호"}, {"t": "관리코칭과 경영성과의 관계에서 심리적임파워먼트와 성과측정시스템의 역할에 관한 연구", "a": "정송, 손성진", "y": "2022", "c": "국내인용논문", "v": [{"n": "관리코칭", "r": "독립"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "성과측정시스템(PMS)", "r": "매개"}, {"n": "경영성과", "r": "종속"}], "si": [], "j": "관리회계연구 제22권 제1호"}, {"t": "항공객실승무원의 심리적임파워먼트, 고객중심 업무수행의도, 조직충성행동 간의 구조적 관계", "a": "이수경", "y": "2020", "c": "국내인용논문", "v": [{"n": "심리적 임파워먼트", "r": "독립"}, {"n": "고객중심 업무수행의도", "r": "매개"}, {"n": "조직충성행동", "r": "종속"}], "si": [], "j": "학술발표대회"}, {"t": "긍정심리자본이 심리적주인의식과 직무성과에 미치는 영향에 관한 연구", "a": "최학룡", "y": "2022", "c": "타대학논문", "v": [{"n": "긍정심리자본", "r": "독립"}, {"n": "심리적주인의식", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "si": [], "j": "동신대학교 석사학위논문"}, {"t": "공공기관에서 진성리더십(Authentic Leadership)이 구성원의 창의적 행동에 미치는 영향: 심리적 임파워먼트의 매개효과와 조직지원인식의 조절된 매개효과", "a": "김성재, 장제욱, 윤동열", "y": "2024", "c": "국내인용논문", "v": [{"n": "진정성리더십", "r": "독립"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "창의적 행동", "r": "종속"}, {"n": "조직후원인식", "r": "조절"}], "si": [], "j": "대한경영학회지 제37권 제2호"}, {"t": "호텔직원의 심리적 임파워먼트가 그릿과 직무성과에 미치는 영향: 인지적 유연성의 조절된 매개효과", "a": "김해섭, 변재문", "y": "2024", "c": "국내인용논문", "v": [{"n": "심리적 임파워먼트", "r": "독립"}, {"n": "그릿", "r": "매개"}, {"n": "직무성과", "r": "종속"}, {"n": "인지적 유연성", "r": "조절"}], "si": [], "j": "호텔경영학연구 제33권 제3호"}, {"t": "보육교사의 보상체계가 조직유효성에 미치는 영향: 원장의 감성리더십 및 심리적 임파워먼트의 중재효과", "a": "김태연, 정유진, 장영의, 이문", "y": "2024", "c": "국내인용논문", "v": [{"n": "보상체계", "r": "독립"}, {"n": "감성리더십", "r": "매개"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "조직유효성", "r": "종속"}], "si": [], "j": "학술발표대회"}, {"t": "임파워링 리더십이 직원 창의성에 미치는 영향: 팀 신뢰, 심리적 임파워먼트의 매개효과 및 팀 내 정보공유의 조절효과를 중심으로", "a": "탄희, 최혜란", "y": "2024", "c": "국내인용논문", "v": [{"n": "임파워링리더십", "r": "독립"}, {"n": "팀 신뢰", "r": "매개"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "직원 창의성", "r": "종속"}, {"n": "팀 내 정보공유", "r": "조절"}], "si": [], "j": "인적자원개발연구 제27권 제4호"}, {"t": "디지털 역량교육의 방향성: 디지털 역량강화 교육사업 분석을 통해", "a": "배진아, 고아라, 조정원", "y": "2023", "c": "국내인용논문", "v": [{"n": "디지털 역량교육", "r": "독립"}, {"n": "교육 만족도", "r": "종속"}, {"n": "디지털 격차", "r": "종속"}], "si": [], "j": "학술대회 논문"}, {"t": "노년층 소비자의 디지털 역량이 삶의 만족에 미치는 영향: 우울감의 매개효과와 자아존중감의 조절된 매개효과를 중심으로", "a": "고경아", "y": "2024", "c": "국내인용논문", "v": [{"n": "디지털 역량", "r": "독립"}, {"n": "우울감", "r": "매개"}, {"n": "삶의 만족", "r": "종속"}, {"n": "자아존중감", "r": "조절"}], "si": [], "j": "사회과학연구 제31권 제2호"}, {"t": "노년층의 디지털역량 강화를 위한 스마트 펜슬과 타블렛 제안", "a": "윤재현, 박소희", "y": "2021", "c": "국내인용논문", "v": [{"n": "디지털역량", "r": "종속"}], "si": [], "j": "디자인 학술논문"}, {"t": "베이비부머의 디지털역량이 온라인 경제활동을 매개로 소득에 미치는 영향", "a": "신하영, 김수진", "y": "2023", "c": "국내인용논문", "v": [{"n": "디지털역량", "r": "독립"}, {"n": "온라인 경제활동", "r": "매개"}, {"n": "소득", "r": "종속"}], "si": [], "j": "인문사회과학연구 제31권 제2호"}, {"t": "유아교사가 인식한 디지털 역량 관련 자기효능감 증진 요인 및 요구", "a": "박채원, 조형숙", "y": "2026", "c": "국내인용논문", "v": [{"n": "디지털 역량", "r": "독립"}, {"n": "자기효능감", "r": "종속"}], "si": [], "j": "유아교육학논집 제30권 제1호"}, {"t": "유아교사의 디지털 역량과 교사 전문성의 관계에서 교수창의성의 매개효과", "a": "조은정, 신수경", "y": "2026", "c": "국내인용논문", "v": [{"n": "디지털 역량", "r": "독립"}, {"n": "교수창의성", "r": "매개"}, {"n": "교사 전문성", "r": "종속"}], "si": [], "j": "한국산학기술학회논문지 27(3)"}, {"t": "유아교사의 디지털역량 강화를 위한 교육 프로그램 개발", "a": "김교령, 박은혜", "y": "2022", "c": "국내인용논문", "v": [{"n": "디지털역량 교육 프로그램", "r": "독립"}, {"n": "디지털역량", "r": "종속"}], "si": [], "j": "육아지원연구 제17권 제3호"}, {"t": "유아교사의 에듀테크 활용을 위한 교육 경험과 소진 간의 관계: 디지털역량과 테크노스트레스의 순차적 매개효과", "a": "황근미, 박보경", "y": "2025", "c": "국내인용논문", "v": [{"n": "에듀테크 교육 경험", "r": "독립"}, {"n": "디지털역량", "r": "매개"}, {"n": "테크노스트레스", "r": "매개"}, {"n": "소진", "r": "종속"}], "si": [], "j": "2025 한국아동학회 추계학술대회"}, {"t": "유아교육기관의 전문성지원환경과 교수창의성이 유아교사 디지털역량에 미치는 영향", "a": "최은미, 이정화", "y": "2025", "c": "국내인용논문", "v": [{"n": "전문성지원환경", "r": "독립"}, {"n": "교수창의성", "r": "독립"}, {"n": "디지털역량", "r": "종속"}], "si": [], "j": "학술논문"}, {"t": "잠재프로파일 분석을 통한 고령층 집단 유형화와 영향요인 연구: 디지털역량과 연령변수를 중심으로", "a": "황현정, 황용석, 이현종, 박지수, 신민호", "y": "2022", "c": "국내인용논문", "v": [{"n": "디지털역량", "r": "독립"}, {"n": "연령", "r": "독립"}, {"n": "디지털 격차 유형", "r": "종속"}], "si": [], "j": "사회과학연구 제29권 제3호"}, {"t": "장애노인의 스포츠활동 가치인식이 삶의 만족도에 미치는 영향: 디지털역량의 매개효과를 중심으로", "a": "조건상, 곽상원, 박진우", "y": "2025", "c": "국내인용논문", "v": [{"n": "스포츠활동 가치인식", "r": "독립"}, {"n": "디지털역량", "r": "매개"}, {"n": "삶의 만족도", "r": "종속"}], "si": [], "j": "학술논문"}, {"t": "창업자의 창업동기와 정부지원사업의 만족도가 경쟁우위 성과에 미치는 영향: 디지털역량과 리스크대응역량의 매개효과", "a": "장영혜, 윤복만", "y": "2025", "c": "국내인용논문", "v": [{"n": "창업동기", "r": "독립"}, {"n": "정부지원사업 만족도", "r": "독립"}, {"n": "디지털역량", "r": "매개"}, {"n": "리스크대응역량", "r": "매개"}, {"n": "경쟁우위 성과", "r": "종속"}], "si": [], "j": "비즈니스융복합연구 제10권 제4호"}, {"t": "표상운동량과 디지털기술능력, 디지털인지능력이 디지털역량에 미치는 영향 분석: 문자형과 그림형의 MO-ABC 모형을 중심으로", "a": "이려화, 허성호", "y": "2023", "c": "국내인용논문", "v": [{"n": "표상운동량", "r": "독립"}, {"n": "디지털기술능력", "r": "매개"}, {"n": "디지털인지능력", "r": "매개"}, {"n": "디지털역량", "r": "종속"}], "si": [], "j": "디지털콘텐츠학회논문지 24(8)"}, {"t": "스타트업 CEO의 변혁적리더십과 이직의도의 관계에서 LMX와 조직몰입의 매개효과 연구", "a": "조원희", "y": "2023", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "이직의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "산업안전 컨설턴트역량이 컨설팅 만족도와 활용도를 매개로 하여 재계약의도에 미치는 영향", "a": "박성준", "y": "2023", "c": "SVU논문", "v": [{"n": "컨설턴트역량", "r": "독립"}, {"n": "컨설팅만족도", "r": "매개"}, {"n": "컨설팅활용도", "r": "매개"}, {"n": "재계약의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "상사의 성격5요인이 부하직원의 직무만족에 미치는 영향: 상사-부하 교환관계(LMX)의 매개·조절효과", "a": "김창섭", "y": "2021", "c": "SVU논문", "v": [{"n": "성격5요인", "r": "독립"}, {"n": "LMX(상사-부하 교환관계)", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "LMX(상사-부하 교환관계)", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "청소년의 사회적지지가 긍정심리자본에 따른 자살생각에 미치는 효과: 성격5요인의 조절효과", "a": "어영미", "y": "2018", "c": "SVU논문", "v": [{"n": "사회적지지", "r": "독립"}, {"n": "긍정심리자본", "r": "매개"}, {"n": "자살생각", "r": "종속"}, {"n": "성격5요인", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "4차 산업혁명 시대 임베디드소프트웨어 기반 미래유망기술 발전 방안에 관한 연구", "a": "김규신", "y": "2017", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "창업자의 개인특성, 사회적자본, 창업정책환경이 창업의지에 미치는 영향: 기업가정신과 가치지향성을 중심으로", "a": "홍진기", "y": "2016", "c": "SVU논문", "v": [{"n": "자기결정성(개인특성)", "r": "독립"}, {"n": "사회적자본", "r": "독립"}, {"n": "창업정책환경", "r": "독립"}, {"n": "기업가정신", "r": "매개"}, {"n": "가치지향성", "r": "매개"}, {"n": "창업의지", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "AHP 기법을 이용한 건축분야 BIM 활성화 방안 연구", "a": "김진호", "y": "2021", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "퀀트분석을 이용한 포트폴리오 구성에서 Monte Carlo Simulation을 이용한 DQN 강화학습 연구", "a": "김의철", "y": "2021", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 석사학위논문"}, {"t": "건설기업의 스마트시티 역량평가지표 개발 연구", "a": "김혜진", "y": "2021", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "중소건설기업의 직무배태성, 직무만족, 조직몰입, LMX, 이직의도 관계 연구", "a": "최영철", "y": "2021", "c": "SVU논문", "v": [{"n": "직무배태성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "이직의도", "r": "종속"}, {"n": "LMX", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "중소기업구성원의 셀프리더십이 혁신행동에 미치는 영향: 자기효능감, 조직몰입의 매개효과", "a": "김선희", "y": "2015", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "혁신행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "상사의 수퍼리더십이 자기효능감과 조직몰입을 매개로 하여 이직의도에 미치는 효과", "a": "장해양", "y": "2017", "c": "SVU논문", "v": [{"n": "수퍼리더십", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "이직의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "건설기업의 조직 공정성이 조직신뢰와 직무태도를 통해 조직시민행동에 미치는 영향", "a": "이영수", "y": "2017", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "조직신뢰", "r": "매개"}, {"n": "직무태도", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "은행서비스 환경에서 라포형성행동과 고객충성도 간에 고객태도와 고객만족도의 매개효과 연구", "a": "김천욱", "y": "2023", "c": "SVU논문", "v": [{"n": "라포형성행동", "r": "독립"}, {"n": "고객태도", "r": "매개"}, {"n": "고객만족도", "r": "매개"}, {"n": "고객충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "직장인의 SNS 사용 요인과 스트레스와의 관계", "a": "김은주", "y": "2013", "c": "SVU논문", "v": [{"n": "SNS사용빈도", "r": "독립"}, {"n": "SNS일상성", "r": "독립"}, {"n": "자기표현(외면적/내면적)", "r": "독립"}, {"n": "사회적지지", "r": "독립"}, {"n": "스트레스", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "정보통신기술 트렌드를 통한 비즈니스 기회발견에 관한 탐색적 연구", "a": "유인철", "y": "2013", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "소셜TV 이용자의 경험 요인이 감정반응(PAD) 요인을 통해 구전의도에 미치는 영향", "a": "권두순", "y": "2014", "c": "SVU논문", "v": [{"n": "사회적실재감", "r": "독립"}, {"n": "지각된사용성", "r": "독립"}, {"n": "감정반응(PAD)", "r": "매개"}, {"n": "구전의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "SNS 마케팅 방법론 연구: SNS 마케팅 캔버스 설계를 중심으로", "a": "송영우", "y": "2015", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "기업 종사자들의 공정성 지각이 심리자본과 직무만족을 통해 조직몰입에 미치는 영향", "a": "엄재규", "y": "2016", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "긍정심리자본", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "업종(건설업/제조업)", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "신재생에너지정책 평가지표 개발: RPS 및 FIT를 중심으로", "a": "최종재", "y": "2014", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "중소 소방엔지니어링 기업의 조직공정성이 조직몰입에 미치는 영향", "a": "황환성", "y": "2019", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "조직신뢰", "r": "매개"}, {"n": "조직후원인식(POS)", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "LMX", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "시공책임형 CM단장의 리더십과 조직유효성 관계 연구", "a": "김명철", "y": "2017", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "진정성리더십", "r": "독립"}, {"n": "신뢰", "r": "매개"}, {"n": "임파워먼트", "r": "매개"}, {"n": "조직유효성(조직몰입/직무만족)", "r": "종속"}, {"n": "신뢰", "r": "조절"}, {"n": "임파워먼트", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "메타버스 한류콘텐츠기업 상사의 변혁적 리더십이 LMX와 직무만족을 매개로 조직몰입에 미치는 영향", "a": "박인규", "y": "2022", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "자기효능감", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "대기업 콜센터의 조직문화와 조직시민행동 관계에서 조직몰입과 노조몰입 매개효과연구", "a": "김정균", "y": "2022", "c": "SVU논문", "v": [{"n": "조직문화", "r": "독립"}, {"n": "조직몰입", "r": "매개"}, {"n": "노조몰입", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}, {"n": "LMX", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "ICT·SW 중소기업 구성원의 셀프리더십이 혁신행동에 미치는 영향", "a": "이희준", "y": "2021", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "심리적임파워먼트", "r": "매개"}, {"n": "혁신행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "스마트워크 시스템의 사용자 만족 영향요인", "a": "정창현", "y": "2013", "c": "SVU논문", "v": [{"n": "사회적요인(SW관리체계/공유가치)", "r": "독립"}, {"n": "기술적요인(정보품질/시스템품질/서비스품질)", "r": "독립"}, {"n": "스마트워크시스템만족", "r": "매개"}, {"n": "시스템사용", "r": "종속"}, {"n": "지속적사용의도", "r": "종속"}, {"n": "개인성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "중소제조업 조직 구성원의 자기결정성이 조직성과에 미치는 영향", "a": "권영민", "y": "2016", "c": "SVU논문", "v": [{"n": "자기결정성", "r": "독립"}, {"n": "직무몰입", "r": "매개"}, {"n": "조직시민행동", "r": "매개"}, {"n": "조직성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "건설엔지니어링기업 구성원의 셀프리더십과 조직몰입 관계에서 자기효능감과 직무만족", "a": "최용래", "y": "2020", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "조직후원인식(POS)", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "FacilityManagement기업의 서비스품질이 고객만족과 관계지향성에 미치는 영향", "a": "전우명", "y": "2013", "c": "SVU논문", "v": [{"n": "FM서비스품질", "r": "독립"}, {"n": "고객만족", "r": "매개"}, {"n": "관계지향성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "AHP기법을 이용한 금형기업의 ESG경영 핵심역량 평가지표 연구", "a": "이준범", "y": "2023", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "건설기술자 특성이 창업의도에 미치는 영향", "a": "이창수", "y": "2015", "c": "SVU논문", "v": [{"n": "경력지향성", "r": "독립"}, {"n": "개인역량", "r": "독립"}, {"n": "이해관계자협력", "r": "독립"}, {"n": "태도", "r": "매개"}, {"n": "주관적규범", "r": "매개"}, {"n": "지각된행동통제", "r": "매개"}, {"n": "창업의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "F-Score를 이용한 종목선정과 위험균형 포트폴리오를 통한 누적수익률 예측 연구", "a": "김천욱", "y": "2020", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "U-방범서비스 품질요인이 사용자만족도에 미치는 영향", "a": "최창선", "y": "2014", "c": "SVU논문", "v": [{"n": "시스템품질", "r": "독립"}, {"n": "서비스품질", "r": "독립"}, {"n": "유용성", "r": "매개"}, {"n": "공공성", "r": "매개"}, {"n": "경제성", "r": "매개"}, {"n": "사용자만족도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "국가직무능력(NCS)기반 IT프로젝트관리 핵심 능력의 현업 적합성 연구", "a": "김지수", "y": "2016", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "국가직무능력표준의 유·무선통신구축 능력단위 통합에 관한 연구", "a": "김광희", "y": "2015", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "진화론과 혁신론의 통섭에 의한 파괴적 가치창출 방법에 관한 연구", "a": "김근호", "y": "2013", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "u-City서비스 품질요인이 고객만족에 미치는 영향", "a": "곽진조", "y": "2013", "c": "SVU논문", "v": [{"n": "시스템품질", "r": "독립"}, {"n": "정보품질", "r": "독립"}, {"n": "서비스품질", "r": "독립"}, {"n": "공공성", "r": "독립"}, {"n": "유용성", "r": "매개"}, {"n": "고객만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "방열과 배광 최적화를 위한 연구", "a": "김경식", "y": "2012", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "웨딩플래너의 자기결정성이 고객지향성에 미치는 영향", "a": "이도연", "y": "2016", "c": "SVU논문", "v": [{"n": "자기결정성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "직무성과", "r": "매개"}, {"n": "고객지향성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "조직공정성이 직무만족과 조직몰입을 통해 직무성과에 미치는 영향", "a": "남상민", "y": "2015", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "화장품제조중소기업 구성원의 셀프리더십이 자기효능감을 통해 직무만족에 미치는 영향", "a": "임종인", "y": "2020", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "성격5요인", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "중소제조업 CEO의 진정성리더십이 신뢰를 통해 직무만족에 미치는 영향", "a": "우성주", "y": "2020", "c": "SVU논문", "v": [{"n": "진정성리더십", "r": "독립"}, {"n": "신뢰", "r": "매개"}, {"n": "직무만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "금형·성형 제조기업 구성원이 지각한 상사의 변혁적리더쉽이 조직몰입에 미치는 영향", "a": "황남연", "y": "2020", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "조직문화", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "소프트웨어개발기업의 근무환경이 지속근무의도에 미치는 영향 연구", "a": "안병찬", "y": "2022", "c": "SVU논문", "v": [{"n": "근무환경", "r": "독립"}, {"n": "조직몰입", "r": "매개"}, {"n": "지속근무의도", "r": "종속"}, {"n": "직무만족", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "U-City환경의 U-교통지능형시스템품질이 지각된 유용성과 혁신성을 통해 이용자 만족도에 미치는 영향", "a": "황준호", "y": "2014", "c": "SVU논문", "v": [{"n": "U-교통시스템품질", "r": "독립"}, {"n": "지각된유용성", "r": "매개"}, {"n": "혁신성", "r": "매개"}, {"n": "이용자만족도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "태양에너지의 건축시스템 도입에 관한 연구", "a": "김성헌", "y": "2012", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "지진피해평가시스템을 활용한 도심지 피해예측에 관한 연구", "a": "황창휘", "y": "2012", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "전시문화디자인기업 구성원의 마음챙김이 직무성과에 미치는 영향", "a": "정수형", "y": "2018", "c": "SVU논문", "v": [{"n": "마음챙김", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "자기효능감", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "다중사용자 온라인 전투게임의 게임특성과 자기효능감이 몰입과 게임만족도를 통해 게임충성도에 미치는 영향", "a": "김태섭", "y": "2020", "c": "SVU논문", "v": [{"n": "게임특성", "r": "독립"}, {"n": "자기효능감", "r": "독립"}, {"n": "몰입", "r": "매개"}, {"n": "게임만족도", "r": "매개"}, {"n": "게임충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "스마트 물관리 시스템 구축을 위한 엔지니어링 활동 고도화 연구", "a": "최용래", "y": "2023", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소제조기업의 근무환경과 조직몰입 관계에서 직무만족과 자기효능감의 매개효과", "a": "임종인", "y": "2023", "c": "SVU논문", "v": [{"n": "근무환경", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "자기효능감", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "BIM기반의 수선분류체계를 통한 리모델링 비용예측모델 개발", "a": "김진호", "y": "2023", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "U-공공서비스품질과 공공기관 신뢰 및 고객만족의 관계", "a": "박상걸", "y": "2014", "c": "SVU논문", "v": [{"n": "U-공공서비스품질", "r": "독립"}, {"n": "공공기관신뢰", "r": "매개"}, {"n": "고객만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "이동통신기지국의 지진피해 복구절차 개선방안", "a": "정창석", "y": "2012", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "공영택지개발사업 갈등과정에서의 인과관계 분석", "a": "강성민", "y": "2013", "c": "SVU논문", "v": [{"n": "갈등원인", "r": "독립"}, {"n": "갈등수준", "r": "매개"}, {"n": "갈등관리", "r": "매개"}, {"n": "갈등결과만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "성격5요인 조절효과를 통한 스타트업 CEO의 변혁적 리더십이 심리적 임파워먼트와 조직몰입에 미치는 영향", "a": "허경영", "y": "2016", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "심리적임파워먼트", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "성격5요인", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "건설기술교육서비스품질이 교육만족을 통하여 행위의도에 미치는 영향", "a": "심민섭", "y": "2018", "c": "SVU논문", "v": [{"n": "교육서비스품질", "r": "독립"}, {"n": "교육만족도", "r": "매개"}, {"n": "행위의도", "r": "종속"}, {"n": "성격5요인", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "ARCS동기이론을 기반으로 한 산업현장 교육이 학습전이에 미치는 영향", "a": "박동철", "y": "2015", "c": "SVU논문", "v": [{"n": "ARCS동기이론", "r": "독립"}, {"n": "NCS교수자상호작용성", "r": "매개"}, {"n": "NCS학습자학습몰입", "r": "매개"}, {"n": "학업성취도", "r": "종속"}, {"n": "학습전이", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "ICT와 Green을 기반으로 한 중소기업의 스마트 그린 공장에 관한 연구", "a": "최충환", "y": "2017", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "감리단장의 변혁적 리더십과 직무만족 관계에서 직무열의와 신뢰의 매개", "a": "차무홍", "y": "2022", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "신뢰", "r": "매개"}, {"n": "직무열의", "r": "매개"}, {"n": "직무만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "대형건설회사의 조직공정성과 조직문화가 직무만족에 미치는 영향", "a": "곽경환", "y": "2022", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "조직문화", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "조직문화", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "디지털 아카이브 전시장 관람객의 감정반응요인이 관람몰입과 관람만족을 통해 전시성과에 미치는 영향", "a": "김인환", "y": "2016", "c": "SVU논문", "v": [{"n": "감정반응요인(PAD)", "r": "독립"}, {"n": "관람몰입", "r": "매개"}, {"n": "관람만족", "r": "매개"}, {"n": "전시성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지방자치단체 부서장의 변혁적리더십과 조직몰입 관계에서 긍정심리자본과 상사신뢰의 매개", "a": "김백경", "y": "2022", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "긍정심리자본", "r": "매개"}, {"n": "상사신뢰", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소 소방기업의 보상공정성과 조직유효성 관계에서 보상만족 매개효과", "a": "김종길", "y": "2025", "c": "SVU논문", "v": [{"n": "보상공정성", "r": "독립"}, {"n": "보상만족", "r": "매개"}, {"n": "조직유효성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "베이커리카페의 고객경험가치와 고객충성도 관계에서 고객만족 및 브랜드신뢰의 매개효과와 성격유형의 조절효과", "a": "남상민", "y": "2025", "c": "SVU논문", "v": [{"n": "고객경험가치", "r": "독립"}, {"n": "고객만족", "r": "매개"}, {"n": "브랜드신뢰", "r": "매개"}, {"n": "고객충성도", "r": "종속"}, {"n": "성격유형(외향성)", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "국내 수소 기업의 발전을 위한 주요 요인 분석 및 밸류체인 균형 발전 방안", "a": "지세영", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "IoT 기반 실시간 좌식 행동 교정 시스템 개발에 관한 연구", "a": "안병찬", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "IoT 기반 물류센터 팔레트 랙 안전관리 시스템 개발에 관한 연구", "a": "박성준", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "여성과학기술인이 지각한 보상공정성과 조직유효성간의 보상만족과 조직신뢰의 매개", "a": "기유경", "y": "2024", "c": "SVU논문", "v": [{"n": "보상공정성", "r": "독립"}, {"n": "보상만족", "r": "매개"}, {"n": "조직신뢰", "r": "매개"}, {"n": "조직유효성", "r": "종속"}, {"n": "미묘한성차별경험", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "커넥터제조기업의 상사의 진정성 리더십과 직무만족 관계에서 LMX의 매개효과 및 POS의 조절효과", "a": "강태만", "y": "2022", "c": "SVU논문", "v": [{"n": "진정성리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "조직후원인식(POS)", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "강원도 지역주민이 지각한 문화적가치와 참여행동의 관계에서 태도의 매개효과와 애착도의 조절효과", "a": "이경영", "y": "2022", "c": "SVU논문", "v": [{"n": "문화적가치", "r": "독립"}, {"n": "태도", "r": "매개"}, {"n": "참여행동", "r": "종속"}, {"n": "애착도", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "직업능력개발훈련기관 교사의 분산적지도성이 직무만족과 교사임파워먼트에 따른 조직시민행동에 미치는 영향", "a": "최상국", "y": "2019", "c": "SVU논문", "v": [{"n": "분산적지도성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "교사임파워먼트", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소 디지털콘텐츠 제작기업 구성원의 조직공정성이 이직의도에 미치는 영향", "a": "장선연", "y": "2019", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "이직의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "학습조직 참여자의 셀프리더십과 직무만족 관계에서 학습지향성과 LMX 매개효과", "a": "김남환", "y": "2018", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "학습지향성", "r": "매개"}, {"n": "LMX", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "성격5요인", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지방정부 특별교통 서비스품질이 기관이미지에 미치는 영향", "a": "김종억", "y": "2018", "c": "SVU논문", "v": [{"n": "특별교통서비스품질", "r": "독립"}, {"n": "이용자만족도", "r": "매개"}, {"n": "기관신뢰", "r": "매개"}, {"n": "기관이미지", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지방정부 공무원의 공직동기(PSM) 요인이 감정노동을 통해 조직유효성에 미치는 영향", "a": "김영미", "y": "2018", "c": "SVU논문", "v": [{"n": "공직동기(PSM)", "r": "독립"}, {"n": "감정노동", "r": "매개"}, {"n": "조직유효성", "r": "종속"}, {"n": "LMX", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소ICT기업 구성원의 셀프리더십이 조직몰입에 미치는 영향", "a": "도철구", "y": "2018", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "감성지능", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "ICT 산업에서 말콤볼드리지 모델을 이용한 경영성과 영향요인에 관한 연구", "a": "신동근", "y": "2018", "c": "SVU논문", "v": [{"n": "리더십(Malcolm Baldrige)", "r": "독립"}, {"n": "측정분석및지식관리", "r": "매개"}, {"n": "인적자원중시", "r": "매개"}, {"n": "프로세스관리", "r": "매개"}, {"n": "경영성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "약국 서비스 환경에서 라포형성 행동과 고객충성도 간에 고객 신뢰와 고객만족도의 매개효과", "a": "곽진희", "y": "2024", "c": "SVU논문", "v": [{"n": "라포형성행동", "r": "독립"}, {"n": "고객신뢰", "r": "매개"}, {"n": "고객만족도", "r": "매개"}, {"n": "고객충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소제조기업의 조직공정성과 직무만족 관계에서 심리적주인의식과 신뢰의 매개효과", "a": "김화자", "y": "2023", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "심리적주인의식", "r": "매개"}, {"n": "신뢰", "r": "매개"}, {"n": "직무만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "전자제품 제조기업 개발팀 구성원의 셀프리더십과 혁신행동 관계에서 직무만족과 직무열의의 매개효과", "a": "김진성", "y": "2023", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "직무열의", "r": "매개"}, {"n": "혁신행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "금형기업의 상사의 변혁적리더십과 거래적리더십이 직무만족에 미치는 영향", "a": "황남연", "y": "2023", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "거래적리더십", "r": "독립"}, {"n": "신뢰", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "LMX", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "스마트약국 POS품질과 지속사용의도간에 고객신뢰와 고객만족도의 매개효과", "a": "박경애", "y": "2024", "c": "SVU논문", "v": [{"n": "POS품질", "r": "독립"}, {"n": "고객신뢰", "r": "매개"}, {"n": "고객만족도", "r": "매개"}, {"n": "지속사용의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "콘텐츠 유튜버의 특성과 채널충성도 관계에서 몰입과 구독자만족의 매개효과", "a": "정은수", "y": "2023", "c": "SVU논문", "v": [{"n": "유튜버특성", "r": "독립"}, {"n": "몰입", "r": "매개"}, {"n": "구독자만족", "r": "매개"}, {"n": "채널충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지방자치단체 공무원의 성격특성과 자기효능감 직무스트레스 직무소진 간의 관계에 관한 연구", "a": "김승연", "y": "2017", "c": "SVU논문", "v": [{"n": "성격특성(Big5)", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "직무스트레스", "r": "매개"}, {"n": "직무소진", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "아파트 세대의 소방시설 자체점검제도 개선방안 연구", "a": "서해열", "y": "2016", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "울트라마라톤 참여동기와 지속참여의도간에 운동몰입과 운동만족의 매개효과", "a": "이학준", "y": "2024", "c": "SVU논문", "v": [{"n": "참여동기", "r": "독립"}, {"n": "운동몰입", "r": "매개"}, {"n": "운동만족", "r": "매개"}, {"n": "지속참여의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "초등학교장의 변혁적 리더십이 LMX와 감성지능을 매개로 조직몰입에 미치는 영향", "a": "김태학", "y": "2022", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "감성지능", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지방자치단체의 조직공정성과 혁신행동 관계에서 자기효능감과 조직몰입의 매개효과", "a": "이명예", "y": "2022", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "혁신행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "섬유패션산업 발전을 위한 핵심정책 중요요인에 관한 연구", "a": "윤창주", "y": "2017", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소건설기업 종사자의 성격5요인이 심리적 임파워먼트와 셀프리더십에 따른 조직시민행동에 미치는 영향", "a": "최재영", "y": "2019", "c": "SVU논문", "v": [{"n": "성격5요인", "r": "독립"}, {"n": "심리적임파워먼트", "r": "매개"}, {"n": "셀프리더십", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "병원환경에서 의료종사자의 건강신념이 대응성과 병원의 예방행동에 미치는 영향", "a": "장국현", "y": "2016", "c": "SVU논문", "v": [{"n": "건강신념", "r": "독립"}, {"n": "건강가치성", "r": "매개"}, {"n": "대응성", "r": "종속"}, {"n": "병원예방행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "전공연계교육의 학습동기유발요인과 진로결정 자기효능감 관계에서 학업성취도 매개효과", "a": "조유경", "y": "2016", "c": "SVU논문", "v": [{"n": "학습동기(ARCS)", "r": "독립"}, {"n": "학업성취도", "r": "매개"}, {"n": "진로결정자기효능감", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "생성형 AI 서비스 특성이 이용자의 지속사용의도에 미치는 영향 연구", "a": "김기동", "y": "2024", "c": "SVU논문", "v": [{"n": "생성형AI서비스특성", "r": "독립"}, {"n": "지각된유용성", "r": "매개"}, {"n": "지각된용이성", "r": "매개"}, {"n": "지속사용의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "상사의 변혁적리더십과 혁신과업행동간에 직원몰입과 조직시민행동의 매개", "a": "정용희", "y": "2024", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "직원몰입", "r": "매개"}, {"n": "조직시민행동", "r": "매개"}, {"n": "혁신과업행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "국내 기업 연구개발 인력의 셀프리더십이 조직몰입과 혁신행동에 미치는 영향", "a": "최민석", "y": "2024", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "혁신행동", "r": "종속"}, {"n": "조직몰입", "r": "종속"}, {"n": "학습지원환경", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지역축제 브랜드자산과 축제성과의 관계에서 개최지역 태도의 매개효과와 지역애호도의 조절효과", "a": "김성헌", "y": "2023", "c": "SVU논문", "v": [{"n": "지역축제브랜드자산", "r": "독립"}, {"n": "개최지역태도", "r": "매개"}, {"n": "축제성과", "r": "종속"}, {"n": "지역애호도", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "직업상담사의 직무스트레스와 이직의도 관계에서 직무만족과 직무소진의 매개효과", "a": "백성현", "y": "2023", "c": "SVU논문", "v": [{"n": "직무스트레스", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "직무소진", "r": "매개"}, {"n": "이직의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "한류스타의 활동과 대중의 행위의도간 관계에서 스타동일시욕구 및 충성도의 매개", "a": "오희영", "y": "2025", "c": "SVU논문", "v": [{"n": "한류스타활동", "r": "독립"}, {"n": "스타동일시욕구", "r": "매개"}, {"n": "스타충성도", "r": "매개"}, {"n": "행위의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "한국폴리텍대학 산업설비 교수의 변혁적 리더십이 학습성과에 미치는 영향", "a": "박종석", "y": "2025", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "학습만족", "r": "매개"}, {"n": "자기효능감", "r": "매개"}, {"n": "학습성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "소방엔지니어링 기업 구성원의 셀프리더십이 조직몰입에 미치는 영향", "a": "이진성", "y": "2025", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "자기효능감", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소 정보통신공사업의 ESG 경영 핵심역량 요인분석 및 평가지표 개발 연구", "a": "최운정", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "강풍에 의한 고층건물의 옥상 통신시설물 풍하중특성에 관한 연구", "a": "조승구", "y": "2012", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "축산물가공산업의 B2B 거래관계에서 전환장벽과 지속구매의도 간에 관계만족의 매개효과", "a": "강호용", "y": "2025", "c": "SVU논문", "v": [{"n": "전환장벽", "r": "독립"}, {"n": "관계만족", "r": "매개"}, {"n": "지속구매의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소전기공사기업 상사의 변혁적·거래적 리더십과 조직유효성 관계에서 셀프리더십의 매개효과", "a": "이상만", "y": "2025", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "거래적리더십", "r": "독립"}, {"n": "셀프리더십", "r": "매개"}, {"n": "조직유효성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "기계경비 기업 구성원의 직무특성, 보상인식과 성격특성이 조직 유효성에 미치는 영향", "a": "김진태", "y": "2025", "c": "SVU논문", "v": [{"n": "직무특성", "r": "독립"}, {"n": "보상인식", "r": "독립"}, {"n": "성격특성", "r": "독립"}, {"n": "조직유효성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "소방분야 종사자의 직무특성과 조직몰입 관계에서 심리적주인의식과 직무만족의 매개효과", "a": "유병선", "y": "2025", "c": "SVU논문", "v": [{"n": "직무특성", "r": "독립"}, {"n": "심리적주인의식", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "조직후원인식", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "모바일 오픈월드 RPG 게임특성과 게임충성도 관계에서 게임만족과 게임몰입의 매개", "a": "김기준", "y": "2025", "c": "SVU논문", "v": [{"n": "게임특성", "r": "독립"}, {"n": "게임만족", "r": "매개"}, {"n": "게임몰입", "r": "매개"}, {"n": "게임충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "피아노 연주자의 연주몰입경험과 공연만족도 관계에서 자아존중감과 자기유능감의 매개", "a": "김진우", "y": "2025", "c": "SVU논문", "v": [{"n": "연주몰입경험", "r": "독립"}, {"n": "자아존중감", "r": "매개"}, {"n": "자기유능감", "r": "매개"}, {"n": "공연만족도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "호텔기업의 e-비즈니스 서비스품질과 쇼핑가치 및 고객만족의 관계", "a": "김영재", "y": "2014", "c": "SVU논문", "v": [{"n": "e-서비스품질", "r": "독립"}, {"n": "쇼핑가치", "r": "매개"}, {"n": "고객만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "공공·민간직업능력개발훈련기관교사의 셀프리더십과 직무성과 관계에서 교사효능감과 혁신행동의 매개", "a": "홍재일", "y": "2025", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "교사효능감", "r": "매개"}, {"n": "혁신행동", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "국내 수소 산업 활성화 핵심 요인 분석 및 전략에 관한 연구", "a": "박성수", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "소상공인의 자기결정성이 재창업의지에 미치는 영향", "a": "박세언", "y": "2015", "c": "SVU논문", "v": [{"n": "자기결정성", "r": "독립"}, {"n": "학습지향성", "r": "매개"}, {"n": "혁신역량", "r": "매개"}, {"n": "재창업의지", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "전문직 종사자의 성격 특성이 셀프리더십과 자기효능감을 통해 직무만족에 미치는 영향", "a": "이대근", "y": "2017", "c": "SVU논문", "v": [{"n": "성격특성", "r": "독립"}, {"n": "셀프리더십", "r": "매개"}, {"n": "자기효능감", "r": "매개"}, {"n": "직무만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "자동차부품제조기업 상사의 변혁적리더십이 조직몰입에 미치는 영향", "a": "장경수", "y": "2024", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "조직공정성", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "조직후원인식", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "직업능력개발훈련교사의 직무교육과 교육훈련전이 관계에서 자기효능감과 교육만족의 매개효과", "a": "박진우", "y": "2024", "c": "SVU논문", "v": [{"n": "직무교육", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "교육만족", "r": "매개"}, {"n": "교육훈련전이", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소 IT기업 상사의 변혁적 리더십과 조직유효성 관계에서 LMX와 직무열의의 매개", "a": "박성헌", "y": "2025", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "직무열의", "r": "매개"}, {"n": "조직유효성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "시계열 딥러닝 모델을 통한 지역별 주택매매 가격지수 예측 연구", "a": "김상철", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "조직몰입 구성개념의 개념화와 타당화: 은행 정규직 종사자 중심", "a": "안정원", "y": "2016", "c": "타대학논문", "v": [{"n": "조직몰입", "r": "종속"}, {"n": "직무도전성", "r": "독립"}, {"n": "직무만족", "r": "독립"}, {"n": "조직공정성", "r": "독립"}, {"n": "이직의도", "r": "종속"}, {"n": "조직시민행동", "r": "종속"}, {"n": "직무성과", "r": "종속"}], "j": "성균관대학교 박사학위논문"}, {"t": "조직몰입 3요소 모형의 내적구조 검토: 탐색적 구조방정식 모형(ESEM) 적용", "a": "안정원, 이순묵", "y": "2015", "c": "타대학논문", "v": [{"n": "조직몰입", "r": "종속"}, {"n": "직무만족", "r": "독립"}, {"n": "조직공정성", "r": "독립"}, {"n": "심리적 자본", "r": "독립"}], "j": "한국심리학회지: 산업 및 조직, Vol.28, No.4"}, {"t": "조직몰입에 대한 사람중심 접근: 국내 직장인들의 조직몰입 프로파일 분석", "a": "오현성, 정용석, 김우석", "y": "2018", "c": "타대학논문", "v": [{"n": "조직몰입", "r": "독립"}, {"n": "이직의도", "r": "종속"}], "j": "Journal of the Korean Data Analysis Society, Vol.20, No.6"}, {"t": "조직공정성의 개념과 효과성: 국내 상관연구의 통합분석", "a": "최대정, 박동건", "y": "2006", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무만족", "r": "종속"}, {"n": "조직몰입", "r": "종속"}, {"n": "조직신뢰", "r": "종속"}, {"n": "조직지원인식(POS)", "r": "종속"}, {"n": "LMX", "r": "종속"}, {"n": "이직의도", "r": "종속"}, {"n": "조직시민행동", "r": "종속"}], "j": "한국심리학회지: 산업 및 조직, Vol.19, No.2"}, {"t": "조직 공정성의 영향요인에 관한 경험적 연구", "a": "타브하이투메리, 배병룡", "y": "2015", "c": "타대학논문", "v": [{"n": "동의성", "r": "독립"}, {"n": "상사신뢰", "r": "독립"}, {"n": "조직지원", "r": "독립"}, {"n": "참여", "r": "독립"}, {"n": "조직공정성", "r": "종속"}], "j": "한국자치행정학보, 제29권 제3호"}, {"t": "조직공정성이 직무만족 및 직무성과에 미치는 영향: 조직지원인식의 매개역할", "a": "김미경", "y": "2022", "c": "타대학논문", "v": [{"n": "분배적 공정성", "r": "독립"}, {"n": "절차적 공정성", "r": "독립"}, {"n": "조직지원인식(POS)", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "직무성과", "r": "종속"}], "j": "지방행정연구, 제36권 제2호"}, {"t": "직무만족, 조직몰입, 성과, 이직의도 간의 관련성: 문헌고찰 및 메타분석", "a": "오인수, 김광현, Todd C. Darnold, 황종오, 유태용, 박영아, 박량희", "y": "2007", "c": "타대학논문", "v": [{"n": "직무만족", "r": "독립"}, {"n": "조직몰입", "r": "매개"}, {"n": "성과", "r": "종속"}, {"n": "이직의도", "r": "종속"}], "j": "인사·조직연구, 제15권 4호"}, {"t": "조직구성원의 감성지능, 직무만족, 조직몰입, 조직충성 간의 구조적 관계", "a": "강명희, 김부희, 유영란, 임현진", "y": "2011", "c": "타대학논문", "v": [{"n": "감성지능", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "조직충성", "r": "종속"}], "j": "기업교육연구, 제13권 제2호"}, {"t": "직무만족도와 조직몰입도의 결정요인과 구조분석", "a": "방하남, 김상욱", "y": "2009", "c": "타대학논문", "v": [{"n": "객관적 조직·직무특성", "r": "독립"}, {"n": "주관적 직무특성", "r": "독립"}, {"n": "직무만족도", "r": "종속"}, {"n": "조직몰입도", "r": "종속"}], "j": "한국사회학, 제43집 1호"}, {"t": "공무원의 자기효능감이 조직몰입에 미치는 영향: 직무열의의 매개효과", "a": "유병규, 이영균", "y": "2019", "c": "타대학논문", "v": [{"n": "자기효능감", "r": "독립"}, {"n": "직무열의", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "j": "한국공공관리학보, 제33권 제4호"}, {"t": "자기효능감이 학습지향성과 조직몰입에 미치는 영향", "a": "진윤희", "y": "2018", "c": "타대학논문", "v": [{"n": "자기효능감", "r": "독립"}, {"n": "학습지향성", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "j": "정책개발연구, 제18권 제1호"}, {"t": "자기효능감이 직무만족과 개인성과에 미치는 영향: 성과급의 조절효과", "a": "전미선, 전영준", "y": "2017", "c": "타대학논문", "v": [{"n": "자기효능감", "r": "독립"}, {"n": "직무만족", "r": "종속"}, {"n": "개인성과", "r": "종속"}, {"n": "성과급", "r": "조절"}], "j": "한국거버넌스학회보, 제24권 제2호"}, {"t": "자기효능감과 직무만족이 혁신행동과 직무성과에 미치는 영향", "a": "남승하, 정종원", "y": "2017", "c": "타대학논문", "v": [{"n": "자기효능감", "r": "독립"}, {"n": "직무만족", "r": "독립"}, {"n": "혁신행동", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "j": "한국인사행정학회보, 제16권 제4호"}, {"t": "Bandura의 교사 자기효능감 척도(TSES) 타당화", "a": "김연하, 김양은", "y": "2008", "c": "타대학논문", "v": [{"n": "교사 자기효능감", "r": "종속"}], "j": "유아교육연구, 제28권 제2호"}, {"t": "한국판 셀프리더십 설문지(RSLQ) 타당화 연구", "a": "신용국, 김명소, 한영석", "y": "2009", "c": "타대학논문", "v": [{"n": "셀프리더십", "r": "종속"}], "j": "한국심리학회지: 학교, 제6권 제3호"}, {"t": "셀프리더십이 직무열의에 미치는 영향: 외로움의 매개효과와 조직공정성의 조절효과", "a": "하순복", "y": "2022", "c": "타대학논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "외로움", "r": "매개"}, {"n": "직무열의", "r": "종속"}, {"n": "전반적 조직공정성", "r": "조절"}], "j": "디지털융복합연구, 제20권 제2호"}, {"t": "한국판 축약형 셀프리더십 설문지(ASLQ) 타당화", "a": "최원설", "y": "2020", "c": "타대학논문", "v": [{"n": "셀프리더십(ASLQ)", "r": "종속"}, {"n": "직무성과", "r": "종속"}], "j": "기업교육과 인재연구, 제22권 제2호"}, {"t": "변혁적 리더십이 무사안일에 미치는 영향: 조직학습역량과 조직몰입의 매개효과", "a": "이유진, 정재삼", "y": "2013", "c": "타대학논문", "v": [{"n": "변혁적 리더십", "r": "독립"}, {"n": "조직학습역량", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "무사안일", "r": "종속"}], "j": "HRD연구, 제15권 제2호"}, {"t": "긍정심리자본이 혁신행동과 직무성과에 미치는 영향: 조직지원인식의 조절효과", "a": "박태운, 김문중", "y": "2019", "c": "타대학논문", "v": [{"n": "긍정심리자본", "r": "독립"}, {"n": "혁신행동", "r": "매개"}, {"n": "직무성과", "r": "종속"}, {"n": "조직지원인식", "r": "조절"}], "j": "상업교육연구, 제33권 제5호"}, {"t": "조직지원인식이 혁신행동에 미치는 영향: 긍정심리자본의 매개효과와 창의적 자기효능감의 조절효과", "a": "우헌근, 김문중", "y": "2021", "c": "타대학논문", "v": [{"n": "조직지원인식", "r": "독립"}, {"n": "긍정심리자본", "r": "매개"}, {"n": "창의적 자기효능감", "r": "조절"}, {"n": "혁신행동", "r": "종속"}], "j": "상업교육연구, 제35권 제3호"}, {"t": "한국판 긍정심리자본 척도(K-PPC) 타당화", "a": "임태홍", "y": "2014", "c": "타대학논문", "v": [{"n": "긍정심리자본(K-PPC)", "r": "종속"}], "j": "코칭능력개발지, 제16권 제3호"}, {"t": "진성리더십과 성격이 긍정심리자본을 통해 직무수행에 미치는 영향", "a": "강호철, 이도화", "y": "2016", "c": "타대학논문", "v": [{"n": "진성 리더십", "r": "독립"}, {"n": "성격 Big-5", "r": "독립"}, {"n": "긍정심리자본", "r": "매개"}, {"n": "역할내 직무수행", "r": "종속"}, {"n": "적응적 수행성과", "r": "종속"}], "j": "인적자원관리연구, 제23권 제2호"}, {"t": "긍정심리자본이 직무만족과 정서적 몰입에 미치는 영향: 긍정적 정서와 생애만족의 매개", "a": "김주엽, 김명수", "y": "2011", "c": "타대학논문", "v": [{"n": "긍정심리자본", "r": "독립"}, {"n": "긍정적 정서", "r": "매개"}, {"n": "부정적 정서", "r": "매개"}, {"n": "생애만족", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "정서적 몰입", "r": "종속"}], "j": "경영교육연구(한국경영교육학회)"}, {"t": "윤리적 리더십이 직무만족과 조직시민행동에 미치는 영향", "a": "김상호", "y": "2008", "c": "타대학논문", "v": [{"n": "윤리적 리더십", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}], "j": "경찰학연구, 제8권 제3호"}, {"t": "참여가 조직시민행동과 성과에 미치는 영향", "a": "배병룡", "y": "2014", "c": "타대학논문", "v": [{"n": "참여", "r": "독립"}, {"n": "조직시민행동", "r": "매개"}, {"n": "성과", "r": "종속"}], "j": "한국자치행정학보, 제28권 제3호"}, {"t": "한국형 번아웃 증후군 자가진단 척도개발 및 타당도 검증", "a": "박수정, 김민규 외", "y": "2019", "c": "타대학논문", "v": [{"n": "번아웃 증후군", "r": "종속"}], "j": "여가학연구, 제17권 제2호"}, {"t": "한국형 번아웃 증후군 자가진단 척도 표준화 연구", "a": "박수정, 김민규", "y": "2020", "c": "타대학논문", "v": [{"n": "번아웃 증후군", "r": "종속"}], "j": "문화교류와 다문화교육, 제9권 제1호"}, {"t": "코칭리더십이 조직몰입에 미치는 영향: 조직신뢰의 매개효과", "a": "박주현, 윤병섭", "y": "2018", "c": "타대학논문", "v": [{"n": "코칭리더십", "r": "독립"}, {"n": "조직신뢰", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "j": "전문경영인연구, 제21권 제1호"}, {"t": "동료신뢰성, 조직신뢰, 조직시민행동 간의 구조적 관계", "a": "백유성", "y": "2016", "c": "타대학논문", "v": [{"n": "동료신뢰성", "r": "독립"}, {"n": "조직신뢰", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}], "j": "경영과 정보연구, 제35권 제4호"}, {"t": "기업체 중간관리자의 심리적 임파워먼트 척도 개발", "a": "오주리", "y": "2013", "c": "타대학논문", "v": [{"n": "심리적 임파워먼트", "r": "종속"}], "j": "상담학연구, 제14권 제3호"}, {"t": "조직지원인식이 종업원 인게이지먼트와 프로세스 혁신에 미치는 영향", "a": "서창적, 이슬기", "y": "2015", "c": "타대학논문", "v": [{"n": "조직지원인식", "r": "독립"}, {"n": "종업원 인게이지먼트", "r": "매개"}, {"n": "프로세스 혁신", "r": "종속"}], "j": "서비스경영학회지, 제16권 제5호"}, {"t": "리더-구성원 교환관계(LMX) 이론의 국내 연구 동향과 향후과제: 최근 10년간 경영학 분야", "a": "지평기, 차동옥", "y": "2020", "c": "타대학논문", "v": [{"n": "LMX", "r": "독립"}], "j": "대한경영학회지, 제33권 제2호"}, {"t": "리더십 및 직무만족이 이직의도에 미치는 영향에 관한 메타분석", "a": "윤병선, 김천규", "y": "2020", "c": "타대학논문", "v": [{"n": "리더십", "r": "독립"}, {"n": "직무만족", "r": "독립"}, {"n": "조직몰입", "r": "매개"}, {"n": "이직의도", "r": "종속"}], "j": "취업진로연구, 제10권 제4호"}, {"t": "직무스트레스와 정신건강의 관계: 마음챙김과 직무만족의 매개효과", "a": "박성현", "y": "2020", "c": "타대학논문", "v": [{"n": "직무스트레스", "r": "독립"}, {"n": "마음챙김", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "심리적 웰빙", "r": "종속"}, {"n": "정신장애", "r": "종속"}], "j": "국내박사"}, {"t": "MBSR이 조직구성원의 마음챙김, 스트레스, 소진, 자아존중감, 조직몰입, 창의성에 미치는 효과", "a": "박남수", "y": "2012", "c": "타대학논문", "v": [{"n": "MBSR 프로그램", "r": "독립"}, {"n": "마음챙김", "r": "종속"}, {"n": "스트레스 반응", "r": "종속"}, {"n": "소진", "r": "종속"}, {"n": "조직몰입", "r": "종속"}, {"n": "창의성", "r": "종속"}], "j": "한국조직학회보, 제9권 제2호"}, {"t": "핵심직무특성 등 유발요인이 테크노스트레스에 미치는 영향", "a": "이창원, 김대건", "y": "2019", "c": "타대학논문", "v": [{"n": "핵심직무특성", "r": "독립"}, {"n": "역할모호성", "r": "독립"}, {"n": "조직분위기", "r": "독립"}, {"n": "테크노스트레스", "r": "종속"}], "j": "경영교육연구, 제34권 제5호"}, {"t": "심리적주인의식이 혁신행동에 미치는 영향: 직무자율성의 매개와 조직지원인식의 조절", "a": "최석봉", "y": "2018", "c": "타대학논문", "v": [{"n": "심리적주인의식", "r": "독립"}, {"n": "직무자율성", "r": "매개"}, {"n": "혁신행동", "r": "종속"}, {"n": "조직지원인식", "r": "조절"}], "j": "기업경영연구, 제25권 제4호"}, {"t": "긍정심리자본이 심리적주인의식을 통해 직무만족과 직무성과에 미치는 영향", "a": "신선해, 김문중", "y": "2020", "c": "타대학논문", "v": [{"n": "긍정심리자본", "r": "독립"}, {"n": "심리적주인의식", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "직무성과", "r": "종속"}], "j": "산업경제연구, 제33권 제4호"}];
+const _embeddedPaperDB = [{"t": "간호사의 조직공정성, 공감피로 및 공감만족이 직무배태성에 미치는 영향", "a": "하희정", "y": "2024", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "공감피로", "r": "독립"}, {"n": "공감만족", "r": "독립"}, {"n": "직무배태성", "r": "종속"}], "si": [], "j": "청주대학교 석사학위논문"}, {"t": "요양병원 간호사의 조직공정성, 직무만족도, 간호근무환경이 직무배태성에 미치는 영향", "a": "김미현", "y": "2024", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무만족", "r": "독립"}, {"n": "간호근무환경", "r": "독립"}, {"n": "직무배태성", "r": "종속"}], "si": [], "j": "경운대학교 석사학위논문"}, {"t": "입대시 병사의 가치관이 분대장 리더십 형성에 미치는 영향에 관한 연구", "a": "노중균, 정병천, 김영춘", "y": "2007", "c": "국내인용논문", "v": [{"n": "가치관", "r": "독립"}, {"n": "리더십", "r": "종속"}, {"n": "조직문화", "r": "조절"}], "si": [], "j": "한국인사조직학회 학술대회"}, {"t": "양성평등 조직문화가 사회복지사의 직무몰입에 미치는 영향: 심리적 임파워먼트의 매개효과와 성인지 리더십의 조절효과", "a": "백재환, 박현환", "y": "2026", "c": "국내인용논문", "v": [{"n": "양성평등 조직문화", "r": "독립"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "직무몰입", "r": "종속"}, {"n": "성인지 리더십", "r": "조절"}], "si": [], "j": "한국행정논집 제38권 제1호"}, {"t": "혁신지향 조직문화와 이직의도 간의 비선형 관계 및 구조적 경력정체의 조절역할: 과학기술 연구개발직을 중심으로", "a": "정우영, 손승연", "y": "2025", "c": "국내인용논문", "v": [{"n": "혁신지향 조직문화", "r": "독립"}, {"n": "이직의도", "r": "종속"}, {"n": "구조적 경력정체", "r": "조절"}], "si": [], "j": "인적자원개발연구 제28권 제4호"}, {"t": "인사관리강도가 이직의도에 미치는 영향 연구: 혁신적 조직문화 및 조직효과성의 매개효과와 인적자본수준의 조절효과", "a": "김미가, 안수진, 옥지호", "y": "2025", "c": "국내인용논문", "v": [{"n": "인사관리강도", "r": "독립"}, {"n": "혁신적 조직문화", "r": "매개"}, {"n": "조직효과성", "r": "매개"}, {"n": "이직의도", "r": "종속"}, {"n": "인적자본수준", "r": "조절"}], "si": [], "j": "문화산업연구 제25권 제3호"}, {"t": "조직문화가 업무몰입에 미치는 영향: 상사 지지 조절효과", "a": "최은희", "y": "2025", "c": "국내인용논문", "v": [{"n": "조직문화", "r": "독립"}, {"n": "업무몰입", "r": "종속"}, {"n": "상사 지지", "r": "조절"}], "si": [], "j": "한국데이터정보과학회지"}, {"t": "공공부문의 양면성조직문화와 조직시민행동의 관계에서 공공봉사동기의 매개효과와 세대의 조절효과", "a": "윤주영", "y": "2025", "c": "국내인용논문", "v": [{"n": "양면성조직문화", "r": "독립"}, {"n": "공공봉사동기", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}, {"n": "세대", "r": "조절"}], "si": [], "j": "한국행정논집 제37권 제3호"}, {"t": "지방자치단체의 서번트 리더십이 효과적 팔로어십 형성에 미치는 영향 연구: 조직목표 명확성과 혁신·개방적 조직문화의 조절효과를 중심으로", "a": "김정인", "y": "2024", "c": "국내인용논문", "v": [{"n": "서번트리더십", "r": "독립"}, {"n": "효과적 팔로어십", "r": "종속"}, {"n": "조직목표 명확성", "r": "조절"}, {"n": "혁신·개방적 조직문화", "r": "조절"}], "si": [], "j": "한국사회와 행정연구 제35권 제1호"}, {"t": "공공봉사동기가 혁신행동에 미치는 영향: 조직문화 조절효과를 중심으로", "a": "박정인", "y": "2023", "c": "국내인용논문", "v": [{"n": "공공봉사동기", "r": "독립"}, {"n": "혁신행동", "r": "종속"}, {"n": "조직문화", "r": "조절"}], "si": [], "j": "지방정부연구 제26권 제4호"}, {"t": "중간관리자의 혁신행동지향성 및 의사소통능력이 MZ세대 신입사원의 조직몰입에 미치는 영향: 디지털조직문화의 조절효과를 중심으로", "a": "양세련, 김유빈, Shuglya Ksenia, 조재희", "y": "2022", "c": "국내인용논문", "v": [{"n": "혁신행동지향성", "r": "독립"}, {"n": "의사소통능력", "r": "독립"}, {"n": "조직몰입", "r": "종속"}, {"n": "디지털조직문화", "r": "조절"}], "si": [], "j": "한국언론학보 66권 6호"}, {"t": "와인소매업체 조직문화와 구매관리자의 역량이 친환경 구매와 환경성과에 미치는 영향: 윤리적 태도의 조절효과", "a": "원상훈, 전용성, 조미희", "y": "2022", "c": "국내인용논문", "v": [{"n": "조직문화", "r": "독립"}, {"n": "구매관리자 역량", "r": "독립"}, {"n": "친환경 구매", "r": "매개"}, {"n": "환경성과", "r": "종속"}, {"n": "윤리적 태도", "r": "조절"}], "si": [], "j": "호텔경영학연구 제31권 제4호"}, {"t": "중국 유학 귀국자의 문화지능과 글로벌역량이 조직적응에 미치는 영향: 위계적 조직문화의 조절효과", "a": "임체리, 박윤희", "y": "2021", "c": "국내인용논문", "v": [{"n": "문화지능", "r": "독립"}, {"n": "글로벌역량", "r": "독립"}, {"n": "조직적응", "r": "종속"}, {"n": "위계적 조직문화", "r": "조절"}], "si": [], "j": "한국산학기술학회논문지 22(12)"}, {"t": "지방공무원의 공공봉사동기가 혁신행동에 미치는 영향: 직무자율성과 조직문화 인식의 매개효과, 조절효과분석", "a": "진윤희", "y": "2021", "c": "국내인용논문", "v": [{"n": "공공봉사동기", "r": "독립"}, {"n": "직무자율성", "r": "매개"}, {"n": "혁신행동", "r": "종속"}, {"n": "조직문화 인식", "r": "조절"}], "si": [], "j": "한국행정논집 제33권 제2호"}, {"t": "직무배태성의 형성 및 결과에 대한 연구: 구성원의 인식을 중심으로", "a": "대호", "y": "2020", "c": "타대학논문", "v": [{"n": "직무배태성", "r": "종속"}], "si": [], "j": "경기대학교 박사학위논문"}, {"t": "대기업 Z세대 근로자가 인식하는 조직공정성과 직무배태성의 관계에서 경력개발지원인식의 매개효과", "a": "김아민", "y": "2026", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "경력개발지원인식", "r": "매개"}, {"n": "직무배태성", "r": "종속"}], "si": [], "j": "고려대학교 석사학위논문"}, {"t": "MZ세대 호텔 종사원이 인식한 조직공정성, 직무배태성, 조직시민행동, 이직의도의 관계: 지각된 과잉자격의 조절된 매개효과를 중심으로", "a": "이승연", "y": "2024", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무배태성", "r": "매개"}, {"n": "조직시민행동", "r": "매개"}, {"n": "이직의도", "r": "종속"}, {"n": "지각된 과잉자격", "r": "조절"}], "si": [], "j": "경기대학교 박사학위논문"}, {"t": "간호사의 조직공정성이 직무배태성에 미치는 영향", "a": "이윤신,김희영", "y": "2022", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무배태성", "r": "종속"}], "si": [], "j": "간호행정학회지"}, {"t": "조직공정성이 직원몰입을 매개로 구성원의 직무배태성에 미치는 영향과 심리적 안전감의 조절효과", "a": "최의인", "y": "2022", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직원몰입", "r": "매개"}, {"n": "직무배태성", "r": "종속"}, {"n": "심리적안전감", "r": "조절"}], "si": [], "j": "중앙대학교 석사학위논문"}, {"t": "임상간호사의 긍정심리자본과 조직공정성이 직무배태성에 미치는 영향", "a": "윤신", "y": "2021", "c": "타대학논문", "v": [{"n": "긍정심리자본", "r": "독립"}, {"n": "조직공정성", "r": "독립"}, {"n": "직무배태성", "r": "종속"}], "si": [], "j": "동신대학교 석사학위논문"}, {"t": "전문가 지향성이 연구성과와 이직의도에 미치는 영향: 전문가 지향성의 영향 요인과 심리적 임파워먼트의 조절효과", "a": "김남규, 고유미, 김경석", "y": "2025", "c": "국내인용논문", "v": [{"n": "전문가 지향성", "r": "독립"}, {"n": "개인-직무 적합성", "r": "매개"}, {"n": "고용가능성", "r": "매개"}, {"n": "연구성과", "r": "종속"}, {"n": "이직의도", "r": "종속"}, {"n": "심리적 임파워먼트", "r": "조절"}], "si": [], "j": "한국혁신학회지 제20권 제1호"}, {"t": "공유리더십이 직무성과에 미치는 영향: 심리적 안전감과 심리적 임파워먼트의 이중 매개역할", "a": "윤하성, 이종건", "y": "2025", "c": "국내인용논문", "v": [{"n": "공유리더십", "r": "독립"}, {"n": "심리적안전감", "r": "매개"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "si": [], "j": "산업경제연구 제38권 제1호"}, {"t": "관료적 조직문화가 공공 연구개발 인력의 직무스트레스에 미치는 영향: 심리적 임파워먼트의 매개효과와 변혁적 리더십의 조절효과", "a": "김남규, 김경석", "y": "2025", "c": "국내인용논문", "v": [{"n": "관료적 조직문화", "r": "독립"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "직무스트레스", "r": "종속"}, {"n": "변혁적리더십", "r": "조절"}], "si": [], "j": "대한경영학회지 제38권 제4호"}, {"t": "조리전공 대학생들의 심리적 임파워먼트가 직무착근도, 현장실습만족 및 실습성과에 미치는 영향", "a": "김정은", "y": "2025", "c": "국내인용논문", "v": [{"n": "심리적 임파워먼트", "r": "독립"}, {"n": "직무착근도", "r": "종속"}, {"n": "현장실습만족", "r": "종속"}, {"n": "실습성과", "r": "종속"}], "si": [], "j": "외식경영연구"}, {"t": "MZ세대에서 조직공정성이 조직성과에 미치는 영향 연구: 직무만족과 조직몰입의 매개효과 및 심리적 임파워먼트의 조절효과", "a": "김지혜", "y": "2025", "c": "국내인용논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "조직성과", "r": "종속"}, {"n": "심리적 임파워먼트", "r": "조절"}], "si": [], "j": "학술발표대회"}, {"t": "조직지원인식이 직무열의에 미치는 영향: LMX와 심리적 임파워먼트의 직렬다중매개를 중심으로", "a": "김연주, 정기수", "y": "2026", "c": "국내인용논문", "v": [{"n": "조직후원인식", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "직무열의", "r": "종속"}], "si": [], "j": "대한경영학회지 제39권 제1호"}, {"t": "호텔리어의 심리적 임파워먼트가 고객지향성에 미치는 영향에 관한 연구: 특1급 호텔 서비스 접점부서를 중심으로", "a": "임재희", "y": "2016", "c": "국내인용논문", "v": [{"n": "심리적 임파워먼트", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "고객지향성", "r": "종속"}], "si": [], "j": "관광레저연구 제28권 제4호"}, {"t": "외식프랜차이즈 조직구성원의 셀프리더십이 혁신행동에 미치는 영향: 심리적임파워먼트의 조절효과", "a": "조준상", "y": "2019", "c": "국내인용논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "혁신행동", "r": "종속"}, {"n": "심리적 임파워먼트", "r": "조절"}], "si": [], "j": "외식경영연구 제22권 제1호"}, {"t": "관리코칭과 경영성과의 관계에서 심리적임파워먼트와 성과측정시스템의 역할에 관한 연구", "a": "정송, 손성진", "y": "2022", "c": "국내인용논문", "v": [{"n": "관리코칭", "r": "독립"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "성과측정시스템(PMS)", "r": "매개"}, {"n": "경영성과", "r": "종속"}], "si": [], "j": "관리회계연구 제22권 제1호"}, {"t": "항공객실승무원의 심리적임파워먼트, 고객중심 업무수행의도, 조직충성행동 간의 구조적 관계", "a": "이수경", "y": "2020", "c": "국내인용논문", "v": [{"n": "심리적 임파워먼트", "r": "독립"}, {"n": "고객중심 업무수행의도", "r": "매개"}, {"n": "조직충성행동", "r": "종속"}], "si": [], "j": "학술발표대회"}, {"t": "긍정심리자본이 심리적주인의식과 직무성과에 미치는 영향에 관한 연구", "a": "최학룡", "y": "2022", "c": "타대학논문", "v": [{"n": "긍정심리자본", "r": "독립"}, {"n": "심리적주인의식", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "si": [], "j": "동신대학교 석사학위논문"}, {"t": "공공기관에서 진성리더십(Authentic Leadership)이 구성원의 창의적 행동에 미치는 영향: 심리적 임파워먼트의 매개효과와 조직지원인식의 조절된 매개효과", "a": "김성재, 장제욱, 윤동열", "y": "2024", "c": "국내인용논문", "v": [{"n": "진정성리더십", "r": "독립"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "창의적 행동", "r": "종속"}, {"n": "조직후원인식", "r": "조절"}], "si": [], "j": "대한경영학회지 제37권 제2호"}, {"t": "호텔직원의 심리적 임파워먼트가 그릿과 직무성과에 미치는 영향: 인지적 유연성의 조절된 매개효과", "a": "김해섭, 변재문", "y": "2024", "c": "국내인용논문", "v": [{"n": "심리적 임파워먼트", "r": "독립"}, {"n": "그릿", "r": "매개"}, {"n": "직무성과", "r": "종속"}, {"n": "인지적 유연성", "r": "조절"}], "si": [], "j": "호텔경영학연구 제33권 제3호"}, {"t": "보육교사의 보상체계가 조직유효성에 미치는 영향: 원장의 감성리더십 및 심리적 임파워먼트의 중재효과", "a": "김태연, 정유진, 장영의, 이문", "y": "2024", "c": "국내인용논문", "v": [{"n": "보상체계", "r": "독립"}, {"n": "감성리더십", "r": "매개"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "조직유효성", "r": "종속"}], "si": [], "j": "학술발표대회"}, {"t": "임파워링 리더십이 직원 창의성에 미치는 영향: 팀 신뢰, 심리적 임파워먼트의 매개효과 및 팀 내 정보공유의 조절효과를 중심으로", "a": "탄희, 최혜란", "y": "2024", "c": "국내인용논문", "v": [{"n": "임파워링리더십", "r": "독립"}, {"n": "팀 신뢰", "r": "매개"}, {"n": "심리적 임파워먼트", "r": "매개"}, {"n": "직원 창의성", "r": "종속"}, {"n": "팀 내 정보공유", "r": "조절"}], "si": [], "j": "인적자원개발연구 제27권 제4호"}, {"t": "디지털 역량교육의 방향성: 디지털 역량강화 교육사업 분석을 통해", "a": "배진아, 고아라, 조정원", "y": "2023", "c": "국내인용논문", "v": [{"n": "디지털 역량교육", "r": "독립"}, {"n": "교육 만족도", "r": "종속"}, {"n": "디지털 격차", "r": "종속"}], "si": [], "j": "학술대회 논문"}, {"t": "노년층 소비자의 디지털 역량이 삶의 만족에 미치는 영향: 우울감의 매개효과와 자아존중감의 조절된 매개효과를 중심으로", "a": "고경아", "y": "2024", "c": "국내인용논문", "v": [{"n": "디지털 역량", "r": "독립"}, {"n": "우울감", "r": "매개"}, {"n": "삶의 만족", "r": "종속"}, {"n": "자아존중감", "r": "조절"}], "si": [], "j": "사회과학연구 제31권 제2호"}, {"t": "노년층의 디지털역량 강화를 위한 스마트 펜슬과 타블렛 제안", "a": "윤재현, 박소희", "y": "2021", "c": "국내인용논문", "v": [{"n": "디지털역량", "r": "종속"}], "si": [], "j": "디자인 학술논문"}, {"t": "베이비부머의 디지털역량이 온라인 경제활동을 매개로 소득에 미치는 영향", "a": "신하영, 김수진", "y": "2023", "c": "국내인용논문", "v": [{"n": "디지털역량", "r": "독립"}, {"n": "온라인 경제활동", "r": "매개"}, {"n": "소득", "r": "종속"}], "si": [], "j": "인문사회과학연구 제31권 제2호"}, {"t": "유아교사가 인식한 디지털 역량 관련 자기효능감 증진 요인 및 요구", "a": "박채원, 조형숙", "y": "2026", "c": "국내인용논문", "v": [{"n": "디지털 역량", "r": "독립"}, {"n": "자기효능감", "r": "종속"}], "si": [], "j": "유아교육학논집 제30권 제1호"}, {"t": "유아교사의 디지털 역량과 교사 전문성의 관계에서 교수창의성의 매개효과", "a": "조은정, 신수경", "y": "2026", "c": "국내인용논문", "v": [{"n": "디지털 역량", "r": "독립"}, {"n": "교수창의성", "r": "매개"}, {"n": "교사 전문성", "r": "종속"}], "si": [], "j": "한국산학기술학회논문지 27(3)"}, {"t": "유아교사의 디지털역량 강화를 위한 교육 프로그램 개발", "a": "김교령, 박은혜", "y": "2022", "c": "국내인용논문", "v": [{"n": "디지털역량 교육 프로그램", "r": "독립"}, {"n": "디지털역량", "r": "종속"}], "si": [], "j": "육아지원연구 제17권 제3호"}, {"t": "유아교사의 에듀테크 활용을 위한 교육 경험과 소진 간의 관계: 디지털역량과 테크노스트레스의 순차적 매개효과", "a": "황근미, 박보경", "y": "2025", "c": "국내인용논문", "v": [{"n": "에듀테크 교육 경험", "r": "독립"}, {"n": "디지털역량", "r": "매개"}, {"n": "테크노스트레스", "r": "매개"}, {"n": "소진", "r": "종속"}], "si": [], "j": "2025 한국아동학회 추계학술대회"}, {"t": "유아교육기관의 전문성지원환경과 교수창의성이 유아교사 디지털역량에 미치는 영향", "a": "최은미, 이정화", "y": "2025", "c": "국내인용논문", "v": [{"n": "전문성지원환경", "r": "독립"}, {"n": "교수창의성", "r": "독립"}, {"n": "디지털역량", "r": "종속"}], "si": [], "j": "학술논문"}, {"t": "잠재프로파일 분석을 통한 고령층 집단 유형화와 영향요인 연구: 디지털역량과 연령변수를 중심으로", "a": "황현정, 황용석, 이현종, 박지수, 신민호", "y": "2022", "c": "국내인용논문", "v": [{"n": "디지털역량", "r": "독립"}, {"n": "연령", "r": "독립"}, {"n": "디지털 격차 유형", "r": "종속"}], "si": [], "j": "사회과학연구 제29권 제3호"}, {"t": "장애노인의 스포츠활동 가치인식이 삶의 만족도에 미치는 영향: 디지털역량의 매개효과를 중심으로", "a": "조건상, 곽상원, 박진우", "y": "2025", "c": "국내인용논문", "v": [{"n": "스포츠활동 가치인식", "r": "독립"}, {"n": "디지털역량", "r": "매개"}, {"n": "삶의 만족도", "r": "종속"}], "si": [], "j": "학술논문"}, {"t": "창업자의 창업동기와 정부지원사업의 만족도가 경쟁우위 성과에 미치는 영향: 디지털역량과 리스크대응역량의 매개효과", "a": "장영혜, 윤복만", "y": "2025", "c": "국내인용논문", "v": [{"n": "창업동기", "r": "독립"}, {"n": "정부지원사업 만족도", "r": "독립"}, {"n": "디지털역량", "r": "매개"}, {"n": "리스크대응역량", "r": "매개"}, {"n": "경쟁우위 성과", "r": "종속"}], "si": [], "j": "비즈니스융복합연구 제10권 제4호"}, {"t": "표상운동량과 디지털기술능력, 디지털인지능력이 디지털역량에 미치는 영향 분석: 문자형과 그림형의 MO-ABC 모형을 중심으로", "a": "이려화, 허성호", "y": "2023", "c": "국내인용논문", "v": [{"n": "표상운동량", "r": "독립"}, {"n": "디지털기술능력", "r": "매개"}, {"n": "디지털인지능력", "r": "매개"}, {"n": "디지털역량", "r": "종속"}], "si": [], "j": "디지털콘텐츠학회논문지 24(8)"}, {"t": "스타트업 CEO의 변혁적리더십과 이직의도의 관계에서 LMX와 조직몰입의 매개효과 연구", "a": "조원희", "y": "2023", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "이직의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "산업안전 컨설턴트역량이 컨설팅 만족도와 활용도를 매개로 하여 재계약의도에 미치는 영향", "a": "박성준", "y": "2023", "c": "SVU논문", "v": [{"n": "컨설턴트역량", "r": "독립"}, {"n": "컨설팅만족도", "r": "매개"}, {"n": "컨설팅활용도", "r": "매개"}, {"n": "재계약의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "상사의 성격5요인이 부하직원의 직무만족에 미치는 영향: 상사-부하 교환관계(LMX)의 매개·조절효과", "a": "김창섭", "y": "2021", "c": "SVU논문", "v": [{"n": "성격5요인", "r": "독립"}, {"n": "LMX(상사-부하 교환관계)", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "LMX(상사-부하 교환관계)", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "청소년의 사회적지지가 긍정심리자본에 따른 자살생각에 미치는 효과: 성격5요인의 조절효과", "a": "어영미", "y": "2018", "c": "SVU논문", "v": [{"n": "사회적지지", "r": "독립"}, {"n": "긍정심리자본", "r": "매개"}, {"n": "자살생각", "r": "종속"}, {"n": "성격5요인", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "4차 산업혁명 시대 임베디드소프트웨어 기반 미래유망기술 발전 방안에 관한 연구", "a": "김규신", "y": "2017", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "창업자의 개인특성, 사회적자본, 창업정책환경이 창업의지에 미치는 영향: 기업가정신과 가치지향성을 중심으로", "a": "홍진기", "y": "2016", "c": "SVU논문", "v": [{"n": "자기결정성(개인특성)", "r": "독립"}, {"n": "사회적자본", "r": "독립"}, {"n": "창업정책환경", "r": "독립"}, {"n": "기업가정신", "r": "매개"}, {"n": "가치지향성", "r": "매개"}, {"n": "창업의지", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "AHP 기법을 이용한 건축분야 BIM 활성화 방안 연구", "a": "김진호", "y": "2021", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "퀀트분석을 이용한 포트폴리오 구성에서 Monte Carlo Simulation을 이용한 DQN 강화학습 연구", "a": "김의철", "y": "2021", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 석사학위논문"}, {"t": "건설기업의 스마트시티 역량평가지표 개발 연구", "a": "김혜진", "y": "2021", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "중소건설기업의 직무배태성, 직무만족, 조직몰입, LMX, 이직의도 관계 연구", "a": "최영철", "y": "2021", "c": "SVU논문", "v": [{"n": "직무배태성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "이직의도", "r": "종속"}, {"n": "LMX", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "중소기업구성원의 셀프리더십이 혁신행동에 미치는 영향: 자기효능감, 조직몰입의 매개효과", "a": "김선희", "y": "2015", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "혁신행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "상사의 수퍼리더십이 자기효능감과 조직몰입을 매개로 하여 이직의도에 미치는 효과", "a": "장해양", "y": "2017", "c": "SVU논문", "v": [{"n": "수퍼리더십", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "이직의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "건설기업의 조직 공정성이 조직신뢰와 직무태도를 통해 조직시민행동에 미치는 영향", "a": "이영수", "y": "2017", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "조직신뢰", "r": "매개"}, {"n": "직무태도", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "은행서비스 환경에서 라포형성행동과 고객충성도 간에 고객태도와 고객만족도의 매개효과 연구", "a": "김천욱", "y": "2023", "c": "SVU논문", "v": [{"n": "라포형성행동", "r": "독립"}, {"n": "고객태도", "r": "매개"}, {"n": "고객만족도", "r": "매개"}, {"n": "고객충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "직장인의 SNS 사용 요인과 스트레스와의 관계", "a": "김은주", "y": "2013", "c": "SVU논문", "v": [{"n": "SNS사용빈도", "r": "독립"}, {"n": "SNS일상성", "r": "독립"}, {"n": "자기표현(외면적/내면적)", "r": "독립"}, {"n": "사회적지지", "r": "독립"}, {"n": "스트레스", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "정보통신기술 트렌드를 통한 비즈니스 기회발견에 관한 탐색적 연구", "a": "유인철", "y": "2013", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "소셜TV 이용자의 경험 요인이 감정반응(PAD) 요인을 통해 구전의도에 미치는 영향", "a": "권두순", "y": "2014", "c": "SVU논문", "v": [{"n": "사회적실재감", "r": "독립"}, {"n": "지각된사용성", "r": "독립"}, {"n": "감정반응(PAD)", "r": "매개"}, {"n": "구전의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "SNS 마케팅 방법론 연구: SNS 마케팅 캔버스 설계를 중심으로", "a": "송영우", "y": "2015", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "기업 종사자들의 공정성 지각이 심리자본과 직무만족을 통해 조직몰입에 미치는 영향", "a": "엄재규", "y": "2016", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "긍정심리자본", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "업종(건설업/제조업)", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "신재생에너지정책 평가지표 개발: RPS 및 FIT를 중심으로", "a": "최종재", "y": "2014", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "중소 소방엔지니어링 기업의 조직공정성이 조직몰입에 미치는 영향", "a": "황환성", "y": "2019", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "조직신뢰", "r": "매개"}, {"n": "조직후원인식(POS)", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "LMX", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "시공책임형 CM단장의 리더십과 조직유효성 관계 연구", "a": "김명철", "y": "2017", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "진정성리더십", "r": "독립"}, {"n": "신뢰", "r": "매개"}, {"n": "임파워먼트", "r": "매개"}, {"n": "조직유효성(조직몰입/직무만족)", "r": "종속"}, {"n": "신뢰", "r": "조절"}, {"n": "임파워먼트", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "메타버스 한류콘텐츠기업 상사의 변혁적 리더십이 LMX와 직무만족을 매개로 조직몰입에 미치는 영향", "a": "박인규", "y": "2022", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "자기효능감", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "대기업 콜센터의 조직문화와 조직시민행동 관계에서 조직몰입과 노조몰입 매개효과연구", "a": "김정균", "y": "2022", "c": "SVU논문", "v": [{"n": "조직문화", "r": "독립"}, {"n": "조직몰입", "r": "매개"}, {"n": "노조몰입", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}, {"n": "LMX", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "ICT·SW 중소기업 구성원의 셀프리더십이 혁신행동에 미치는 영향", "a": "이희준", "y": "2021", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "심리적임파워먼트", "r": "매개"}, {"n": "혁신행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "스마트워크 시스템의 사용자 만족 영향요인", "a": "정창현", "y": "2013", "c": "SVU논문", "v": [{"n": "사회적요인(SW관리체계/공유가치)", "r": "독립"}, {"n": "기술적요인(정보품질/시스템품질/서비스품질)", "r": "독립"}, {"n": "스마트워크시스템만족", "r": "매개"}, {"n": "시스템사용", "r": "종속"}, {"n": "지속적사용의도", "r": "종속"}, {"n": "개인성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "중소제조업 조직 구성원의 자기결정성이 조직성과에 미치는 영향", "a": "권영민", "y": "2016", "c": "SVU논문", "v": [{"n": "자기결정성", "r": "독립"}, {"n": "직무몰입", "r": "매개"}, {"n": "조직시민행동", "r": "매개"}, {"n": "조직성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "건설엔지니어링기업 구성원의 셀프리더십과 조직몰입 관계에서 자기효능감과 직무만족", "a": "최용래", "y": "2020", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "조직후원인식(POS)", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "FacilityManagement기업의 서비스품질이 고객만족과 관계지향성에 미치는 영향", "a": "전우명", "y": "2013", "c": "SVU논문", "v": [{"n": "FM서비스품질", "r": "독립"}, {"n": "고객만족", "r": "매개"}, {"n": "관계지향성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "AHP기법을 이용한 금형기업의 ESG경영 핵심역량 평가지표 연구", "a": "이준범", "y": "2023", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "건설기술자 특성이 창업의도에 미치는 영향", "a": "이창수", "y": "2015", "c": "SVU논문", "v": [{"n": "경력지향성", "r": "독립"}, {"n": "개인역량", "r": "독립"}, {"n": "이해관계자협력", "r": "독립"}, {"n": "태도", "r": "매개"}, {"n": "주관적규범", "r": "매개"}, {"n": "지각된행동통제", "r": "매개"}, {"n": "창업의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "F-Score를 이용한 종목선정과 위험균형 포트폴리오를 통한 누적수익률 예측 연구", "a": "김천욱", "y": "2020", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "U-방범서비스 품질요인이 사용자만족도에 미치는 영향", "a": "최창선", "y": "2014", "c": "SVU논문", "v": [{"n": "시스템품질", "r": "독립"}, {"n": "서비스품질", "r": "독립"}, {"n": "유용성", "r": "매개"}, {"n": "공공성", "r": "매개"}, {"n": "경제성", "r": "매개"}, {"n": "사용자만족도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "국가직무능력(NCS)기반 IT프로젝트관리 핵심 능력의 현업 적합성 연구", "a": "김지수", "y": "2016", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "국가직무능력표준의 유·무선통신구축 능력단위 통합에 관한 연구", "a": "김광희", "y": "2015", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "진화론과 혁신론의 통섭에 의한 파괴적 가치창출 방법에 관한 연구", "a": "김근호", "y": "2013", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "u-City서비스 품질요인이 고객만족에 미치는 영향", "a": "곽진조", "y": "2013", "c": "SVU논문", "v": [{"n": "시스템품질", "r": "독립"}, {"n": "정보품질", "r": "독립"}, {"n": "서비스품질", "r": "독립"}, {"n": "공공성", "r": "독립"}, {"n": "유용성", "r": "매개"}, {"n": "고객만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "방열과 배광 최적화를 위한 연구", "a": "김경식", "y": "2012", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "웨딩플래너의 자기결정성이 고객지향성에 미치는 영향", "a": "이도연", "y": "2016", "c": "SVU논문", "v": [{"n": "자기결정성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "직무성과", "r": "매개"}, {"n": "고객지향성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "조직공정성이 직무만족과 조직몰입을 통해 직무성과에 미치는 영향", "a": "남상민", "y": "2015", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "화장품제조중소기업 구성원의 셀프리더십이 자기효능감을 통해 직무만족에 미치는 영향", "a": "임종인", "y": "2020", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "성격5요인", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "중소제조업 CEO의 진정성리더십이 신뢰를 통해 직무만족에 미치는 영향", "a": "우성주", "y": "2020", "c": "SVU논문", "v": [{"n": "진정성리더십", "r": "독립"}, {"n": "신뢰", "r": "매개"}, {"n": "직무만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "금형·성형 제조기업 구성원이 지각한 상사의 변혁적리더쉽이 조직몰입에 미치는 영향", "a": "황남연", "y": "2020", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "조직문화", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "소프트웨어개발기업의 근무환경이 지속근무의도에 미치는 영향 연구", "a": "안병찬", "y": "2022", "c": "SVU논문", "v": [{"n": "근무환경", "r": "독립"}, {"n": "조직몰입", "r": "매개"}, {"n": "지속근무의도", "r": "종속"}, {"n": "직무만족", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "U-City환경의 U-교통지능형시스템품질이 지각된 유용성과 혁신성을 통해 이용자 만족도에 미치는 영향", "a": "황준호", "y": "2014", "c": "SVU논문", "v": [{"n": "U-교통시스템품질", "r": "독립"}, {"n": "지각된유용성", "r": "매개"}, {"n": "혁신성", "r": "매개"}, {"n": "이용자만족도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "태양에너지의 건축시스템 도입에 관한 연구", "a": "김성헌", "y": "2012", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "지진피해평가시스템을 활용한 도심지 피해예측에 관한 연구", "a": "황창휘", "y": "2012", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "전시문화디자인기업 구성원의 마음챙김이 직무성과에 미치는 영향", "a": "정수형", "y": "2018", "c": "SVU논문", "v": [{"n": "마음챙김", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "자기효능감", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "다중사용자 온라인 전투게임의 게임특성과 자기효능감이 몰입과 게임만족도를 통해 게임충성도에 미치는 영향", "a": "김태섭", "y": "2020", "c": "SVU논문", "v": [{"n": "게임특성", "r": "독립"}, {"n": "자기효능감", "r": "독립"}, {"n": "몰입", "r": "매개"}, {"n": "게임만족도", "r": "매개"}, {"n": "게임충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "스마트 물관리 시스템 구축을 위한 엔지니어링 활동 고도화 연구", "a": "최용래", "y": "2023", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소제조기업의 근무환경과 조직몰입 관계에서 직무만족과 자기효능감의 매개효과", "a": "임종인", "y": "2023", "c": "SVU논문", "v": [{"n": "근무환경", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "자기효능감", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "BIM기반의 수선분류체계를 통한 리모델링 비용예측모델 개발", "a": "김진호", "y": "2023", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "U-공공서비스품질과 공공기관 신뢰 및 고객만족의 관계", "a": "박상걸", "y": "2014", "c": "SVU논문", "v": [{"n": "U-공공서비스품질", "r": "독립"}, {"n": "공공기관신뢰", "r": "매개"}, {"n": "고객만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "이동통신기지국의 지진피해 복구절차 개선방안", "a": "정창석", "y": "2012", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "공영택지개발사업 갈등과정에서의 인과관계 분석", "a": "강성민", "y": "2013", "c": "SVU논문", "v": [{"n": "갈등원인", "r": "독립"}, {"n": "갈등수준", "r": "매개"}, {"n": "갈등관리", "r": "매개"}, {"n": "갈등결과만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "성격5요인 조절효과를 통한 스타트업 CEO의 변혁적 리더십이 심리적 임파워먼트와 조직몰입에 미치는 영향", "a": "허경영", "y": "2016", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "심리적임파워먼트", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "성격5요인", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "건설기술교육서비스품질이 교육만족을 통하여 행위의도에 미치는 영향", "a": "심민섭", "y": "2018", "c": "SVU논문", "v": [{"n": "교육서비스품질", "r": "독립"}, {"n": "교육만족도", "r": "매개"}, {"n": "행위의도", "r": "종속"}, {"n": "성격5요인", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "ARCS동기이론을 기반으로 한 산업현장 교육이 학습전이에 미치는 영향", "a": "박동철", "y": "2015", "c": "SVU논문", "v": [{"n": "ARCS동기이론", "r": "독립"}, {"n": "NCS교수자상호작용성", "r": "매개"}, {"n": "NCS학습자학습몰입", "r": "매개"}, {"n": "학업성취도", "r": "종속"}, {"n": "학습전이", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "ICT와 Green을 기반으로 한 중소기업의 스마트 그린 공장에 관한 연구", "a": "최충환", "y": "2017", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "감리단장의 변혁적 리더십과 직무만족 관계에서 직무열의와 신뢰의 매개", "a": "차무홍", "y": "2022", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "신뢰", "r": "매개"}, {"n": "직무열의", "r": "매개"}, {"n": "직무만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "대형건설회사의 조직공정성과 조직문화가 직무만족에 미치는 영향", "a": "곽경환", "y": "2022", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "조직문화", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "조직문화", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "디지털 아카이브 전시장 관람객의 감정반응요인이 관람몰입과 관람만족을 통해 전시성과에 미치는 영향", "a": "김인환", "y": "2016", "c": "SVU논문", "v": [{"n": "감정반응요인(PAD)", "r": "독립"}, {"n": "관람몰입", "r": "매개"}, {"n": "관람만족", "r": "매개"}, {"n": "전시성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지방자치단체 부서장의 변혁적리더십과 조직몰입 관계에서 긍정심리자본과 상사신뢰의 매개", "a": "김백경", "y": "2022", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "긍정심리자본", "r": "매개"}, {"n": "상사신뢰", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소 소방기업의 보상공정성과 조직유효성 관계에서 보상만족 매개효과", "a": "김종길", "y": "2025", "c": "SVU논문", "v": [{"n": "보상공정성", "r": "독립"}, {"n": "보상만족", "r": "매개"}, {"n": "조직유효성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "베이커리카페의 고객경험가치와 고객충성도 관계에서 고객만족 및 브랜드신뢰의 매개효과와 성격유형의 조절효과", "a": "남상민", "y": "2025", "c": "SVU논문", "v": [{"n": "고객경험가치", "r": "독립"}, {"n": "고객만족", "r": "매개"}, {"n": "브랜드신뢰", "r": "매개"}, {"n": "고객충성도", "r": "종속"}, {"n": "성격유형(외향성)", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "국내 수소 기업의 발전을 위한 주요 요인 분석 및 밸류체인 균형 발전 방안", "a": "지세영", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "IoT 기반 실시간 좌식 행동 교정 시스템 개발에 관한 연구", "a": "안병찬", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "CEO브랜드이미지가 기업의 고객충성도에 미치는 영향과 CEO평판 및 기업평판의 매개효과", "a": "안영노", "y": "2025", "c": "SVU논문", "v": [{"n": "CEO브랜드이미지", "r": "독립"}, {"n": "CEO평판", "r": "매개"}, {"n": "기업평판", "r": "매개"}, {"n": "고객충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 박사학위논문"}, {"t": "IoT 기반 물류센터 팔레트 랙 안전관리 시스템 개발에 관한 연구", "a": "박성준", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "여성과학기술인이 지각한 보상공정성과 조직유효성간의 보상만족과 조직신뢰의 매개", "a": "기유경", "y": "2024", "c": "SVU논문", "v": [{"n": "보상공정성", "r": "독립"}, {"n": "보상만족", "r": "매개"}, {"n": "조직신뢰", "r": "매개"}, {"n": "조직유효성", "r": "종속"}, {"n": "미묘한성차별경험", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "커넥터제조기업의 상사의 진정성 리더십과 직무만족 관계에서 LMX의 매개효과 및 POS의 조절효과", "a": "강태만", "y": "2022", "c": "SVU논문", "v": [{"n": "진정성리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "조직후원인식(POS)", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "강원도 지역주민이 지각한 문화적가치와 참여행동의 관계에서 태도의 매개효과와 애착도의 조절효과", "a": "이경영", "y": "2022", "c": "SVU논문", "v": [{"n": "문화적가치", "r": "독립"}, {"n": "태도", "r": "매개"}, {"n": "참여행동", "r": "종속"}, {"n": "애착도", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "직업능력개발훈련기관 교사의 분산적지도성이 직무만족과 교사임파워먼트에 따른 조직시민행동에 미치는 영향", "a": "최상국", "y": "2019", "c": "SVU논문", "v": [{"n": "분산적지도성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "교사임파워먼트", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소 디지털콘텐츠 제작기업 구성원의 조직공정성이 이직의도에 미치는 영향", "a": "장선연", "y": "2019", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "이직의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "학습조직 참여자의 셀프리더십과 직무만족 관계에서 학습지향성과 LMX 매개효과", "a": "김남환", "y": "2018", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "학습지향성", "r": "매개"}, {"n": "LMX", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "성격5요인", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지방정부 특별교통 서비스품질이 기관이미지에 미치는 영향", "a": "김종억", "y": "2018", "c": "SVU논문", "v": [{"n": "특별교통서비스품질", "r": "독립"}, {"n": "이용자만족도", "r": "매개"}, {"n": "기관신뢰", "r": "매개"}, {"n": "기관이미지", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지방정부 공무원의 공직동기(PSM) 요인이 감정노동을 통해 조직유효성에 미치는 영향", "a": "김영미", "y": "2018", "c": "SVU논문", "v": [{"n": "공직동기(PSM)", "r": "독립"}, {"n": "감정노동", "r": "매개"}, {"n": "조직유효성", "r": "종속"}, {"n": "LMX", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소ICT기업 구성원의 셀프리더십이 조직몰입에 미치는 영향", "a": "도철구", "y": "2018", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "감성지능", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "ICT 산업에서 말콤볼드리지 모델을 이용한 경영성과 영향요인에 관한 연구", "a": "신동근", "y": "2018", "c": "SVU논문", "v": [{"n": "리더십(Malcolm Baldrige)", "r": "독립"}, {"n": "측정분석및지식관리", "r": "매개"}, {"n": "인적자원중시", "r": "매개"}, {"n": "프로세스관리", "r": "매개"}, {"n": "경영성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "약국 서비스 환경에서 라포형성 행동과 고객충성도 간에 고객 신뢰와 고객만족도의 매개효과", "a": "곽진희", "y": "2024", "c": "SVU논문", "v": [{"n": "라포형성행동", "r": "독립"}, {"n": "고객신뢰", "r": "매개"}, {"n": "고객만족도", "r": "매개"}, {"n": "고객충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소제조기업의 조직공정성과 직무만족 관계에서 심리적주인의식과 신뢰의 매개효과", "a": "김화자", "y": "2023", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "심리적주인의식", "r": "매개"}, {"n": "신뢰", "r": "매개"}, {"n": "직무만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "전자제품 제조기업 개발팀 구성원의 셀프리더십과 혁신행동 관계에서 직무만족과 직무열의의 매개효과", "a": "김진성", "y": "2023", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "직무열의", "r": "매개"}, {"n": "혁신행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "금형기업의 상사의 변혁적리더십과 거래적리더십이 직무만족에 미치는 영향", "a": "황남연", "y": "2023", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "거래적리더십", "r": "독립"}, {"n": "신뢰", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "LMX", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "스마트약국 POS품질과 지속사용의도간에 고객신뢰와 고객만족도의 매개효과", "a": "박경애", "y": "2024", "c": "SVU논문", "v": [{"n": "POS품질", "r": "독립"}, {"n": "고객신뢰", "r": "매개"}, {"n": "고객만족도", "r": "매개"}, {"n": "지속사용의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "콘텐츠 유튜버의 특성과 채널충성도 관계에서 몰입과 구독자만족의 매개효과", "a": "정은수", "y": "2023", "c": "SVU논문", "v": [{"n": "유튜버특성", "r": "독립"}, {"n": "몰입", "r": "매개"}, {"n": "구독자만족", "r": "매개"}, {"n": "채널충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지방자치단체 공무원의 성격특성과 자기효능감 직무스트레스 직무소진 간의 관계에 관한 연구", "a": "김승연", "y": "2017", "c": "SVU논문", "v": [{"n": "성격특성(Big5)", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "직무스트레스", "r": "매개"}, {"n": "직무소진", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "아파트 세대의 소방시설 자체점검제도 개선방안 연구", "a": "서해열", "y": "2016", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "울트라마라톤 참여동기와 지속참여의도간에 운동몰입과 운동만족의 매개효과", "a": "이학준", "y": "2024", "c": "SVU논문", "v": [{"n": "참여동기", "r": "독립"}, {"n": "운동몰입", "r": "매개"}, {"n": "운동만족", "r": "매개"}, {"n": "지속참여의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "초등학교장의 변혁적 리더십이 LMX와 감성지능을 매개로 조직몰입에 미치는 영향", "a": "김태학", "y": "2022", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "감성지능", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지방자치단체의 조직공정성과 혁신행동 관계에서 자기효능감과 조직몰입의 매개효과", "a": "이명예", "y": "2022", "c": "SVU논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "혁신행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "섬유패션산업 발전을 위한 핵심정책 중요요인에 관한 연구", "a": "윤창주", "y": "2017", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소건설기업 종사자의 성격5요인이 심리적 임파워먼트와 셀프리더십에 따른 조직시민행동에 미치는 영향", "a": "최재영", "y": "2019", "c": "SVU논문", "v": [{"n": "성격5요인", "r": "독립"}, {"n": "심리적임파워먼트", "r": "매개"}, {"n": "셀프리더십", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "병원환경에서 의료종사자의 건강신념이 대응성과 병원의 예방행동에 미치는 영향", "a": "장국현", "y": "2016", "c": "SVU논문", "v": [{"n": "건강신념", "r": "독립"}, {"n": "건강가치성", "r": "매개"}, {"n": "대응성", "r": "종속"}, {"n": "병원예방행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "전공연계교육의 학습동기유발요인과 진로결정 자기효능감 관계에서 학업성취도 매개효과", "a": "조유경", "y": "2016", "c": "SVU논문", "v": [{"n": "학습동기(ARCS)", "r": "독립"}, {"n": "학업성취도", "r": "매개"}, {"n": "진로결정자기효능감", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "생성형 AI 서비스 특성이 이용자의 지속사용의도에 미치는 영향 연구", "a": "김기동", "y": "2024", "c": "SVU논문", "v": [{"n": "생성형AI서비스특성", "r": "독립"}, {"n": "지각된유용성", "r": "매개"}, {"n": "지각된용이성", "r": "매개"}, {"n": "지속사용의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "상사의 변혁적리더십과 혁신과업행동간에 직원몰입과 조직시민행동의 매개", "a": "정용희", "y": "2024", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "직원몰입", "r": "매개"}, {"n": "조직시민행동", "r": "매개"}, {"n": "혁신과업행동", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "국내 기업 연구개발 인력의 셀프리더십이 조직몰입과 혁신행동에 미치는 영향", "a": "최민석", "y": "2024", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "혁신행동", "r": "종속"}, {"n": "조직몰입", "r": "종속"}, {"n": "학습지원환경", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "지역축제 브랜드자산과 축제성과의 관계에서 개최지역 태도의 매개효과와 지역애호도의 조절효과", "a": "김성헌", "y": "2023", "c": "SVU논문", "v": [{"n": "지역축제브랜드자산", "r": "독립"}, {"n": "개최지역태도", "r": "매개"}, {"n": "축제성과", "r": "종속"}, {"n": "지역애호도", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "직업상담사의 직무스트레스와 이직의도 관계에서 직무만족과 직무소진의 매개효과", "a": "백성현", "y": "2023", "c": "SVU논문", "v": [{"n": "직무스트레스", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "직무소진", "r": "매개"}, {"n": "이직의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "한류스타의 활동과 대중의 행위의도간 관계에서 스타동일시욕구 및 충성도의 매개", "a": "오희영", "y": "2025", "c": "SVU논문", "v": [{"n": "한류스타활동", "r": "독립"}, {"n": "스타동일시욕구", "r": "매개"}, {"n": "스타충성도", "r": "매개"}, {"n": "행위의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "한국폴리텍대학 산업설비 교수의 변혁적 리더십이 학습성과에 미치는 영향", "a": "박종석", "y": "2025", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "학습만족", "r": "매개"}, {"n": "자기효능감", "r": "매개"}, {"n": "학습성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "소방엔지니어링 기업 구성원의 셀프리더십이 조직몰입에 미치는 영향", "a": "이진성", "y": "2025", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "자기효능감", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소 정보통신공사업의 ESG 경영 핵심역량 요인분석 및 평가지표 개발 연구", "a": "최운정", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "강풍에 의한 고층건물의 옥상 통신시설물 풍하중특성에 관한 연구", "a": "조승구", "y": "2012", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "축산물가공산업의 B2B 거래관계에서 전환장벽과 지속구매의도 간에 관계만족의 매개효과", "a": "강호용", "y": "2025", "c": "SVU논문", "v": [{"n": "전환장벽", "r": "독립"}, {"n": "관계만족", "r": "매개"}, {"n": "지속구매의도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소전기공사기업 상사의 변혁적·거래적 리더십과 조직유효성 관계에서 셀프리더십의 매개효과", "a": "이상만", "y": "2025", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "거래적리더십", "r": "독립"}, {"n": "셀프리더십", "r": "매개"}, {"n": "조직유효성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "기계경비 기업 구성원의 직무특성, 보상인식과 성격특성이 조직 유효성에 미치는 영향", "a": "김진태", "y": "2025", "c": "SVU논문", "v": [{"n": "직무특성", "r": "독립"}, {"n": "보상인식", "r": "독립"}, {"n": "성격특성", "r": "독립"}, {"n": "조직유효성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "소방분야 종사자의 직무특성과 조직몰입 관계에서 심리적주인의식과 직무만족의 매개효과", "a": "유병선", "y": "2025", "c": "SVU논문", "v": [{"n": "직무특성", "r": "독립"}, {"n": "심리적주인의식", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "조직후원인식", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "모바일 오픈월드 RPG 게임특성과 게임충성도 관계에서 게임만족과 게임몰입의 매개", "a": "김기준", "y": "2025", "c": "SVU논문", "v": [{"n": "게임특성", "r": "독립"}, {"n": "게임만족", "r": "매개"}, {"n": "게임몰입", "r": "매개"}, {"n": "게임충성도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "피아노 연주자의 연주몰입경험과 공연만족도 관계에서 자아존중감과 자기유능감의 매개", "a": "김진우", "y": "2025", "c": "SVU논문", "v": [{"n": "연주몰입경험", "r": "독립"}, {"n": "자아존중감", "r": "매개"}, {"n": "자기유능감", "r": "매개"}, {"n": "공연만족도", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "호텔기업의 e-비즈니스 서비스품질과 쇼핑가치 및 고객만족의 관계", "a": "김영재", "y": "2014", "c": "SVU논문", "v": [{"n": "e-서비스품질", "r": "독립"}, {"n": "쇼핑가치", "r": "매개"}, {"n": "고객만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "공공·민간직업능력개발훈련기관교사의 셀프리더십과 직무성과 관계에서 교사효능감과 혁신행동의 매개", "a": "홍재일", "y": "2025", "c": "SVU논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "교사효능감", "r": "매개"}, {"n": "혁신행동", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "국내 수소 산업 활성화 핵심 요인 분석 및 전략에 관한 연구", "a": "박성수", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "소상공인의 자기결정성이 재창업의지에 미치는 영향", "a": "박세언", "y": "2015", "c": "SVU논문", "v": [{"n": "자기결정성", "r": "독립"}, {"n": "학습지향성", "r": "매개"}, {"n": "혁신역량", "r": "매개"}, {"n": "재창업의지", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "전문직 종사자의 성격 특성이 셀프리더십과 자기효능감을 통해 직무만족에 미치는 영향", "a": "이대근", "y": "2017", "c": "SVU논문", "v": [{"n": "성격특성", "r": "독립"}, {"n": "셀프리더십", "r": "매개"}, {"n": "자기효능감", "r": "매개"}, {"n": "직무만족", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "자동차부품제조기업 상사의 변혁적리더십이 조직몰입에 미치는 영향", "a": "장경수", "y": "2024", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "조직공정성", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "종속"}, {"n": "조직후원인식", "r": "조절"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "직업능력개발훈련교사의 직무교육과 교육훈련전이 관계에서 자기효능감과 교육만족의 매개효과", "a": "박진우", "y": "2024", "c": "SVU논문", "v": [{"n": "직무교육", "r": "독립"}, {"n": "자기효능감", "r": "매개"}, {"n": "교육만족", "r": "매개"}, {"n": "교육훈련전이", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "중소 IT기업 상사의 변혁적 리더십과 조직유효성 관계에서 LMX와 직무열의의 매개", "a": "박성헌", "y": "2025", "c": "SVU논문", "v": [{"n": "변혁적리더십", "r": "독립"}, {"n": "LMX", "r": "매개"}, {"n": "직무열의", "r": "매개"}, {"n": "조직유효성", "r": "종속"}], "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "시계열 딥러닝 모델을 통한 지역별 주택매매 가격지수 예측 연구", "a": "김상철", "y": "2025", "c": "SVU논문", "si": [], "j": "서울벤처대학원대학교 학위논문"}, {"t": "조직몰입 구성개념의 개념화와 타당화: 은행 정규직 종사자 중심", "a": "안정원", "y": "2016", "c": "타대학논문", "v": [{"n": "조직몰입", "r": "종속"}, {"n": "직무도전성", "r": "독립"}, {"n": "직무만족", "r": "독립"}, {"n": "조직공정성", "r": "독립"}, {"n": "이직의도", "r": "종속"}, {"n": "조직시민행동", "r": "종속"}, {"n": "직무성과", "r": "종속"}], "j": "성균관대학교 박사학위논문"}, {"t": "조직몰입 3요소 모형의 내적구조 검토: 탐색적 구조방정식 모형(ESEM) 적용", "a": "안정원, 이순묵", "y": "2015", "c": "타대학논문", "v": [{"n": "조직몰입", "r": "종속"}, {"n": "직무만족", "r": "독립"}, {"n": "조직공정성", "r": "독립"}, {"n": "심리적 자본", "r": "독립"}], "j": "한국심리학회지: 산업 및 조직, Vol.28, No.4"}, {"t": "조직몰입에 대한 사람중심 접근: 국내 직장인들의 조직몰입 프로파일 분석", "a": "오현성, 정용석, 김우석", "y": "2018", "c": "타대학논문", "v": [{"n": "조직몰입", "r": "독립"}, {"n": "이직의도", "r": "종속"}], "j": "Journal of the Korean Data Analysis Society, Vol.20, No.6"}, {"t": "조직공정성의 개념과 효과성: 국내 상관연구의 통합분석", "a": "최대정, 박동건", "y": "2006", "c": "타대학논문", "v": [{"n": "조직공정성", "r": "독립"}, {"n": "직무만족", "r": "종속"}, {"n": "조직몰입", "r": "종속"}, {"n": "조직신뢰", "r": "종속"}, {"n": "조직지원인식(POS)", "r": "종속"}, {"n": "LMX", "r": "종속"}, {"n": "이직의도", "r": "종속"}, {"n": "조직시민행동", "r": "종속"}], "j": "한국심리학회지: 산업 및 조직, Vol.19, No.2"}, {"t": "조직 공정성의 영향요인에 관한 경험적 연구", "a": "타브하이투메리, 배병룡", "y": "2015", "c": "타대학논문", "v": [{"n": "동의성", "r": "독립"}, {"n": "상사신뢰", "r": "독립"}, {"n": "조직지원", "r": "독립"}, {"n": "참여", "r": "독립"}, {"n": "조직공정성", "r": "종속"}], "j": "한국자치행정학보, 제29권 제3호"}, {"t": "조직공정성이 직무만족 및 직무성과에 미치는 영향: 조직지원인식의 매개역할", "a": "김미경", "y": "2022", "c": "타대학논문", "v": [{"n": "분배적 공정성", "r": "독립"}, {"n": "절차적 공정성", "r": "독립"}, {"n": "조직지원인식(POS)", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "직무성과", "r": "종속"}], "j": "지방행정연구, 제36권 제2호"}, {"t": "직무만족, 조직몰입, 성과, 이직의도 간의 관련성: 문헌고찰 및 메타분석", "a": "오인수, 김광현, Todd C. Darnold, 황종오, 유태용, 박영아, 박량희", "y": "2007", "c": "타대학논문", "v": [{"n": "직무만족", "r": "독립"}, {"n": "조직몰입", "r": "매개"}, {"n": "성과", "r": "종속"}, {"n": "이직의도", "r": "종속"}], "j": "인사·조직연구, 제15권 4호"}, {"t": "조직구성원의 감성지능, 직무만족, 조직몰입, 조직충성 간의 구조적 관계", "a": "강명희, 김부희, 유영란, 임현진", "y": "2011", "c": "타대학논문", "v": [{"n": "감성지능", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "조직충성", "r": "종속"}], "j": "기업교육연구, 제13권 제2호"}, {"t": "직무만족도와 조직몰입도의 결정요인과 구조분석", "a": "방하남, 김상욱", "y": "2009", "c": "타대학논문", "v": [{"n": "객관적 조직·직무특성", "r": "독립"}, {"n": "주관적 직무특성", "r": "독립"}, {"n": "직무만족도", "r": "종속"}, {"n": "조직몰입도", "r": "종속"}], "j": "한국사회학, 제43집 1호"}, {"t": "공무원의 자기효능감이 조직몰입에 미치는 영향: 직무열의의 매개효과", "a": "유병규, 이영균", "y": "2019", "c": "타대학논문", "v": [{"n": "자기효능감", "r": "독립"}, {"n": "직무열의", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "j": "한국공공관리학보, 제33권 제4호"}, {"t": "자기효능감이 학습지향성과 조직몰입에 미치는 영향", "a": "진윤희", "y": "2018", "c": "타대학논문", "v": [{"n": "자기효능감", "r": "독립"}, {"n": "학습지향성", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "j": "정책개발연구, 제18권 제1호"}, {"t": "자기효능감이 직무만족과 개인성과에 미치는 영향: 성과급의 조절효과", "a": "전미선, 전영준", "y": "2017", "c": "타대학논문", "v": [{"n": "자기효능감", "r": "독립"}, {"n": "직무만족", "r": "종속"}, {"n": "개인성과", "r": "종속"}, {"n": "성과급", "r": "조절"}], "j": "한국거버넌스학회보, 제24권 제2호"}, {"t": "자기효능감과 직무만족이 혁신행동과 직무성과에 미치는 영향", "a": "남승하, 정종원", "y": "2017", "c": "타대학논문", "v": [{"n": "자기효능감", "r": "독립"}, {"n": "직무만족", "r": "독립"}, {"n": "혁신행동", "r": "매개"}, {"n": "직무성과", "r": "종속"}], "j": "한국인사행정학회보, 제16권 제4호"}, {"t": "Bandura의 교사 자기효능감 척도(TSES) 타당화", "a": "김연하, 김양은", "y": "2008", "c": "타대학논문", "v": [{"n": "교사 자기효능감", "r": "종속"}], "j": "유아교육연구, 제28권 제2호"}, {"t": "한국판 셀프리더십 설문지(RSLQ) 타당화 연구", "a": "신용국, 김명소, 한영석", "y": "2009", "c": "타대학논문", "v": [{"n": "셀프리더십", "r": "종속"}], "j": "한국심리학회지: 학교, 제6권 제3호"}, {"t": "셀프리더십이 직무열의에 미치는 영향: 외로움의 매개효과와 조직공정성의 조절효과", "a": "하순복", "y": "2022", "c": "타대학논문", "v": [{"n": "셀프리더십", "r": "독립"}, {"n": "외로움", "r": "매개"}, {"n": "직무열의", "r": "종속"}, {"n": "전반적 조직공정성", "r": "조절"}], "j": "디지털융복합연구, 제20권 제2호"}, {"t": "한국판 축약형 셀프리더십 설문지(ASLQ) 타당화", "a": "최원설", "y": "2020", "c": "타대학논문", "v": [{"n": "셀프리더십(ASLQ)", "r": "종속"}, {"n": "직무성과", "r": "종속"}], "j": "기업교육과 인재연구, 제22권 제2호"}, {"t": "변혁적 리더십이 무사안일에 미치는 영향: 조직학습역량과 조직몰입의 매개효과", "a": "이유진, 정재삼", "y": "2013", "c": "타대학논문", "v": [{"n": "변혁적 리더십", "r": "독립"}, {"n": "조직학습역량", "r": "매개"}, {"n": "조직몰입", "r": "매개"}, {"n": "무사안일", "r": "종속"}], "j": "HRD연구, 제15권 제2호"}, {"t": "긍정심리자본이 혁신행동과 직무성과에 미치는 영향: 조직지원인식의 조절효과", "a": "박태운, 김문중", "y": "2019", "c": "타대학논문", "v": [{"n": "긍정심리자본", "r": "독립"}, {"n": "혁신행동", "r": "매개"}, {"n": "직무성과", "r": "종속"}, {"n": "조직지원인식", "r": "조절"}], "j": "상업교육연구, 제33권 제5호"}, {"t": "조직지원인식이 혁신행동에 미치는 영향: 긍정심리자본의 매개효과와 창의적 자기효능감의 조절효과", "a": "우헌근, 김문중", "y": "2021", "c": "타대학논문", "v": [{"n": "조직지원인식", "r": "독립"}, {"n": "긍정심리자본", "r": "매개"}, {"n": "창의적 자기효능감", "r": "조절"}, {"n": "혁신행동", "r": "종속"}], "j": "상업교육연구, 제35권 제3호"}, {"t": "한국판 긍정심리자본 척도(K-PPC) 타당화", "a": "임태홍", "y": "2014", "c": "타대학논문", "v": [{"n": "긍정심리자본(K-PPC)", "r": "종속"}], "j": "코칭능력개발지, 제16권 제3호"}, {"t": "진성리더십과 성격이 긍정심리자본을 통해 직무수행에 미치는 영향", "a": "강호철, 이도화", "y": "2016", "c": "타대학논문", "v": [{"n": "진성 리더십", "r": "독립"}, {"n": "성격 Big-5", "r": "독립"}, {"n": "긍정심리자본", "r": "매개"}, {"n": "역할내 직무수행", "r": "종속"}, {"n": "적응적 수행성과", "r": "종속"}], "j": "인적자원관리연구, 제23권 제2호"}, {"t": "긍정심리자본이 직무만족과 정서적 몰입에 미치는 영향: 긍정적 정서와 생애만족의 매개", "a": "김주엽, 김명수", "y": "2011", "c": "타대학논문", "v": [{"n": "긍정심리자본", "r": "독립"}, {"n": "긍정적 정서", "r": "매개"}, {"n": "부정적 정서", "r": "매개"}, {"n": "생애만족", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "정서적 몰입", "r": "종속"}], "j": "경영교육연구(한국경영교육학회)"}, {"t": "윤리적 리더십이 직무만족과 조직시민행동에 미치는 영향", "a": "김상호", "y": "2008", "c": "타대학논문", "v": [{"n": "윤리적 리더십", "r": "독립"}, {"n": "직무만족", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}], "j": "경찰학연구, 제8권 제3호"}, {"t": "참여가 조직시민행동과 성과에 미치는 영향", "a": "배병룡", "y": "2014", "c": "타대학논문", "v": [{"n": "참여", "r": "독립"}, {"n": "조직시민행동", "r": "매개"}, {"n": "성과", "r": "종속"}], "j": "한국자치행정학보, 제28권 제3호"}, {"t": "한국형 번아웃 증후군 자가진단 척도개발 및 타당도 검증", "a": "박수정, 김민규 외", "y": "2019", "c": "타대학논문", "v": [{"n": "번아웃 증후군", "r": "종속"}], "j": "여가학연구, 제17권 제2호"}, {"t": "한국형 번아웃 증후군 자가진단 척도 표준화 연구", "a": "박수정, 김민규", "y": "2020", "c": "타대학논문", "v": [{"n": "번아웃 증후군", "r": "종속"}], "j": "문화교류와 다문화교육, 제9권 제1호"}, {"t": "코칭리더십이 조직몰입에 미치는 영향: 조직신뢰의 매개효과", "a": "박주현, 윤병섭", "y": "2018", "c": "타대학논문", "v": [{"n": "코칭리더십", "r": "독립"}, {"n": "조직신뢰", "r": "매개"}, {"n": "조직몰입", "r": "종속"}], "j": "전문경영인연구, 제21권 제1호"}, {"t": "동료신뢰성, 조직신뢰, 조직시민행동 간의 구조적 관계", "a": "백유성", "y": "2016", "c": "타대학논문", "v": [{"n": "동료신뢰성", "r": "독립"}, {"n": "조직신뢰", "r": "매개"}, {"n": "조직시민행동", "r": "종속"}], "j": "경영과 정보연구, 제35권 제4호"}, {"t": "기업체 중간관리자의 심리적 임파워먼트 척도 개발", "a": "오주리", "y": "2013", "c": "타대학논문", "v": [{"n": "심리적 임파워먼트", "r": "종속"}], "j": "상담학연구, 제14권 제3호"}, {"t": "조직지원인식이 종업원 인게이지먼트와 프로세스 혁신에 미치는 영향", "a": "서창적, 이슬기", "y": "2015", "c": "타대학논문", "v": [{"n": "조직지원인식", "r": "독립"}, {"n": "종업원 인게이지먼트", "r": "매개"}, {"n": "프로세스 혁신", "r": "종속"}], "j": "서비스경영학회지, 제16권 제5호"}, {"t": "리더-구성원 교환관계(LMX) 이론의 국내 연구 동향과 향후과제: 최근 10년간 경영학 분야", "a": "지평기, 차동옥", "y": "2020", "c": "타대학논문", "v": [{"n": "LMX", "r": "독립"}], "j": "대한경영학회지, 제33권 제2호"}, {"t": "리더십 및 직무만족이 이직의도에 미치는 영향에 관한 메타분석", "a": "윤병선, 김천규", "y": "2020", "c": "타대학논문", "v": [{"n": "리더십", "r": "독립"}, {"n": "직무만족", "r": "독립"}, {"n": "조직몰입", "r": "매개"}, {"n": "이직의도", "r": "종속"}], "j": "취업진로연구, 제10권 제4호"}, {"t": "직무스트레스와 정신건강의 관계: 마음챙김과 직무만족의 매개효과", "a": "박성현", "y": "2020", "c": "타대학논문", "v": [{"n": "직무스트레스", "r": "독립"}, {"n": "마음챙김", "r": "매개"}, {"n": "직무만족", "r": "매개"}, {"n": "심리적 웰빙", "r": "종속"}, {"n": "정신장애", "r": "종속"}], "j": "국내박사"}, {"t": "MBSR이 조직구성원의 마음챙김, 스트레스, 소진, 자아존중감, 조직몰입, 창의성에 미치는 효과", "a": "박남수", "y": "2012", "c": "타대학논문", "v": [{"n": "MBSR 프로그램", "r": "독립"}, {"n": "마음챙김", "r": "종속"}, {"n": "스트레스 반응", "r": "종속"}, {"n": "소진", "r": "종속"}, {"n": "조직몰입", "r": "종속"}, {"n": "창의성", "r": "종속"}], "j": "한국조직학회보, 제9권 제2호"}, {"t": "핵심직무특성 등 유발요인이 테크노스트레스에 미치는 영향", "a": "이창원, 김대건", "y": "2019", "c": "타대학논문", "v": [{"n": "핵심직무특성", "r": "독립"}, {"n": "역할모호성", "r": "독립"}, {"n": "조직분위기", "r": "독립"}, {"n": "테크노스트레스", "r": "종속"}], "j": "경영교육연구, 제34권 제5호"}, {"t": "심리적주인의식이 혁신행동에 미치는 영향: 직무자율성의 매개와 조직지원인식의 조절", "a": "최석봉", "y": "2018", "c": "타대학논문", "v": [{"n": "심리적주인의식", "r": "독립"}, {"n": "직무자율성", "r": "매개"}, {"n": "혁신행동", "r": "종속"}, {"n": "조직지원인식", "r": "조절"}], "j": "기업경영연구, 제25권 제4호"}, {"t": "긍정심리자본이 심리적주인의식을 통해 직무만족과 직무성과에 미치는 영향", "a": "신선해, 김문중", "y": "2020", "c": "타대학논문", "v": [{"n": "긍정심리자본", "r": "독립"}, {"n": "심리적주인의식", "r": "매개"}, {"n": "직무만족", "r": "종속"}, {"n": "직무성과", "r": "종속"}], "j": "산업경제연구, 제33권 제4호"}];
 function _expandEmbeddedDB(compact) {
   return compact.map(p => ({
     title: p.t||'', authors: p.a||'', year: p.y||'', category: p.c||'',
