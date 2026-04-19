@@ -9,7 +9,29 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script>if(window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
+  <script>
+  (function(){
+    if(!window.pdfjsLib) return;
+    /* pdf.worker.min.js를 <script>로 로드하면 globalThis["pdfjs-dist/build/pdf.worker"] 에 등록되지만,
+       pdf.min.js 는 globalThis.pdfjsWorker 를 찾으므로 이름을 브릿지해줌 */
+    if(!window.pdfjsWorker){
+      var w=window["pdfjs-dist/build/pdf.worker"]||window["pdfjs-dist/build/pdf.worker.min"];
+      if(!w){
+        /* 만약 이름이 다르면, window 속성 중 WorkerMessageHandler를 가진 객체를 찾음 */
+        var keys=Object.getOwnPropertyNames(window);
+        for(var i=0;i<keys.length;i++){
+          try{var v=window[keys[i]];if(v&&typeof v==='object'&&v.WorkerMessageHandler){w=v;break;}}catch(e){}
+        }
+      }
+      if(w) window.pdfjsWorker=w;
+    }
+    if(location.protocol!=='file:'){
+      pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+    /* file:// → workerSrc 미설정 → pdfjsWorker.WorkerMessageHandler로 fake worker 모드 자동 사용 */
+  })();
+  </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
@@ -14876,7 +14898,24 @@ function getUserDBVariableData() {
 async function parseSVUpdf(file) {
   if(!window.pdfjsLib) throw new Error('PDF.js 라이브러리를 불러오지 못했습니다.');
   const buf = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({data:buf}).promise;
+  let pdf;
+  try {
+    pdf = await pdfjsLib.getDocument({data:new Uint8Array(buf)}).promise;
+  } catch(workerErr) {
+    try {
+      // Retry: fake worker 브릿지 재시도
+      if(!window.pdfjsWorker){
+        var keys=Object.getOwnPropertyNames(window);
+        for(var i=0;i<keys.length;i++){
+          try{var v=window[keys[i]];if(v&&typeof v==='object'&&v.WorkerMessageHandler){window.pdfjsWorker=v;break;}}catch(e){}
+        }
+      }
+      pdfjsLib.GlobalWorkerOptions.workerSrc='';
+      pdf = await pdfjsLib.getDocument({data:new Uint8Array(buf)}).promise;
+    } catch(e2) {
+      throw new Error('PDF 열기 실패: ' + (workerErr.message||e2.message));
+    }
+  }
   const totalPages = pdf.numPages;
 
   // 텍스트 추출 함수
@@ -15414,7 +15453,7 @@ const PaperDBBuilder = ({ onBack }) => {
 
   const emptyPaper = () => ({
     id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
-    title:'', authors:'', year:'', journal:'', university:'', sampleSize:'', method:'', analysisMethod:'',
+    title:'', authors:'', year:'', journal:'', university:'', sampleSize:'', method:'', analysisMethod:'', result:'', region:'',
     category: 'SVU논문',  // 'SVU논문' | '타대학논문' | '해외논문' | '국내인용논문' | '기타'
     advisor: '',
     variables: [{ name:'', role:'독립', dimensions:'', itemCount:'', scale:'5점 Likert', source:'', koreanSource:'', alpha:'' }],
@@ -15431,10 +15470,13 @@ const PaperDBBuilder = ({ onBack }) => {
   const handleSave = () => {
     if(!form.title.trim()) { showToast('논문 제목을 입력하세요.', 'error'); return; }
     if(!form.authors.trim()) { showToast('저자를 입력하세요.', 'error'); return; }
-    if(isDuplicate(form.title, form.year, form.authors)) { showToast('⚠️ 동일/유사한 논문이 이미 DB에 있습니다!', 'error'); return; }
+    if(isDuplicate(form.title, form.year, form.authors)) {
+      if(!confirm('⚠️ 동일/유사한 논문이 이미 DB에 있습니다!\n\n그래도 저장하시겠습니까?')) return;
+    }
 
+    try {
     let updated;
-    const cleanForm = {...form, needsReview: false}; // 저장 시 변수확인 플래그 해제
+    const cleanForm = {...form, needsReview: false};
     if(editIdx !== null) {
       updated = [...papers]; updated[editIdx] = cleanForm;
       showToast('✅ 논문 정보가 수정되었습니다.');
@@ -15444,6 +15486,7 @@ const PaperDBBuilder = ({ onBack }) => {
     }
     saveDB(updated); setPapers(updated);
     setForm(emptyPaper()); setEditIdx(null); setView('list');
+    } catch(err) { showToast('❌ 저장 중 오류: '+err.message, 'error'); }
   };
 
   const handleDelete = (idx) => {
@@ -15490,6 +15533,8 @@ const PaperDBBuilder = ({ onBack }) => {
           analysisMethod: result.analysisMethod,
           category: result.category || 'SVU논문',
           variables: result.variables,
+          region: result.sampleSize || '',
+          result: '',
           memo: `PDF 자동 추출 (${result.totalPages}페이지) — ${file.name}`,
         };
         setForm(newForm); setEditIdx(null);
@@ -15730,7 +15775,7 @@ const PaperDBBuilder = ({ onBack }) => {
               isExpanded && h('div',{style:{padding:'16px',borderTop:'1px solid #eee',background:'#FAFBFF'}},
                 // 기본 정보 수정
                 h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px',marginBottom:'14px'}},
-                  ...[['제목','title'],['저자','authors'],['연도','year'],['대학','university'],['카테고리','category'],['표본크기','sampleSize']].map(([label,field])=>
+                  ...[['제목','title'],['저자','authors'],['연도','year'],['대학','university'],['카테고리','category'],['표본크기','sampleSize'],['연구대상','region'],['연구결과','result']].map(([label,field])=>
                     h('div',{key:field},
                       h('label',{style:{fontSize:'11px',fontWeight:'bold',color:'#1F3864',display:'block',marginBottom:'3px'}},label),
                       field==='category'
@@ -15920,7 +15965,9 @@ const PaperDBBuilder = ({ onBack }) => {
             p.advisor && h('div',null,`👨‍🏫 지도교수: ${p.advisor}`),
             h('div',null,`👥 표본: ${p.sampleSize||'-'}`),
             h('div',null,`🔬 연구방법: ${p.method||'-'}`),
-            h('div',null,`📈 분석방법: ${p.analysisMethod||'-'}`)
+            h('div',null,`📈 분석방법: ${p.analysisMethod||'-'}`),
+            h('div',null,`🎯 연구대상: ${p.region||'-'}`),
+            h('div',null,`📋 연구결과: ${p.result||'-'}`)
           )
         ),
         // Variables
@@ -15986,8 +16033,13 @@ const PaperDBBuilder = ({ onBack }) => {
           h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px'}},
             h('div',null, h('label',{style:labelStyle},'표본크기'), h('input',{style:inputStyle,value:form.sampleSize,onChange:e=>setForm({...form,sampleSize:e.target.value}),placeholder:'N=300'})),
             h('div',null, h('label',{style:labelStyle},'연구방법'), h('select',{style:inputStyle,value:form.method,onChange:e=>setForm({...form,method:e.target.value})},
+              h('option',{value:'',disabled:true},'-- 선택 --'),
               ...['설문조사','실험연구','사례연구','혼합방법','메타분석','질적연구'].map(o=>h('option',{key:o,value:o},o)))),
             h('div',null, h('label',{style:labelStyle},'분석방법'), h('input',{style:inputStyle,value:form.analysisMethod,onChange:e=>setForm({...form,analysisMethod:e.target.value}),placeholder:'SEM, 회귀분석 등'}))
+          ),
+          h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px'}},
+            h('div',null, h('label',{style:labelStyle},'연구대상'), h('input',{style:inputStyle,value:form.region||'',onChange:e=>setForm({...form,region:e.target.value}),placeholder:'예: 중소기업 직원 300명, 대학생'})),
+            h('div',null, h('label',{style:labelStyle},'연구결과'), h('input',{style:inputStyle,value:form.result||'',onChange:e=>setForm({...form,result:e.target.value}),placeholder:'예: IV→DV 긍정(+), MV 매개효과 유의'}))
           ),
           h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px',marginTop:'4px'}},
             h('div',null, h('label',{style:labelStyle},'논문 분류'),
@@ -16061,15 +16113,12 @@ const HomeScreen = ({ onSelect }) => {
     {id:'thesis',icon:'📄',title:'일반 논문 작성',sub:'석사·박사·학술지',
       desc:'연구주제 자동분석 → 연구모형 설계 → 설문지 자동생성 → 구글폼 연동까지 9단계 가이드.',
       features:[`총 ${dbStats.total||204}편 논문 DB 기반 (SVU+타학교+인용)`,'연구변수·경로 자동 추천','설문지 자동 생성','구글폼 내보내기'],color:'#1F3864',bg:'#EEF3FB'},
-    {id:'phd',icon:'🎓',title:'박사논문 고도화',sub:'석사논문·학술지 기반',
-      desc:'본인 석사논문과 학술지 논문을 입력하면 박사학위논문으로 발전시킬 전략을 제시합니다.',
-      features:['석사→박사 확장 전략','조절·이중매개 심화','다집단·종단 설계안','박사논문 목차 구성'],color:'#7B3F00',bg:'#FFF5EC'},
     {id:'stats',icon:'📊',title:'설문 결과 통계 검토',sub:'SPSS·SmartPLS·AMOS',
       desc:'엑셀 데이터 업로드 → 빈도·기술통계·신뢰도·상관·회귀·매개효과를 논문 결과표 형식으로 자동 출력.',
       features:['xlsx/xls 파일 업로드','Cronbach α 자동계산','회귀·매개효과 자동분석','논문 결과표 형식 + 복사 기능'],color:'#1a6b3a',bg:'#EDF7EF'},
-    {id:'paperdb',icon:'🗄️',title:'논문 DB 구축',sub:'PDF 업로드 → 자동 추출',
-      desc:'원본 PDF를 업로드하면 제목·저자·변수·측정도구를 자동 추출합니다. 여러 PDF 일괄등록도 가능!',
-      features:['📄 PDF 업로드 → 자동입력','📚 PDF 여러개 일괄등록','SVU 논문 구조 최적화 파싱','중복 자동 감지 + JSON 내보내기'],color:'#6B3FA0',bg:'#F3EEF8'},
+    {id:'paperdb',icon:'🏗️',title:'논문 DB 구축',sub:'공사중 🚧',
+      desc:'현재 기능 개선 작업 중입니다. 빠른 시일 내에 더 안정적인 PDF 자동 추출 기능으로 찾아뵙겠습니다!',
+      features:['🚧 기능 업그레이드 진행 중','📄 PDF 자동 파싱 고도화','📚 일괄등록 안정화','🔜 곧 오픈 예정'],color:'#999',bg:'#f5f5f5',disabled:true},
   ];
   return h('div',{style:{minHeight:'100vh',background:'linear-gradient(160deg,#f0f4ff 0%,#ffffff 60%)'}},
     h('div',{style:{textAlign:'center',padding:'52px 24px 28px'}},
@@ -16096,9 +16145,9 @@ const HomeScreen = ({ onSelect }) => {
     ),
     h('div',{style:{maxWidth:'1080px',margin:'0 auto',padding:'0 20px 60px',display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'24px'}},
       ...cards.map(card=>h('div',{
-        key:card.id,onClick:()=>onSelect(card.id),
-        style:{background:'#fff',borderRadius:'18px',padding:'28px',cursor:'pointer',border:`2px solid ${card.bg}`,
-          boxShadow:'0 4px 20px rgba(0,0,0,0.06)',transition:'all 0.22s',position:'relative',overflow:'hidden'},
+        key:card.id,onClick:()=>{if(card.disabled){alert('🚧 공사중입니다!\n\n기능 업그레이드 진행 중이니 조금만 기다려주세요.');return;}onSelect(card.id);},
+        style:{background:card.disabled?'#fafafa':'#fff',borderRadius:'18px',padding:'28px',cursor:card.disabled?'not-allowed':'pointer',border:`2px solid ${card.disabled?'#ddd':card.bg}`,
+          boxShadow:'0 4px 20px rgba(0,0,0,0.06)',transition:'all 0.22s',position:'relative',overflow:'hidden',opacity:card.disabled?0.7:1},
         onMouseEnter:e=>{e.currentTarget.style.transform='translateY(-5px)';e.currentTarget.style.boxShadow='0 14px 36px rgba(0,0,0,0.13)';},
         onMouseLeave:e=>{e.currentTarget.style.transform='translateY(0)';e.currentTarget.style.boxShadow='0 4px 20px rgba(0,0,0,0.06)';}
       },
@@ -16112,7 +16161,7 @@ const HomeScreen = ({ onSelect }) => {
             h('span',{style:{fontWeight:'bold',marginTop:'1px'}},'✓'),f
           ))
         ),
-        h('div',{style:{background:card.color,color:'#fff',borderRadius:'8px',padding:'10px 16px',textAlign:'center',fontSize:'13px',fontWeight:'bold'}},`${card.title} 시작하기 →`)
+        h('div',{style:{background:card.disabled?'#bbb':card.color,color:'#fff',borderRadius:'8px',padding:'10px 16px',textAlign:'center',fontSize:'13px',fontWeight:'bold'}},card.disabled?'🚧 준비 중...':''+card.title+' 시작하기 →')
       ))
     ),
     h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',maxWidth:'1080px',margin:'0 auto',padding:'16px 20px 24px'}},
