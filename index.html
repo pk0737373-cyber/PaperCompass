@@ -2343,7 +2343,7 @@ const PaperCompass = ({ onBack }) => {
         { name: '교육훈련환경', scholar: 'Flechsig(1991), 오선희(2010)', scale: '직무교육 효과성 척도(직업훈련교사)', answer: '' },
         { name: '목표설정', scholar: 'Latham & Locke(1979), 이도형(1995)', scale: '직무교육 효과성 척도(직업훈련교사)', answer: '' },
       ],
-      defaultSelected: [0, 1, 2],
+      defaultSelected: [1, 3, 4, 5, 6],
     },
     '지각된용이성': {
       options: [
@@ -2390,7 +2390,7 @@ const PaperCompass = ({ onBack }) => {
         { name: '비재무적 성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC', answer: '' },
         { name: '조직성과(단일차원)', scholar: 'Campbell(1977), Podsakoff & Mackenzie(1990)', scale: '조직성과 종합 척도', answer: 'Campbell(1977)과 Podsakoff & Mackenzie(1990) 등의 이론에 기반하여 업무만족, 조직애착, 능력발휘 등을 종합적으로 측정하는 단일차원 척도입니다.' },
       ],
-      defaultSelected: [0, 1],
+      defaultSelected: [2],
     },
     '사회적지지': {
       options: [
@@ -2399,7 +2399,7 @@ const PaperCompass = ({ onBack }) => {
         { name: '도구적 지지', scholar: 'House(1981)', scale: 'House(1981) 사회적 지지 척도', answer: '' },
         { name: '평가적 지지', scholar: 'House(1981)', scale: 'House(1981) 사회적 지지 척도', answer: '' },
       ],
-      defaultSelected: [0, 1, 2, 3],
+      defaultSelected: [0, 1, 3],
     },
     '성격특성': {
       options: [
@@ -2497,7 +2497,7 @@ const PaperCompass = ({ onBack }) => {
         { name: '실행상황', scholar: 'Christy(2008), 김규태(2009)', scale: '분산적 지도성 척도(직업훈련기관)', answer: '' },
         { name: '학습조직문화', scholar: 'Christy(2008), 박희경(2014)', scale: '분산적 지도성 척도(직업훈련기관)', answer: '' },
       ],
-      defaultSelected: [0, 1, 2, 3],
+      defaultSelected: [4, 5, 6, 7],
     },
     '재계약의도': {
       options: [
@@ -2584,7 +2584,7 @@ const PaperCompass = ({ onBack }) => {
         { name: '확신성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: '' },
         { name: '공감성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: '' },
       ],
-      defaultSelected: [0, 1, 2, 3],
+      defaultSelected: [4, 5, 6, 7, 8],
     },
     '자살생각': {
       options: [
@@ -2634,7 +2634,7 @@ const PaperCompass = ({ onBack }) => {
         { name: '분배공정성', scholar: 'Adams(1965), Folger & Konovsky(1989)', scale: '보상공정성 척도', answer: 'Adams(1965)의 형평이론과 Folger & Konovsky(1989)의 연구에 기반하여 보상의 분배적 공정성(결과의 공정성)을 측정하였습니다.' },
         { name: '절차공정성', scholar: 'Folger & Konovsky(1989), Leventhal(1980)', scale: '보상공정성 척도', answer: '보상 결정 과정의 절차적 공정성을 측정하였습니다.' },
       ],
-      defaultSelected: [0],
+      defaultSelected: [1, 2],
     },
     '고객지향성': {
       options: [
@@ -2649,7 +2649,7 @@ const PaperCompass = ({ onBack }) => {
         { name: '균형잡힌 정보처리', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
         { name: '관계적 투명성', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
       ],
-      defaultSelected: [0, 1, 2, 3],
+      defaultSelected: [0, 1, 3],
     },
     '컨설팅만족도': {
       options: [
@@ -2760,7 +2760,7 @@ const PaperCompass = ({ onBack }) => {
         { name: '보상/건설적질책', scholar: 'Manz & Sims(2001)', scale: '수퍼리더십 척도', answer: '' },
         { name: '수퍼리더십(단일차원)', scholar: 'Manz & Sims(1995), 신주영(2017)', scale: '수퍼리더십 척도(단일차원)', answer: 'Manz & Sims(1995)의 수퍼리더십 이론에 기반하여 신주영(2017)이 수정한 단일차원 척도로 솔선수범, 동기부여, 격려/안내, 자기평가 등을 종합적으로 측정하였습니다.' },
       ],
-      defaultSelected: [0, 1, 2, 3],
+      defaultSelected: [4],
     },
     '스마트워크시스템만족': { options: [{ name: '스마트워크시스템만족(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 IS 성공모델에 기반하여 스마트워크 시스템에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '연주몰입경험': { options: [{ name: '연주몰입경험(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도(연주 맥락)', answer: 'Csikszentmihalyi(1990)의 몰입이론을 음악 연주 맥락에 적용하여 연주 활동에 완전히 몰입하는 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -2769,9 +2769,9 @@ const PaperCompass = ({ onBack }) => {
     '유튜버특성': { options: [{ name: '매력성', scholar: 'Ohanian(1990)', scale: '정보원 신뢰도 척도 변형', answer: 'Ohanian(1990)의 정보원 신뢰도 모델을 유튜버에 적용하여 매력성, 전문성, 신뢰성의 하위차원으로 측정하였습니다.' }, { name: '전문성', scholar: 'Ohanian(1990)', scale: '정보원 신뢰도 척도', answer: '' }, { name: '신뢰성', scholar: 'Ohanian(1990)', scale: '정보원 신뢰도 척도', answer: '' }], defaultSelected: [0, 1, 2] },
     '경영성과': { options: [{ name: '재무성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC', answer: 'Kaplan & Norton(1992)의 BSC에 기반하여 재무성과와 비재무성과의 하위차원으로 경영성과를 측정하였습니다.' }, { name: '비재무성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC', answer: '' }], defaultSelected: [0, 1] },
     '재창업의지': { options: [{ name: '재창업의지(단일차원)', scholar: 'Krueger(2000)', scale: '창업의지 척도 변형', answer: 'Krueger(2000)의 창업의지 모델에 기반하여 실패 이후 다시 창업하고자 하는 의지를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '참여동기': { options: [{ name: '내재적 동기', scholar: 'Deci & Ryan(1985)', scale: '자기결정이론 동기 척도', answer: 'Deci & Ryan(1985)의 자기결정이론에 기반하여 내재적 동기와 외재적 동기의 하위차원으로 참여동기를 측정하였습니다.' }, { name: '외재적 동기', scholar: 'Deci & Ryan(1985)', scale: '자기결정이론 동기 척도', answer: '' }, { name: '기술발달', scholar: 'Pelletier et al.(1995)', scale: 'SMS(Sport Motivation Scale)', answer: '' }, { name: '즐거움', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '성취감', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '컨디션', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '사교', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '건강체력', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '외적과시', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '무동기', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }], defaultSelected: [0, 1] },
+    '참여동기': { options: [{ name: '내재적 동기', scholar: 'Deci & Ryan(1985)', scale: '자기결정이론 동기 척도', answer: 'Deci & Ryan(1985)의 자기결정이론에 기반하여 내재적 동기와 외재적 동기의 하위차원으로 참여동기를 측정하였습니다.' }, { name: '외재적 동기', scholar: 'Deci & Ryan(1985)', scale: '자기결정이론 동기 척도', answer: '' }, { name: '기술발달', scholar: 'Pelletier et al.(1995)', scale: 'SMS(Sport Motivation Scale)', answer: '' }, { name: '즐거움', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '성취감', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '컨디션', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '사교', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '건강체력', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '외적과시', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '무동기', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }], defaultSelected: [2, 3, 4, 5, 6, 7, 8, 9] },
     '창업정책환경': { options: [{ name: '창업정책환경(단일차원)', scholar: 'GEM(2001)', scale: 'GEM 창업환경 척도', answer: 'GEM(Global Entrepreneurship Monitor)의 창업환경 프레임워크에 기반하여 정부의 창업 지원 정책과 제도적 환경을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '특별교통서비스품질': { options: [{ name: '특별교통서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 특별교통 서비스에 적용하여 서비스 품질을 단일차원으로 측정하였습니다.' }, { name: '유형성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '신뢰성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '응답성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '확신성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '공감성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }], defaultSelected: [0] },
+    '특별교통서비스품질': { options: [{ name: '특별교통서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 특별교통 서비스에 적용하여 서비스 품질을 단일차원으로 측정하였습니다.' }, { name: '유형성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '신뢰성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '응답성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '확신성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '공감성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }], defaultSelected: [1, 2, 3, 4, 5] },
     '한류스타활동': { options: [{ name: '한류스타활동(단일차원)', scholar: '연구자 구성', scale: '한류 콘텐츠 척도', answer: '한류 스타의 미디어 노출, 팬 소통, 공연 활동 등을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '접근성': { options: [{ name: '접근성(단일차원)', scholar: 'Davis(1989)', scale: '접근성/용이성 척도', answer: '시스템이나 서비스에 접근하는 용이성 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '통합성': { options: [{ name: '통합성(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델 변형', answer: '시스템 간 데이터 연동 및 통합 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -2786,7 +2786,7 @@ const PaperCompass = ({ onBack }) => {
     '촉진조건': { options: [{ name: '촉진조건(단일차원)', scholar: 'Venkatesh et al.(2003)', scale: 'UTAUT', answer: 'Venkatesh et al.(2003)의 UTAUT에서 제시한 촉진조건 개념에 기반하여 기술 사용을 지원하는 인프라와 자원의 존재를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '사회적압박': { options: [{ name: '사회적압박(단일차원)', scholar: 'Venkatesh et al.(2003)', scale: 'UTAUT 사회적 영향', answer: 'Venkatesh et al.(2003)의 UTAUT 모델의 사회적 영향 개념에 기반하여 주변의 기대와 압력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '공정성인식': { options: [{ name: '공정성인식(단일차원)', scholar: 'Colquitt(2001)', scale: '조직공정성 척도', answer: 'Colquitt(2001)의 조직공정성 척도에 기반하여 분배, 절차, 상호작용 공정성에 대한 전반적 인식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '교사임파워먼트': { options: [{ name: '의사결정 참여', scholar: 'Short & Rinehart(1992)', scale: 'SES(School Participant Empowerment Scale)', answer: 'Short & Rinehart(1992)의 학교참여자 임파워먼트 척도(SES)에 기반하여 의사결정 참여, 전문성 개발, 자율성 등의 하위차원으로 측정하였습니다.' }, { name: '전문성 개발', scholar: 'Short & Rinehart(1992)', scale: 'SES', answer: '' }, { name: '자율성', scholar: 'Short & Rinehart(1992)', scale: 'SES', answer: '' }, { name: '의사결정참여', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형(직업훈련기관)', answer: 'Short & Rinehart(1992)의 SES를 박희경(2014)이 수정하여 직업능력개발훈련기관에 적용하였으며, 의사결정참여, 자율성, 자기효능감, 전문성의 4개 하위차원으로 측정하였습니다.' }, { name: '자기효능감', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형(직업훈련기관)', answer: '' }, { name: '전문성', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형(직업훈련기관)', answer: '' }], defaultSelected: [0, 1, 2] },
+    '교사임파워먼트': { options: [{ name: '의사결정 참여', scholar: 'Short & Rinehart(1992)', scale: 'SES(School Participant Empowerment Scale)', answer: 'Short & Rinehart(1992)의 학교참여자 임파워먼트 척도(SES)에 기반하여 의사결정 참여, 전문성 개발, 자율성 등의 하위차원으로 측정하였습니다.' }, { name: '전문성 개발', scholar: 'Short & Rinehart(1992)', scale: 'SES', answer: '' }, { name: '자율성', scholar: 'Short & Rinehart(1992)', scale: 'SES', answer: '' }, { name: '의사결정참여', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형(직업훈련기관)', answer: 'Short & Rinehart(1992)의 SES를 박희경(2014)이 수정하여 직업능력개발훈련기관에 적용하였으며, 의사결정참여, 자율성, 자기효능감, 전문성의 4개 하위차원으로 측정하였습니다.' }, { name: '자기효능감', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형(직업훈련기관)', answer: '' }, { name: '전문성', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형(직업훈련기관)', answer: '' }], defaultSelected: [2, 3, 4, 5] },
     '지속근무의도': { options: [{ name: '지속근무의도(단일차원)', scholar: 'Price & Mueller(1981)', scale: '이직의도 역코딩', answer: 'Price & Mueller(1981)의 이직의도 모델을 역으로 적용하여 현 직장에서 계속 근무하고자 하는 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '상사신뢰': { options: [{ name: '상사신뢰(단일차원)', scholar: 'Mayer et al.(1995)', scale: '조직신뢰 척도(상사 맥락)', answer: 'Mayer, Davis & Schoorman(1995)의 신뢰 모델에 기반하여 상사의 능력, 선의, 진실성에 대한 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '직무착근도': { options: [{ name: '연결', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: 'Mitchell et al.(2001)의 직무착근도 이론에 기반하여 연결(links), 적합(fit), 희생(sacrifice)의 3개 하위차원으로 측정하였습니다.' }, { name: '적합', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: '' }, { name: '희생', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: '' }], defaultSelected: [0, 1, 2] },
@@ -2796,14 +2796,14 @@ const PaperCompass = ({ onBack }) => {
     '활용도': { options: [{ name: '활용도(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델 사용(Use)', answer: 'DeLone & McLean(2003)의 IS 성공모델 중 시스템 사용(Use) 개념에 기반하여 활용 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '학습동기유발요인': { options: [{ name: '학습동기유발요인(단일차원)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계모델', answer: 'Keller(1987)의 ARCS 모델에 기반하여 학습동기를 유발하는 요인을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '절차공정성': { options: [{ name: '절차공정성(단일차원)', scholar: 'Leventhal(1980)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Leventhal(1980)의 절차공정성 이론에 기반하여 의사결정 과정의 공정성을 Colquitt(2001) 척도로 측정하였습니다.' }], defaultSelected: [0] },
-    'FM서비스품질': { options: [{ name: 'FM서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형(FM 맥락)', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 시설관리(FM) 서비스에 적용하여 서비스 품질을 단일차원으로 측정하였습니다.' }, { name: '유형성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '신뢰성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '확신성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '반응성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '공감성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '안전성', scholar: '연구자 추가', scale: 'SERVPERF 변형', answer: '' }], defaultSelected: [0] },
+    'FM서비스품질': { options: [{ name: 'FM서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형(FM 맥락)', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 시설관리(FM) 서비스에 적용하여 서비스 품질을 단일차원으로 측정하였습니다.' }, { name: '유형성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '신뢰성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '확신성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '반응성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '공감성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '안전성', scholar: '연구자 추가', scale: 'SERVPERF 변형', answer: '' }], defaultSelected: [1, 2, 3, 4, 5, 6] },
     '관계지향성': { options: [{ name: '관계지향성(단일차원)', scholar: 'Morgan & Hunt(1994)', scale: '관계마케팅 척도', answer: 'Morgan & Hunt(1994)의 관계마케팅 이론에 기반하여 장기적 관계 유지를 중시하는 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '고객만족도': { options: [{ name: '고객만족도(단일차원)', scholar: 'Oliver(1980)', scale: '고객만족도 척도', answer: 'Oliver(1980)의 기대불일치 이론에 기반하여 고객의 전반적 만족 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '고객신뢰': { options: [{ name: '고객신뢰(단일차원)', scholar: 'Morgan & Hunt(1994)', scale: '신뢰 척도', answer: 'Morgan & Hunt(1994)의 신뢰-몰입 이론에 기반하여 서비스 제공자에 대한 고객의 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '갈등관리': { options: [{ name: '경쟁', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI(Thomas-Kilmann Conflict Mode Instrument)', answer: 'Thomas & Kilmann(1974)의 갈등관리 모델에 기반하여 경쟁, 협력, 회피, 수용, 타협의 5개 전략으로 측정하였습니다.' }, { name: '협력', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }, { name: '회피', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }, { name: '수용', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }, { name: '타협', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }], defaultSelected: [0, 1, 2, 3, 4] },
     '갈등수준': { options: [{ name: '갈등수준(단일차원)', scholar: 'Jehn(1995)', scale: '조직갈등 척도', answer: 'Jehn(1995)의 조직갈등 이론에 기반하여 조직 내 갈등의 전반적 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '개최지역태도': { options: [{ name: '개최지역태도(단일차원)', scholar: 'Getz(1997)', scale: '이벤트 영향 인식 척도', answer: 'Getz(1997)의 이벤트 연구에 기반하여 행사 개최지역에 대한 태도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '축제성과': { options: [{ name: '축제성과(단일차원)', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: 'Getz(1997)의 축제이벤트 이론에 기반하여 축제의 경제적·사회문화적 성과를 단일차원으로 측정하였습니다.' }, { name: '경제적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '사회문화적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '관광산업적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '정치적성과', scholar: 'Hall(1992)', scale: '축제영향 척도', answer: '' }, { name: '환경적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }], defaultSelected: [0] },
+    '축제성과': { options: [{ name: '축제성과(단일차원)', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: 'Getz(1997)의 축제이벤트 이론에 기반하여 축제의 경제적·사회문화적 성과를 단일차원으로 측정하였습니다.' }, { name: '경제적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '사회문화적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '관광산업적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '정치적성과', scholar: 'Hall(1992)', scale: '축제영향 척도', answer: '' }, { name: '환경적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }], defaultSelected: [1, 2, 3, 4, 5] },
     '대응성': { options: [{ name: '대응성(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 하위차원', answer: 'Parasuraman et al.(1988)의 SERVQUAL 중 대응성(Responsiveness) 차원을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '병원예방행동': { options: [{ name: '병원예방행동(단일차원)', scholar: 'Rosenstock(1974)', scale: 'HBM 변형', answer: 'Rosenstock(1974)의 건강신념모델에 기반하여 질병 예방을 위한 병원 방문 행동을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '게임만족': { options: [{ name: '게임만족(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도', answer: 'Oliver(1980)의 만족이론을 게임에 적용하여 게임 이용 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -2823,9 +2823,9 @@ const PaperCompass = ({ onBack }) => {
     '운동만족': { options: [{ name: '운동만족(단일차원)', scholar: 'Kenyon(1968)', scale: '운동만족 척도', answer: '운동 참여에 대한 전반적 만족 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '운동몰입': { options: [{ name: '운동몰입(단일차원)', scholar: 'Scanlan et al.(1993)', scale: 'Sport Commitment Model', answer: 'Scanlan et al.(1993)의 스포츠 몰입 모델에 기반하여 운동에 대한 몰입을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '혁신역량': { options: [{ name: '혁신역량(단일차원)', scholar: 'Lawson & Samson(2001)', scale: '혁신역량 척도', answer: 'Lawson & Samson(2001)의 혁신역량 모델에 기반하여 조직의 혁신 능력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '전환장벽': { options: [{ name: '전환장벽(단일차원)', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: 'Jones et al.(2000)의 전환비용 이론에 기반하여 서비스 전환 시 인지되는 장벽을 단일차원으로 측정하였습니다.' }, { name: '전환비용', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: '' }, { name: '고객유대', scholar: 'Berry & Parasuraman(1991)', scale: '관계마케팅 척도', answer: '' }, { name: '대안의매력', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: '' }, { name: '서비스회복', scholar: 'Tax et al.(1998)', scale: '서비스회복 척도', answer: '' }], defaultSelected: [0] },
+    '전환장벽': { options: [{ name: '전환장벽(단일차원)', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: 'Jones et al.(2000)의 전환비용 이론에 기반하여 서비스 전환 시 인지되는 장벽을 단일차원으로 측정하였습니다.' }, { name: '전환비용', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: '' }, { name: '고객유대', scholar: 'Berry & Parasuraman(1991)', scale: '관계마케팅 척도', answer: '' }, { name: '대안의매력', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: '' }, { name: '서비스회복', scholar: 'Tax et al.(1998)', scale: '서비스회복 척도', answer: '' }], defaultSelected: [1, 2, 3, 4] },
     '정보품질': { options: [{ name: '정보품질(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 IS 성공모델에 기반하여 정보의 정확성, 적시성, 완전성, 관련성 등을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '지역축제브랜드자산': { options: [{ name: '인지도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도(축제 맥락)', answer: 'Aaker(1991)의 브랜드자산 모델을 축제에 적용하여 인지도, 이미지, 충성도의 하위차원으로 측정하였습니다.' }, { name: '이미지', scholar: 'Keller(1993)', scale: '브랜드자산 척도', answer: '' }, { name: '충성도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드인지도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드이미지', scholar: 'Keller(1993)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드가치', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드품질', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }], defaultSelected: [0, 1, 2] },
+    '지역축제브랜드자산': { options: [{ name: '인지도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도(축제 맥락)', answer: 'Aaker(1991)의 브랜드자산 모델을 축제에 적용하여 인지도, 이미지, 충성도의 하위차원으로 측정하였습니다.' }, { name: '이미지', scholar: 'Keller(1993)', scale: '브랜드자산 척도', answer: '' }, { name: '충성도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드인지도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드이미지', scholar: 'Keller(1993)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드가치', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드품질', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }], defaultSelected: [3, 4, 5, 6] },
     '인간적친밀성': { options: [{ name: '인간적친밀성(단일차원)', scholar: '연구자 구성', scale: '친밀성 척도', answer: '서비스 제공자의 인간적 친밀감과 따뜻함을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '기술적우월성': { options: [{ name: '기술적우월성(단일차원)', scholar: 'Rogers(2003)', scale: '혁신확산이론 상대적 이점', answer: 'Rogers(2003)의 혁신확산이론 중 상대적 이점 개념에 기반하여 기술의 우월성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '조직학습역량': { options: [{ name: '조직학습역량(단일차원)', scholar: 'Senge(1990)', scale: '학습조직 척도', answer: 'Senge(1990)의 학습조직 이론에 기반하여 조직의 학습 역량을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -2849,7 +2849,7 @@ const PaperCompass = ({ onBack }) => {
     '관람만족': { options: [{ name: '관람만족(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도(관람 맥락)', answer: '관람 경험에 대한 전반적 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '관람몰입': { options: [{ name: '관람몰입(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도(관람 맥락)', answer: '관람 활동에 대한 몰입 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '사회적실재감': { options: [{ name: '사회적실재감(단일차원)', scholar: 'Short et al.(1976)', scale: '사회적 실재감 척도', answer: 'Short et al.(1976)의 사회적 실재감 이론에 기반하여 매체를 통한 상호작용에서 상대방의 존재감을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '쇼핑가치': { options: [{ name: '실용적 가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: 'Babin et al.(1994)의 쇼핑가치 이론에 기반하여 실용적 가치와 쾌락적 가치의 하위차원으로 측정하였습니다.' }, { name: '쾌락적 가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }, { name: '실용가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }, { name: '기호가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }], defaultSelected: [0, 1] },
+    '쇼핑가치': { options: [{ name: '실용적 가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: 'Babin et al.(1994)의 쇼핑가치 이론에 기반하여 실용적 가치와 쾌락적 가치의 하위차원으로 측정하였습니다.' }, { name: '쾌락적 가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }, { name: '실용가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }, { name: '기호가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }], defaultSelected: [2, 3] },
     '개인성과': { options: [{ name: '개인성과(단일차원)', scholar: 'Campbell(1990)', scale: '직무성과 척도', answer: 'Campbell(1990)의 성과 모델에 기반하여 개인 수준의 업무 성과를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '시스템사용': { options: [{ name: '시스템사용(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 IS 성공모델 중 사용(Use) 개념에 기반하여 시스템 활용 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '지속적사용의도': { options: [{ name: '지속적사용의도(단일차원)', scholar: 'Bhattacherjee(2001)', scale: 'ECM-IT', answer: 'Bhattacherjee(2001)의 ECM-IT 모델에 기반하여 시스템의 지속적 사용 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -2858,11 +2858,11 @@ const PaperCompass = ({ onBack }) => {
     '측정분석및지식관리': { options: [{ name: '측정분석및지식관리(단일차원)', scholar: 'MBNQA(2019)', scale: '말콤볼드리지 기준 4범주', answer: '말콤볼드리지 국가품질상(MBNQA) 기준의 측정·분석 및 지식관리 범주에 기반하여 조직의 데이터 관리 역량을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '프로세스관리': { options: [{ name: '프로세스관리(단일차원)', scholar: 'MBNQA(2019)', scale: '말콤볼드리지 기준 6범주', answer: '말콤볼드리지 국가품질상(MBNQA) 기준의 프로세스 관리 범주에 기반하여 조직의 핵심 프로세스 관리 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '혁신성': { options: [{ name: '혁신성(단일차원)', scholar: 'Rogers(2003)', scale: '개인혁신성 척도', answer: 'Rogers(2003)의 혁신확산이론에 기반하여 새로운 것을 수용하려는 개인의 성향을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '감정고갈': { options: [{ name: '감정고갈(단일차원)', scholar: 'Maslach & Jackson(1981)', scale: 'MBI(Maslach Burnout Inventory)', answer: 'Maslach & Jackson(1981)의 MBI 중 감정고갈(Emotional Exhaustion) 하위차원을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '감정고갈': { options: [{ name: '감정고갈(단일)', scholar: 'Maslach & Jackson(1981)', scale: 'MBI(Maslach Burnout Inventory)', answer: 'Maslach & Jackson(1981)의 MBI 중 감정고갈(Emotional Exhaustion) 하위차원을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     'LMX(상사-부하 교환관계)': { options: [{ name: 'LMX(다차원)', scholar: 'Graen & Uhl-Bien(1995)', scale: 'LMX-7', answer: 'Graen & Uhl-Bien(1995)의 LMX-7 척도를 활용하여 상사-부하 교환관계의 질을 측정하였습니다.' }], defaultSelected: [0] },
     'U-공공서비스품질': { options: [{ name: 'U-공공서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: 'Parasuraman et al.(1988)의 SERVQUAL 모델을 유비쿼터스 공공서비스 환경에 맞게 변형하여 서비스품질을 측정하였습니다.' }], defaultSelected: [0] },
     'U-교통시스템품질': { options: [{ name: 'U-교통시스템품질(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS Success Model 변형', answer: 'DeLone & McLean(2003)의 정보시스템 성공모형을 유비쿼터스 교통시스템에 맞게 변형하여 시스템품질을 측정하였습니다.' }], defaultSelected: [0] },
-    'e-서비스품질': { options: [{ name: 'e-서비스품질(다차원)', scholar: 'Parasuraman et al.(2005)', scale: 'E-S-QUAL', answer: 'Parasuraman et al.(2005)의 E-S-QUAL 척도를 활용하여 전자서비스품질을 효율성, 시스템가용성, 이행성, 프라이버시 등의 차원으로 측정하였습니다.' }, { name: 'e-정보서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-거래서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-디자인서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-의사소통서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-안전성서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-브랜드이미지', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }], defaultSelected: [0] },
+    'e-서비스품질': { options: [{ name: 'e-서비스품질(다차원)', scholar: 'Parasuraman et al.(2005)', scale: 'E-S-QUAL', answer: 'Parasuraman et al.(2005)의 E-S-QUAL 척도를 활용하여 전자서비스품질을 효율성, 시스템가용성, 이행성, 프라이버시 등의 차원으로 측정하였습니다.' }, { name: 'e-정보서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-거래서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-디자인서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-의사소통서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-안전성서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-브랜드이미지', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }], defaultSelected: [1, 2, 3, 4, 5, 6] },
     '감정반응(PAD)': { options: [{ name: '즐거움(Pleasure)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'Mehrabian & Russell(1974)의 PAD 모델 중 즐거움 차원입니다.' }, { name: '각성(Arousal)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 각성 차원입니다.' }, { name: '지배(Dominance)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 지배 차원입니다.' }], defaultSelected: [0,1,2] },
     '감정반응요인(PAD)': { options: [{ name: '즐거움(Pleasure)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'Mehrabian & Russell(1974)의 PAD 모델 중 즐거움 차원입니다.' }, { name: '각성(Arousal)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 각성 차원입니다.' }, { name: '지배(Dominance)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 지배 차원입니다.' }], defaultSelected: [0,1,2] },
     '개인적 몰입': { options: [{ name: '개인적 몰입(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도', answer: 'Csikszentmihalyi(1990)의 몰입이론에 기반하여 개인이 특정 활동에 완전히 몰입하는 심리적 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -3374,6 +3374,7 @@ const PaperCompass = ({ onBack }) => {
   // SVU 논문 DB에서 각 변수별 측정도구를 활용한 SVU 학위논문 목록
   const svuScaleUsage = {
     'LMX': ['강태만(2023)', '김남환(2019)', '김영미(2019)', '김정균(2023)', '김창섭(2021)', '김태학(2023)', '도철구(2019)', '박성헌(2025)', '박인규(2023)', '조원희(2023)', '최영철(2023)', '황남연(2023)', '황환성(2019)'],
+    'LMX(상사-부하 교환관계)': ['김창섭(2021)'],
     '교육만족': ['박진우(2024)'],
     '긍정심리자본': ['김백경(2023)', '어영미(2018)', '엄재규(2016)'],
     '변혁적리더십': ['김명철(2017)', '김백경(2023)', '김태학(2023)', '박성헌(2025)', '박인규(2023)', '박종석(2025)', '이상만(2025)', '장경수(2024)', '정용희(2024)', '조원희(2023)', '지세영(2025)', '차무흥(2023)', '허경영(2016)', '황남연(2020)', '황남연(2023)'],
@@ -3464,7 +3465,7 @@ const PaperCompass = ({ onBack }) => {
       "김진태(2025)": "서비스업",
       "김진호(2021)": "건설업",
       "김진호(2023)": "건설업",
-      "김창섭(2021)": "기타",
+      "김창섭(2021)": "건설업",
       "김천욱(2023)": "서비스업",
       "김천욱(2020)": "기술/연구",
       "김태섭(2020)": "IT/SW",
@@ -10605,10 +10606,27 @@ const PaperCompass = ({ onBack }) => {
                     ), React.createElement("div", {className: "flex justify-end mb-3"}, React.createElement("button", {onClick: (e) => { e.stopPropagation(); toggleSubFactor(v, -1); }, className: "text-xs px-3 py-1 rounded border transition-all", style: { borderColor: '#BDBDBD', color: '#757575', backgroundColor: '#FAFAFA' }, title: "추천 하위요인으로 초기화"}, " 🔄 추천 항목으로 초기화 ")),
                     // ── 개별 설문 문항 선택 패널 ──
                     React.createElement("div", {className: "mb-4 pt-3", style: { borderTop: '2px solid #1565C0' }},
-                      React.createElement("div", {className: "flex items-center gap-2 mb-3"},
+                      React.createElement("div", {className: "flex items-center gap-2 mb-1"},
                         React.createElement("span", {className: "text-xs font-bold", style: { color: '#1565C0' }}, "📝 설문 문항 선택"),
                         React.createElement("span", {className: "text-xs text-gray-400"}, "(AI가 각 요인당 5개를 추천합니다. 추가/삭제 가능)")
                       ),
+                      // ── 산업 매칭 출처 표시 ──
+                      (() => {
+                        if (selectedIndustry === '전체') return null;
+                        const indF = getIndustryFilteredSvuPapers(v);
+                        if (!indF || indF.matched.length === 0) return null;
+                        const matchLabel = indF.matchType === '동일' ? `${selectedIndustry} 동일 산업` : indF.matchType === '유사' ? '유사 산업군' : '범용';
+                        const matchColor = indF.matchType === '동일' ? '#1B5E20' : indF.matchType === '유사' ? '#F57F17' : '#757575';
+                        const matchBg = indF.matchType === '동일' ? '#E8F5E9' : indF.matchType === '유사' ? '#FFF8E1' : '#F5F5F5';
+                        return React.createElement("div", {className: "mb-3 p-2 rounded text-xs", style: { backgroundColor: matchBg, color: matchColor, border: `1px solid ${matchColor}30` }},
+                          React.createElement("span", {className: "font-bold"}, `📋 ${matchLabel} 논문 출처: `),
+                          indF.matched.map((p, i) => {
+                            const ind = svuIndustryMap[Object.keys(svuIndustryMap).find(k => k.replace(/\(\d{4}\)/,'') === p.replace(/\(\d{4}\)/,''))] || '';
+                            return React.createElement("span", {key: i}, i > 0 ? ', ' : '', p, ind ? `[${ind}]` : '');
+                          }),
+                          React.createElement("span", {className: "ml-1 opacity-70"}, ` (전체 ${indF.total}편 중 ${indF.matched.length}편)`)
+                        );
+                      })(),
                       React.createElement("div", {className: "space-y-3"},
                         ...getAllSurveyItemsByFactor(v).map(factorData => {
                           // 선행연구 설문항이 없는 변수 처리 — 경고 5줄 표시
