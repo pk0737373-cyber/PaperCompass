@@ -9000,13 +9000,32 @@ const PaperCompass = ({ onBack }) => {
       }
       const authorKey = match[1] + '(' + match[2] + ')';
       const pdfPath = svuPdfMap[authorKey];
-      if (pdfPath) {
+      const isOnline = location.protocol === 'https:' || location.protocol === 'http:';
+      if (pdfPath && !isOnline) {
+        // 로컬(file://)에서만 PDF 직접 열기
         parts.push(h('a', {
           key: 'pdf-' + match.index,
           href: encodeURI(pdfPath),
           target: '_blank',
           rel: 'noopener',
           title: '📄 ' + authorKey + ' 논문 PDF 열기',
+          style: { color: '#1565C0', textDecoration: 'underline', cursor: 'pointer', fontWeight: '600' },
+          onClick: (e) => { e.stopPropagation(); }
+        }, authorKey));
+      } else if (pdfPath && isOnline) {
+        // GitHub Pages 등 온라인에서는 RISS 검색으로 안내
+        const authorName = match[1];
+        const isKorean = /[가-힣]/.test(authorName);
+        const searchQuery = encodeURIComponent(authorName);
+        const rissUrl = isKorean
+          ? `https://www.riss.kr/search/Search.do?queryText=znCreator,${searchQuery}&searchGubun=true&colName=bib_t&query=${searchQuery}`
+          : `https://scholar.google.com/scholar?q=${searchQuery}+${match[2]}`;
+        parts.push(h('a', {
+          key: 'pdf-' + match.index,
+          href: rissUrl,
+          target: '_blank',
+          rel: 'noopener',
+          title: '📄 ' + authorKey + ' 원본 보유 논문\n온라인 모드에서는 RISS/Google Scholar에서 검색합니다.',
           style: { color: '#1565C0', textDecoration: 'underline', cursor: 'pointer', fontWeight: '600' },
           onClick: (e) => { e.stopPropagation(); }
         }, authorKey));
