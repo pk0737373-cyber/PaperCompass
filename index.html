@@ -8168,31 +8168,39 @@ const PaperCompass = ({ onBack }) => {
     '직무스트레스': { type: 'variable', description: '스트레스 수준이 관계를 약화', method: 'PROCESS Macro Model 1', common: false },
     '조직신뢰': { type: 'variable', description: '조직 신뢰가 리더십 효과를 조절', method: 'PROCESS Macro Model 1', common: false },
     '디지털역량': { type: 'variable', description: '디지털 활용 능력이 관계를 조절', method: 'PROCESS Macro Model 1', common: false },
+    'LMX': { type: 'variable', description: '상사-부하 교환관계 수준이 관계를 조절', method: 'PROCESS Macro Model 1', common: true },
+    '성격5요인': { type: 'variable', description: '성격특성(외향성·성실성 등)이 관계를 조절', method: 'PROCESS Macro Model 1', common: true },
+    '조직후원인식(POS)': { type: 'variable', description: '조직의 지원 인식이 관계를 조절', method: 'PROCESS Macro Model 1', common: true },
+    '미묘한성차별경험': { type: 'variable', description: '성차별 경험이 관계를 약화', method: 'PROCESS Macro Model 1', common: false },
+    '조직몰입': { type: 'variable', description: '조직몰입 수준이 관계의 강도를 조절', method: 'PROCESS Macro Model 1', common: false },
+    '직무만족': { type: 'variable', description: '직무만족 수준이 관계를 조절', method: 'PROCESS Macro Model 1', common: false },
+    '임파워먼트': { type: 'variable', description: '임파워먼트 수준이 관계를 강화', method: 'PROCESS Macro Model 1', common: false },
+    '신뢰': { type: 'variable', description: '신뢰 수준이 관계를 조절', method: 'PROCESS Macro Model 1', common: false },
   };
 
   // ── 개별 논문 상세정보 DB (연구자별) ──
   const paperDetailDB = {
     // SVU 논문들 (국내)
-    '박인규(2023)': { subject: 'IT기업 관리자의 변혁적리더십과 조직몰입 관계 연구', sample: '320명', region: '국내', iv: '변혁적리더십', mv: 'LMX, 신뢰', dv: '조직몰입, 직무만족', result: '변혁적리더십 → 조직몰입/직무만족 (+), LMX/신뢰의 매개효과 확인' },
+    '박인규(2023)': { subject: 'IT기업 관리자의 변혁적리더십과 조직몰입 관계 연구', sample: '320명', region: '국내', iv: '변혁적리더십', mv: 'LMX, 직무만족', dv: '조직몰입', mod: '자기효능감', result: '변혁적리더십 → 조직몰입/직무만족 (+), LMX/직무만족의 매개효과 확인, 자기효능감의 조절효과 확인' },
     '전광종(2021)': { subject: '공기업 조직변화와 변혁적리더십이 조직몰입에 미치는 영향', sample: '280명', region: '국내', iv: '변혁적리더십', mv: '조직신뢰', dv: '조직몰입', result: '변혁적리더십 → 조직몰입 (+), 조직신뢰의 매개효과 확인' },
     '황남연(2021)': { subject: '조직문화가 변혁적리더십과 조직몰입에 미치는 영향', sample: '250명', region: '국내', iv: '조직문화, 변혁적리더십', mv: '', dv: '조직몰입', result: '변혁적리더십 → 조직몰입 (+)' },
     '차무홍(2023)': { subject: '변혁적리더십과 신뢰가 직무만족에 미치는 영향', sample: '310명', region: '국내', iv: '변혁적리더십', mv: '신뢰', dv: '직무만족', result: '변혁적리더십 → 직무만족 (+), 신뢰의 매개효과 확인' },
     '정희우(2021)': { subject: '중소기업의 변혁적리더십과 직무만족 관계 연구', sample: '200명', region: '국내', iv: '변혁적리더십', mv: '', dv: '직무만족', result: '변혁적리더십 → 직무만족 (+)' },
-    '허경영(2017)': { subject: '리더십이 심리적임파워먼트를 매개로 직무만족에 미치는 영향', sample: '290명', region: '국내', iv: '변혁적리더십', mv: '심리적임파워먼트', dv: '직무만족', result: '변혁적리더십 → 심리적임파워먼트 → 직무만족 (+), 심리적임파워먼트의 매개효과 확인' },
-    '임종인(2021)': { subject: '셀프리더십이 직무만족에 미치는 영향', sample: '220명', region: '국내', iv: '셀프리더십', mv: '', dv: '직무만족', result: '셀프리더십 → 직무만족 (+)' },
+    '허경영(2017)': { subject: '리더십이 심리적임파워먼트를 매개로 직무만족에 미치는 영향', sample: '290명', region: '국내', iv: '변혁적리더십', mv: '심리적임파워먼트', dv: '직무만족', mod: '성격5요인', result: '변혁적리더십 → 심리적임파워먼트 → 직무만족 (+), 심리적임파워먼트의 매개효과 확인, 성격5요인의 조절효과 확인' },
+    '임종인(2021)': { subject: '셀프리더십이 자기효능감을 통해 직무만족에 미치는 영향', sample: '220명', region: '국내', iv: '셀프리더십', mv: '자기효능감', dv: '직무만족', mod: '성격5요인', result: '셀프리더십 → 자기효능감 → 직무만족 (+), 자기효능감의 매개효과 확인, 성격5요인의 조절효과 확인' },
     '최용래(2021)': { subject: '셀프리더십과 직무만족, 조직몰입 관계', sample: '240명', region: '국내', iv: '셀프리더십', mv: '', dv: '직무만족, 조직몰입', result: '셀프리더십 → 직무만족/조직몰입 (+)' },
     '김남한(2019)': { subject: '셀프리더십이 학습지향성을 매개로 직무만족에 미치는 영향', sample: '260명', region: '국내', iv: '셀프리더십', mv: '학습지향성', dv: '직무만족', result: '셀프리더십 → 학습지향성 → 직무만족 (+), 학습지향성의 매개효과 확인' },
     '한대익(2021)': { subject: '변혁적리더십과 조직유효성 관계 연구', sample: '300명', region: '국내', iv: '변혁적리더십', mv: '', dv: '조직유효성', result: '변혁적리더십 → 조직유효성 (+), 조직학습역량의 매개효과 확인' },
     '임재규(2017)': { subject: '조직공정성이 직무만족에 미치는 영향', sample: '230명', region: '국내', iv: '조직공정성', mv: '', dv: '직무만족', result: '조직공정성 → 직무만족 (+)' },
     '우성주(2021)': { subject: 'LMX와 신뢰가 직무만족에 미치는 영향', sample: '270명', region: '국내', iv: 'LMX', mv: '신뢰', dv: '직무만족', result: 'LMX → 신뢰 → 직무만족 (+), 신뢰의 매개효과 확인' },
     '최상구(2020)': { subject: '분산적지도성과 조직시민행동 관계', sample: '200명', region: '국내', iv: '분산적지도성', mv: '', dv: '직무만족', result: '분산적지도성 → 직무만족 (+)' },
-    '김장설(2021)': { subject: '성격5요인이 직무만족에 미치는 영향', sample: '350명', region: '국내', iv: '성격특성', mv: '', dv: '직무만족', result: '성격5요인 → 직무만족 (+)' },
+    '김장설(2021)': { subject: '상사의 성격5요인이 부하직원의 직무만족에 미치는 영향: LMX의 매개·조절효과', sample: '350명', region: '국내', iv: '성격특성', mv: 'LMX', dv: '직무만족', mod: 'LMX', result: '성격5요인 → LMX → 직무만족 (+), LMX의 매개효과 확인, LMX의 조절효과 확인' },
     '이대근(2018)': { subject: '성격특성과 직무만족 관계 실증연구', sample: '210명', region: '국내', iv: '성격특성', mv: '', dv: '직무만족', result: '성격특성 → 직무만족 (+)' },
     '김영미(2019)': { subject: '감정노동이 조직유효성에 미치는 영향', sample: '240명', region: '국내', iv: '감정노동', mv: '', dv: '조직유효성', result: '감정노동 → 조직유효성 (-)' },
     '형규박(2021)': { subject: '변혁적리더십이 신뢰를 매개로 미치는 영향', sample: '280명', region: '국내', iv: '변혁적리더십', mv: '신뢰', dv: '조직성과', result: '변혁적리더십 → 신뢰 → 조직성과 (+), 신뢰의 매개효과 확인' },
     '백성현(2024)': { subject: '변혁적리더십과 조직몰입 관계', sample: '290명', region: '국내', iv: '변혁적리더십', mv: '', dv: '조직몰입', result: '변혁적리더십 → 조직몰입 (+)' },
     '임주형(2020)': { subject: '변혁적리더십이 직무만족에 미치는 영향', sample: '225명', region: '국내', iv: '변혁적리더십', mv: '', dv: '직무만족', result: '변혁적리더십 → 직무만족 (+)' },
-    '조원희(2020)': { subject: '변혁적리더십과 이직의도 관계 연구', sample: '310명', region: '국내', iv: '변혁적리더십', mv: '', dv: '이직의도', result: '변혁적리더십 → 이직의도 (-)' },
+    '조원희(2020)': { subject: '변혁적리더십이 이직의도에 미치는 영향: LMX의 매개효과와 조직몰입의 조절효과', sample: '310명', region: '국내', iv: '변혁적리더십', mv: 'LMX', dv: '이직의도', mod: '조직몰입', result: '변혁적리더십 → LMX → 이직의도 (-), LMX의 매개효과 확인, 조직몰입의 조절효과 확인' },
     '황규복(2020)': { subject: '변혁적리더십과 신뢰 관계', sample: '260명', region: '국내', iv: '변혁적리더십', mv: '', dv: '신뢰', result: '변혁적리더십 → 신뢰 (+)' },
     '서정희(2016)': { subject: '변혁적리더십과 조직공정성 관계', sample: '245명', region: '국내', iv: '변혁적리더십', mv: '', dv: '조직공정성', result: '변혁적리더십 → 조직공정성 (+)' },
     '오선희(2020)': { subject: '변혁적리더십이 직무성과에 미치는 영향', sample: '340명', region: '국내', iv: '변혁적리더십', mv: '', dv: '직무성과', result: '변혁적리더십 → 직무성과 (+)' },
@@ -8263,7 +8271,7 @@ const PaperCompass = ({ onBack }) => {
     'Tannenbaum et al.(1991)': { subject: 'Matching training methods and trainees to objectives', sample: '290명', region: '국외', iv: '교육만족', mv: '', dv: '자기효능감, 직무만족', result: '교육만족 → 자기효능감/직무만족 (+)' },
     // ── SVU 선배 논문 추가 (65편) ──
     '박성준(2023)': { subject: '산업안전 컨설턴트역량이 컨설팅 만족도와 활용도를 매개로 하여 재계약의도에 미치는 영향', sample: '산업안전 컨설팅 수혜 기업/공공기관 고객 202명', region: '국내', iv: '컨설턴트역량', mv: '컨설팅만족도,컨설팅활용도', dv: '재계약의도', result: '컨설턴트역량 → 컨설팅만족도/컨설팅활용도 → 재계약의도 (+), 컨설팅만족도/컨설팅활용도의 매개효과 확인' },
-    '김창섭(2021)': { subject: '상사의 성격5요인이 부하직원의 직무만족에 미치는 영향: 상사-부하 교환관계(LMX)의...', sample: '대형건설기업 종사자 301명', region: '국내', iv: '상사성격5요인', mv: 'LMX(상사-부하 교환관계)', dv: '직무만족', result: '상사성격5요인 → LMX(상사-부하 교환관계) → 직무만족 (+), LMX(상사-부하 교환관계)의 매개효과 확인' },
+    '김창섭(2021)': { subject: '상사의 성격5요인이 부하직원의 직무만족에 미치는 영향: 상사-부하 교환관계(LMX)의 매개·조절효과', sample: '대형건설기업 종사자 301명', region: '국내', iv: '상사성격5요인', mv: 'LMX', dv: '직무만족', mod: 'LMX', result: '상사성격5요인 → LMX → 직무만족 (+), LMX의 매개효과 확인, LMX의 조절효과 확인' },
     '어영미(2018)': { subject: '청소년의 사회적지지가 긍정심리자본에 따른 자살생각에 미치는 효과: 성격5요인의 조절효과', sample: '초·중·고등학생 271부 중 248부 유효', region: '국내', iv: '사회적지지', mv: '긍정심리자본', dv: '자살생각', result: '사회적지지 → 긍정심리자본 → 자살생각 (-), 매개효과 확인, 조절효과 확인' },
     '홍진기(2016)': { subject: '창업자의 개인특성, 사회적자본, 창업정책환경이 창업의지에 미치는 영향: 기업가정신과 ...', sample: '서울·경기 일반인 창업자 234명', region: '국내', iv: '자기결정성(개인특성),사회적자본,창업정책환경', mv: '기업가정신,가치지향성', dv: '창업의지', result: '자기결정성(개인특성) 등 → 기업가정신 등 → 창업의지 부분 지지: (+)16, (-)3, n.s.5, 조절효과 확인' },
     '최영철(2021)': { subject: '중소건설기업의 직무배태성, 직무만족, 조직몰입, LMX, 이직의도 관계 연구', sample: '중소건설기업 종사자 320부 중 316부 유효', region: '국내', iv: '직무배태성', mv: '직무만족,조직몰입', dv: '이직의도', result: '직무배태성 → 직무만족 등 → 이직의도 혼합: (+)8, (-)8, n.s.5' },
@@ -8272,8 +8280,8 @@ const PaperCompass = ({ onBack }) => {
     '김은주(2013)': { subject: '직장인의 SNS 사용 요인과 스트레스와의 관계', sample: '서울지역 직장인 300명', region: '국내', iv: 'SNS사용빈도,SNS일상성,자기표현(외면적/내면적),사회적지지', mv: '-', dv: '스트레스', result: 'SNS사용빈도 등 → 스트레스 혼합: (+)1, (-)2, n.s.1' },
     '권두순(2014)': { subject: '소셜TV 이용자의 경험 요인이 감정반응(PAD) 요인을 통해 구전의도에 미치는 영향', sample: '소셜TV 이용 서울 소재 대학생·일반인 330부 중 319부 유효', region: '국내', iv: '사회적실재감,지각된사용성', mv: '감정반응(PAD)', dv: '구전의도', result: '사회적실재감/지각된사용성 → 감정반응(PAD) → 구전의도 (+), 감정반응(PAD)의 매개효과 확인' },
     '엄재규(2016)': { subject: '기업 종사자들의 공정성 지각이 심리자본과 직무만족을 통해 조직몰입에 미치는 영향', sample: '건설업/제조업 종사자 355명', region: '국내', iv: '조직공정성', mv: '긍정심리자본,직무만족', dv: '조직몰입', result: '조직공정성 → 긍정심리자본 등 → 조직몰입 (+), 매개효과 확인, 조절효과 확인' },
-    '황환성(2019)': { subject: '중소 소방엔지니어링 기업의 조직공정성이 조직몰입에 미치는 영향', sample: '수도권 중소 소방엔지니어링 기업 구성원 345부 중 316부 유효', region: '국내', iv: '조직공정성', mv: '조직신뢰,조직후원인식(POS)', dv: '조직몰입', result: '조직공정성 → 조직신뢰 등 → 조직몰입 부분 지지: (+)1, n.s.2, 조절효과 확인' },
-    '김명철(2017)': { subject: '시공책임형 CM단장의 리더십과 조직유효성 관계 연구', sample: 'CM현장 감리원 451명', region: '국내', iv: '변혁적리더십,진정성리더십', mv: '신뢰,임파워먼트', dv: '조직유효성(조직몰입/직무만족)', result: '변혁적리더십/진정성리더십 → 신뢰/임파워먼트 → 조직유효성(조직몰입/직무만족) (+), 신뢰/임파워먼트의 매개효과 확인' },
+    '황환성(2019)': { subject: '중소 소방엔지니어링 기업의 조직공정성이 조직몰입에 미치는 영향', sample: '수도권 중소 소방엔지니어링 기업 구성원 345부 중 316부 유효', region: '국내', iv: '조직공정성', mv: '조직신뢰, 조직후원인식(POS)', dv: '조직몰입', mod: 'LMX', result: '조직공정성 → 조직신뢰/POS → 조직몰입 부분 지지, LMX의 조절효과 확인' },
+    '김명철(2017)': { subject: '시공책임형 CM단장의 리더십과 조직유효성 관계 연구', sample: 'CM현장 감리원 451명', region: '국내', iv: '변혁적리더십, 진정성리더십', mv: '신뢰, 임파워먼트', dv: '조직유효성(조직몰입/직무만족)', mod: '신뢰, 임파워먼트', result: '변혁적리더십/진정성리더십 → 신뢰/임파워먼트 → 조직유효성 (+), 신뢰/임파워먼트의 매개 및 조절효과 확인' },
     '박인규(2022)': { subject: '메타버스 한류콘텐츠기업 상사의 변혁적 리더십이 LMX와 직무만족을 매개로 조직몰입에 ...', sample: '메타버스 한류콘텐츠기업 구성원 340부 중 304부 유효', region: '국내', iv: '변혁적리더십', mv: 'LMX,직무만족', dv: '조직몰입', result: '변혁적리더십 → LMX 등 → 조직몰입 (+), 매개효과 확인, 조절효과 확인' },
     '김정균(2022)': { subject: '대기업 콜센터의 조직문화와 조직시민행동 관계에서 조직몰입과 노조몰입 매개효과연구', sample: '대기업 콜센터 구성원 420부 중 395부 유효', region: '국내', iv: '조직문화', mv: '조직몰입,노조몰입', dv: '조직시민행동', result: '조직문화 → 조직몰입 등 → 조직시민행동 부분 지지: (+)14, (-)2, n.s.1' },
     '이희준(2021)': { subject: 'ICT·SW 중소기업 구성원의 셀프리더십이 혁신행동에 미치는 영향', sample: 'ICT/SW 중소기업 구성원 350부 중 310부 유효', region: '국내', iv: '셀프리더십', mv: '자기효능감,심리적임파워먼트', dv: '혁신행동', result: '셀프리더십 → 자기효능감 등 → 혁신행동 (+), 자기효능감/심리적임파워먼트의 매개효과 확인' },
@@ -8313,7 +8321,7 @@ const PaperCompass = ({ onBack }) => {
     '김태섭(2020)': { subject: '다중사용자 온라인 전투게임의 게임특성과 자기효능감이 몰입과 게임만족도를 통해 게임충성...', sample: '온라인 전투게임 이용자 250명', region: '국내', iv: '게임특성,자기효능감', mv: '몰입,게임만족도', dv: '게임충성도', result: '게임특성 등 → 몰입 등 → 게임충성도 부분 지지: (+)11, (-)1, n.s.3, 조절효과 확인' },
     '박상걸(2014)': { subject: 'U-공공서비스품질과 공공기관 신뢰 및 고객만족의 관계', sample: 'U-공공서비스 이용자 350명', region: '국내', iv: 'U-공공서비스품질', mv: '공공기관신뢰', dv: '고객만족', result: 'U-공공서비스품질 → 공공기관신뢰 → 고객만족 (+), 공공기관신뢰의 매개효과 확인' },
     '강성민(2013)': { subject: '공영택지개발사업 갈등과정에서의 인과관계 분석', sample: '서울 내곡/세곡2지구 지역주민 300부 중 160부 유효', region: '국내', iv: '갈등원인', mv: '갈등수준,갈등관리', dv: '갈등결과만족', result: '갈등원인 → 갈등수준/갈등관리 → 갈등결과만족 (+), 갈등수준/갈등관리의 매개효과 확인' },
-    '허경영(2016)': { subject: '성격5요인 조절효과를 통한 스타트업 CEO의 변혁적 리더십이 심리적 임파워먼트와 조직...', sample: '경기지역 정부지원 스타트업 기업 대표 201명', region: '국내', iv: '변혁적리더십', mv: '심리적임파워먼트', dv: '조직몰입', result: '변혁적리더십 → 심리적임파워먼트 → 조직몰입 (+), 심리적임파워먼트의 조절효과 확인' },
+    '허경영(2016)': { subject: '스타트업 CEO의 변혁적 리더십이 심리적 임파워먼트를 통해 조직몰입에 미치는 효과: 성격5요인의 조절효과', sample: '경기지역 정부지원 스타트업 기업 대표 201명', region: '국내', iv: '변혁적리더십', mv: '심리적임파워먼트', dv: '조직몰입', mod: '성격5요인', result: '변혁적리더십 → 심리적임파워먼트 → 조직몰입 (+), 심리적임파워먼트의 매개효과 확인, 성격5요인의 조절효과 확인' },
     '심민섭(2018)': { subject: '건설기술교육서비스품질이 교육만족을 통하여 행위의도에 미치는 영향', sample: '건설기술교육원 교육생 225부 중 212부 유효', region: '국내', iv: '교육서비스품질', mv: '교육만족도', dv: '행위의도', result: '교육서비스품질 → 교육만족도 → 행위의도 부분 지지: (+)2, (-)1, 조절효과 확인' },
     '박동철(2015)': { subject: 'ARCS동기이론을 기반으로 한 산업현장 교육이 학습전이에 미치는 영향', sample: '수도권 전문대학 NCS기반 정보통신 학생 415부 중 345부 유효', region: '국내', iv: 'ARCS동기이론', mv: 'NCS교수자상호작용성,NCS학습자학습몰입', dv: '학업성취도,학습전이', result: 'ARCS동기이론 → NCS교수자상호작용성/NCS학습자학습몰입 → 학업성취도/학습전이 (+), NCS교수자상호작용성/NCS학습자학습몰입의 매개효과 확인' },
     '차무홍(2022)': { subject: '감리단장의 변혁적 리더십과 직무만족 관계에서 직무열의와 신뢰의 매개', sample: '건설현장 감리·시공분야 구성원 430부 중 416부 유효', region: '국내', iv: '변혁적리더십', mv: '신뢰,직무열의', dv: '직무만족', result: '변혁적리더십 → 신뢰 등 → 직무만족 부분 지지: (+)2, (-)2, 매개효과 확인' },
@@ -8325,7 +8333,7 @@ const PaperCompass = ({ onBack }) => {
     '장선연(2019)': { subject: '중소 디지털콘텐츠 제작기업 구성원의 조직공정성이 이직의도에 미치는 영향', sample: '중소 디지털콘텐츠 제작기업 구성원 378부 중 375부 유효', region: '국내', iv: '조직공정성', mv: '직무만족,조직몰입', dv: '이직의도', result: '조직공정성 → 직무만족 등 → 이직의도 부분 지지: n.s.1, 매개효과 확인' },
     '김남환(2018)': { subject: '학습조직 참여자의 셀프리더십과 직무만족 관계에서 학습지향성과 LMX 매개효과', sample: '수도권 중소기업 학습조직 참여자 350부 중 323부 유효', region: '국내', iv: '셀프리더십', mv: '학습지향성,LMX', dv: '직무만족', result: '셀프리더십 → 학습지향성 등 → 직무만족 부분 지지: (+)2, n.s.2' },
     '김종억(2018)': { subject: '지방정부 특별교통 서비스품질이 기관이미지에 미치는 영향', sample: '특별교통 이용자 430부 중 406부 유효', region: '국내', iv: '특별교통서비스품질', mv: '이용자만족도,기관신뢰', dv: '기관이미지', result: '특별교통서비스품질 → 이용자만족도 등 → 기관이미지 (+), 이용자만족도/기관신뢰의 매개효과 확인' },
-    '김영미(2018)': { subject: '지방정부 공무원의 공직동기(PSM) 요인이 감정노동을 통해 조직유효성에 미치는 영향', sample: '서울시 공무원 310부 중 301부 유효', region: '국내', iv: '공직동기(PSM)', mv: '감정노동', dv: '조직유효성', result: '공직동기(PSM) → 감정노동 → 조직유효성 부분 지지: (+)3, (-)2, 매개효과 확인, 조절효과 확인' },
+    '김영미(2018)': { subject: '지방정부 공무원의 공직동기(PSM) 요인이 감정노동을 통해 조직유효성에 미치는 영향', sample: '서울시 공무원 310부 중 301부 유효', region: '국내', iv: '공직동기(PSM)', mv: '감정노동', dv: '조직유효성', mod: 'LMX', result: '공직동기(PSM) → 감정노동 → 조직유효성 부분 지지, 매개효과 확인, LMX의 조절효과 확인' },
     '도철구(2018)': { subject: '중소ICT기업 구성원의 셀프리더십이 조직몰입에 미치는 영향', sample: '보육교사 305부 중 290부 유효', region: '국내', iv: '셀프리더십', mv: 'LMX,감성지능', dv: '조직몰입', result: '셀프리더십 → LMX 등 → 조직몰입 (+), LMX/감성지능의 매개효과 확인' },
     '신동근(2018)': { subject: 'ICT 산업에서 말콤볼드리지 모델을 이용한 경영성과 영향요인에 관한 연구', sample: '수도권 ICT 기업 구성원 371부 중 362부 유효', region: '국내', iv: '리더십(Malcolm Baldrige)', mv: '측정분석및지식관리,인적자원중시,프로세스관리', dv: '경영성과', result: '리더십(Malcolm Baldrige) → 측정분석및지식관리 등 → 경영성과 대체로 (+), 일부 (-), 매개효과 확인' },
     '박경애(2024)': { subject: '스마트약국 POS품질과 지속사용의도간에 고객신뢰와 고객만족도의 매개효과', sample: '스마트약국 POS 이용 고객 617부 중 602부 유효', region: '국내', iv: 'POS품질', mv: '고객신뢰,고객만족도', dv: '지속사용의도', result: 'POS품질 → 고객신뢰 등 → 지속사용의도 대체로 (+), 일부 (-), 매개효과 확인' },
@@ -8355,20 +8363,20 @@ const PaperCompass = ({ onBack }) => {
     '남상민(2025)': { subject: '베이커리카페의 고객경험가치와 고객충성도 관계에서 고객만족 및 브랜드신뢰의 매개효과와 성격유형의 조절효과', sample: '독립형 베이커리카페 고객', region: '국내', iv: '고객경험가치', mv: '고객만족', dv: '고객충성도', result: '고객경험가치이(가) 고객충성도에 유의한 정(+)의 영향, 고객만족의 매개효과 확인' },
     '김종길(2025)': { subject: '중소 소방기업의 보상공정성과 조직유효성 관계에서 보상만족 매개효과', sample: '중소 소방기업 구성원', region: '국내', iv: '보상공정성', mv: '-', dv: '직무만족, 조직몰입, 이직의도', result: '보상공정성이(가) 직무만족에 유의한 정(+)의 영향' },
     '박종석(2025)': { subject: '한국폴리텍대학 산업설비 교수의 변혁적 리더십이 학습성과에 미치는 영향', sample: '한국폴리텍대학 산업설비 교수', region: '국내', iv: '변혁적리더십', mv: '-', dv: '자기효능감', result: '변혁적리더십이(가) 자기효능감에 유의한 정(+)의 영향' },
-    '이진성(2025)': { subject: '소방엔지니어링 기업 구성원의 셀프리더십이 조직몰입에 미치는 영향', sample: '소방엔지니어링 기업 구성원', region: '국내', iv: '셀프리더십', mv: '직무만족', dv: '조직몰입', result: '셀프리더십이(가) 조직몰입에 유의한 정(+)의 영향, 직무만족의 매개효과 확인' },
+    '이진성(2025)': { subject: '소방엔지니어링 기업 구성원의 셀프리더십이 조직몰입에 미치는 영향', sample: '소방엔지니어링 기업 구성원', region: '국내', iv: '셀프리더십', mv: '직무만족', dv: '조직몰입', mod: '자기효능감', result: '셀프리더십이(가) 조직몰입에 유의한 정(+)의 영향, 직무만족의 매개효과 확인, 자기효능감의 조절효과 확인' },
     '박성헌(2025)': { subject: '중소 IT기업 상사의 변혁적 리더십과 조직유효성 관계에서 LMX와 직무열의의 매개', sample: '중소 IT기업 구성원', region: '국내', iv: '변혁적리더십', mv: 'LMX', dv: '직무만족, 조직몰입, 조직시민행동, 이직의도', result: '변혁적리더십이(가) 직무만족에 유의한 정(+)의 영향, LMX의 매개효과 확인' },
     '곽진희(2024)': { subject: '약국 서비스 환경에서 라포형성 행동과 고객충성도 간에 고객 신뢰와 고객만족도의 매개효과', sample: '약국 이용 고객', region: '국내', iv: '라포형성행동', mv: '고객만족', dv: '고객충성도', result: '라포형성행동이(가) 고객충성도에 유의한 정(+)의 영향, 고객만족의 매개효과 확인' },
     '정용희(2024)': { subject: '상사의 변혁적리더십이 혁신과업행동에 미치는 영향: 직원몰입과 조직시민행동의 매개효과 - K 통신사 기술직과 영업지원직 비교 분석', sample: 'K 통신사 기술직/영업지원직 구성원', region: '국내', iv: '변혁적리더십', mv: '직원몰입, 조직시민행동', dv: '혁신과업행동', result: '변혁적리더십 → 혁신과업행동 정(+) 유의, 직원몰입의 매개효과 확인, 조직시민행동의 매개효과 확인' },
     '최민석(2024)': { subject: '국내 기업 연구개발 인력의 셀프리더십이 조직몰입과 혁신행동에 미치는 영향', sample: '국내 기업 연구개발 인력', region: '국내', iv: '셀프리더십', mv: '-', dv: '조직몰입, 혁신행동', result: '셀프리더십이(가) 조직몰입에 유의한 정(+)의 영향' },
-    '장경수(2024)': { subject: '자동차부품제조기업 상사의 변혁적리더십이 조직몰입에 미치는 영향', sample: '자동차부품제조기업 구성원', region: '국내', iv: '변혁적리더십', mv: '조직공정성, 직무만족', dv: '조직몰입', result: '변혁적리더십이(가) 조직몰입에 유의한 정(+)의 영향, 조직공정성의 매개효과 확인' },
-    '기유경(2024)': { subject: '여성과학기술인이 지각한 보상공정성과 조직유효성간의 보상만족과 조직신뢰의 매개', sample: '여성과학기술인', region: '국내', iv: '보상공정성', mv: '-', dv: '직무만족, 조직몰입', result: '보상공정성이(가) 직무만족에 유의한 정(+)의 영향' },
+    '장경수(2024)': { subject: '자동차부품제조기업 상사의 변혁적리더십이 조직몰입에 미치는 영향', sample: '자동차부품제조기업 구성원', region: '국내', iv: '변혁적리더십', mv: '조직공정성, 직무만족', dv: '조직몰입', mod: '조직후원인식(POS)', result: '변혁적리더십이(가) 조직몰입에 유의한 정(+)의 영향, 조직공정성/직무만족의 매개효과 확인, 조직후원인식(POS)의 조절된 매개효과 확인' },
+    '기유경(2024)': { subject: '여성과학기술인이 지각한 보상공정성과 조직유효성간의 보상만족과 조직신뢰의 매개효과 연구: 미묘한성차별경험의 조절효과', sample: '여성과학기술인', region: '국내', iv: '보상공정성', mv: '보상만족, 조직신뢰', dv: '직무만족, 조직몰입', mod: '미묘한성차별경험', result: '보상공정성 → 보상만족/조직신뢰 → 직무만족/조직몰입 (+), 보상만족/조직신뢰의 매개효과 확인, 미묘한성차별경험의 조절효과 확인' },
     '박진우(2024)': { subject: '직업능력개발훈련교사의 직무교육과 교육훈련전이 관계에서 자기효능감과 교육만족의 매개효과', sample: '직업능력개발훈련교사', region: '국내', iv: '직무교육', mv: '자기효능감', dv: '직무성과', result: '직무교육이(가) 직무성과에 유의한 정(+)의 영향, 자기효능감의 매개효과 확인' },
     '황남연(2023)': { subject: '금형기업의 상사의 변혁적리더십과 거래적리더십이 직무만족에 미치는 영향', sample: '금형기업 구성원 (한국/베트남)', region: '국내', iv: '변혁적리더십, 거래적리더십', mv: 'LMX', dv: '직무만족', result: '변혁적리더십이(가) 직무만족에 유의한 정(+)의 영향, LMX의 매개효과 확인' },
     '김천욱(2023)': { subject: '은행서비스 환경에서 라포형성행동과 고객충성도 간에 고객태도와 고객만족도의 매개효과 연구', sample: '은행 고객 (청년/중장년)', region: '국내', iv: '라포형성행동', mv: '고객만족', dv: '고객충성도', result: '라포형성행동이(가) 고객충성도에 유의한 정(+)의 영향, 고객만족의 매개효과 확인' },
     '최영철(2023)': { subject: '중소건설기업의 직무배태성, 직무만족, 조직몰입, LMX, 이직의도 관계 연구 -설계업과 시공업의 비교분석 -', sample: '중소건설기업 구성원', region: '국내', iv: '직무배태성', mv: '직무만족, LMX', dv: '이직의도', result: '직무배태성이(가) 이직의도에 유의한 부(-)의 영향, 직무만족의 매개효과 확인' },
     '김선희(2023)': { subject: '소재 부품 장비 제조업과 오프라인 온라인 유통업의 중소기업구성원의 셀프리더십이 혁신행동에 미치는 영향 : 자기효능감, 조직몰입의 매개효과', sample: '중소기업 구성원 (제조/유통)', region: '국내', iv: '셀프리더십', mv: '자기효능감, 조직몰입', dv: '혁신행동', result: '셀프리더십이(가) 혁신행동에 유의한 정(+)의 영향, 자기효능감의 매개효과 확인' },
     '김화자(2023)': { subject: '중소제조기업의 조직공정성과 직무만족 관계에서 심리적주인의식과 신뢰의 매개효과', sample: '중소제조기업 구성원', region: '국내', iv: '조직공정성', mv: '-', dv: '직무만족', result: '조직공정성이(가) 직무만족에 유의한 정(+)의 영향' },
-    '강태만(2023)': { subject: '커넥터제조기업의 상사의 진정성 리더십과 직무만족 관계에서 LMX의 매개효과 및 POS의 조절효과 연구', sample: '커넥터제조기업 구성원', region: '국내', iv: '진성리더십', mv: 'LMX', dv: '직무만족', result: '진성리더십이(가) 직무만족에 유의한 정(+)의 영향, LMX의 매개효과 확인' },
+    '강태만(2023)': { subject: '커넥터제조기업의 상사의 진정성 리더십과 직무만족 관계에서 LMX의 매개효과 및 POS의 조절효과 연구', sample: '커넥터제조기업 구성원', region: '국내', iv: '진성리더십', mv: 'LMX', dv: '직무만족', mod: '조직후원인식(POS)', result: '진성리더십이(가) 직무만족에 유의한 정(+)의 영향, LMX의 매개효과 확인, POS의 조절효과 확인' },
     '김태학(2023)': { subject: '초등학교장의 변혁적 리더십이 LMX와 감성지능을 매개로 조직몰입에 미치는 영향', sample: '초등학교 교사', region: '국내', iv: '변혁적리더십', mv: 'LMX', dv: '조직몰입', result: '변혁적리더십이(가) 조직몰입에 유의한 정(+)의 영향, LMX의 매개효과 확인' },
     '이명예(2023)': { subject: '지방자치단체의 조직공정성과 혁신행동 관계에서 자기효능감과 조직몰입의 매개효과 연구', sample: '지방자치단체 공무원', region: '국내', iv: '조직공정성', mv: '자기효능감, 조직몰입', dv: '혁신행동', result: '조직공정성이(가) 혁신행동에 유의한 정(+)의 영향, 자기효능감의 매개효과 확인' },
     '김백경(2023)': { subject: '지방자치단체 부서장의 변혁적리더십과 조직몰입 관계에서 긍정심리자본과 상사신뢰의 매개효과 연구', sample: '지방자치단체 부서 구성원', region: '국내', iv: '변혁적리더십', mv: '-', dv: '조직몰입', result: '변혁적리더십이(가) 조직몰입에 유의한 정(+)의 영향' },
@@ -8378,20 +8386,20 @@ const PaperCompass = ({ onBack }) => {
     '백성현(2023)': { subject: '직업상담사의 직무스트레스와 이직의도 관계에서 직무만족과 직무소진의 매개효과', sample: '직업상담사', region: '국내', iv: '직무스트레스', mv: '직무만족', dv: '이직의도', result: '직무스트레스이(가) 이직의도에 유의한 정(+)의 영향, 직무만족의 매개효과 확인' },
     '김진성(2023)': { subject: '전자제품 제조기업 개발팀 구성원의 셀프리더십과 혁신행동 관계에서 직무만족과 직무열의의 매개효과', sample: '전자제품 제조기업 개발팀', region: '국내', iv: '셀프리더십', mv: '직무만족', dv: '혁신행동', result: '셀프리더십이(가) 혁신행동에 유의한 정(+)의 영향, 직무만족의 매개효과 확인' },
     '임종인(2023)': { subject: '중소제조기업의 근무환경과 조직몰입 관계에서 직무만족과 자기효능감의 매개효과', sample: '중소제조기업 구성원', region: '국내', iv: '근무환경', mv: '직무만족, 자기효능감', dv: '조직몰입', result: '근무환경이(가) 조직몰입에 유의한 정(+)의 영향, 직무만족의 매개효과 확인' },
-    '김정균(2023)': { subject: '대기업 콜센터의 조직문화와 조직시민행동 관계에서 조직몰입과 노조몰입 매개효과연구: LMX의 조절효과', sample: '대기업 콜센터 직원', region: '국내', iv: '조직문화', mv: '조직몰입', dv: '조직시민행동', result: '조직문화이(가) 조직시민행동에 유의한 정(+)의 영향, 조직몰입의 매개효과 확인' },
+    '김정균(2023)': { subject: '대기업 콜센터의 조직문화와 조직시민행동 관계에서 조직몰입과 노조몰입 매개효과연구: LMX의 조절효과', sample: '대기업 콜센터 직원', region: '국내', iv: '조직문화', mv: '조직몰입, 노조몰입', dv: '조직시민행동', mod: 'LMX', result: '조직문화 → 조직시민행동 (+), 조직몰입/노조몰입의 매개효과 확인, LMX의 조절효과 확인' },
     '조원희(2023)': { subject: '스타트업 CEO의 변혁적리더십과 이직의도의 관계에서 LMX와 조직몰입의 매개효과 연구', sample: '스타트업 구성원', region: '국내', iv: '변혁적리더십', mv: 'LMX, 조직몰입', dv: '이직의도', result: '변혁적리더십이(가) 이직의도에 유의한 부(-)의 영향, LMX의 매개효과 확인' },
     '장해양(2022)': { subject: '상사의 수퍼리더십이 자기효능감과 조직몰입을 매개로 하여 이직의도에 미치는 효과 : 자동차부품 제조기업과 물류기업의 비교연구', sample: '자동차부품/물류기업 구성원', region: '국내', iv: '수퍼리더십', mv: '자기효능감, 조직몰입', dv: '이직의도', result: '수퍼리더십이(가) 이직의도에 유의한 부(-)의 영향, 자기효능감의 매개효과 확인' },
     '심민섭(2022)': { subject: '대형 건설기업 종사자의 직무특성이 직무열의와 조직몰입을 통하여 혁신행동에 미치는 영향; 건설사와 건설용역사의 비교', sample: '대형 건설기업 종사자', region: '국내', iv: '직무특성', mv: '조직몰입', dv: '혁신행동', result: '직무특성이(가) 혁신행동에 유의한 정(+)의 영향, 조직몰입의 매개효과 확인' },
-    '김창섭(2021)': { subject: '상사의 성격5요인이 부하직원의 직무만족에 미치는 영향: 상사-부하 교환관계(LMX)의 매개·조절효과', sample: '기업 구성원', region: '국내', iv: '상사성격5요인', mv: 'LMX(상사-부하 교환관계)', dv: '직무만족', result: '상사성격5요인이(가) 직무만족에 유의한 정(+)의 영향, LMX(상사-부하 교환관계)의 매개효과 확인' },
-    '정회우(2021)': { subject: '뿌리산업 중소기업 상사의 변혁적리더십이 직무만족에 미치는영향 : -셀프리더십의매개효과및LMX조절효과-', sample: '뿌리산업 중소기업 구성원', region: '국내', iv: '변혁적리더십', mv: '셀프리더십', dv: '직무만족', result: '변혁적리더십이(가) 직무만족에 유의한 정(+)의 영향, 셀프리더십의 매개효과 확인' },
-    '전공중(2021)': { subject: '중소금형제조기업 상사의 변혁적 리더십이 조직몰입에 미치는 영향 : -LMX의 매개효과 및 자기효능감의 조절효과-', sample: '중소금형제조기업 구성원', region: '국내', iv: '변혁적리더십', mv: 'LMX', dv: '조직몰입', result: '변혁적리더십이(가) 조직몰입에 유의한 정(+)의 영향, LMX의 매개효과 확인' },
+    '김창섭(2021)': { subject: '상사의 성격5요인이 부하직원의 직무만족에 미치는 영향: LMX의 매개·조절효과', sample: '기업 구성원', region: '국내', iv: '상사성격5요인', mv: 'LMX', dv: '직무만족', mod: 'LMX', result: '상사성격5요인 → LMX → 직무만족 (+), LMX의 매개효과 확인, LMX의 조절효과 확인' },
+    '정회우(2021)': { subject: '뿌리산업 중소기업 상사의 변혁적리더십이 직무만족에 미치는 영향: 셀프리더십의 매개효과 및 LMX 조절효과', sample: '뿌리산업 중소기업 구성원', region: '국내', iv: '변혁적리더십', mv: '셀프리더십', dv: '직무만족', mod: 'LMX', result: '변혁적리더십 → 셀프리더십 → 직무만족 (+), 셀프리더십의 매개효과 확인, LMX의 조절효과 확인' },
+    '전공중(2021)': { subject: '중소금형제조기업 상사의 변혁적 리더십이 조직몰입에 미치는 영향: LMX의 매개효과 및 자기효능감의 조절효과', sample: '중소금형제조기업 구성원', region: '국내', iv: '변혁적리더십', mv: 'LMX', dv: '조직몰입', mod: '자기효능감', result: '변혁적리더십 → LMX → 조직몰입 (+), LMX의 매개효과 확인, 자기효능감의 조절효과 확인' },
     '황규복(2021)': { subject: '중소제조기업 상사의 변혁적리더십이 정서적 신뢰와 업무적 신뢰를 통하여 조직몰입에 미치는 효과 : 제조업과 건설업 비교연구', sample: '중소제조기업 구성원', region: '국내', iv: '변혁적리더십', mv: '-', dv: '조직몰입', result: '변혁적리더십이(가) 조직몰입에 유의한 정(+)의 영향' },
     '최상국(2020)': { subject: '직업능력개발훈련기관 교사의 분산적지도성이 직무만족과 교사임파워먼트에 따른 조직시민행동에 미치는 영향', sample: '직업능력개발훈련기관 교사', region: '국내', iv: '직무특성', mv: '직무만족', dv: '조직시민행동', result: '직무특성이(가) 조직시민행동에 유의한 정(+)의 영향, 직무만족의 매개효과 확인' },
     '황환성(2020)': { subject: '중소 소방엔지니어링 기업의 조직공정성이 조직몰입에 미치는 영향 : 조직신뢰와 POS의 매개효과 및 LMX의 조절효과', sample: '중소 소방엔지니어링 구성원', region: '국내', iv: '조직공정성', mv: '-', dv: '조직몰입', result: '조직공정성이(가) 조직몰입에 유의한 정(+)의 영향' },
     '정수형(2019)': { subject: '전시문화디자인기업 구성원의 마음챙김이 직무성과에 미치는 영향', sample: '전시문화디자인기업 구성원', region: '국내', iv: '마음챙김', mv: '직무만족', dv: '직무성과', result: '마음챙김이(가) 직무성과에 유의한 정(+)의 영향, 직무만족의 매개효과 확인' },
-    '김남환(2019)': { subject: '학습조직 참여자의 셀프리더십과 직무만족 관계에서 학습지향성과 LMX 매개효과 연구 : 성격 5요인의 조절효과', sample: '학습조직 참여자', region: '국내', iv: '셀프리더십', mv: 'LMX', dv: '직무만족', result: '셀프리더십이(가) 직무만족에 유의한 정(+)의 영향, LMX의 매개효과 확인' },
+    '김남환(2019)': { subject: '학습조직 참여자의 셀프리더십과 직무만족 관계에서 학습지향성과 LMX 매개효과 연구: 성격5요인의 조절효과', sample: '학습조직 참여자', region: '국내', iv: '셀프리더십', mv: '학습지향성, LMX', dv: '직무만족', mod: '성격5요인', result: '셀프리더십 → 학습지향성/LMX → 직무만족 (+), 매개효과 확인, 성격5요인의 조절효과 확인' },
     '김명철(2018)': { subject: '시공책임형 CM단장의 리더십과 조직유효성 관계 연구 : 신뢰와 임파워먼트의 매개 및 조절효과', sample: 'CM 기업 구성원', region: '국내', iv: '변혁적리더십', mv: '-', dv: '직무만족, 조직몰입', result: '변혁적리더십이(가) 직무만족에 유의한 정(+)의 영향' },
-    '조영준(2018)': { subject: '군 초급간부의 창의적 리더십이 조직유효성에 미치는 영향에 관한 연구 : 자기효능감 매개효과 및 조직신뢰 조절효과', sample: '군 초급간부', region: '국내', iv: '창의적리더십', mv: '자기효능감', dv: '직무만족, 조직몰입', result: '창의적리더십이(가) 직무만족에 유의한 정(+)의 영향, 자기효능감의 매개효과 확인' },
+    '조영준(2018)': { subject: '군 초급간부의 창의적 리더십이 조직유효성에 미치는 영향: 자기효능감 매개효과 및 조직신뢰 조절효과', sample: '군 초급간부', region: '국내', iv: '창의적리더십', mv: '자기효능감', dv: '직무만족, 조직몰입', mod: '조직신뢰', result: '창의적리더십 → 자기효능감 → 직무만족/조직몰입 (+), 자기효능감의 매개효과 확인, 조직신뢰의 조절효과 확인' },
     '엄재규(2017)': { subject: '기업 종사자들의 공정성 지각이 심리자본과 직무만족을 통해 조직몰입에 미치는 영향 : 건설업·제조업 종사자를 중심으로', sample: '건설/제조업 종사자', region: '국내', iv: '조직공정성', mv: '직무만족', dv: '조직몰입', result: '조직공정성이(가) 조직몰입에 유의한 정(+)의 영향, 직무만족의 매개효과 확인' },
     '남상민(2016)': { subject: '조직공정성이 직무만족과 조직몰입을 통해 직무성과에 미치는 영향 : U-콜센터 사례를 중심으로', sample: 'U-콜센터 종사자', region: '국내', iv: '조직공정성', mv: '직무만족, 조직몰입', dv: '직무성과', result: '조직공정성이(가) 직무성과에 유의한 정(+)의 영향, 직무만족의 매개효과 확인' },
     '김미선(2014)': { subject: '어린이집의 조직공정성과 조직성과 관계에서 카리스마 리더십 매개효과 분석연구', sample: '어린이집 교사', region: '국내', iv: '조직공정성', mv: '-', dv: '조직시민행동, 이직의도', result: '조직공정성이(가) 조직시민행동에 유의한 정(+)의 영향' },
@@ -8477,7 +8485,7 @@ const PaperCompass = ({ onBack }) => {
     '심민선(2019)': { subject: '교육서비스품질과 교육만족의 관계', sample: '교육서비스품질과 교육만족의 관계', region: '국내', iv: '교육서비스품질', mv: '교육만족', dv: '행위의도', result: '교육서비스품질 → 교육만족 → 행위의도 (+), 교육만족의 매개효과 확인' },
     '심민선(2022)': { subject: '대형 건설기업 종사자의 직무특성이 직무열의와 조직몰입을 통하여 혁신행동에 미치는 영향', sample: '직무특성이 혁신행동에 미치는 영향', region: '국내', iv: '직무특성', mv: '조직몰입, 직무열의', dv: '혁신행동', result: '직무특성 → 직무열의/조직몰입 → 혁신행동 (+), 조직몰입/직무열의의 매개효과 확인' },
     '임종인(2024)': { subject: '중소제조기업의 근무환경이 조직몰입에 미치는 영향: 직무만족과 자기효능감의 매개효과', sample: '근무환경과 자기효능감 관계 연구', region: '국내', iv: '근무환경', mv: '-', dv: '자기효능감', result: '근무환경 → 자기효능감 (+)' },
-    '안병찬(2023)': { subject: '근무환경이 지속근무의도에 미치는 영향', sample: '소프트웨어개발 기업 구성원', region: '국내', iv: '근무환경', mv: '조직몰입', dv: '지속근무의도', result: '근무환경 → 조직몰입 → 지속근무의도 (+), 조직몰입의 매개효과 확인' },
+    '안병찬(2023)': { subject: '소프트웨어개발기업의 근무환경이 지속근무의도에 미치는 영향: 조직몰입의 매개효과와 직무만족의 조절효과', sample: '소프트웨어개발 기업 구성원', region: '국내', iv: '근무환경', mv: '조직몰입', dv: '지속근무의도', mod: '직무만족', result: '근무환경 → 조직몰입 → 지속근무의도 (+), 조직몰입의 매개효과 확인, 직무만족의 조절효과 확인' },
     '어영미(2018)': { subject: '청소년의 사회적지지가 긍정심리자본에 따른 자살생각에 미치는 효과: 성격5요인의 조절효과', sample: '사회적지지와 자살생각의 관계', region: '국내', iv: '사회적지지', mv: '긍정심리자본', dv: '자살생각', result: '사회적지지 → 긍정심리자본 → 자살생각 (-), 매개효과 확인, 조절효과 확인' },
     '김명설(2018)': { subject: '리더십이 조직유효성에 미치는 영향', sample: '리더십이 조직유효성에 미치는 영향', region: '국내', iv: '리더십', mv: '-', dv: '조직유효성', result: '리더십 → 조직유효성 (+)' },
     '이경영(2023)': { subject: '강원도 지역주민이 지각한 문화적가치와 참여행동의 관계에서 태도의 매개효과와 애착도의 조절효과', sample: '문화적가치와 참여행동의 관계', region: '국내', iv: '문화적가치', mv: '태도', dv: '참여행동', result: '문화적가치 → 태도 → 참여행동 (+), 태도의 매개효과 확인' },
@@ -8502,7 +8510,7 @@ const PaperCompass = ({ onBack }) => {
     '임명서, 양해술(2019)': { subject: '잡크래프팅이 조직몰입과 직무성과에 미치는 영향', sample: '잡크래프팅과 조직몰입 관계', region: '국내', iv: '잡크래프팅', mv: '-', dv: '조직몰입', result: '잡크래프팅 → 조직몰입 (+)' },
     '신인규, 서대교(2018)': { subject: '직무자율성이 조직몰입에 미치는 영향: 잡크래프팅의 매개효과', sample: '잡크래프팅이 조직몰입에 미치는 영향', region: '국내', iv: '잡크래프팅', mv: '-', dv: '조직몰입', result: '잡크래프팅 → 조직몰입 (+)' },
     '장선연(2020)': { subject: '중소 디지털콘텐츠 제작기업 구성원의 조직공정성이 이직의도에 미치는 영향', sample: '조직공정성이 이직의도에 미치는 영향', region: '국내', iv: '조직공정성', mv: '-', dv: '이직의도', result: '조직공정성 → 이직의도 (-)' },
-    '김종훈(2023)': { subject: '중소금형제조 기업의 조직공정성이 조직몰입에 미치는 영향: 직무만족의 매개효과 및 LMX의 조절효과', sample: '조직공정성이 조직몰입에 미치는 영향', region: '국내', iv: '조직공정성', mv: '-', dv: '조직몰입', result: '조직공정성 → 조직몰입 (+)' },
+    '김종훈(2023)': { subject: '중소금형제조 기업의 조직공정성이 조직몰입에 미치는 영향: 직무만족의 매개효과 및 LMX의 조절효과', sample: '중소금형제조기업 구성원', region: '국내', iv: '조직공정성', mv: '직무만족', dv: '조직몰입', mod: 'LMX', result: '조직공정성 → 직무만족 → 조직몰입 (+), 직무만족의 매개효과 확인, LMX의 조절효과 확인' },
     '황찬성(2020)': { subject: '중소 소방엔지니어링 기업의 조직공정성이 조직몰입에 미치는 영향', sample: '조직공정성과 조직몰입 관계', region: '국내', iv: '조직공정성', mv: '-', dv: '조직몰입', result: '조직공정성 → 조직몰입 (+)' },
     '어영준(2018)': { subject: '군 초급간부의 창의적 리더십이 조직유효성에 미치는 영향에 관한 연구', sample: '창의적리더십이 조직유효성에 미치는 영향', region: '국내', iv: '창의적리더십', mv: '-', dv: '조직유효성', result: '창의적리더십 → 조직유효성 (+)' },
     '박성준(2023)': { subject: '산업안전 컨설턴트역량이 컨설팅 만족도와 활용도를 매개로 하여 재계약의도에 미치는 영향', sample: '컨설턴트역량이 재계약의도에 미치는 영향', region: '국내', iv: '컨설턴트역량', mv: '컨설팅만족도, 활용도', dv: '재계약의도', result: '컨설턴트역량 → 만족도/활용도 → 재계약의도 (+), 컨설팅만족도/활용도의 매개효과 확인' },
@@ -9667,14 +9675,55 @@ const PaperCompass = ({ onBack }) => {
     const candidates = [];
     const usedVars = new Set([selectedIV, ...selectedDVs, ...selectedMediators].filter(Boolean));
 
+    // paperDetailDB에서 모든 논문의 mod(조절변수) 수집 (전체)
+    const allModFromDB = {};
+    // IV/DV 매칭되는 논문의 mod 별도 수집 (추천용)
+    const matchedModFromDB = {};
+    Object.entries(paperDetailDB).forEach(([key, paper]) => {
+      if (!paper.mod || paper.mod === '-') return;
+      const mods = paper.mod.split(/[,，]\s*/);
+      const paperIVs = (paper.iv || '').split(/[,，]\s*/);
+      const paperDVs = (paper.dv || '').split(/[,，]\s*/);
+      const hasMatchIV = paperIVs.some(v => v.trim() === selectedIV);
+      const hasMatchDV = selectedDVs.some(dv => paperDVs.some(pd => pd.trim() === dv || pd.trim().includes(dv)));
+      mods.forEach(m => {
+        const mt = m.trim();
+        if (!mt) return;
+        // 전체 수집
+        if (!allModFromDB[mt]) allModFromDB[mt] = { count: 0, papers: [] };
+        allModFromDB[mt].count++;
+        allModFromDB[mt].papers.push(key);
+        // IV/DV 매칭 수집
+        if (hasMatchIV || hasMatchDV) {
+          if (!matchedModFromDB[mt]) matchedModFromDB[mt] = { count: 0, papers: [] };
+          matchedModFromDB[mt].count++;
+          matchedModFromDB[mt].papers.push(key);
+        }
+      });
+    });
+
     Object.entries(moderatorCandidateDB).forEach(([name, info]) => {
       if (usedVars.has(name)) return;
 
-      // Check if there's research evidence for this moderator with the user's variables
-      let evidenceCount = 0;
-      for (const key of Object.keys(researchPairDB)) {
-        if (key.includes(name)) evidenceCount++;
-      }
+      // 전체 SVU 사용 근거 (모든 논문)
+      let totalCount = 0;
+      let totalPapers = [];
+      Object.entries(allModFromDB).forEach(([modName, data]) => {
+        if (modName === name || name.includes(modName) || modName.includes(name)) {
+          totalCount += data.count;
+          totalPapers = totalPapers.concat(data.papers);
+        }
+      });
+
+      // IV/DV 매칭 근거 (추천 표시용)
+      let matchedCount = 0;
+      let matchedPapers = [];
+      Object.entries(matchedModFromDB).forEach(([modName, data]) => {
+        if (modName === name || name.includes(modName) || modName.includes(name)) {
+          matchedCount += data.count;
+          matchedPapers = matchedPapers.concat(data.papers);
+        }
+      });
 
       candidates.push({
         name,
@@ -9682,12 +9731,39 @@ const PaperCompass = ({ onBack }) => {
         description: info.description,
         method: info.method,
         common: info.common,
-        evidenceCount,
+        evidenceCount: totalCount,
+        evidencePapers: totalPapers,
+        matchedCount,
+        matchedPapers,
       });
     });
 
-    // Sort: demographic first, then by common, then by evidence
+    // DB에서 발견됐지만 moderatorCandidateDB에 없는 조절변수도 추가
+    Object.entries(allModFromDB).forEach(([modName, data]) => {
+      if (usedVars.has(modName)) return;
+      const alreadyAdded = candidates.some(c => c.name === modName || modName.includes(c.name) || c.name.includes(modName));
+      if (!alreadyAdded) {
+        const matched = matchedModFromDB[modName] || { count: 0, papers: [] };
+        candidates.push({
+          name: modName,
+          type: 'variable',
+          description: 'SVU 선배 논문에서 사용된 조절변수',
+          method: 'PROCESS Macro Model 1',
+          common: false,
+          evidenceCount: data.count,
+          evidencePapers: data.papers,
+          matchedCount: matched.count,
+          matchedPapers: matched.papers,
+        });
+      }
+    });
+
+    // Sort: IV/DV 매칭 우선 → DB 근거 있는 것 → demographic → common 순
     candidates.sort((a, b) => {
+      if (a.matchedCount > 0 && b.matchedCount === 0) return -1;
+      if (a.matchedCount === 0 && b.matchedCount > 0) return 1;
+      if (a.evidenceCount > 0 && b.evidenceCount === 0) return -1;
+      if (a.evidenceCount === 0 && b.evidenceCount > 0) return 1;
       if (a.type === 'demographic' && b.type !== 'demographic') return -1;
       if (a.type !== 'demographic' && b.type === 'demographic') return 1;
       if (a.common && !b.common) return -1;
@@ -10948,15 +11024,24 @@ const PaperCompass = ({ onBack }) => {
               ))))
         ), variableMods.length > 0 && (
           React.createElement("div", {className: "mb-6"}, React.createElement("h3", {className: "font-bold text-sm text-gray-700 mb-2 px-1"}, "변수형 조절변수 (설문 측정 필요)"), React.createElement("div", {className: "space-y-1.5"}, variableMods.map(mod => (
-                React.createElement("div", {key: mod.name, onClick: () => toggleModerator(mod.name), className: "flex items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all", style: {
-                    borderColor: selectedModerators.includes(mod.name) ? '#2E75B6' : '#E5E7EB',
-                    backgroundColor: selectedModerators.includes(mod.name) ? '#EFF6FF' : 'white',
-                  }}, React.createElement("div", {className: "flex items-center gap-3"}, React.createElement("div", {className: "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold", style: {
-                        backgroundColor: selectedModerators.includes(mod.name) ? '#2E75B6' : '#E5E7EB',
-                        color: selectedModerators.includes(mod.name) ? 'white' : '#999',
-                      }}, selectedModerators.includes(mod.name) ? '✓' : ''), React.createElement("div", null, React.createElement("p", {className: "font-semibold text-gray-800"}, mod.name), React.createElement("p", {className: "text-xs text-gray-500"}, mod.description))), React.createElement("div", {className: "flex items-center gap-2"}, mod.evidenceCount > 0 && (
-                      React.createElement("span", {className: "text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700"}, "DB ", mod.evidenceCount, "건")
-                    ), React.createElement("span", {className: "text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600"}, mod.method)))
+                React.createElement("div", {key: mod.name, onClick: () => toggleModerator(mod.name), className: "p-4 rounded-lg border-2 cursor-pointer transition-all", style: {
+                    borderColor: selectedModerators.includes(mod.name) ? '#2E75B6' : mod.matchedCount > 0 ? '#FFB74D' : '#E5E7EB',
+                    backgroundColor: selectedModerators.includes(mod.name) ? '#EFF6FF' : mod.matchedCount > 0 ? '#FFF8E1' : 'white',
+                  }},
+                  React.createElement("div", {className: "flex items-center justify-between"},
+                    React.createElement("div", {className: "flex items-center gap-3"},
+                      React.createElement("div", {className: "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold", style: {
+                        backgroundColor: selectedModerators.includes(mod.name) ? '#2E75B6' : mod.matchedCount > 0 ? '#FF9800' : '#E5E7EB',
+                        color: selectedModerators.includes(mod.name) ? 'white' : mod.matchedCount > 0 ? 'white' : '#999',
+                      }}, selectedModerators.includes(mod.name) ? '✓' : ''),
+                      React.createElement("div", null,
+                        React.createElement("p", {className: "font-semibold text-gray-800"}, mod.name),
+                        React.createElement("p", {className: "text-xs text-gray-500"}, mod.description))),
+                    React.createElement("div", {className: "flex items-center gap-2"},
+                      mod.matchedCount > 0 && React.createElement("span", {className: "text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-semibold"}, "내 변수 매칭"),
+                      mod.evidenceCount > 0 && React.createElement("span", {className: "text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-semibold"}, "SVU ", mod.evidenceCount, "편"),
+                      React.createElement("span", {className: "text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600"}, mod.method))),
+                  mod.evidencePapers && mod.evidencePapers.length > 0 && React.createElement("div", {className: "mt-2 ml-9 text-xs text-blue-700"}, "사용 논문: ", mod.evidencePapers.slice(0,3).map((p,i) => React.createElement("span", {key: i}, i > 0 ? ', ' : '', renderAuthorLinks(p) || p)), mod.evidencePapers.length > 3 ? ` 외 ${mod.evidencePapers.length - 3}편` : ''))
               ))))
         ), React.createElement("div", {className: "p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400 text-sm text-gray-700"}, React.createElement("p", {className: "font-semibold mb-1"}, "조절변수 vs 매개변수"), React.createElement("p", null, React.createElement("strong", null, "매개변수"), ": IV → M → DV (관계를 전달하는 경로)"), React.createElement("p", null, React.createElement("strong", null, "조절변수"), ": IV × W → DV (관계의 강도를 변화시킴)"), React.createElement("p", {className: "mt-2 text-xs text-gray-500"}, "석사 논문에서는 조절변수 1개를 추천하며, 인구통계학적 변수(성별, 세대 등)가 가장 일반적입니다.")), renderFeasibilityPanel())
     );
