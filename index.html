@@ -982,7 +982,7 @@ const PaperCompass = ({ onBack }) => {
     '상사지원→이직의도': { count: 1, sources: '타교: 김민수, 김은영(2020)', verdict: 'emerging' },
     '상사지원→조직몰입': { count: 1, sources: '타교: 김민수, 김은영(2020)', verdict: 'emerging' },
     // 서번트리더십
-    '서번트리더십→심리적안전감': { count: 1, sources: '타교: 박정우, 이형룡(2019)', verdict: 'emerging' },
+    '서번트리더십→심리적안전감': { count: 1, sources: '타교: 박정우, 이형룡(2019), 이후석(2022)', verdict: 'emerging' },
     '서번트리더십→조직몰입': { count: 3, sources: 'van Dierendonck(2011), 이재연(2009), 이명신 외(2012)', verdict: 'moderate' },
     '서번트리더십→직무만족': { count: 1, sources: 'Greenleaf(1977)', verdict: 'moderate' },
     '서번트리더십→혁신행동': { count: 1, sources: '타교: 박정우, 이형룡(2019)', verdict: 'emerging' },
@@ -1114,7 +1114,7 @@ const PaperCompass = ({ onBack }) => {
 // 직무스트레스
     '직무스트레스→이직의도': { count: 3, sources: 'SVU: 백성현(2023) / 김형태·이금희(2019), Lim(2023)', verdict: 'moderate' },
     '직무스트레스→조직몰입': { count: 1, sources: 'Anton(2009)', verdict: 'moderate' },
-    '직무스트레스→직무만족': { count: 3, sources: 'SVU: 백성현(2023) / Beehr&Newman(1978), Lim(2023)', verdict: 'moderate' },
+    '직무스트레스→직무만족': { count: 3, sources: 'SVU: 백성현(2023) / Beehr&Newman(1978), Lim(2023), 김동진(2020)', verdict: 'moderate' },
     '직무스트레스→직무성과': { count: 2, sources: '타교: LePine et al.(2005) / Gilboa et al.(2008)', verdict: 'moderate' },
     // 직무역량
     '직무역량→직무성과': { count: 3, sources: 'Spencer&Spencer(1993), Boyatzis(1982), Campion et al.(2011)', verdict: 'moderate' },
@@ -1759,7 +1759,25 @@ const PaperCompass = ({ onBack }) => {
     '조직지원인식→긍정심리자본': { count: 1, sources: '우헌근, 김문중(2021)', verdict: 'emerging' },
     '긍정심리자본→혁신행동': { count: 3, sources: '우헌근, 김문중(2021), Luthans et al.(2007), Abbas & Raja(2015)', verdict: 'moderate' },
     '심리적주인의식→직무성과': { count: 12, sources: '신선해(2020), Hackman & Oldham(1975), 서영표·이종건(2019) 외 9편', verdict: 'strong' },
-};
+
+    // ── 타교 논문 7편 변수쌍 (2026-04-22) ──
+    '코칭리더십→혁신행동': { sources: '박선규(2022)', result: '코칭리더십 → 혁신행동 정(+)의 영향, 조직신뢰의 부분매개효과 확인' },
+    '코칭리더십→조직신뢰': { sources: '박선규(2022)', result: '코칭리더십 → 조직신뢰 정(+)의 영향' },
+    '권력거리성향→비윤리적 친조직행동(UPB)': { sources: '정유림(2020)', result: '상사의 권력거리성향 → 부하의 비윤리적 친조직행동 정(+)의 영향, 직무스트레스의 부분매개효과 확인' },
+    '권력거리성향→신체화(Somatization)': { sources: '정유림(2020)', result: '상사의 권력거리성향 → 신체화 정(+)의 영향, 직무스트레스의 부분매개효과 확인' },
+    '직무과부하→직무스트레스': { sources: '김동진(2020)', result: '직무과부하 → 직무스트레스 정(+)의 영향' },
+    '서번트리더십→과업성과': { sources: '이후석(2022)', result: '서번트리더십 → 과업성과 정(+)의 영향, 심리적안전감·인지적유연성·학습목표지향성의 순차적 매개효과 확인' },
+    '심리적안전감→인지적유연성': { sources: '이후석(2022)', result: '심리적안전감 → 인지적유연성 정(+)의 영향' },
+    '심리적안전감→학습목표지향성': { sources: '이후석(2022)', result: '심리적안전감 → 학습목표지향성 정(+)의 영향' },
+    '인지적유연성→과업성과': { sources: '이후석(2022)', result: '인지적유연성 → 과업성과 정(+)의 영향' },
+    '학습목표지향성→과업성과': { sources: '이후석(2022)', result: '학습목표지향성 → 과업성과 정(+)의 영향' },
+    '의사소통능력→직무배태성': { sources: '석희금(2024)', result: '의사소통능력 → 직무배태성 정(+)의 영향' },
+    '슈퍼리더십→셀프리더십': { sources: '이선영(2020)', result: '슈퍼리더십 → 셀프리더십 정(+)의 영향' },
+    '슈퍼리더십→인지적유연성': { sources: '이선영(2020)', result: '슈퍼리더십 → 인지적유연성 정(+)의 영향, 셀프리더십·그릿의 순차적 매개효과 확인' },
+    '셀프리더십→그릿(grit)': { sources: '이선영(2020)', result: '셀프리더십 → 그릿 정(+)의 영향' },
+    '그릿(grit)→인지적유연성': { sources: '이선영(2020)', result: '그릿 → 인지적유연성 정(+)의 영향' },
+    '자아존중감→탈진(Burn-out)': { sources: '김남수(2002)', result: '자아존중감 → 탈진(정서적 탈진) 부(-)의 영향' },
+  };
 
   // ── researchPairDB에서 독립변수 목록 동적 계산 ──
   const ivMeta = {
@@ -1871,6 +1889,10 @@ const PaperCompass = ({ onBack }) => {
     '컨설팅만족도':'컨설팅 만족도','컨설턴트역량':'컨설턴트 역량',
     '지각된용이성':'지각된 용이성','지각된유용성':'지각된 유용성',
     '문화적가치':'문화적 가치',
+    '상사의 권력거리성향':'권력거리성향','상사의권력거리성향':'권력거리성향',
+    '심리적 안전감':'심리적안전감','인지적 유연성':'인지적유연성',
+    '비윤리적 친조직행동':'비윤리적 친조직행동(UPB)','비윤리적친조직행동':'비윤리적 친조직행동(UPB)',
+    '신체화':'신체화(Somatization)','그릿':'그릿(grit)',
   };
   // ── 변수명 정규화 검색 유틸 ──
   // 조사/접사를 제거하여 DB 키와 매칭 (설문항 데이터는 건드리지 않음, 검색용으로만 사용)
@@ -2071,7 +2093,7 @@ const PaperCompass = ({ onBack }) => {
   const subFactorTheory = {
     '변혁적리더십': {
       options: [
-        { name: '카리스마(이상화된 영향력)', scholar: 'Bass(1985), 김종현(2011), 전공중(2020)', scale: 'MLQ(Multifactor Leadership Questionnaire)', answer: 'Bass(1985)의 변혁적리더십 이론에서 제시한 4개 하위요인(이상화된 영향력, 영감적 동기부여, 지적 자극, 개별적 배려)을 채택하였으며, 이는 국내외 선행연구에서 가장 널리 사용되는 분류입니다.' },
+        { name: '카리스마(이상화된 영향력)', scholar: 'Bass(1985), 김종현(2011), 전공중(2020), Bass & Avolio(1990), 이광수(2012), Avolio & Bass(1995), Neider & Schriesheim(2011), 구현회(2008), 김미화(2011), 변재우(2016), 윤인한(2015), 정정식(2015)', scale: 'MLQ(Multifactor Leadership Questionnaire)', answer: 'Bass(1985)의 변혁적리더십 이론에서 제시한 4개 하위요인(이상화된 영향력, 영감적 동기부여, 지적 자극, 개별적 배려)을 채택하였으며, 이는 국내외 선행연구에서 가장 널리 사용되는 분류입니다.' },
         { name: '영감적 동기부여', scholar: 'Bass(1985), 김종현(2011), 전공중(2020)', scale: 'MLQ', answer: '' },
         { name: '지적 자극', scholar: 'Bass(1985), 김종현(2011), 전공중(2020)', scale: 'MLQ', answer: '' },
         { name: '개별적 배려', scholar: 'Bass(1985), 김종현(2011), 전공중(2020)', scale: 'MLQ', answer: '' },
@@ -2080,7 +2102,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '셀프리더십': {
       options: [
-        { name: '행동중심 전략', scholar: 'Manz(1986), Houghton & Neck(2002), 이종찬(2013), 김남환(2019), 김두영(2015)', scale: 'RSLQ(Revised Self-Leadership Questionnaire)', answer: 'Manz(1986)와 Houghton & Neck(2002)의 셀프리더십 이론에 기반하여 행동중심 전략, 자연적 보상 전략, 건설적 사고 전략의 3개 하위요인을 채택하였으며, RSLQ 척도로 측정하였습니다.' },
+        { name: '행동중심 전략', scholar: 'Manz(1986), Houghton & Neck(2002), 이종찬(2013), 김남환(2019), 김두영(2015), Manz & Sims(1991), Anderson & Prussia(1997), Manz & Neck(1999), Neck et al.(1995), 김남현(2002), 김선희(2023), 김정자(2011), 문종현·이동철(2015), 백수민(2017), 장은주·이숙정(2016), 조윤형·나윤진(2013), 최용래(2021), 최점락(2018), 이선영(2020)', scale: 'RSLQ(Revised Self-Leadership Questionnaire)', answer: 'Manz(1986)와 Houghton & Neck(2002)의 셀프리더십 이론에 기반하여 행동중심 전략, 자연적 보상 전략, 건설적 사고 전략의 3개 하위요인을 채택하였으며, RSLQ 척도로 측정하였습니다.' },
         { name: '자연적 보상 전략', scholar: 'Manz(1986), Houghton & Neck(2002), 이종찬(2013), 김남환(2019), 김두영(2015)', scale: 'RSLQ', answer: '' },
         { name: '건설적 사고 전략', scholar: 'Houghton & Neck(2002), 이종찬(2013), 김남환(2019), 김두영(2015)', scale: 'RSLQ', answer: '' },
       ],
@@ -2088,7 +2110,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '조직공정성': {
       options: [
-        { name: '분배공정성', scholar: 'Adams(1965), Colquitt(2001), 남상민(2016), 정승훈(2014)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Colquitt(2001)의 조직공정성 척도를 기반으로 분배공정성(Adams, 1965), 절차공정성(Thibaut & Walker, 1975; Leventhal, 1980), 상호작용공정성(Bies & Moag, 1986)의 3개 하위요인을 채택하였습니다.' },
+        { name: '분배공정성', scholar: 'Adams(1965), Colquitt(2001), 남상민(2016), 정승훈(2014), Alexander & Ruderman(1987), Masterson, Lewis, Goldman, Taylor(2000), 윤정호(2013), 조지연(2018)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Colquitt(2001)의 조직공정성 척도를 기반으로 분배공정성(Adams, 1965), 절차공정성(Thibaut & Walker, 1975; Leventhal, 1980), 상호작용공정성(Bies & Moag, 1986)의 3개 하위요인을 채택하였습니다.' },
         { name: '절차공정성', scholar: 'Leventhal(1980), Colquitt(2001), 남상민(2016), 정승훈(2014)', scale: 'Colquitt(2001)', answer: '' },
         { name: '상호작용공정성', scholar: 'Bies & Moag(1986), Colquitt(2001), 남상민(2016), 정승훈(2014)', scale: 'Colquitt(2001)', answer: '' },
         { name: '정보공정성', scholar: 'Colquitt(2001), 남상민(2016), 정승훈(2014)', scale: 'Colquitt(2001)', answer: 'Colquitt(2001)은 상호작용공정성을 대인공정성과 정보공정성으로 세분화하여 4요인 모형을 제시하였으며, 본 연구에서는 이를 채택하였습니다.' },
@@ -2097,7 +2119,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '자기효능감': {
       options: [
-        { name: '자기조절 효능감', scholar: 'Bandura(1977, 1997), Schwarzer & Jerusalem(1995), 문유석(2010), 곽강희(2006), 임광민(2020)', scale: 'GSE(General Self-Efficacy Scale, Schwarzer & Jerusalem, 1995)', answer: 'Bandura(1977)의 사회인지이론에 기반한 자기효능감 개념을 채택하였으며, Schwarzer & Jerusalem(1995)의 일반적 자기효능감 척도(GSE)로 측정하였습니다.' },
+        { name: '자기조절 효능감', scholar: 'Bandura(1977, 1997), Schwarzer & Jerusalem(1995), 문유석(2010), 곽강희(2006), 임광민(2020), 곽대영(2006), 신순이(2018), 유소영(2014), Chen et al.(2001), Chen, Gully, Eden(2001), Weiss & Cropanzano(1996), 권소영(2016), 김선희(2023), 노기영(2012), 어기준(2000), 이명자(2015), 이미소(2019), 전공중(2020), 조영세(2014), 조현주(2006)', scale: 'GSE(General Self-Efficacy Scale, Schwarzer & Jerusalem, 1995)', answer: 'Bandura(1977)의 사회인지이론에 기반한 자기효능감 개념을 채택하였으며, Schwarzer & Jerusalem(1995)의 일반적 자기효능감 척도(GSE)로 측정하였습니다.' },
         { name: '과업 효능감', scholar: 'Bandura(1997), 문유석(2010), 곽강희(2006), 임광민(2020)', scale: 'GSE', answer: '' },
         { name: '사회적 효능감', scholar: 'Bandura(1997), 문유석(2010), 곽강희(2006), 임광민(2020)', scale: 'GSE', answer: '' },
       ],
@@ -2105,7 +2127,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '심리적안전감': {
       options: [
-        { name: '팀 심리적 안전감', scholar: 'Edmondson(1999)', scale: 'Edmondson(1999) 7-item scale', answer: 'Edmondson(1999)이 개발한 팀 심리적 안전감 척도를 사용하였으며, 이는 팀 내에서 대인관계 위험을 감수해도 안전하다는 공유된 믿음을 측정합니다. 심리적 안전감 연구의 가장 대표적인 척도입니다.' },
+        { name: '팀 심리적 안전감', scholar: 'Edmondson(1999), 이후석(2022), 방호진(2013), 석희금(2024)', scale: 'Edmondson(1999) 7-item scale', answer: 'Edmondson(1999)이 개발한 팀 심리적 안전감 척도를 사용하였으며, 이는 팀 내에서 대인관계 위험을 감수해도 안전하다는 공유된 믿음을 측정합니다. 심리적 안전감 연구의 가장 대표적인 척도입니다.' },
         { name: '발언 안전감', scholar: 'Liang et al.(2012)', scale: 'Liang(2012) Voice Behavior Scale', answer: '' },
       ],
       defaultSelected: [0],
@@ -2124,7 +2146,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '조직몰입': {
       options: [
-        { name: '정서적 몰입', scholar: 'Kanter(1968), Porter et al.(1974), Allen & Meyer(1990), 장혜진(2008), 이인숙(2009), 한연주(2010)', scale: 'OCQ(Organizational Commitment Questionnaire)', answer: 'Allen & Meyer(1990)의 조직몰입 3요소 모형(정서적, 지속적, 규범적)을 채택하였습니다. 이는 조직몰입 연구에서 가장 보편적으로 사용되는 분류이며, 국내 선행연구에서도 널리 검증되었습니다.' },
+        { name: '정서적 몰입', scholar: 'Kanter(1968), Porter et al.(1974), Allen & Meyer(1990), 장혜진(2008), 이인숙(2009), 한연주(2010), Meyer & Allen(1991), Mowday, Porter & Steers(1982), Steers(1982), 김선희(2023), 김용근(2016), 남상민(2016), 도철구(2019), 심민섭(2022), 윤권현(1998), 이만규(2005), 이상영(2014), 최영철(2023), Bluedorn(1982), Liden et al.(1997), Meyer, Allen & Smith(1993), Mowday et al.(1982), 권민정(2014), 김기현(2010), 김상욱(2011), 김순희(2009), 박소영(2013), 박영식(2011), 박현정(2007), 서정민(2013), 성지현(2010), 이광수(2011), 이존철(2014), 이찬옥(2014), 최용래(2021), 홍인기(2014)', scale: 'OCQ(Organizational Commitment Questionnaire)', answer: 'Allen & Meyer(1990)의 조직몰입 3요소 모형(정서적, 지속적, 규범적)을 채택하였습니다. 이는 조직몰입 연구에서 가장 보편적으로 사용되는 분류이며, 국내 선행연구에서도 널리 검증되었습니다.' },
         { name: '지속적 몰입', scholar: 'Kanter(1968), Porter et al.(1974), Allen & Meyer(1990), 장혜진(2008), 이인숙(2009), 한연주(2010)', scale: 'OCQ', answer: '' },
         { name: '규범적 몰입', scholar: 'Kanter(1968), Porter et al.(1974), Allen & Meyer(1990), 장혜진(2008), 이인숙(2009), 한연주(2010)', scale: 'OCQ', answer: '' },
       ],
@@ -2132,7 +2154,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '직무만족': {
       options: [
-        { name: '내재적 만족', scholar: 'Weiss & Cropanzano(1996), Herzberg(1959), 김병한(2017), 김남환(2019), 김화자(2023)', scale: 'MSQ(Minnesota Satisfaction Questionnaire)', answer: 'Smith et al.(1969)의 JDI 또는 Weiss et al.(1967)의 MSQ를 활용하여 직무만족을 측정하였으며, 내재적 만족(일 자체)과 외재적 만족(보상, 환경)으로 구분하였습니다.' },
+        { name: '내재적 만족', scholar: 'Weiss & Cropanzano(1996), Herzberg(1959), 김병한(2017), 김남환(2019), 김화자(2023), Locke(1969), Rothe(1951), Stone(1992), Williams & Anderson(1991), 권성민(2013), 김대근(2015), 김병환(2017), 김창섭(2020), 이만규(2005), 이상호(2006), 이정민(2012), 장미정(2011), 최영철(2023), Cropanzano & Weiss(1996), Eisenberger, Huchison & Sowa(1986), Meyer & Allen(1991), Meyer et al.(2002), Schermerhorn(1996), Shore & Tetric(1991), Smith(1975), Wu and Norman(2006), 김영식(2012), 김은석(2016), 김인재·조성진(2012), 김철영(2018), 김현생(2018), 남상민(2015), 남승하·정종원(2017), 남연희·손국진(2005), 명호(2023), 문옥선(2013), 박노근(2017), 박득(2011), 박시진·홍원기(2018), 박영대(2019), 박영배·조수진(1999), 박영주(2008), 변재우(2016), 손지영(2014), 신유근(1995), 오성탁(2015), 우성주(2021), 윤기열(2003), 이병규·윤이중(2009), 이석훈(2010), 이인재·김성우(2012), 이헌구(2016), 장경화(2007), 장선연(2020), 장성철(2016), 장철주(2015), 전돈익(2019), 정경미(2012), 최병권(2017), 최용래(2021), 최호규·심우극(2013), 홍동기(2019), 김동진(2020)', scale: 'MSQ(Minnesota Satisfaction Questionnaire)', answer: 'Smith et al.(1969)의 JDI 또는 Weiss et al.(1967)의 MSQ를 활용하여 직무만족을 측정하였으며, 내재적 만족(일 자체)과 외재적 만족(보상, 환경)으로 구분하였습니다.' },
         { name: '외재적 만족', scholar: 'Weiss & Cropanzano(1996), Herzberg(1959), 김병한(2017), 김남환(2019), 김화자(2023)', scale: 'MSQ', answer: '' },
         { name: '전반적 만족', scholar: 'Judge et al.(2001), 김병한(2017), 김남환(2019), 김화자(2023)', scale: 'JDI(Job Descriptive Index, Smith et al., 1969)', answer: 'Judge et al.(2001)의 전반적 직무만족 개념을 채택하여 단일요인으로 측정하였습니다.' },
       ],
@@ -2140,14 +2162,14 @@ const PaperCompass = ({ onBack }) => {
     },
     '직무성과': {
       options: [
-        { name: '과업성과', scholar: 'Borman & Motowidlo(1993)', scale: 'Williams & Anderson(1991)', answer: 'Borman & Motowidlo(1993)의 직무성과 이론에 기반하여 과업성과(역할 내 행동)와 맥락성과(역할 외 행동)로 구분하여 측정하였습니다.' },
+        { name: '과업성과', scholar: 'Borman & Motowidlo(1993), 이주영(2016), Millar(1990), Miller(1990), Pincus(1986), 남상민(2015), 이광희(2009), 이세한(2013)', scale: 'Williams & Anderson(1991)', answer: 'Borman & Motowidlo(1993)의 직무성과 이론에 기반하여 과업성과(역할 내 행동)와 맥락성과(역할 외 행동)로 구분하여 측정하였습니다.' },
         { name: '맥락성과(조직시민행동)', scholar: 'Borman & Motowidlo(1993)', scale: 'Williams & Anderson(1991)', answer: '' },
       ],
       defaultSelected: [0, 1],
     },
     'LMX': {
       options: [
-        { name: '정서(Affect)', scholar: 'Graen & Uhl-Bien(1995)', scale: 'LMX-MDM(Liden & Maslyn, 1998)', answer: 'Liden & Maslyn(1998)의 LMX-MDM 다차원 척도를 사용하여 정서, 충성, 공헌, 전문적 존경의 4개 하위요인으로 측정하였습니다. 단일차원 LMX-7보다 풍부한 관계 특성을 포착할 수 있습니다.' },
+        { name: '정서(Affect)', scholar: 'Graen & Uhl-Bien(1995), Liden & Maslyn(1998), Liden and Maslyn(1998), Liden et al.(1997), 김남환(2018), 강세현(2020), 김성훈(2012), 김영식(2016), 김원동(2009), 박범우(2017), 박복만(2019), 배효선(2018), 석봉인(2014), 안병주·차민석(2013), 양태석·최광수(2016), 윤지원(2017), 이공희·김성환(2014), 이찬옥(2014), 이화(2012), 장세준(2011), 전정호·이현응(2015), 전정호·조성준(2016), 정순항(2019), 정진경(2017), 조익점(2017)', scale: 'LMX-MDM(Liden & Maslyn, 1998)', answer: 'Liden & Maslyn(1998)의 LMX-MDM 다차원 척도를 사용하여 정서, 충성, 공헌, 전문적 존경의 4개 하위요인으로 측정하였습니다. 단일차원 LMX-7보다 풍부한 관계 특성을 포착할 수 있습니다.' },
         { name: '충성(Loyalty)', scholar: 'Liden & Maslyn(1998)', scale: 'LMX-MDM', answer: '' },
         { name: '공헌(Contribution)', scholar: 'Liden & Maslyn(1998)', scale: 'LMX-MDM', answer: '' },
         { name: '전문적 존경(Professional Respect)', scholar: 'Liden & Maslyn(1998)', scale: 'LMX-MDM', answer: '' },
@@ -2157,7 +2179,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '혁신행동': {
       options: [
-        { name: '아이디어 생성', scholar: 'Scott & Bruce(1994), 백영미(1998), 이민호(2012), 임광민(2020)', scale: 'Scott & Bruce(1994) Innovative Behavior Scale', answer: 'Scott & Bruce(1994)의 혁신행동 척도를 사용하였으며, 아이디어 생성과 실행을 포함하는 혁신행동의 전 과정을 측정하였습니다.' },
+        { name: '아이디어 생성', scholar: 'Scott & Bruce(1994), 백영미(1998), 이민호(2012), 임광민(2020), 김선희(2023), 백홍기(2021), 정윤미(2010), Janssen(2000), 서남숙(2017), 홍완기(2015), 박선규(2022)', scale: 'Scott & Bruce(1994) Innovative Behavior Scale', answer: 'Scott & Bruce(1994)의 혁신행동 척도를 사용하였으며, 아이디어 생성과 실행을 포함하는 혁신행동의 전 과정을 측정하였습니다.' },
         { name: '아이디어 촉진', scholar: 'Janssen(2000), 백영미(1998), 이민호(2012), 임광민(2020)', scale: 'Janssen(2000) 9-item scale', answer: 'Janssen(2000)의 혁신행동 척도를 사용하여 아이디어 생성, 촉진, 실행의 3단계를 측정하였습니다.' },
         { name: '아이디어 실행', scholar: 'Janssen(2000), 백영미(1998), 이민호(2012), 임광민(2020)', scale: 'Janssen(2000)', answer: '' },
       ],
@@ -2165,13 +2187,13 @@ const PaperCompass = ({ onBack }) => {
     },
     '이직의도': {
       options: [
-        { name: '이직 의도(단일)', scholar: 'Mobley(1978), 나종문(2008), 박주임(2020), 오재동(2017), 김종완(2008)', scale: 'Mobley(1978) / Bozeman & Perrewé(2001)', answer: 'Mobley(1978)의 이직의도 개념에 기반하여 단일차원으로 측정하였으며, 이는 국내외 이직의도 연구에서 가장 널리 사용되는 접근법입니다.' },
+        { name: '이직 의도(단일)', scholar: 'Mobley(1978), 나종문(2008), 박주임(2020), 오재동(2017), 김종완(2008), Allen & Meyer(1991), Iverson(1992), 김미경(2018), 서동진(2013), 서효민(2018), Becker(1995)', scale: 'Mobley(1978) / Bozeman & Perrewé(2001)', answer: 'Mobley(1978)의 이직의도 개념에 기반하여 단일차원으로 측정하였으며, 이는 국내외 이직의도 연구에서 가장 널리 사용되는 접근법입니다.' },
       ],
       defaultSelected: [0],
     },
     '신뢰': {
       options: [
-        { name: '인지적 신뢰', scholar: 'McAllister(1995), 김명철(2017)', scale: 'McAllister(1995)', answer: 'McAllister(1995)의 신뢰 이론에 기반하여 인지적 신뢰(능력/신뢰성 기반)와 정서적 신뢰(감정적 유대 기반)로 구분하여 측정하였습니다.' },
+        { name: '인지적 신뢰', scholar: 'McAllister(1995), 김명철(2017), 윤영숙(2012), 최재욱(2013), Cook & Wall(1980), Fishbein & Ajzen(1975), Lewis, Weigert(1985), Schooman(2007), Schoorman(2007), 김민강(2008), 김호정(1999), 우성주(2021), 최병석(2018), 황윤환(2020)', scale: 'McAllister(1995)', answer: 'McAllister(1995)의 신뢰 이론에 기반하여 인지적 신뢰(능력/신뢰성 기반)와 정서적 신뢰(감정적 유대 기반)로 구분하여 측정하였습니다.' },
         { name: '정서적 신뢰', scholar: 'McAllister(1995), 김명철(2017)', scale: 'McAllister(1995)', answer: '' },
       ],
       defaultSelected: [0, 1],
@@ -2195,7 +2217,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '직무열의': {
       options: [
-        { name: '활력(Vigor)', scholar: 'Schaufeli et al.(2002), 서용(2016)', scale: 'UWES(Utrecht Work Engagement Scale)', answer: 'Schaufeli et al.(2002)의 직무열의 개념에 기반하여 활력, 헌신, 몰두의 3개 하위요인을 채택하였으며, UWES 척도로 측정하였습니다. 이는 직무열의 연구의 표준 척도입니다.' },
+        { name: '활력(Vigor)', scholar: 'Schaufeli et al.(2002), 서용(2016), Bakker(2003), Kahn(1990), Salanova(2005), 신상복(2012), Schaufeli & Bakker(2003), Schaufeli & Bakker(2004), 김선희(2018), 박민선(2010), 정유림(2020)', scale: 'UWES(Utrecht Work Engagement Scale)', answer: 'Schaufeli et al.(2002)의 직무열의 개념에 기반하여 활력, 헌신, 몰두의 3개 하위요인을 채택하였으며, UWES 척도로 측정하였습니다. 이는 직무열의 연구의 표준 척도입니다.' },
         { name: '헌신(Dedication)', scholar: 'Schaufeli et al.(2002), 서용(2016)', scale: 'UWES', answer: '' },
         { name: '몰두(Absorption)', scholar: 'Schaufeli et al.(2002), 서용(2016)', scale: 'UWES', answer: '' },
       ],
@@ -2203,7 +2225,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '긍정심리자본': {
       options: [
-        { name: '자기효능감(Efficacy)', scholar: 'Luthans et al.(2007)', scale: 'PCQ(Psychological Capital Questionnaire)', answer: 'Luthans et al.(2007)의 긍정심리자본 이론에 기반하여 자기효능감, 희망, 복원력, 낙관주의의 4개 하위요인을 채택하였으며, PCQ 척도로 측정하였습니다.' },
+        { name: '자기효능감(Efficacy)', scholar: 'Luthans et al.(2007), 오현아(2017), 최아라(2017)', scale: 'PCQ(Psychological Capital Questionnaire)', answer: 'Luthans et al.(2007)의 긍정심리자본 이론에 기반하여 자기효능감, 희망, 복원력, 낙관주의의 4개 하위요인을 채택하였으며, PCQ 척도로 측정하였습니다.' },
         { name: '희망(Hope)', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' },
         { name: '복원력(Resilience)', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' },
         { name: '낙관주의(Optimism)', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' },
@@ -2212,7 +2234,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '직무몰입': {
       options: [
-        { name: '인지적 몰입', scholar: 'Kahn(1990)', scale: 'Rich et al.(2010)', answer: 'Kahn(1990)의 개인적 몰입(Personal Engagement) 이론에 기반하여 인지적, 정서적, 신체적 몰입으로 구분하였으며, Rich et al.(2010)의 척도로 측정하였습니다.' },
+        { name: '인지적 몰입', scholar: 'Kahn(1990), Lughans et al.(2002), Mowday et al.(1987), Porter et al.(1974)', scale: 'Rich et al.(2010)', answer: 'Kahn(1990)의 개인적 몰입(Personal Engagement) 이론에 기반하여 인지적, 정서적, 신체적 몰입으로 구분하였으며, Rich et al.(2010)의 척도로 측정하였습니다.' },
         { name: '정서적 몰입', scholar: 'Kahn(1990)', scale: 'Rich et al.(2010)', answer: '' },
         { name: '신체적 몰입', scholar: 'Kahn(1990)', scale: 'Rich et al.(2010)', answer: '' },
       ],
@@ -2220,7 +2242,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '조직시민행동': {
       options: [
-        { name: '이타행동(Altruism)', scholar: 'Organ(1988), Podsakoff et al.(1990), 최용배(2013), 박준엽(2014), 김용근(2016)', scale: 'Podsakoff et al.(1990)', answer: 'Organ(1988)의 조직시민행동 5차원 모형 중 연구 목적에 적합한 하위요인을 선택하였으며, Podsakoff et al.(1990)의 척도로 측정하였습니다.' },
+        { name: '이타행동(Altruism)', scholar: 'Organ(1988), Podsakoff et al.(1990), 최용배(2013), 박준엽(2014), 김용근(2016), Scott & Bruce(1994), 백홍기(2021), 최상국(2019), Bateman & Organ(1983), Sosik(2005), Williams & Anderson(1991), 강상묵(2010), 하재길(2013)', scale: 'Podsakoff et al.(1990)', answer: 'Organ(1988)의 조직시민행동 5차원 모형 중 연구 목적에 적합한 하위요인을 선택하였으며, Podsakoff et al.(1990)의 척도로 측정하였습니다.' },
         { name: '양심행동(Conscientiousness)', scholar: 'Organ(1988), Podsakoff et al.(1990), 최용배(2013), 박준엽(2014), 김용근(2016)', scale: 'Podsakoff et al.(1990)', answer: '' },
         { name: '예의행동(Courtesy)', scholar: 'Organ(1988), Podsakoff et al.(1990), 최용배(2013), 박준엽(2014), 김용근(2016)', scale: 'Podsakoff et al.(1990)', answer: '' },
         { name: '시민덕목(Civic virtue)', scholar: 'Organ(1988), Podsakoff et al.(1990), 최용배(2013), 박준엽(2014), 김용근(2016)', scale: 'Podsakoff et al.(1990)', answer: '' },
@@ -2230,7 +2252,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '직무스트레스': {
       options: [
-        { name: '역할갈등', scholar: 'Kahn et al.(1964)', scale: 'Rizzo et al.(1970)', answer: 'Kahn et al.(1964)의 역할이론에 기반하여 역할갈등, 역할모호성, 역할과부하를 직무스트레스의 하위요인으로 채택하였으며, Rizzo et al.(1970)의 척도로 측정하였습니다.' },
+        { name: '역할갈등', scholar: 'Kahn et al.(1964), 소유진(2019), Jayaratne(1988), 이명자(2015), 정창훈(2014), Parker & Decotiis(1983), Motowidlo et al.(1986), 김동진(2020), 정유림(2020)', scale: 'Rizzo et al.(1970)', answer: 'Kahn et al.(1964)의 역할이론에 기반하여 역할갈등, 역할모호성, 역할과부하를 직무스트레스의 하위요인으로 채택하였으며, Rizzo et al.(1970)의 척도로 측정하였습니다.' },
         { name: '역할모호성', scholar: 'Kahn et al.(1964)', scale: 'Rizzo et al.(1970)', answer: '' },
         { name: '역할과부하', scholar: 'Beehr & Newman(1978)', scale: 'Caplan et al.(1975)', answer: '' },
       ],
@@ -2238,7 +2260,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '교육만족': {
       options: [
-        { name: '교육내용 만족', scholar: 'Kirkpatrick(1959)', scale: 'Kirkpatrick 4단계 평가모형 기반', answer: 'Kirkpatrick(1959)의 교육훈련 평가모형 1단계(반응평가)에 기반하여 교육내용, 교육방법, 교육환경에 대한 만족도를 측정하였습니다.' },
+        { name: '교육내용 만족', scholar: 'Kirkpatrick(1959), Oliver(1980), 강민석(2013), 안진우(2018)', scale: 'Kirkpatrick 4단계 평가모형 기반', answer: 'Kirkpatrick(1959)의 교육훈련 평가모형 1단계(반응평가)에 기반하여 교육내용, 교육방법, 교육환경에 대한 만족도를 측정하였습니다.' },
         { name: '교육방법 만족', scholar: 'Kirkpatrick(1959)', scale: 'Kirkpatrick 4단계', answer: '' },
         { name: '교육환경 만족', scholar: 'Kirkpatrick(1959)', scale: 'Kirkpatrick 4단계', answer: '' },
       ],
@@ -2246,7 +2268,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '근무환경': {
       options: [
-        { name: '물리적 환경', scholar: 'Herzberg(1959)', scale: 'Hackman & Oldham(1975) 직무진단조사 변형', answer: 'Herzberg(1959)의 위생요인 개념에 기반하여 물리적 환경(시설, 장비)과 심리적 환경(조직분위기, 대인관계)으로 구분하여 측정하였습니다.' },
+        { name: '물리적 환경', scholar: 'Herzberg(1959), 김대근(2015)', scale: 'Hackman & Oldham(1975) 직무진단조사 변형', answer: 'Herzberg(1959)의 위생요인 개념에 기반하여 물리적 환경(시설, 장비)과 심리적 환경(조직분위기, 대인관계)으로 구분하여 측정하였습니다.' },
         { name: '심리적 환경', scholar: 'Herzberg(1959)', scale: '직무진단조사 변형', answer: '' },
         { name: '제도적 환경', scholar: 'Guest(2002)', scale: 'Guest(2002) HRM 환경 척도', answer: '' },
       ],
@@ -2254,7 +2276,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '직무특성': {
       options: [
-        { name: '기술다양성', scholar: 'Hackman & Oldham(1976), 김용철(2009)', scale: 'JDS(Job Diagnostic Survey)', answer: 'Hackman & Oldham(1976)의 직무특성모형(JCM)에서 제시한 5개 핵심 직무특성(기술다양성, 과업정체성, 과업중요성, 자율성, 피드백)을 채택하였으며, JDS 척도로 측정하였습니다.' },
+        { name: '기술다양성', scholar: 'Hackman & Oldham(1976), 김용철(2009), Turner & Lawrence(1965), 김성환(1997), 문은혜(2016), 심민섭(2022), 최경진(2006), 최지선(2019), Oldham & Hackman(1980), Pierce et al.(2001), 박수현·이형룡(2019), 윤병현(2019), 임영규(2011)', scale: 'JDS(Job Diagnostic Survey)', answer: 'Hackman & Oldham(1976)의 직무특성모형(JCM)에서 제시한 5개 핵심 직무특성(기술다양성, 과업정체성, 과업중요성, 자율성, 피드백)을 채택하였으며, JDS 척도로 측정하였습니다.' },
         { name: '과업정체성', scholar: 'Hackman & Oldham(1976), 김용철(2009)', scale: 'JDS', answer: '' },
         { name: '과업중요성', scholar: 'Hackman & Oldham(1976), 김용철(2009)', scale: 'JDS', answer: '' },
         { name: '자율성', scholar: 'Hackman & Oldham(1976), 김용철(2009)', scale: 'JDS', answer: '' },
@@ -2264,7 +2286,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '윤리적리더십': {
       options: [
-        { name: '윤리적 리더십(단일)', scholar: 'Brown et al.(2005)', scale: 'ELS(Ethical Leadership Scale, 10-item)', answer: 'Brown et al.(2005)의 윤리적 리더십 개념을 채택하였으며, ELS(Ethical Leadership Scale) 10문항 척도로 단일차원 측정하였습니다. 이는 윤리적 리더십의 대표적 측정도구입니다.' },
+        { name: '윤리적 리더십(단일)', scholar: 'Brown et al.(2005), Kalshoven(2011), 김정언(2015), 석희금(2024)', scale: 'ELS(Ethical Leadership Scale, 10-item)', answer: 'Brown et al.(2005)의 윤리적 리더십 개념을 채택하였으며, ELS(Ethical Leadership Scale) 10문항 척도로 단일차원 측정하였습니다. 이는 윤리적 리더십의 대표적 측정도구입니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2278,7 +2300,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '서번트리더십': {
       options: [
-        { name: '이타적 소명', scholar: 'Greenleaf(1977)', scale: 'Liden et al.(2008) SL-28', answer: 'Liden et al.(2008)의 서번트리더십 척도(SL-28)를 사용하여 측정하였습니다. Greenleaf(1977)의 서번트리더십 원론에 기반한 다차원적 접근입니다.' },
+        { name: '이타적 소명', scholar: 'Greenleaf(1977), Ehrhart(2004), 이후석(2022)', scale: 'Liden et al.(2008) SL-28', answer: 'Liden et al.(2008)의 서번트리더십 척도(SL-28)를 사용하여 측정하였습니다. Greenleaf(1977)의 서번트리더십 원론에 기반한 다차원적 접근입니다.' },
         { name: '감정치유', scholar: 'Liden et al.(2008)', scale: 'SL-28', answer: '' },
         { name: '공동체 형성', scholar: 'Liden et al.(2008)', scale: 'SL-28', answer: '' },
         { name: '윤리적 행동', scholar: 'Liden et al.(2008)', scale: 'SL-28', answer: '' },
@@ -2305,7 +2327,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '진정성리더십': {
       options: [
-        { name: '자아인식', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ(Authentic Leadership Questionnaire)', answer: 'Walumbwa et al.(2008)의 진정성리더십 이론에서 제시한 4개 하위요인(자아인식, 관계적 투명성, 내면화된 도덕관점, 균형잡힌 정보처리)을 채택하였으며, ALQ 척도로 측정하였습니다.' },
+        { name: '자아인식', scholar: 'Walumbwa et al.(2008), Neider & Schriesheim(2011), 구동우(2013), 김가진(2011), 남차현(2012), 박상길(2016), 우성주(2021), 윤인한(2015), 이미현(2014), 장성철(2016), 조경주(2016), 최병권(2017)', scale: 'ALQ(Authentic Leadership Questionnaire)', answer: 'Walumbwa et al.(2008)의 진정성리더십 이론에서 제시한 4개 하위요인(자아인식, 관계적 투명성, 내면화된 도덕관점, 균형잡힌 정보처리)을 채택하였으며, ALQ 척도로 측정하였습니다.' },
         { name: '관계적 투명성', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
         { name: '내면화된 도덕관점', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
         { name: '균형잡힌 정보처리', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
@@ -2314,7 +2336,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '조직문화': {
       options: [
-        { name: '혁신문화(Adhocracy)', scholar: 'Cameron & Quinn(1999)', scale: 'OCAI(Organizational Culture Assessment Instrument)', answer: 'Cameron & Quinn(1999)의 경쟁가치모형(CVF)에 기반한 OCAI 척도를 사용하여 조직문화를 측정하였습니다.' },
+        { name: '혁신문화(Adhocracy)', scholar: 'Cameron & Quinn(1999), Quinn & MaGrath(1985), 구연원(2006), 김호정(2002), 심민섭(2022), 한봉주(2010), Quinn & McGrath(1985), 김병오(2017)', scale: 'OCAI(Organizational Culture Assessment Instrument)', answer: 'Cameron & Quinn(1999)의 경쟁가치모형(CVF)에 기반한 OCAI 척도를 사용하여 조직문화를 측정하였습니다.' },
         { name: '관계문화(Clan)', scholar: 'Cameron & Quinn(1999)', scale: 'OCAI', answer: '' },
         { name: '위계문화(Hierarchy)', scholar: 'Cameron & Quinn(1999)', scale: 'OCAI', answer: '' },
         { name: '시장문화(Market)', scholar: 'Cameron & Quinn(1999)', scale: 'OCAI', answer: '' },
@@ -2331,14 +2353,14 @@ const PaperCompass = ({ onBack }) => {
     },
     '조직신뢰': {
       options: [
-        { name: '인지적 신뢰', scholar: 'Cook & Wall(1980), 김유나(2015), 황용수(2010)', scale: 'Cook & Wall(1980) Organizational Trust Scale', answer: 'Cook & Wall(1980)의 조직신뢰 척도를 사용하였으며, 인지적 신뢰(능력 기반)와 정서적 신뢰(감정적 유대 기반)로 구분하여 측정하였습니다.' },
+        { name: '인지적 신뢰', scholar: 'Cook & Wall(1980), 김유나(2015), 황용수(2010), Schooman(2007), 김민강(2008), 김호정(1999), 우성주(2021), 최재욱(2013), Tan & Tan(2000), 현병무(2016), 박선규(2022)', scale: 'Cook & Wall(1980) Organizational Trust Scale', answer: 'Cook & Wall(1980)의 조직신뢰 척도를 사용하였으며, 인지적 신뢰(능력 기반)와 정서적 신뢰(감정적 유대 기반)로 구분하여 측정하였습니다.' },
         { name: '정서적 신뢰', scholar: 'Cook & Wall(1980), 김유나(2015), 황용수(2010)', scale: 'Cook & Wall(1980)', answer: '' },
       ],
       defaultSelected: [0, 1],
     },
     '조직후원인식': {
       options: [
-        { name: '조직후원인식(단일차원)', scholar: 'Eisenberger, Huchison & Sowa(1986), Shore & Tetrick(1991), Wayne et al.(1997), 서재현(2002), 김윤성(2002), 이인숙(2009)', scale: 'SPOS(Survey of Perceived Organizational Support)', answer: 'Eisenberger et al.(1986)의 조직후원인식 척도(SPOS)를 사용하여 단일차원으로 측정하였습니다.' },
+        { name: '조직후원인식(단일차원)', scholar: 'Eisenberger, Huchison & Sowa(1986), Shore & Tetrick(1991), Wayne et al.(1997), 서재현(2002), 김윤성(2002), 이인숙(2009), Eisenberger et al.(1986), Kanter(1968), Porter et al.(1974), 최송아(2018)', scale: 'SPOS(Survey of Perceived Organizational Support)', answer: 'Eisenberger et al.(1986)의 조직후원인식 척도(SPOS)를 사용하여 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2352,7 +2374,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '직무배태성': {
       options: [
-        { name: '적합성(Fit)', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: 'Mitchell et al.(2001)의 직무배태성 이론에 기반하여 적합성(Fit), 연계(Links), 희생(Sacrifice)의 3개 하위요인을 채택하였습니다. 이는 직무배태성 연구에서 가장 보편적으로 사용되는 분류입니다.' },
+        { name: '적합성(Fit)', scholar: 'Mitchell et al.(2001), 권성민(2013), 장미정(2011), Mitchell(2001), Kim(2014), 석희금(2024)', scale: 'Job Embeddedness Scale', answer: 'Mitchell et al.(2001)의 직무배태성 이론에 기반하여 적합성(Fit), 연계(Links), 희생(Sacrifice)의 3개 하위요인을 채택하였습니다. 이는 직무배태성 연구에서 가장 보편적으로 사용되는 분류입니다.' },
         { name: '연계(Links)', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: '' },
         { name: '희생(Sacrifice)', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: '' },
       ],
@@ -2369,7 +2391,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '거래적리더십': {
       options: [
-        { name: '조건적 보상(Contingent Reward)', scholar: 'Bass & Avolio(1995)', scale: 'MLQ(Multifactor Leadership Questionnaire)', answer: 'Bass & Avolio(1995)의 MLQ를 기반으로 조건적 보상, 예외적 관리(적극적/소극적)의 하위요인을 채택하였습니다.' },
+        { name: '조건적 보상(Contingent Reward)', scholar: 'Bass & Avolio(1995), 강신규(2002)', scale: 'MLQ(Multifactor Leadership Questionnaire)', answer: 'Bass & Avolio(1995)의 MLQ를 기반으로 조건적 보상, 예외적 관리(적극적/소극적)의 하위요인을 채택하였습니다.' },
         { name: '예외적 관리-적극적(Active MBE)', scholar: 'Bass & Avolio(1995)', scale: 'MLQ', answer: '' },
         { name: '예외적 관리-소극적(Passive MBE)', scholar: 'Bass & Avolio(1995)', scale: 'MLQ', answer: '' },
       ],
@@ -2377,7 +2399,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '코칭리더십': {
       options: [
-        { name: '방향제시', scholar: 'Stowell(1988)', scale: '코칭리더십 척도(박정원, 2008)', answer: 'Stowell(1988)과 Park(2008)의 코칭리더십 이론에 기반하여 방향제시, 역량개발, 수행평가, 관계의 4개 하위요인을 채택하였습니다.' },
+        { name: '방향제시', scholar: 'Stowell(1988), Stowell(1986), 박선규(2022)', scale: '코칭리더십 척도(박정원, 2008)', answer: 'Stowell(1988)과 Park(2008)의 코칭리더십 이론에 기반하여 방향제시, 역량개발, 수행평가, 관계의 4개 하위요인을 채택하였습니다.' },
         { name: '역량개발', scholar: 'Stowell(1988)', scale: '코칭리더십 척도', answer: '' },
         { name: '수행평가', scholar: 'Stowell(1988)', scale: '코칭리더십 척도', answer: '' },
         { name: '관계', scholar: 'Stowell(1988)', scale: '코칭리더십 척도', answer: '' },
@@ -2399,7 +2421,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '직무소진': {
       options: [
-        { name: '정서적 고갈(Emotional Exhaustion)', scholar: 'Maslach & Jackson(1981)', scale: 'MBI(Maslach Burnout Inventory)', answer: 'Maslach & Jackson(1981)의 MBI를 기반으로 정서적 고갈, 비인격화, 개인적 성취감 저하의 3개 하위요인을 채택하였습니다.' },
+        { name: '정서적 고갈(Emotional Exhaustion)', scholar: 'Maslach & Jackson(1981), Yu(2007), 이자영(2008), Demerouti(1999), 이명자(2015), 정창훈(2014)', scale: 'MBI(Maslach Burnout Inventory)', answer: 'Maslach & Jackson(1981)의 MBI를 기반으로 정서적 고갈, 비인격화, 개인적 성취감 저하의 3개 하위요인을 채택하였습니다.' },
         { name: '비인격화(Depersonalization)', scholar: 'Maslach & Jackson(1981)', scale: 'MBI', answer: '' },
         { name: '개인적 성취감 저하(Reduced Personal Accomplishment)', scholar: 'Maslach & Jackson(1981)', scale: 'MBI', answer: '' },
       ],
@@ -2445,7 +2467,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '학습지향성': {
       options: [
-        { name: '학습목표지향(Learning Goal Orientation)', scholar: 'VandeWalle(1997)', scale: 'Goal Orientation Scale', answer: 'VandeWalle(1997)의 목표지향성 이론에 기반하여 학습목표지향, 성과증명목표지향, 성과회피목표지향의 3개 하위요인을 채택하였습니다.' },
+        { name: '학습목표지향(Learning Goal Orientation)', scholar: 'VandeWalle(1997), Baker & Sinkula(1999), 유봉호(2012), 이우형·박태형(2015), 이정환(2015), 정대용·박권홍(2010)', scale: 'Goal Orientation Scale', answer: 'VandeWalle(1997)의 목표지향성 이론에 기반하여 학습목표지향, 성과증명목표지향, 성과회피목표지향의 3개 하위요인을 채택하였습니다.' },
         { name: '성과증명목표지향(Performance Prove Orientation)', scholar: 'VandeWalle(1997)', scale: 'Goal Orientation Scale', answer: '' },
         { name: '성과회피목표지향(Performance Avoid Orientation)', scholar: 'VandeWalle(1997)', scale: 'Goal Orientation Scale', answer: '' },
       ],
@@ -2459,7 +2481,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '심리적주인의식': {
       options: [
-        { name: '심리적주인의식(단일)', scholar: 'Pierce et al.(2001), 박수현·이형룡(2019), 이미영(2021), 김화자(2023)', scale: 'Psychological Ownership Scale(Van Dyne & Pierce, 2004)', answer: 'Pierce et al.(2001)와 Van Dyne & Pierce(2004)의 심리적주인의식 척도를 단일차원으로 측정하였습니다.' },
+        { name: '심리적주인의식(단일)', scholar: 'Pierce et al.(2001), 박수현·이형룡(2019), 이미영(2021), 김화자(2023), Weiss & Cropanzano(1996), 김병한(2017)', scale: 'Psychological Ownership Scale(Van Dyne & Pierce, 2004)', answer: 'Pierce et al.(2001)와 Van Dyne & Pierce(2004)의 심리적주인의식 척도를 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2471,7 +2493,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '마음챙김': {
       options: [
-        { name: '마음챙김(단일)', scholar: 'Brown & Ryan(2003)', scale: 'MAAS(Mindful Attention Awareness Scale)', answer: 'Brown & Ryan(2003)의 MAAS를 기반으로 마음챙김을 단일차원으로 측정하였습니다.' },
+        { name: '마음챙김(단일)', scholar: 'Brown & Ryan(2003), Kabat-Zinn(1990), 박성현(2006), 이주양(2016)', scale: 'MAAS(Mindful Attention Awareness Scale)', answer: 'Brown & Ryan(2003)의 MAAS를 기반으로 마음챙김을 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2483,7 +2505,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '자기결정성': {
       options: [
-        { name: '자율성(Autonomy)', scholar: 'Deci & Ryan(2000)', scale: 'BPNS(Basic Psychological Needs Scale), MWMS(Gagné et al., 2010)', answer: 'Deci & Ryan(2000)의 자기결정성 이론(SDT)에 기반하여 자율성, 유능성, 관계성의 3개 기본 심리적 욕구를 채택하였습니다.' },
+        { name: '자율성(Autonomy)', scholar: 'Deci & Ryan(2000), Standage(2003), 윤경화(2016), 이명희(2008)', scale: 'BPNS(Basic Psychological Needs Scale), MWMS(Gagné et al., 2010)', answer: 'Deci & Ryan(2000)의 자기결정성 이론(SDT)에 기반하여 자율성, 유능성, 관계성의 3개 기본 심리적 욕구를 채택하였습니다.' },
         { name: '유능성(Competence)', scholar: 'Deci & Ryan(2000)', scale: 'BPNS', answer: '' },
         { name: '관계성(Relatedness)', scholar: 'Deci & Ryan(2000)', scale: 'BPNS', answer: '' },
       ],
@@ -2606,7 +2628,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '직원몰입': {
       options: [
-        { name: '직원몰입 (단일차원)', scholar: 'Mowday, Porter & Steers(1982)', scale: 'OCQ(Organizational Commitment Questionnaire)', answer: 'Mowday et al.(1982)의 조직몰입 척도(OCQ)를 기반으로 직원이 조직에 대해 느끼는 몰입과 헌신 수준을 측정하였습니다. 도현구(2019), 손다혜(2023) 등 국내 선행연구에서도 활용된 척도입니다.' },
+        { name: '직원몰입 (단일차원)', scholar: 'Mowday, Porter & Steers(1982), 도철구(2019)', scale: 'OCQ(Organizational Commitment Questionnaire)', answer: 'Mowday et al.(1982)의 조직몰입 척도(OCQ)를 기반으로 직원이 조직에 대해 느끼는 몰입과 헌신 수준을 측정하였습니다. 도현구(2019), 손다혜(2023) 등 국내 선행연구에서도 활용된 척도입니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2642,7 +2664,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '고객충성도': {
       options: [
-        { name: '고객충성도(단일차원)', scholar: 'Tellis(1988)', scale: '연구자 재구성(Tellis 1988, Chadhuri&Holbrook 2001, 최현정 2023)', answer: 'Tellis(1988)의 재구매, 추가구매, 반복구매, 지속구매 개념과 Chadhuri&Holbrook(2001)의 행동적·태도적 충성도를 바탕으로 단일차원 8문항으로 측정하였습니다.' },
+        { name: '고객충성도(단일차원)', scholar: 'Tellis(1988), Anderson & Srinivasan(2003), Dick & Basu(1994), Oliver(1999), Parasuraman(1996), 궈원징(2013), 이신화(2020), 이원화(2009), 전광우(2021), 관뢰(2013), 김태숙(2016), 임성연(2024)', scale: '연구자 재구성(Tellis 1988, Chadhuri&Holbrook 2001, 최현정 2023)', answer: 'Tellis(1988)의 재구매, 추가구매, 반복구매, 지속구매 개념과 Chadhuri&Holbrook(2001)의 행동적·태도적 충성도를 바탕으로 단일차원 8문항으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2655,7 +2677,7 @@ const PaperCompass = ({ onBack }) => {
     // ── PDF 일괄 추출 자동 등록 ──
     '교사효능감': {
       options: [
-        { name: '교사효능감(단일차원)', scholar: 'Tschannen-Moran & Woolfolk Hoy(2001), 홍재일(2025)', scale: 'Tschannen-Moran & Woolfolk Hoy(2001)의 교사효능감 척도(TSES)를 홍재일(2025)이 직업능력개발훈련 맥락에 적용', answer: 'Tschannen-Moran & Woolfolk Hoy(2001)의 교사효능감 척도를 기반으로, 수업지도·학생지도·학교업무 수행에 대한 교사의 자기효능 신념을 단일차원 10문항으로 측정하였습니다.' },
+        { name: '교사효능감(단일차원)', scholar: 'Tschannen-Moran & Woolfolk Hoy(2001), 홍재일(2025), 이진영(2014), 정동연(2023)', scale: 'Tschannen-Moran & Woolfolk Hoy(2001)의 교사효능감 척도(TSES)를 홍재일(2025)이 직업능력개발훈련 맥락에 적용', answer: 'Tschannen-Moran & Woolfolk Hoy(2001)의 교사효능감 척도를 기반으로, 수업지도·학생지도·학교업무 수행에 대한 교사의 자기효능 신념을 단일차원 10문항으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2668,19 +2690,19 @@ const PaperCompass = ({ onBack }) => {
     },
     '게임만족': {
       options: [
-        { name: '게임만족(단일차원)', scholar: 'Oliver(1980), 김기준(2025)', scale: '고객만족 이론을 게임 맥락에 적용', answer: 'Oliver(1980)의 기대-불일치 모형에 기반하여 게임 이용 후 만족도를 단일차원으로 측정하였습니다.' },
+        { name: '게임만족(단일차원)', scholar: 'Oliver(1980), 김기준(2025), Phan Keebler et al(2020), 김동현(2004), 백영석, 이호, 이동현(2015)', scale: '고객만족 이론을 게임 맥락에 적용', answer: 'Oliver(1980)의 기대-불일치 모형에 기반하여 게임 이용 후 만족도를 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '게임몰입': {
       options: [
-        { name: '게임몰입(단일차원)', scholar: 'Csikszentmihalyi(1990), 김기준(2025)', scale: '몰입 이론을 게임 맥락에 적용', answer: 'Csikszentmihalyi(1990)의 몰입(Flow) 이론에 기반하여 게임 이용 시 몰입 경험을 단일차원으로 측정하였습니다.' },
+        { name: '게임몰입(단일차원)', scholar: 'Csikszentmihalyi(1990), 김기준(2025), Lan-Ying Huang(2011)', scale: '몰입 이론을 게임 맥락에 적용', answer: 'Csikszentmihalyi(1990)의 몰입(Flow) 이론에 기반하여 게임 이용 시 몰입 경험을 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '연주몰입경험': {
       options: [
-        { name: '목적', scholar: 'Csikszentmihalyi(1990), Jackson & Marsh(1996), 김진우(2025)', scale: 'Flow State Scale(FSS)', answer: 'Jackson & Marsh(1996)의 FSS 척도를 피아노 연주 맥락에 적용하였습니다.' },
+        { name: '목적', scholar: 'Csikszentmihalyi(1990), Jackson & Marsh(1996), 김진우(2025), 신숙경(2008), 오성심(2019)', scale: 'Flow State Scale(FSS)', answer: 'Jackson & Marsh(1996)의 FSS 척도를 피아노 연주 맥락에 적용하였습니다.' },
         { name: '시간변형', scholar: '', scale: '', answer: '' },
         { name: '자아의식상실', scholar: '', scale: '', answer: '' },
         { name: '집중도-보상', scholar: '', scale: '', answer: '' },
@@ -2690,13 +2712,13 @@ const PaperCompass = ({ onBack }) => {
     },
     '자기유능감': {
       options: [
-        { name: '자기유능감(단일차원)', scholar: 'Deci & Ryan(1985), 김진우(2025)', scale: '자기결정이론(SDT) 기반 유능감 척도', answer: 'Deci & Ryan(1985)의 자기결정이론에서 기본심리욕구 중 유능감을 측정하였습니다.' },
+        { name: '자기유능감(단일차원)', scholar: 'Deci & Ryan(1985), 김진우(2025), Harter(1982), Harter(1985), 서동균(2007), 이애리(2013)', scale: '자기결정이론(SDT) 기반 유능감 척도', answer: 'Deci & Ryan(1985)의 자기결정이론에서 기본심리욕구 중 유능감을 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '자아존중감': {
       options: [
-        { name: '자아존중감(단일차원)', scholar: 'Rosenberg(1965), 김진우(2025)', scale: 'Rosenberg Self-Esteem Scale(RSES)', answer: 'Rosenberg(1965)의 자아존중감 척도(RSES) 10문항을 사용하여 전반적 자아존중감을 측정하였습니다.' },
+        { name: '자아존중감(단일차원)', scholar: 'Rosenberg(1965), 김진우(2025), 박정민(2007), 오성심(2019), 정미선(2018)', scale: 'Rosenberg Self-Esteem Scale(RSES)', answer: 'Rosenberg(1965)의 자아존중감 척도(RSES) 10문항을 사용하여 전반적 자아존중감을 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2716,19 +2738,19 @@ const PaperCompass = ({ onBack }) => {
     },
     '공연만족도': {
       options: [
-        { name: '공연만족도(단일차원)', scholar: 'Oliver(1980), 김진우(2025)', scale: '만족도 척도를 피아노 공연 맥락에 적용', answer: '연주자의 공연에 대한 전반적 만족도를 측정하였습니다.' },
+        { name: '공연만족도(단일차원)', scholar: 'Oliver(1980), 김진우(2025), Francise(1982), McPherson & McCormick(2006), 신숙경(2008)', scale: '만족도 척도를 피아노 공연 맥락에 적용', answer: '연주자의 공연에 대한 전반적 만족도를 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '고객태도': {
       options: [
-        { name: '고객태도(단일차원)', scholar: 'Fishbein & Ajzen(1975), 최혜수(2021), 김천욱(2023)', scale: 'Fishbein & Ajzen(1975)의 태도 척도를 은행서비스 맥락에 적용', answer: 'Fishbein & Ajzen(1975)의 태도 이론에 기반하여 고객이 특정 서비스 또는 제품에 대해 가지는 호의적·비호의적 평가를 단일차원 10문항으로 측정하였습니다.' },
+        { name: '고객태도(단일차원)', scholar: 'Fishbein & Ajzen(1975), 최혜수(2021), 김천욱(2023), Fiore & Kim(2007), 이요(2014), 주철근(2015), 최주호(2003)', scale: 'Fishbein & Ajzen(1975)의 태도 척도를 은행서비스 맥락에 적용', answer: 'Fishbein & Ajzen(1975)의 태도 이론에 기반하여 고객이 특정 서비스 또는 제품에 대해 가지는 호의적·비호의적 평가를 단일차원 10문항으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '교육훈련전이': {
       options: [
-        { name: '교육훈련전이(단일차원)', scholar: '강상묵(2018), 이도형(1995), 박진우(2024)', scale: '교육훈련전이 척도(강상묵 2018)', answer: '교육·훈련에서 학습한 지식, 기술, 태도를 실제 업무 현장에 적용하고 활용하는 정도를 단일차원 4문항으로 측정하였습니다.' },
+        { name: '교육훈련전이(단일차원)', scholar: '강상묵(2018), 이도형(1995), 박진우(2024), Baldwin & Ford(1988)', scale: '교육훈련전이 척도(강상묵 2018)', answer: '교육·훈련에서 학습한 지식, 기술, 태도를 실제 업무 현장에 적용하고 활용하는 정도를 단일차원 4문항으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2752,7 +2774,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '애착도': {
       options: [
-        { name: '애착도(단일차원)', scholar: 'Williams & Vaske(2003), 이경영(2022)', scale: '장소애착 척도를 지역사회 맥락에 적용', answer: '인간과 물리적 환경 사이의 인지장소에 대한 의존상태로, 지역주민이 해당 지역사회에 대해 개인적·집단적으로 느끼는 심리적 연계를 단일차원으로 측정하였습니다.' },
+        { name: '애착도(단일차원)', scholar: 'Williams & Vaske(2003), 이경영(2022), McCool(1994), Um(1987), 강신겸(2001)', scale: '장소애착 척도를 지역사회 맥락에 적용', answer: '인간과 물리적 환경 사이의 인지장소에 대한 의존상태로, 지역주민이 해당 지역사회에 대해 개인적·집단적으로 느끼는 심리적 연계를 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2764,7 +2786,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '지역애호도': {
       options: [
-        { name: '지역애호도(단일차원)', scholar: 'Zenker & Rütter(2014), 김성헌(2023)', scale: '지역애호도 척도를 축제 맥락에 적용', answer: '특정 지역에 대한 애정과 선호도를 측정하며, 지역축제 브랜드자산과 축제성과의 관계에서 조절효과를 분석하기 위해 단일차원으로 측정하였습니다.' },
+        { name: '지역애호도(단일차원)', scholar: 'Zenker & Rütter(2014), 김성헌(2023), Oliver(1999), 진문강(2019)', scale: '지역애호도 척도를 축제 맥락에 적용', answer: '특정 지역에 대한 애정과 선호도를 측정하며, 지역축제 브랜드자산과 축제성과의 관계에서 조절효과를 분석하기 위해 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2783,13 +2805,13 @@ const PaperCompass = ({ onBack }) => {
     // ── 자동 등록: researchPairDB 기반 변수 ──
     '지속사용의도': {
       options: [
-        { name: '지속사용의도(단일차원)', scholar: 'Bhattacherjee(2001)', scale: 'IS Continuance Model', answer: 'Bhattacherjee(2001)의 정보시스템 지속사용 모델(ECM-IT)에 기반하여 지속사용의도를 단일차원으로 측정하였습니다. 기대확인, 만족, 지각된 유용성이 지속사용의도에 미치는 영향을 설명합니다.' },
+        { name: '지속사용의도(단일차원)', scholar: 'Bhattacherjee(2001), Ajzen(1991), Venkatesh, Morris(2000), 강미혜(2019), 김민지(2022), 김지은(2023), 서창옥(2017), 왕지아(2023), 장동길(2021)', scale: 'IS Continuance Model', answer: 'Bhattacherjee(2001)의 정보시스템 지속사용 모델(ECM-IT)에 기반하여 지속사용의도를 단일차원으로 측정하였습니다. 기대확인, 만족, 지각된 유용성이 지속사용의도에 미치는 영향을 설명합니다.' },
       ],
       defaultSelected: [0],
     },
     '고객만족': {
       options: [
-        { name: '고객만족(단일차원)', scholar: 'Oliver(1980)', scale: '고객만족 척도(Oliver 1980, Fornell 1992)', answer: 'Oliver(1980)의 기대불일치 이론과 Fornell(1992)의 고객만족지수(ACSI)를 바탕으로 전반적 만족, 기대 대비 만족, 이상적 서비스 대비 만족 등을 단일차원으로 측정하였습니다.' },
+        { name: '고객만족(단일차원)', scholar: 'Oliver(1980), Delone & Mclean(1992), Morgan & Hunt(1994), 강미혜(2019), 궈원징(2013), 박성규(2011), 박시숙(2006), 박용주(2021), 이숙영(2003), 이신화(2020), 이용철(2017), 전광우(2021), 최혜수(2021), 윤선미(2015), 김태숙(2016), Fornell(1992), Castaneda(2011), Parasuraman, Grewal and Voss(2002), 김동원(2009), 배백식·박남규(2012), 이학식(2003), 정기한(2006), 정우천·하명신·배상욱(2011), 최근녕(2012), 한국정보화진흥원(2009)', scale: '고객만족 척도(Oliver 1980, Fornell 1992)', answer: 'Oliver(1980)의 기대불일치 이론과 Fornell(1992)의 고객만족지수(ACSI)를 바탕으로 전반적 만족, 기대 대비 만족, 이상적 서비스 대비 만족 등을 단일차원으로 측정하였습니다.' },
         { name: '서비스만족', scholar: 'Oliver(1980)', scale: '고객만족 척도', answer: '' },
         { name: '재구매의도', scholar: 'Oliver(1980)', scale: '고객만족 척도', answer: '' },
       ],
@@ -2797,19 +2819,19 @@ const PaperCompass = ({ onBack }) => {
     },
     '이용의도': {
       options: [
-        { name: '이용의도(단일차원)', scholar: 'Davis(1989)', scale: 'TAM(Technology Acceptance Model)', answer: 'Davis(1989)의 기술수용모델(TAM)에 기반하여 특정 기술이나 서비스를 이용하고자 하는 행동 의도를 단일차원으로 측정하였습니다.' },
+        { name: '이용의도(단일차원)', scholar: 'Davis(1989), 김은영(2020), 최병석(2018)', scale: 'TAM(Technology Acceptance Model)', answer: 'Davis(1989)의 기술수용모델(TAM)에 기반하여 특정 기술이나 서비스를 이용하고자 하는 행동 의도를 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '유용성': {
       options: [
-        { name: '지각된 유용성', scholar: 'Davis(1989)', scale: 'TAM 유용성 척도', answer: 'Davis(1989)의 기술수용모델에서 제시한 지각된 유용성(Perceived Usefulness) 개념을 채택하였으며, 업무 성과 향상, 생산성 증가, 효과성 등의 항목으로 측정하였습니다.' },
+        { name: '지각된 유용성', scholar: 'Davis(1989), DeLone & McLean(2003), 경승현(2019), 김본수(2010), 배재권·권두순(2011), 여인수(2007)', scale: 'TAM 유용성 척도', answer: 'Davis(1989)의 기술수용모델에서 제시한 지각된 유용성(Perceived Usefulness) 개념을 채택하였으며, 업무 성과 향상, 생산성 증가, 효과성 등의 항목으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '지각된가치': {
       options: [
-        { name: '기능적 가치', scholar: 'Zeithaml(1988)', scale: 'PERVAL(Sweeney & Soutar 2001)', answer: 'Zeithaml(1988)의 지각된 가치 개념과 Sweeney & Soutar(2001)의 PERVAL 척도를 바탕으로 기능적 가치, 감정적 가치, 사회적 가치, 경제적 가치의 하위차원으로 측정하였습니다.' },
+        { name: '기능적 가치', scholar: 'Zeithaml(1988), Gabler & Reynolds(2013), 이호성(2019), 장민흔(2020)', scale: 'PERVAL(Sweeney & Soutar 2001)', answer: 'Zeithaml(1988)의 지각된 가치 개념과 Sweeney & Soutar(2001)의 PERVAL 척도를 바탕으로 기능적 가치, 감정적 가치, 사회적 가치, 경제적 가치의 하위차원으로 측정하였습니다.' },
         { name: '감정적 가치', scholar: 'Sweeney & Soutar(2001)', scale: 'PERVAL', answer: '' },
         { name: '사회적 가치', scholar: 'Sweeney & Soutar(2001)', scale: 'PERVAL', answer: '' },
         { name: '경제적 가치', scholar: 'Zeithaml(1988)', scale: 'PERVAL', answer: '' },
@@ -2824,13 +2846,13 @@ const PaperCompass = ({ onBack }) => {
     },
     '태도': {
       options: [
-        { name: '태도(단일차원)', scholar: 'Ajzen(1991)', scale: '계획행동이론(TPB) 태도 척도', answer: 'Ajzen(1991)의 계획행동이론(Theory of Planned Behavior)에 기반하여 특정 행동에 대한 개인의 긍정적 또는 부정적 평가를 단일차원으로 측정하였습니다.' },
+        { name: '태도(단일차원)', scholar: 'Ajzen(1991), McCool(1994), 강신겸(2001), 노윤구(2007), 이요(2014), 주철근(2015), 최주호(2003), 최혜수(2021)', scale: '계획행동이론(TPB) 태도 척도', answer: 'Ajzen(1991)의 계획행동이론(Theory of Planned Behavior)에 기반하여 특정 행동에 대한 개인의 긍정적 또는 부정적 평가를 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '직무교육': {
       options: [
-        { name: '교육내용', scholar: 'Noe(2010)', scale: '직무교육 효과성 척도', answer: 'Noe(2010)의 교육훈련 이론에 기반하여 교육내용의 적절성, 교육방법, 교육환경 등의 하위차원으로 직무교육을 측정하였습니다.' },
+        { name: '교육내용', scholar: 'Noe(2010), 이도형(1995)', scale: '직무교육 효과성 척도', answer: 'Noe(2010)의 교육훈련 이론에 기반하여 교육내용의 적절성, 교육방법, 교육환경 등의 하위차원으로 직무교육을 측정하였습니다.' },
         { name: '교육방법', scholar: 'Noe(2010)', scale: '직무교육 효과성 척도', answer: '' },
         { name: '교육환경', scholar: 'Kirkpatrick(1994)', scale: '교육훈련 평가모델', answer: '' },
         { name: '직무관련성', scholar: 'Grove & Ostroff(1991), 이원석(2012)', scale: '직무교육 효과성 척도(직업훈련교사)', answer: 'Grove & Ostroff(1991)의 교육 효과성 이론에 기반하여 직무관련성, 교수능력, 교육방법, 교육훈련환경, 목표설정의 5개 하위차원으로 직무교육을 측정하였습니다.' },
@@ -2848,20 +2870,20 @@ const PaperCompass = ({ onBack }) => {
     },
     '행위의도': {
       options: [
-        { name: '행위의도(단일차원)', scholar: 'Ajzen(1991)', scale: '계획행동이론(TPB)', answer: 'Ajzen(1991)의 계획행동이론에 기반하여 특정 행위를 수행하고자 하는 개인의 의도를 단일차원으로 측정하였습니다.' },
+        { name: '행위의도(단일차원)', scholar: 'Ajzen(1991), 박건희(2009), 배수원(2006), 우광호(2012)', scale: '계획행동이론(TPB)', answer: 'Ajzen(1991)의 계획행동이론에 기반하여 특정 행위를 수행하고자 하는 개인의 의도를 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '학업성취도': {
       options: [
-        { name: '인지적 성취', scholar: 'Bloom(1956)', scale: 'Bloom의 교육목표 분류체계', answer: 'Bloom(1956)의 교육목표 분류체계를 바탕으로 인지적 영역(지식, 이해, 적용)과 정의적 영역(태도, 흥미)의 학업성취를 측정하였습니다.' },
+        { name: '인지적 성취', scholar: 'Bloom(1956), Astin(1991), 길혜지(2015), 김민선(2012), 성영혜(2002), 신은경(2016), 주영주(2013)', scale: 'Bloom의 교육목표 분류체계', answer: 'Bloom(1956)의 교육목표 분류체계를 바탕으로 인지적 영역(지식, 이해, 적용)과 정의적 영역(태도, 흥미)의 학업성취를 측정하였습니다.' },
         { name: '정의적 성취', scholar: 'Bloom(1956)', scale: 'Bloom의 교육목표 분류체계', answer: '' },
       ],
       defaultSelected: [0, 1],
     },
     '몰입': {
       options: [
-        { name: '인지몰입', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도', answer: 'Csikszentmihalyi(1990)의 몰입(Flow) 이론에 기반하여 인지적 몰입과 감정적 몰입으로 구분하여 측정하였습니다. 활동에 완전히 집중하고 시간 감각을 잃는 최적 경험 상태를 의미합니다.' },
+        { name: '인지몰입', scholar: 'Csikszentmihalyi(1990), Trevino, Webster(1992)', scale: 'Flow 척도', answer: 'Csikszentmihalyi(1990)의 몰입(Flow) 이론에 기반하여 인지적 몰입과 감정적 몰입으로 구분하여 측정하였습니다. 활동에 완전히 집중하고 시간 감각을 잃는 최적 경험 상태를 의미합니다.' },
         { name: '감정몰입', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도', answer: '' },
       ],
       defaultSelected: [0, 1],
@@ -2874,14 +2896,14 @@ const PaperCompass = ({ onBack }) => {
     },
     '게임충성도': {
       options: [
-        { name: '행동적 충성도', scholar: 'Oliver(1999)', scale: '충성도 척도(Oliver 1999)', answer: 'Oliver(1999)의 충성도 이론에 기반하여 게임에 대한 행동적 충성도(재이용, 지속이용)와 태도적 충성도(선호, 추천의향)로 구분하여 측정하였습니다.' },
+        { name: '행동적 충성도', scholar: 'Oliver(1999), Lan-Ying Huang(2011), 조진완(2008)', scale: '충성도 척도(Oliver 1999)', answer: 'Oliver(1999)의 충성도 이론에 기반하여 게임에 대한 행동적 충성도(재이용, 지속이용)와 태도적 충성도(선호, 추천의향)로 구분하여 측정하였습니다.' },
         { name: '태도적 충성도', scholar: 'Oliver(1999)', scale: '충성도 척도', answer: '' },
       ],
       defaultSelected: [0, 1],
     },
     '조직성과': {
       options: [
-        { name: '재무적 성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC(Balanced Scorecard)', answer: 'Kaplan & Norton(1992)의 균형성과표(BSC)에 기반하여 재무적 성과와 비재무적 성과(고객, 내부프로세스, 학습/성장)의 하위차원으로 조직성과를 측정하였습니다.' },
+        { name: '재무적 성과', scholar: 'Kaplan & Norton(1992), 박상목(2016), 오경헌(2010), 유봉호(2012), 조경훈(2008), 한기장(2009)', scale: 'BSC(Balanced Scorecard)', answer: 'Kaplan & Norton(1992)의 균형성과표(BSC)에 기반하여 재무적 성과와 비재무적 성과(고객, 내부프로세스, 학습/성장)의 하위차원으로 조직성과를 측정하였습니다.' },
         { name: '비재무적 성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC', answer: '' },
         { name: '조직성과(단일차원)', scholar: 'Campbell(1977), Podsakoff & Mackenzie(1990)', scale: '조직성과 종합 척도', answer: 'Campbell(1977)과 Podsakoff & Mackenzie(1990) 등의 이론에 기반하여 업무만족, 조직애착, 능력발휘 등을 종합적으로 측정하는 단일차원 척도입니다.' },
       ],
@@ -2889,7 +2911,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '사회적지지': {
       options: [
-        { name: '정서적 지지', scholar: 'House(1981)', scale: 'House(1981) 사회적 지지 척도', answer: 'House(1981)의 사회적 지지 이론에 기반하여 정서적 지지, 정보적 지지, 도구적 지지, 평가적 지지의 4개 하위차원으로 측정하였습니다.' },
+        { name: '정서적 지지', scholar: 'House(1981), Dubow & Ullman(1989), 지추련(2012), 한미현(1996)', scale: 'House(1981) 사회적 지지 척도', answer: 'House(1981)의 사회적 지지 이론에 기반하여 정서적 지지, 정보적 지지, 도구적 지지, 평가적 지지의 4개 하위차원으로 측정하였습니다.' },
         { name: '정보적 지지', scholar: 'House(1981)', scale: 'House(1981) 사회적 지지 척도', answer: '' },
         { name: '도구적 지지', scholar: 'House(1981)', scale: 'House(1981) 사회적 지지 척도', answer: '' },
         { name: '평가적 지지', scholar: 'House(1981)', scale: 'House(1981) 사회적 지지 척도', answer: '' },
@@ -2898,7 +2920,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '성격특성': {
       options: [
-        { name: '외향성', scholar: 'Costa & McCrae(1992)', scale: 'Big Five(NEO-PI-R)', answer: 'Costa & McCrae(1992)의 Big Five 성격 모델에 기반하여 외향성, 친화성, 성실성, 신경증, 개방성의 5개 하위차원으로 성격특성을 측정하였습니다.' },
+        { name: '외향성', scholar: 'Costa & McCrae(1992), 이경임(1996), 김재경(2007), 안창규·이경임(1996)', scale: 'Big Five(NEO-PI-R)', answer: 'Costa & McCrae(1992)의 Big Five 성격 모델에 기반하여 외향성, 친화성, 성실성, 신경증, 개방성의 5개 하위차원으로 성격특성을 측정하였습니다.' },
         { name: '친화성', scholar: 'Costa & McCrae(1992)', scale: 'Big Five(NEO-PI-R)', answer: '' },
         { name: '성실성', scholar: 'Costa & McCrae(1992)', scale: 'Big Five(NEO-PI-R)', answer: '' },
         { name: '신경증', scholar: 'Costa & McCrae(1992)', scale: 'Big Five(NEO-PI-R)', answer: '' },
@@ -2925,7 +2947,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '게임특성': {
       options: [
-        { name: '게임성', scholar: 'Malone(1981)', scale: '게임특성 척도', answer: 'Malone(1981)의 내재적 동기 이론을 바탕으로 게임성, 상호작용성, 도전성 등의 하위차원으로 게임특성을 측정하였습니다.' },
+        { name: '게임성', scholar: 'Malone(1981), Barratt(1985), 강태용(2012), 송붕(2013), 이진형(2019), 김창수, 오은해(2005), 송봉(2012)', scale: '게임특성 척도', answer: 'Malone(1981)의 내재적 동기 이론을 바탕으로 게임성, 상호작용성, 도전성 등의 하위차원으로 게임특성을 측정하였습니다.' },
         { name: '상호작용성', scholar: 'Malone(1981)', scale: '게임특성 척도', answer: '' },
         { name: '도전성', scholar: 'Malone(1981)', scale: '게임특성 척도', answer: '' },
       ],
@@ -2939,7 +2961,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '공공성': {
       options: [
-        { name: '공익성', scholar: 'Bozeman(2007)', scale: '공공가치 척도', answer: 'Bozeman(2007)의 공공가치 이론에 기반하여 공익성, 형평성, 투명성 등의 하위차원으로 공공성을 측정하였습니다.' },
+        { name: '공익성', scholar: 'Bozeman(2007), 라준영(2007), 이재필·이시경(2009), 정책의 당위성에서 추출', scale: '공공가치 척도', answer: 'Bozeman(2007)의 공공가치 이론에 기반하여 공익성, 형평성, 투명성 등의 하위차원으로 공공성을 측정하였습니다.' },
         { name: '형평성', scholar: 'Bozeman(2007)', scale: '공공가치 척도', answer: '' },
         { name: '투명성', scholar: 'Bozeman(2007)', scale: '공공가치 척도', answer: '' },
       ],
@@ -2947,7 +2969,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '서비스품질': {
       options: [
-        { name: '유형성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: 'Parasuraman, Zeithaml & Berry(1988)의 SERVQUAL 모델에 기반하여 유형성, 신뢰성, 응답성, 확신성, 공감성의 5개 하위차원으로 서비스품질을 측정하였습니다.' },
+        { name: '유형성', scholar: 'Parasuraman et al.(1988), Morgan and Hunt(1994), Cronin & Taylor(1992), PZB(1985), PZB(1988), 김상열·유용주·김태훈·김율성(2011), 배백식·박남규(2012), 이병호(2012), 정우천·하명신·배상욱(2011), 정원민·김한수(2007)', scale: 'SERVQUAL', answer: 'Parasuraman, Zeithaml & Berry(1988)의 SERVQUAL 모델에 기반하여 유형성, 신뢰성, 응답성, 확신성, 공감성의 5개 하위차원으로 서비스품질을 측정하였습니다.' },
         { name: '신뢰성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: '' },
         { name: '응답성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: '' },
         { name: '확신성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL', answer: '' },
@@ -2957,13 +2979,13 @@ const PaperCompass = ({ onBack }) => {
     },
     '시스템품질': {
       options: [
-        { name: '시스템품질(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 정보시스템 성공모델에 기반하여 시스템의 적응성, 가용성, 신뢰성, 응답시간, 사용편의성 등을 단일차원으로 측정하였습니다.' },
+        { name: '시스템품질(단일차원)', scholar: 'DeLone & McLean(2003), Seddon and Kiew(1994), 강미혜(2019), 서창옥(2018), Hamilton & Chervany(1981), 여인수(2007), 한국정보화진흥원(2009)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 정보시스템 성공모델에 기반하여 시스템의 적응성, 가용성, 신뢰성, 응답시간, 사용편의성 등을 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '리더십': {
       options: [
-        { name: '리더십(단일차원)', scholar: 'Northouse(2018)', scale: '리더십 척도(연구자 구성)', answer: 'Northouse(2018)의 리더십 이론을 바탕으로 조직 목표 달성을 위해 구성원에게 영향을 미치는 과정과 능력을 단일차원으로 측정하였습니다.' },
+        { name: '리더십(단일차원)', scholar: 'Northouse(2018), Meyer & Collier(2001), 문재영(2007), 이동기(2008), 이상철(2007)', scale: '리더십 척도(연구자 구성)', answer: 'Northouse(2018)의 리더십 이론을 바탕으로 조직 목표 달성을 위해 구성원에게 영향을 미치는 과정과 능력을 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2996,7 +3018,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '재계약의도': {
       options: [
-        { name: '재계약의도(단일차원)', scholar: 'Zeithaml et al.(1996)', scale: '행동의도 척도', answer: 'Zeithaml, Berry & Parasuraman(1996)의 행동의도 척도를 바탕으로 서비스에 대한 재계약(재이용) 의도를 단일차원으로 측정하였습니다.' },
+        { name: '재계약의도(단일차원)', scholar: 'Zeithaml et al.(1996), Cronin & Taylor(2002), 정소진(2007), 최명규(2011), 최승호(2006), 최영석(2012)', scale: '행동의도 척도', answer: 'Zeithaml, Berry & Parasuraman(1996)의 행동의도 척도를 바탕으로 서비스에 대한 재계약(재이용) 의도를 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -3011,7 +3033,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '창업의지': {
       options: [
-        { name: '창업의지(단일차원)', scholar: 'Bird(1988)', scale: '창업의지 척도(Bird 1988, Krueger 2000)', answer: 'Bird(1988)와 Krueger(2000)의 창업의지 모델에 기반하여 창업에 대한 의지와 결심의 정도를 단일차원으로 측정하였습니다.' },
+        { name: '창업의지(단일차원)', scholar: 'Bird(1988), Timmons(1994), 박우철(2010)', scale: '창업의지 척도(Bird 1988, Krueger 2000)', answer: 'Bird(1988)와 Krueger(2000)의 창업의지 모델에 기반하여 창업에 대한 의지와 결심의 정도를 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -3045,7 +3067,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '이용자만족도': {
       options: [
-        { name: '이용자만족도(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 정보시스템 성공모델에 기반하여 시스템/서비스 이용에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' },
+        { name: '이용자만족도(단일차원)', scholar: 'DeLone & McLean(2003), Oliver(1997), 김상수(2011), 박상걸(2014), 송기옥(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 정보시스템 성공모델에 기반하여 시스템/서비스 이용에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -3069,7 +3091,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '교육서비스품질': {
       options: [
-        { name: '교육내용', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형(교육 맥락)', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 교육 맥락에 맞게 변형하여 교육내용, 교수법, 교육환경, 행정서비스 등의 하위차원으로 교육서비스품질을 측정하였습니다.' },
+        { name: '교육내용', scholar: 'Parasuraman et al.(1988), PZB(1991), 박영주(2013), 이필재(2007), 정문흠(2015)', scale: 'SERVQUAL 변형(교육 맥락)', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 교육 맥락에 맞게 변형하여 교육내용, 교수법, 교육환경, 행정서비스 등의 하위차원으로 교육서비스품질을 측정하였습니다.' },
         { name: '교수법', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: '' },
         { name: '교육환경', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: '' },
         { name: '행정서비스', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: '' },
@@ -3083,7 +3105,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '자살생각': {
       options: [
-        { name: '자살생각(단일차원)', scholar: 'Beck(1979)', scale: 'SSI(Scale for Suicide Ideation)', answer: 'Beck(1979)의 자살사고 척도(SSI)를 바탕으로 자살에 대한 생각과 계획의 정도를 단일차원으로 측정하였습니다.' },
+        { name: '자살생각(단일차원)', scholar: 'Beck(1979), Reynolds(1988), 조보행(2013)', scale: 'SSI(Scale for Suicide Ideation)', answer: 'Beck(1979)의 자살사고 척도(SSI)를 바탕으로 자살에 대한 생각과 계획의 정도를 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -3096,13 +3118,13 @@ const PaperCompass = ({ onBack }) => {
     },
     '참여행동': {
       options: [
-        { name: '참여행동(단일차원)', scholar: 'Van Dyne & LePine(1998)', scale: '참여행동 척도', answer: 'Van Dyne & LePine(1998)의 참여행동 이론에 기반하여 조직 활동에 적극적으로 참여하는 행동을 단일차원으로 측정하였습니다.' },
+        { name: '참여행동(단일차원)', scholar: 'Van Dyne & LePine(1998), Ajzen(1991), Fishbein(1975), 김은정(2022)', scale: '참여행동 척도', answer: 'Van Dyne & LePine(1998)의 참여행동 이론에 기반하여 조직 활동에 적극적으로 참여하는 행동을 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '보상인식': {
       options: [
-        { name: '내재적 보상', scholar: 'Lawler(1971)', scale: '보상인식 척도', answer: 'Lawler(1971)의 기대이론에 기반하여 내재적 보상(성취감, 자율성)과 외재적 보상(급여, 승진, 복리후생)으로 구분하여 보상인식을 측정하였습니다.' },
+        { name: '내재적 보상', scholar: 'Lawler(1971), Kerr(1988), 이유안(2015), 김가영(2012)', scale: '보상인식 척도', answer: 'Lawler(1971)의 기대이론에 기반하여 내재적 보상(성취감, 자율성)과 외재적 보상(급여, 승진, 복리후생)으로 구분하여 보상인식을 측정하였습니다.' },
         { name: '외재적 보상', scholar: 'Lawler(1971)', scale: '보상인식 척도', answer: '' },
       ],
       defaultSelected: [0, 1],
@@ -3115,7 +3137,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '성격5요인': {
       options: [
-        { name: '외향성', scholar: 'Goldberg(1993)', scale: 'Big Five Inventory(BFI)', answer: 'Goldberg(1993)의 Big Five 모델에 기반하여 외향성, 친화성, 성실성, 신경증, 개방성의 5개 하위차원으로 측정하였습니다.' },
+        { name: '외향성', scholar: 'Goldberg(1993), Costa & McCrae(1992), Costa & McCrae(1992a), McCrae & Costa(1987), McCrae & Costa(1992), 김영황, 홍상황(1998), 이경임, 안창규(1996), 이경임·안창규(1996), 이진섭(2015), 정은정(2012)', scale: 'Big Five Inventory(BFI)', answer: 'Goldberg(1993)의 Big Five 모델에 기반하여 외향성, 친화성, 성실성, 신경증, 개방성의 5개 하위차원으로 측정하였습니다.' },
         { name: '친화성', scholar: 'Goldberg(1993)', scale: 'BFI', answer: '' },
         { name: '성실성', scholar: 'Goldberg(1993)', scale: 'BFI', answer: '' },
         { name: '신경증', scholar: 'Goldberg(1993)', scale: 'BFI', answer: '' },
@@ -3125,7 +3147,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '보상공정성': {
       options: [
-        { name: '보상공정성(단일차원)', scholar: 'Adams(1965)', scale: '형평이론 척도', answer: 'Adams(1965)의 형평이론에 기반하여 조직에서 받는 보상이 기여도에 비해 공정하다고 인식하는 정도를 단일차원으로 측정하였습니다.' },
+        { name: '보상공정성(단일차원)', scholar: 'Adams(1965), 이만규(2005)', scale: '형평이론 척도', answer: 'Adams(1965)의 형평이론에 기반하여 조직에서 받는 보상이 기여도에 비해 공정하다고 인식하는 정도를 단일차원으로 측정하였습니다.' },
         { name: '분배공정성', scholar: 'Adams(1965), Folger & Konovsky(1989)', scale: '보상공정성 척도', answer: 'Adams(1965)의 형평이론과 Folger & Konovsky(1989)의 연구에 기반하여 보상의 분배적 공정성(결과의 공정성)을 측정하였습니다.' },
         { name: '절차공정성', scholar: 'Folger & Konovsky(1989), Leventhal(1980)', scale: '보상공정성 척도', answer: '보상 결정 과정의 절차적 공정성을 측정하였습니다.' },
       ],
@@ -3133,7 +3155,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '고객지향성': {
       options: [
-        { name: '고객지향성(단일차원)', scholar: 'Saxe & Weitz(1982)', scale: 'SOCO(Selling Orientation-Customer Orientation)', answer: 'Saxe & Weitz(1982)의 SOCO 척도를 바탕으로 고객의 욕구를 파악하고 충족시키려는 태도와 행동을 단일차원으로 측정하였습니다.' },
+        { name: '고객지향성(단일차원)', scholar: 'Saxe & Weitz(1982), Narver & Slater(1990)', scale: 'SOCO(Selling Orientation-Customer Orientation)', answer: 'Saxe & Weitz(1982)의 SOCO 척도를 바탕으로 고객의 욕구를 파악하고 충족시키려는 태도와 행동을 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -3154,7 +3176,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '분배공정성': {
       options: [
-        { name: '분배공정성(단일차원)', scholar: 'Adams(1965)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Adams(1965)의 형평이론에 기반하여 성과에 대한 보상의 분배가 공정한 정도를 Colquitt(2001) 척도로 측정하였습니다.' },
+        { name: '분배공정성(단일차원)', scholar: 'Adams(1965), Alexander & Ruderman(1987), Homans(1961), Masterson, Lewis, Goldman, Taylor(2000), 곽경환(2023), 김나연(2013), 남상민(2016), 윤정호(2013), 이영만(2015), 전영민(2012), 조지연(2018), 정승훈(2014), 조국행(2001)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Adams(1965)의 형평이론에 기반하여 성과에 대한 보상의 분배가 공정한 정도를 Colquitt(2001) 척도로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -3178,13 +3200,13 @@ const PaperCompass = ({ onBack }) => {
     },
     'POS품질': {
       options: [
-        { name: 'POS품질(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델 변형', answer: 'DeLone & McLean(2003)의 IS 성공모델을 POS(Point of Sale) 시스템에 적용하여 시스템 품질을 단일차원으로 측정하였습니다.' },
+        { name: 'POS품질(단일차원)', scholar: 'DeLone & McLean(2003), 강미혜(2019), 서창옥(2018)', scale: 'IS 성공모델 변형', answer: 'DeLone & McLean(2003)의 IS 성공모델을 POS(Point of Sale) 시스템에 적용하여 시스템 품질을 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
     '가치지향성': {
       options: [
-        { name: '가치지향성(단일차원)', scholar: 'Rokeach(1973)', scale: '가치관 척도(Rokeach Value Survey)', answer: 'Rokeach(1973)의 가치관 조사를 바탕으로 개인이 추구하는 가치의 방향성을 단일차원으로 측정하였습니다.' },
+        { name: '가치지향성(단일차원)', scholar: 'Rokeach(1973), Kluckhohn & Strodtbeck(1960), 서근하(2001)', scale: '가치관 척도(Rokeach Value Survey)', answer: 'Rokeach(1973)의 가치관 조사를 바탕으로 개인이 추구하는 가치의 방향성을 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -3204,7 +3226,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '감성지능': {
       options: [
-        { name: '자기감정 인식', scholar: 'Salovey & Mayer(1990)', scale: 'Wong & Law(2002) WLEIS', answer: 'Salovey & Mayer(1990)의 감성지능 이론과 Wong & Law(2002)의 WLEIS 척도에 기반하여 자기감정 인식, 타인감정 인식, 감정 활용, 감정 조절의 4개 하위차원으로 측정하였습니다.' },
+        { name: '자기감정 인식', scholar: 'Salovey & Mayer(1990), Wong & Law(2002), 김희수·이규태(2015)', scale: 'Wong & Law(2002) WLEIS', answer: 'Salovey & Mayer(1990)의 감성지능 이론과 Wong & Law(2002)의 WLEIS 척도에 기반하여 자기감정 인식, 타인감정 인식, 감정 활용, 감정 조절의 4개 하위차원으로 측정하였습니다.' },
         { name: '타인감정 인식', scholar: 'Salovey & Mayer(1990)', scale: 'WLEIS', answer: '' },
         { name: '감정 활용', scholar: 'Salovey & Mayer(1990)', scale: 'WLEIS', answer: '' },
         { name: '감정 조절', scholar: 'Salovey & Mayer(1990)', scale: 'WLEIS', answer: '' },
@@ -3229,10 +3251,10 @@ const PaperCompass = ({ onBack }) => {
     '게임만족도': { options: [{ name: '게임만족도(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도(게임 맥락)', answer: 'Oliver(1980)의 기대불일치 이론을 게임 맥락에 적용하여 게임 이용에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '경제성': { options: [{ name: '경제성(단일차원)', scholar: 'Zeithaml(1988)', scale: '지각된 가치 척도', answer: 'Zeithaml(1988)의 가치이론에 기반하여 투입 대비 산출의 경제적 효율성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '채널충성도': { options: [{ name: '채널충성도(단일차원)', scholar: 'Oliver(1999)', scale: '충성도 척도', answer: 'Oliver(1999)의 충성도 이론을 유통채널에 적용하여 특정 채널에 대한 지속이용 의도와 선호도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '기관이미지': { options: [{ name: '기관이미지(단일차원)', scholar: 'Keller(1993)', scale: '브랜드 이미지 척도 변형', answer: 'Keller(1993)의 브랜드 이미지 이론을 기관 맥락에 적용하여 기관에 대한 전반적 인상과 이미지를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '기관이미지': { options: [{ name: '기관이미지(단일차원)', scholar: 'Keller(1993), Barich & Kotler(1991), 권진희(2012), 김창범(2015), 우광호(2012)', scale: '브랜드 이미지 척도 변형', answer: 'Keller(1993)의 브랜드 이미지 이론을 기관 맥락에 적용하여 기관에 대한 전반적 인상과 이미지를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '기업가정신': {
       options: [
-        { name: '혁신성', scholar: 'Miller(1983)', scale: '기업가적 지향성 척도(EO)', answer: 'Miller(1983)와 Covin & Slevin(1989)의 기업가적 지향성(EO) 이론에 기반하여 혁신성, 진취성, 위험감수성의 3개 하위차원으로 기업가정신을 측정하였습니다.' },
+        { name: '혁신성', scholar: 'Miller(1983), Covin & Slevin(1986), 송재길(2010)', scale: '기업가적 지향성 척도(EO)', answer: 'Miller(1983)와 Covin & Slevin(1989)의 기업가적 지향성(EO) 이론에 기반하여 혁신성, 진취성, 위험감수성의 3개 하위차원으로 기업가정신을 측정하였습니다.' },
         { name: '진취성', scholar: 'Covin & Slevin(1989)', scale: 'EO 척도', answer: '' },
         { name: '위험감수성', scholar: 'Miller(1983)', scale: 'EO 척도', answer: '' },
       ],
@@ -3240,7 +3262,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '사회적자본': {
       options: [
-        { name: '구조적 자본', scholar: 'Nahapiet & Ghoshal(1998)', scale: '사회적 자본 척도', answer: 'Nahapiet & Ghoshal(1998)의 사회적 자본 이론에 기반하여 구조적 자본(네트워크), 관계적 자본(신뢰), 인지적 자본(공유비전)의 3개 하위차원으로 측정하였습니다.' },
+        { name: '구조적 자본', scholar: 'Nahapiet & Ghoshal(1998), 송재길(2010)', scale: '사회적 자본 척도', answer: 'Nahapiet & Ghoshal(1998)의 사회적 자본 이론에 기반하여 구조적 자본(네트워크), 관계적 자본(신뢰), 인지적 자본(공유비전)의 3개 하위차원으로 측정하였습니다.' },
         { name: '관계적 자본', scholar: 'Nahapiet & Ghoshal(1998)', scale: '사회적 자본 척도', answer: '' },
         { name: '인지적 자본', scholar: 'Nahapiet & Ghoshal(1998)', scale: '사회적 자본 척도', answer: '' },
       ],
@@ -3249,7 +3271,7 @@ const PaperCompass = ({ onBack }) => {
     '생성형AI서비스특성': { options: [{ name: '생성형AI서비스특성(단일차원)', scholar: 'Venkatesh et al.(2003)', scale: 'UTAUT 변형', answer: 'Venkatesh et al.(2003)의 UTAUT 모델을 생성형 AI 서비스 맥락에 적용하여 서비스 특성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '수퍼리더십': {
       options: [
-        { name: '모델링', scholar: 'Manz & Sims(2001)', scale: '수퍼리더십 척도', answer: 'Manz & Sims(2001)의 수퍼리더십 이론에 기반하여 모델링, 목표설정, 격려/안내, 보상/건설적 질책의 하위차원으로 측정하였습니다.' },
+        { name: '모델링', scholar: 'Manz & Sims(2001), 강경석·박용진(2008), 신주영(2017)', scale: '수퍼리더십 척도', answer: 'Manz & Sims(2001)의 수퍼리더십 이론에 기반하여 모델링, 목표설정, 격려/안내, 보상/건설적 질책의 하위차원으로 측정하였습니다.' },
         { name: '목표설정', scholar: 'Manz & Sims(2001)', scale: '수퍼리더십 척도', answer: '' },
         { name: '격려/안내', scholar: 'Manz & Sims(2001)', scale: '수퍼리더십 척도', answer: '' },
         { name: '보상/건설적질책', scholar: 'Manz & Sims(2001)', scale: '수퍼리더십 척도', answer: '' },
@@ -3260,12 +3282,12 @@ const PaperCompass = ({ onBack }) => {
     '스마트워크시스템만족': { options: [{ name: '스마트워크시스템만족(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 IS 성공모델에 기반하여 스마트워크 시스템에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '연주몰입경험': { options: [{ name: '연주몰입경험(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도(연주 맥락)', answer: 'Csikszentmihalyi(1990)의 몰입이론을 음악 연주 맥락에 적용하여 연주 활동에 완전히 몰입하는 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '공연만족도': { options: [{ name: '공연만족도(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도(공연 맥락)', answer: 'Oliver(1980)의 기대불일치 이론을 공연 맥락에 적용하여 공연 관람에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '지속참여의도': { options: [{ name: '지속참여의도(단일차원)', scholar: 'Bhattacherjee(2001)', scale: 'ECM 변형', answer: 'Bhattacherjee(2001)의 지속사용 모델을 참여 맥락에 적용하여 활동에 지속적으로 참여하고자 하는 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지속참여의도': { options: [{ name: '지속참여의도(단일차원)', scholar: 'Bhattacherjee(2001), 양명환(2004)', scale: 'ECM 변형', answer: 'Bhattacherjee(2001)의 지속사용 모델을 참여 맥락에 적용하여 활동에 지속적으로 참여하고자 하는 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '유튜버특성': { options: [{ name: '매력성', scholar: 'Ohanian(1990)', scale: '정보원 신뢰도 척도 변형', answer: 'Ohanian(1990)의 정보원 신뢰도 모델을 유튜버에 적용하여 매력성, 전문성, 신뢰성의 하위차원으로 측정하였습니다.' }, { name: '전문성', scholar: 'Ohanian(1990)', scale: '정보원 신뢰도 척도', answer: '' }, { name: '신뢰성', scholar: 'Ohanian(1990)', scale: '정보원 신뢰도 척도', answer: '' }], defaultSelected: [0, 1, 2] },
-    '경영성과': { options: [{ name: '재무성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC', answer: 'Kaplan & Norton(1992)의 BSC에 기반하여 재무성과와 비재무성과의 하위차원으로 경영성과를 측정하였습니다.' }, { name: '비재무성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC', answer: '' }], defaultSelected: [0, 1] },
+    '경영성과': { options: [{ name: '재무성과', scholar: 'Kaplan & Norton(1992), Pannirselvam & Ferguson(2001), 문재영(2007), 이동기(2008)', scale: 'BSC', answer: 'Kaplan & Norton(1992)의 BSC에 기반하여 재무성과와 비재무성과의 하위차원으로 경영성과를 측정하였습니다.' }, { name: '비재무성과', scholar: 'Kaplan & Norton(1992)', scale: 'BSC', answer: '' }], defaultSelected: [0, 1] },
     '재창업의지': { options: [{ name: '재창업의지(단일차원)', scholar: 'Krueger(2000)', scale: '창업의지 척도 변형', answer: 'Krueger(2000)의 창업의지 모델에 기반하여 실패 이후 다시 창업하고자 하는 의지를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '참여동기': { options: [{ name: '내재적 동기', scholar: 'Deci & Ryan(1985)', scale: '자기결정이론 동기 척도', answer: 'Deci & Ryan(1985)의 자기결정이론에 기반하여 내재적 동기와 외재적 동기의 하위차원으로 참여동기를 측정하였습니다.' }, { name: '외재적 동기', scholar: 'Deci & Ryan(1985)', scale: '자기결정이론 동기 척도', answer: '' }, { name: '기술발달', scholar: 'Pelletier et al.(1995)', scale: 'SMS(Sport Motivation Scale)', answer: '' }, { name: '즐거움', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '성취감', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '컨디션', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '사교', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '건강체력', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '외적과시', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '무동기', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }], defaultSelected: [2, 3, 4, 5, 6, 7, 8, 9] },
-    '창업정책환경': { options: [{ name: '창업정책환경(단일차원)', scholar: 'GEM(2001)', scale: 'GEM 창업환경 척도', answer: 'GEM(Global Entrepreneurship Monitor)의 창업환경 프레임워크에 기반하여 정부의 창업 지원 정책과 제도적 환경을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '참여동기': { options: [{ name: '내재적 동기', scholar: 'Deci & Ryan(1985), Bandalos(1995)', scale: '자기결정이론 동기 척도', answer: 'Deci & Ryan(1985)의 자기결정이론에 기반하여 내재적 동기와 외재적 동기의 하위차원으로 참여동기를 측정하였습니다.' }, { name: '외재적 동기', scholar: 'Deci & Ryan(1985)', scale: '자기결정이론 동기 척도', answer: '' }, { name: '기술발달', scholar: 'Pelletier et al.(1995)', scale: 'SMS(Sport Motivation Scale)', answer: '' }, { name: '즐거움', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '성취감', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '컨디션', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '사교', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '건강체력', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '외적과시', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }, { name: '무동기', scholar: 'Pelletier et al.(1995)', scale: 'SMS', answer: '' }], defaultSelected: [2, 3, 4, 5, 6, 7, 8, 9] },
+    '창업정책환경': { options: [{ name: '창업정책환경(단일차원)', scholar: 'GEM(2001), Johnson(1990), 박남규(2014), 이인재(2006)', scale: 'GEM 창업환경 척도', answer: 'GEM(Global Entrepreneurship Monitor)의 창업환경 프레임워크에 기반하여 정부의 창업 지원 정책과 제도적 환경을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '특별교통서비스품질': { options: [{ name: '특별교통서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 특별교통 서비스에 적용하여 서비스 품질을 단일차원으로 측정하였습니다.' }, { name: '유형성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '신뢰성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '응답성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '확신성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }, { name: '공감성', scholar: 'PBZ(1985)', scale: 'SERVQUAL', answer: '' }], defaultSelected: [1, 2, 3, 4, 5] },
     '한류스타활동': { options: [{ name: '한류스타활동(단일차원)', scholar: '연구자 구성', scale: '한류 콘텐츠 척도', answer: '한류 스타의 미디어 노출, 팬 소통, 공연 활동 등을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '접근성': { options: [{ name: '접근성(단일차원)', scholar: 'Davis(1989)', scale: '접근성/용이성 척도', answer: '시스템이나 서비스에 접근하는 용이성 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -3273,58 +3295,58 @@ const PaperCompass = ({ onBack }) => {
     '유희성': { options: [{ name: '유희성(단일차원)', scholar: 'Moon & Kim(2001)', scale: '유희성 척도', answer: 'Moon & Kim(2001)의 유희성 개념에 기반하여 시스템 사용 시 느끼는 즐거움과 재미를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '개인화': { options: [{ name: '개인화(단일차원)', scholar: 'Peppers & Rogers(1997)', scale: '개인화 서비스 척도', answer: 'Peppers & Rogers(1997)의 1:1 마케팅 이론에 기반하여 개인 맞춤형 서비스 제공 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '맥락인지': { options: [{ name: '맥락인지(단일차원)', scholar: 'Dey(2001)', scale: '맥락인지 컴퓨팅 척도', answer: 'Dey(2001)의 맥락인지 컴퓨팅 개념에 기반하여 사용자의 상황과 맥락을 인식하는 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '보안성': { options: [{ name: '보안성(단일차원)', scholar: 'Salisbury et al.(2001)', scale: '정보보안 척도', answer: 'Salisbury et al.(2001)의 지각된 보안성 개념에 기반하여 시스템의 보안 수준에 대한 인식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '정확성': { options: [{ name: '정확성(단일차원)', scholar: 'DeLone & McLean(2003)', scale: '정보품질 하위차원', answer: '정보나 서비스의 정확성 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '의인화수준': { options: [{ name: '의인화수준(단일차원)', scholar: 'Epley et al.(2007)', scale: '의인화 척도', answer: 'Epley et al.(2007)의 의인화 이론에 기반하여 비인간 대상에 인간적 특성을 부여하는 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '쾌락적동기': { options: [{ name: '쾌락적동기(단일차원)', scholar: 'Venkatesh et al.(2012)', scale: 'UTAUT2', answer: 'Venkatesh et al.(2012)의 UTAUT2에서 제시한 쾌락적 동기 개념을 채택하여 기술 사용의 즐거움과 재미를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '습관적이용': { options: [{ name: '습관적이용(단일차원)', scholar: 'Venkatesh et al.(2012)', scale: 'UTAUT2', answer: 'Venkatesh et al.(2012)의 UTAUT2에서 제시한 습관 개념에 기반하여 기술 사용의 습관적 반복 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '촉진조건': { options: [{ name: '촉진조건(단일차원)', scholar: 'Venkatesh et al.(2003)', scale: 'UTAUT', answer: 'Venkatesh et al.(2003)의 UTAUT에서 제시한 촉진조건 개념에 기반하여 기술 사용을 지원하는 인프라와 자원의 존재를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '사회적압박': { options: [{ name: '사회적압박(단일차원)', scholar: 'Venkatesh et al.(2003)', scale: 'UTAUT 사회적 영향', answer: 'Venkatesh et al.(2003)의 UTAUT 모델의 사회적 영향 개념에 기반하여 주변의 기대와 압력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '보안성': { options: [{ name: '보안성(단일차원)', scholar: 'Salisbury et al.(2001), Schierz et al.(2010), 하준석(2017), 황영훈(2019)', scale: '정보보안 척도', answer: 'Salisbury et al.(2001)의 지각된 보안성 개념에 기반하여 시스템의 보안 수준에 대한 인식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '정확성': { options: [{ name: '정확성(단일차원)', scholar: 'DeLone & McLean(2003), 황윤환(2020)', scale: '정보품질 하위차원', answer: '정보나 서비스의 정확성 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '의인화수준': { options: [{ name: '의인화수준(단일차원)', scholar: 'Epley et al.(2007), 김은영(2020)', scale: '의인화 척도', answer: 'Epley et al.(2007)의 의인화 이론에 기반하여 비인간 대상에 인간적 특성을 부여하는 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '쾌락적동기': { options: [{ name: '쾌락적동기(단일차원)', scholar: 'Venkatesh et al.(2012), 경승현(2019)', scale: 'UTAUT2', answer: 'Venkatesh et al.(2012)의 UTAUT2에서 제시한 쾌락적 동기 개념을 채택하여 기술 사용의 즐거움과 재미를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '습관적이용': { options: [{ name: '습관적이용(단일차원)', scholar: 'Venkatesh et al.(2012), Erkan et al.(2016), 김태희(2013)', scale: 'UTAUT2', answer: 'Venkatesh et al.(2012)의 UTAUT2에서 제시한 습관 개념에 기반하여 기술 사용의 습관적 반복 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '촉진조건': { options: [{ name: '촉진조건(단일차원)', scholar: 'Venkatesh et al.(2003), Salimon et al.(2016), 김기봉(2019)', scale: 'UTAUT', answer: 'Venkatesh et al.(2003)의 UTAUT에서 제시한 촉진조건 개념에 기반하여 기술 사용을 지원하는 인프라와 자원의 존재를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '사회적압박': { options: [{ name: '사회적압박(단일차원)', scholar: 'Venkatesh et al.(2003), Hoffman & Novak(2009), Sarkar & Khare(2019), 황영훈(2019)', scale: 'UTAUT 사회적 영향', answer: 'Venkatesh et al.(2003)의 UTAUT 모델의 사회적 영향 개념에 기반하여 주변의 기대와 압력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '공정성인식': { options: [{ name: '공정성인식(단일차원)', scholar: 'Colquitt(2001)', scale: '조직공정성 척도', answer: 'Colquitt(2001)의 조직공정성 척도에 기반하여 분배, 절차, 상호작용 공정성에 대한 전반적 인식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '교사임파워먼트': { options: [{ name: '의사결정 참여', scholar: 'Short & Rinehart(1992)', scale: 'SES(School Participant Empowerment Scale)', answer: 'Short & Rinehart(1992)의 학교참여자 임파워먼트 척도(SES)에 기반하여 의사결정 참여, 전문성 개발, 자율성 등의 하위차원으로 측정하였습니다.' }, { name: '전문성 개발', scholar: 'Short & Rinehart(1992)', scale: 'SES', answer: '' }, { name: '자율성', scholar: 'Short & Rinehart(1992)', scale: 'SES', answer: '' }, { name: '의사결정참여', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형(직업훈련기관)', answer: 'Short & Rinehart(1992)의 SES를 박희경(2014)이 수정하여 직업능력개발훈련기관에 적용하였으며, 의사결정참여, 자율성, 자기효능감, 전문성의 4개 하위차원으로 측정하였습니다.' }, { name: '자기효능감', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형(직업훈련기관)', answer: '' }, { name: '전문성', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형(직업훈련기관)', answer: '' }], defaultSelected: [2, 3, 4, 5] },
-    '지속근무의도': { options: [{ name: '지속근무의도(단일차원)', scholar: 'Price & Mueller(1981)', scale: '이직의도 역코딩', answer: 'Price & Mueller(1981)의 이직의도 모델을 역으로 적용하여 현 직장에서 계속 근무하고자 하는 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '상사신뢰': { options: [{ name: '상사신뢰(단일차원)', scholar: 'Mayer et al.(1995)', scale: '조직신뢰 척도(상사 맥락)', answer: 'Mayer, Davis & Schoorman(1995)의 신뢰 모델에 기반하여 상사의 능력, 선의, 진실성에 대한 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지속근무의도': { options: [{ name: '지속근무의도(단일차원)', scholar: 'Price & Mueller(1981), Meyer(2002), 유홍준(2002), 홍연숙(2010)', scale: '이직의도 역코딩', answer: 'Price & Mueller(1981)의 이직의도 모델을 역으로 적용하여 현 직장에서 계속 근무하고자 하는 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '상사신뢰': { options: [{ name: '상사신뢰(단일차원)', scholar: 'Mayer et al.(1995), Lewis, Weigert(1985), 김호정(1999), 우성주(2020), 우성주(2021)', scale: '조직신뢰 척도(상사 맥락)', answer: 'Mayer, Davis & Schoorman(1995)의 신뢰 모델에 기반하여 상사의 능력, 선의, 진실성에 대한 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '직무착근도': { options: [{ name: '연결', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: 'Mitchell et al.(2001)의 직무착근도 이론에 기반하여 연결(links), 적합(fit), 희생(sacrifice)의 3개 하위차원으로 측정하였습니다.' }, { name: '적합', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: '' }, { name: '희생', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: '' }], defaultSelected: [0, 1, 2] },
     '사회적책임': { options: [{ name: '경제적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: 'Carroll(1991)의 CSR 피라미드에 기반하여 경제적, 법적, 윤리적, 자선적 책임의 4개 하위차원으로 측정하였습니다.' }, { name: '법적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: '' }, { name: '윤리적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: '' }, { name: '자선적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: '' }], defaultSelected: [0, 1, 2, 3] },
-    '직무태도': { options: [{ name: '직무태도(단일차원)', scholar: 'Judge et al.(2001)', scale: '직무태도 척도', answer: 'Judge et al.(2001)의 연구에 기반하여 직무에 대한 전반적 태도(만족, 몰입, 애착)를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '직무태도': { options: [{ name: '직무태도(단일차원)', scholar: 'Judge et al.(2001), 김유나(2015), 황용수(2010)', scale: '직무태도 척도', answer: 'Judge et al.(2001)의 연구에 기반하여 직무에 대한 전반적 태도(만족, 몰입, 애착)를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '직무역량': { options: [{ name: '직무역량(단일차원)', scholar: 'Spencer & Spencer(1993)', scale: '역량모델', answer: 'Spencer & Spencer(1993)의 역량모델에 기반하여 직무 수행에 필요한 지식, 기술, 능력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '활용도': { options: [{ name: '활용도(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델 사용(Use)', answer: 'DeLone & McLean(2003)의 IS 성공모델 중 시스템 사용(Use) 개념에 기반하여 활용 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '활용도': { options: [{ name: '활용도(단일차원)', scholar: 'DeLone & McLean(2003), 류재희(2017)', scale: 'IS 성공모델 사용(Use)', answer: 'DeLone & McLean(2003)의 IS 성공모델 중 시스템 사용(Use) 개념에 기반하여 활용 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '학습동기유발요인': { options: [{ name: '학습동기유발요인(단일차원)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계모델', answer: 'Keller(1987)의 ARCS 모델에 기반하여 학습동기를 유발하는 요인을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '절차공정성': { options: [{ name: '절차공정성(단일차원)', scholar: 'Leventhal(1980)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Leventhal(1980)의 절차공정성 이론에 기반하여 의사결정 과정의 공정성을 Colquitt(2001) 척도로 측정하였습니다.' }], defaultSelected: [0] },
+    '절차공정성': { options: [{ name: '절차공정성(단일차원)', scholar: 'Leventhal(1980), Alexander & Ruderman(1987), Masterson, Lewis, Goldman, Taylor(2000), 김나연(2013), 윤정호(2013), 조지연(2018), 권문찬(2016), 남상민(2016), 이영만(2014), 전영민(2012), 정승훈(2014), 조국행(2001)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Leventhal(1980)의 절차공정성 이론에 기반하여 의사결정 과정의 공정성을 Colquitt(2001) 척도로 측정하였습니다.' }], defaultSelected: [0] },
     'FM서비스품질': { options: [{ name: 'FM서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형(FM 맥락)', answer: 'Parasuraman et al.(1988)의 SERVQUAL을 시설관리(FM) 서비스에 적용하여 서비스 품질을 단일차원으로 측정하였습니다.' }, { name: '유형성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '신뢰성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '확신성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '반응성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '공감성', scholar: 'Parasuraman et al.(1988)', scale: 'SERVPERF', answer: '' }, { name: '안전성', scholar: '연구자 추가', scale: 'SERVPERF 변형', answer: '' }], defaultSelected: [1, 2, 3, 4, 5, 6] },
-    '관계지향성': { options: [{ name: '관계지향성(단일차원)', scholar: 'Morgan & Hunt(1994)', scale: '관계마케팅 척도', answer: 'Morgan & Hunt(1994)의 관계마케팅 이론에 기반하여 장기적 관계 유지를 중시하는 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '고객만족도': { options: [{ name: '고객만족도(단일차원)', scholar: 'Oliver(1980)', scale: '고객만족도 척도', answer: 'Oliver(1980)의 기대불일치 이론에 기반하여 고객의 전반적 만족 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '고객신뢰': { options: [{ name: '고객신뢰(단일차원)', scholar: 'Morgan & Hunt(1994)', scale: '신뢰 척도', answer: 'Morgan & Hunt(1994)의 신뢰-몰입 이론에 기반하여 서비스 제공자에 대한 고객의 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '관계지향성': { options: [{ name: '관계지향성(단일차원)', scholar: 'Morgan & Hunt(1994), 배백식·박남규(2012), 정우천·하명신·배상욱(2011)', scale: '관계마케팅 척도', answer: 'Morgan & Hunt(1994)의 관계마케팅 이론에 기반하여 장기적 관계 유지를 중시하는 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '고객만족도': { options: [{ name: '고객만족도(단일차원)', scholar: 'Oliver(1980), DeLone & McLean(2003), 김본수(2010), 박정현(2002)', scale: '고객만족도 척도', answer: 'Oliver(1980)의 기대불일치 이론에 기반하여 고객의 전반적 만족 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '고객신뢰': { options: [{ name: '고객신뢰(단일차원)', scholar: 'Morgan & Hunt(1994), Morgan and Hunt(1994), 김도희(2015), 윤남수(2003), 윤영숙(2012), 이시후(2009), 이원화(2009)', scale: '신뢰 척도', answer: 'Morgan & Hunt(1994)의 신뢰-몰입 이론에 기반하여 서비스 제공자에 대한 고객의 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '갈등관리': { options: [{ name: '경쟁', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI(Thomas-Kilmann Conflict Mode Instrument)', answer: 'Thomas & Kilmann(1974)의 갈등관리 모델에 기반하여 경쟁, 협력, 회피, 수용, 타협의 5개 전략으로 측정하였습니다.' }, { name: '협력', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }, { name: '회피', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }, { name: '수용', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }, { name: '타협', scholar: 'Thomas & Kilmann(1974)', scale: 'TKI', answer: '' }], defaultSelected: [0, 1, 2, 3, 4] },
     '갈등수준': { options: [{ name: '갈등수준(단일차원)', scholar: 'Jehn(1995)', scale: '조직갈등 척도', answer: 'Jehn(1995)의 조직갈등 이론에 기반하여 조직 내 갈등의 전반적 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '개최지역태도': { options: [{ name: '개최지역태도(단일차원)', scholar: 'Getz(1997)', scale: '이벤트 영향 인식 척도', answer: 'Getz(1997)의 이벤트 연구에 기반하여 행사 개최지역에 대한 태도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '축제성과': { options: [{ name: '축제성과(단일차원)', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: 'Getz(1997)의 축제이벤트 이론에 기반하여 축제의 경제적·사회문화적 성과를 단일차원으로 측정하였습니다.' }, { name: '경제적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '사회문화적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '관광산업적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '정치적성과', scholar: 'Hall(1992)', scale: '축제영향 척도', answer: '' }, { name: '환경적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }], defaultSelected: [1, 2, 3, 4, 5] },
+    '축제성과': { options: [{ name: '축제성과(단일차원)', scholar: 'Getz(1997), 박종부(2019), 장경(2022)', scale: '축제평가 척도', answer: 'Getz(1997)의 축제이벤트 이론에 기반하여 축제의 경제적·사회문화적 성과를 단일차원으로 측정하였습니다.' }, { name: '경제적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '사회문화적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '관광산업적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }, { name: '정치적성과', scholar: 'Hall(1992)', scale: '축제영향 척도', answer: '' }, { name: '환경적성과', scholar: 'Getz(1997)', scale: '축제평가 척도', answer: '' }], defaultSelected: [1, 2, 3, 4, 5] },
     '대응성': { options: [{ name: '대응성(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 하위차원', answer: 'Parasuraman et al.(1988)의 SERVQUAL 중 대응성(Responsiveness) 차원을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '병원예방행동': { options: [{ name: '병원예방행동(단일차원)', scholar: 'Rosenstock(1974)', scale: 'HBM 변형', answer: 'Rosenstock(1974)의 건강신념모델에 기반하여 질병 예방을 위한 병원 방문 행동을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '게임만족': { options: [{ name: '게임만족(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도', answer: 'Oliver(1980)의 만족이론을 게임에 적용하여 게임 이용 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '게임몰입': { options: [{ name: '게임몰입(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도(게임 맥락)', answer: 'Csikszentmihalyi(1990)의 몰입이론을 게임에 적용하여 게임 몰입 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '관계만족': { options: [{ name: '관계만족(단일차원)', scholar: 'Rusbult(1983)', scale: '관계투자모델 척도', answer: 'Rusbult(1983)의 관계투자모델에 기반하여 관계에 대한 전반적 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '지속구매의도': { options: [{ name: '지속구매의도(단일차원)', scholar: 'Oliver(1999)', scale: '충성도 척도', answer: 'Oliver(1999)의 충성도 이론에 기반하여 제품/서비스의 지속적 구매 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '관계만족': { options: [{ name: '관계만족(단일차원)', scholar: 'Rusbult(1983), Geyskens et al.(1999), 박성진(2015)', scale: '관계투자모델 척도', answer: 'Rusbult(1983)의 관계투자모델에 기반하여 관계에 대한 전반적 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지속구매의도': { options: [{ name: '지속구매의도(단일차원)', scholar: 'Oliver(1999), Zeithaml et al.(1996), 황문성(2016)', scale: '충성도 척도', answer: 'Oliver(1999)의 충성도 이론에 기반하여 제품/서비스의 지속적 구매 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '전시성과': { options: [{ name: '전시성과(단일차원)', scholar: '연구자 구성', scale: '전시회 성과 척도', answer: '전시회의 경제적·사회적 성과를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '교육만족도': { options: [{ name: '교육만족도(단일차원)', scholar: 'Kirkpatrick(1994)', scale: '교육훈련 평가모델 1단계', answer: 'Kirkpatrick(1994)의 4단계 교육평가모델 중 반응(Reaction) 단계에 기반하여 교육에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '교육만족도': { options: [{ name: '교육만족도(단일차원)', scholar: 'Kirkpatrick(1994), 손주형(2015), 신상복(2012), 황인호(2005)', scale: '교육훈련 평가모델 1단계', answer: 'Kirkpatrick(1994)의 4단계 교육평가모델 중 반응(Reaction) 단계에 기반하여 교육에 대한 전반적 만족도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '구독자만족': { options: [{ name: '구독자만족(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도(구독 맥락)', answer: 'Oliver(1980)의 만족이론을 구독 서비스에 적용하여 구독자 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '기관신뢰': { options: [{ name: '기관신뢰(단일차원)', scholar: 'Mayer et al.(1995)', scale: '조직신뢰 척도(기관 맥락)', answer: 'Mayer et al.(1995)의 신뢰 모델에 기반하여 기관에 대한 전반적 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '노조몰입': { options: [{ name: '노조몰입(단일차원)', scholar: 'Gordon et al.(1980)', scale: '노조몰입 척도', answer: 'Gordon et al.(1980)의 노조몰입 이론에 기반하여 노동조합에 대한 충성심과 몰입을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '기관신뢰': { options: [{ name: '기관신뢰(단일차원)', scholar: 'Mayer et al.(1995), Tyler(1996), 우광호(2012), 이광진(2015), 조성도(2016)', scale: '조직신뢰 척도(기관 맥락)', answer: 'Mayer et al.(1995)의 신뢰 모델에 기반하여 기관에 대한 전반적 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '노조몰입': { options: [{ name: '노조몰입(단일차원)', scholar: 'Gordon et al.(1980), 김종철(2009)', scale: '노조몰입 척도', answer: 'Gordon et al.(1980)의 노조몰입 이론에 기반하여 노동조합에 대한 충성심과 몰입을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '구전의도': { options: [{ name: '구전의도(단일차원)', scholar: 'Zeithaml et al.(1996)', scale: '행동의도 척도', answer: 'Zeithaml et al.(1996)의 행동의도 척도에 기반하여 타인에게 추천하고 긍정적으로 이야기하려는 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '스타동일시욕구': { options: [{ name: '스타동일시욕구(단일차원)', scholar: 'Kelman(1958)', scale: '동일시 척도', answer: 'Kelman(1958)의 사회적 영향 이론에 기반하여 스타와 자신을 동일시하고자 하는 욕구를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '스타동일시욕구': { options: [{ name: '스타동일시욕구(단일차원)', scholar: 'Kelman(1958), Mael and Ashforth(1992), Roca et al.(2006), Srinivasan et al.(2002), 김종훈(2013), 이연희(2012), 이혜선(2015), 정수연(2011)', scale: '동일시 척도', answer: 'Kelman(1958)의 사회적 영향 이론에 기반하여 스타와 자신을 동일시하고자 하는 욕구를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '스타충성도': { options: [{ name: '스타충성도(단일차원)', scholar: 'Oliver(1999)', scale: '충성도 척도(스타 맥락)', answer: 'Oliver(1999)의 충성도 이론을 스타에 적용하여 특정 스타에 대한 지속적 선호와 지지를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '자기유능감': { options: [{ name: '자기유능감(단일차원)', scholar: 'Deci & Ryan(1985)', scale: '기본심리욕구 척도', answer: 'Deci & Ryan(1985)의 자기결정이론에서 제시한 유능감(Competence) 개념에 기반하여 자신의 능력에 대한 지각을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '자아존중감': { options: [{ name: '자아존중감(단일차원)', scholar: 'Rosenberg(1965)', scale: 'RSES(Rosenberg Self-Esteem Scale)', answer: 'Rosenberg(1965)의 자아존중감 척도(RSES)를 활용하여 자기 자신에 대한 전반적 가치 평가를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '운동만족': { options: [{ name: '운동만족(단일차원)', scholar: 'Kenyon(1968)', scale: '운동만족 척도', answer: '운동 참여에 대한 전반적 만족 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '운동몰입': { options: [{ name: '운동몰입(단일차원)', scholar: 'Scanlan et al.(1993)', scale: 'Sport Commitment Model', answer: 'Scanlan et al.(1993)의 스포츠 몰입 모델에 기반하여 운동에 대한 몰입을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '운동만족': { options: [{ name: '운동만족(단일차원)', scholar: 'Kenyon(1968), Ragheb(1980), 김영재(2004)', scale: '운동만족 척도', answer: '운동 참여에 대한 전반적 만족 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '운동몰입': { options: [{ name: '운동몰입(단일차원)', scholar: 'Scanlan et al.(1993), Simons(1993)', scale: 'Sport Commitment Model', answer: 'Scanlan et al.(1993)의 스포츠 몰입 모델에 기반하여 운동에 대한 몰입을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '혁신역량': { options: [{ name: '혁신역량(단일차원)', scholar: 'Lawson & Samson(2001)', scale: '혁신역량 척도', answer: 'Lawson & Samson(2001)의 혁신역량 모델에 기반하여 조직의 혁신 능력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '전환장벽': { options: [{ name: '전환장벽(단일차원)', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: 'Jones et al.(2000)의 전환비용 이론에 기반하여 서비스 전환 시 인지되는 장벽을 단일차원으로 측정하였습니다.' }, { name: '전환비용', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: '' }, { name: '고객유대', scholar: 'Berry & Parasuraman(1991)', scale: '관계마케팅 척도', answer: '' }, { name: '대안의매력', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: '' }, { name: '서비스회복', scholar: 'Tax et al.(1998)', scale: '서비스회복 척도', answer: '' }], defaultSelected: [1, 2, 3, 4] },
-    '정보품질': { options: [{ name: '정보품질(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 IS 성공모델에 기반하여 정보의 정확성, 적시성, 완전성, 관련성 등을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '전환장벽': { options: [{ name: '전환장벽(단일차원)', scholar: 'Jones et al.(2000), 엄난숙(2006), 오경택(2009)', scale: '전환비용 척도', answer: 'Jones et al.(2000)의 전환비용 이론에 기반하여 서비스 전환 시 인지되는 장벽을 단일차원으로 측정하였습니다.' }, { name: '전환비용', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: '' }, { name: '고객유대', scholar: 'Berry & Parasuraman(1991)', scale: '관계마케팅 척도', answer: '' }, { name: '대안의매력', scholar: 'Jones et al.(2000)', scale: '전환비용 척도', answer: '' }, { name: '서비스회복', scholar: 'Tax et al.(1998)', scale: '서비스회복 척도', answer: '' }], defaultSelected: [1, 2, 3, 4] },
+    '정보품질': { options: [{ name: '정보품질(단일차원)', scholar: 'DeLone & McLean(2003), Bailey & Pearson(1983), 성백춘(2006), 한국정보화진흥원(2009)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 IS 성공모델에 기반하여 정보의 정확성, 적시성, 완전성, 관련성 등을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '지역축제브랜드자산': { options: [{ name: '인지도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도(축제 맥락)', answer: 'Aaker(1991)의 브랜드자산 모델을 축제에 적용하여 인지도, 이미지, 충성도의 하위차원으로 측정하였습니다.' }, { name: '이미지', scholar: 'Keller(1993)', scale: '브랜드자산 척도', answer: '' }, { name: '충성도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드인지도', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드이미지', scholar: 'Keller(1993)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드가치', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }, { name: '브랜드품질', scholar: 'Aaker(1991)', scale: '브랜드자산 척도', answer: '' }], defaultSelected: [3, 4, 5, 6] },
     '인간적친밀성': { options: [{ name: '인간적친밀성(단일차원)', scholar: '연구자 구성', scale: '친밀성 척도', answer: '서비스 제공자의 인간적 친밀감과 따뜻함을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '기술적우월성': { options: [{ name: '기술적우월성(단일차원)', scholar: 'Rogers(2003)', scale: '혁신확산이론 상대적 이점', answer: 'Rogers(2003)의 혁신확산이론 중 상대적 이점 개념에 기반하여 기술의 우월성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '조직학습역량': { options: [{ name: '조직학습역량(단일차원)', scholar: 'Senge(1990)', scale: '학습조직 척도', answer: 'Senge(1990)의 학습조직 이론에 기반하여 조직의 학습 역량을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '심리자본': { options: [{ name: '자기효능감', scholar: 'Luthans et al.(2007)', scale: 'PCQ(Psychological Capital Questionnaire)', answer: 'Luthans et al.(2007)의 심리적 자본 이론에 기반하여 자기효능감, 희망, 회복탄력성, 낙관주의의 4개 하위차원으로 측정하였습니다.' }, { name: '희망', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' }, { name: '회복탄력성', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' }, { name: '낙관주의', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' }], defaultSelected: [0, 1, 2, 3] },
+    '심리자본': { options: [{ name: '자기효능감', scholar: 'Luthans et al.(2007), 김나연(2013), 박보람(2015), 안화용(2013)', scale: 'PCQ(Psychological Capital Questionnaire)', answer: 'Luthans et al.(2007)의 심리적 자본 이론에 기반하여 자기효능감, 희망, 회복탄력성, 낙관주의의 4개 하위차원으로 측정하였습니다.' }, { name: '희망', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' }, { name: '회복탄력성', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' }, { name: '낙관주의', scholar: 'Luthans et al.(2007)', scale: 'PCQ', answer: '' }], defaultSelected: [0, 1, 2, 3] },
     '개선노력': { options: [{ name: '개선노력(단일차원)', scholar: '연구자 구성', scale: '조직개선 척도', answer: '조직이나 개인의 업무 프로세스 개선을 위한 노력을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '기업성과': { options: [{ name: '기업성과(단일차원)', scholar: 'Kaplan & Norton(1992)', scale: 'BSC 변형', answer: 'Kaplan & Norton(1992)의 BSC에 기반하여 기업의 전반적 성과를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '발언행동': { options: [{ name: '발언행동(단일차원)', scholar: 'Van Dyne & LePine(1998)', scale: '발언행동 척도', answer: 'Van Dyne & LePine(1998)의 발언행동(Voice Behavior) 이론에 기반하여 조직 개선을 위해 의견을 적극적으로 개진하는 행동을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -3341,10 +3363,10 @@ const PaperCompass = ({ onBack }) => {
     'SNS사용빈도': { options: [{ name: 'SNS사용빈도(단일차원)', scholar: 'Ellison et al.(2007)', scale: 'SNS 사용 척도', answer: 'Ellison et al.(2007)의 SNS 사용 연구에 기반하여 SNS 이용 빈도와 시간을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     'SNS일상성': { options: [{ name: 'SNS일상성(단일차원)', scholar: 'Ellison et al.(2007)', scale: 'SNS 사용 척도', answer: 'SNS가 일상생활에서 차지하는 비중과 습관적 사용 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '공공기관신뢰': { options: [{ name: '공공기관신뢰(단일차원)', scholar: 'Mayer et al.(1995)', scale: '기관신뢰 척도', answer: 'Mayer et al.(1995)의 신뢰 모델에 기반하여 공공기관에 대한 시민의 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '관람만족': { options: [{ name: '관람만족(단일차원)', scholar: 'Oliver(1980)', scale: '만족도 척도(관람 맥락)', answer: '관람 경험에 대한 전반적 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '관람몰입': { options: [{ name: '관람몰입(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도(관람 맥락)', answer: '관람 활동에 대한 몰입 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '관람만족': { options: [{ name: '관람만족(단일차원)', scholar: 'Oliver(1980), Oliver & Deshpande(1994)', scale: '만족도 척도(관람 맥락)', answer: '관람 경험에 대한 전반적 만족을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '관람몰입': { options: [{ name: '관람몰입(단일차원)', scholar: 'Csikszentmihalyi(1990), 석임복(2011)', scale: 'Flow 척도(관람 맥락)', answer: '관람 활동에 대한 몰입 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '사회적실재감': { options: [{ name: '사회적실재감(단일차원)', scholar: 'Short et al.(1976)', scale: '사회적 실재감 척도', answer: 'Short et al.(1976)의 사회적 실재감 이론에 기반하여 매체를 통한 상호작용에서 상대방의 존재감을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '쇼핑가치': { options: [{ name: '실용적 가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: 'Babin et al.(1994)의 쇼핑가치 이론에 기반하여 실용적 가치와 쾌락적 가치의 하위차원으로 측정하였습니다.' }, { name: '쾌락적 가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }, { name: '실용가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }, { name: '기호가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }], defaultSelected: [2, 3] },
+    '쇼핑가치': { options: [{ name: '실용적 가치', scholar: 'Babin et al.(1994), Jeffrey & Lee(2006), 김유리(2011), 정수연(2009)', scale: '쇼핑가치 척도', answer: 'Babin et al.(1994)의 쇼핑가치 이론에 기반하여 실용적 가치와 쾌락적 가치의 하위차원으로 측정하였습니다.' }, { name: '쾌락적 가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }, { name: '실용가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }, { name: '기호가치', scholar: 'Babin et al.(1994)', scale: '쇼핑가치 척도', answer: '' }], defaultSelected: [2, 3] },
     '개인성과': { options: [{ name: '개인성과(단일차원)', scholar: 'Campbell(1990)', scale: '직무성과 척도', answer: 'Campbell(1990)의 성과 모델에 기반하여 개인 수준의 업무 성과를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '시스템사용': { options: [{ name: '시스템사용(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS 성공모델', answer: 'DeLone & McLean(2003)의 IS 성공모델 중 사용(Use) 개념에 기반하여 시스템 활용 정도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '지속적사용의도': { options: [{ name: '지속적사용의도(단일차원)', scholar: 'Bhattacherjee(2001)', scale: 'ECM-IT', answer: 'Bhattacherjee(2001)의 ECM-IT 모델에 기반하여 시스템의 지속적 사용 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -3352,12 +3374,12 @@ const PaperCompass = ({ onBack }) => {
     '지각된사용성': { options: [{ name: '지각된사용성(단일차원)', scholar: 'Davis(1989)', scale: 'TAM', answer: 'Davis(1989)의 TAM에 기반하여 시스템 사용의 용이성에 대한 지각을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '측정분석및지식관리': { options: [{ name: '측정분석및지식관리(단일차원)', scholar: 'MBNQA(2019)', scale: '말콤볼드리지 기준 4범주', answer: '말콤볼드리지 국가품질상(MBNQA) 기준의 측정·분석 및 지식관리 범주에 기반하여 조직의 데이터 관리 역량을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '프로세스관리': { options: [{ name: '프로세스관리(단일차원)', scholar: 'MBNQA(2019)', scale: '말콤볼드리지 기준 6범주', answer: '말콤볼드리지 국가품질상(MBNQA) 기준의 프로세스 관리 범주에 기반하여 조직의 핵심 프로세스 관리 수준을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '혁신성': { options: [{ name: '혁신성(단일차원)', scholar: 'Rogers(2003)', scale: '개인혁신성 척도', answer: 'Rogers(2003)의 혁신확산이론에 기반하여 새로운 것을 수용하려는 개인의 성향을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '혁신성': { options: [{ name: '혁신성(단일차원)', scholar: 'Rogers(2003), Legris et al.(2002), 배준식(2014), 이창희(2013), 이호(2018)', scale: '개인혁신성 척도', answer: 'Rogers(2003)의 혁신확산이론에 기반하여 새로운 것을 수용하려는 개인의 성향을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '감정고갈': { options: [{ name: '감정고갈(단일)', scholar: 'Maslach & Jackson(1981)', scale: 'MBI(Maslach Burnout Inventory)', answer: 'Maslach & Jackson(1981)의 MBI 중 감정고갈(Emotional Exhaustion) 하위차원을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    'LMX(상사-부하 교환관계)': { options: [{ name: 'LMX(다차원)', scholar: 'Graen & Uhl-Bien(1995)', scale: 'LMX-7', answer: 'Graen & Uhl-Bien(1995)의 LMX-7 척도를 활용하여 상사-부하 교환관계의 질을 측정하였습니다.' }], defaultSelected: [0] },
+    'LMX(상사-부하 교환관계)': { options: [{ name: 'LMX(다차원)', scholar: 'Graen & Uhl-Bien(1995), Liden et al(1997)', scale: 'LMX-7', answer: 'Graen & Uhl-Bien(1995)의 LMX-7 척도를 활용하여 상사-부하 교환관계의 질을 측정하였습니다.' }], defaultSelected: [0] },
     'U-공공서비스품질': { options: [{ name: 'U-공공서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988)', scale: 'SERVQUAL 변형', answer: 'Parasuraman et al.(1988)의 SERVQUAL 모델을 유비쿼터스 공공서비스 환경에 맞게 변형하여 서비스품질을 측정하였습니다.' }], defaultSelected: [0] },
     'U-교통시스템품질': { options: [{ name: 'U-교통시스템품질(단일차원)', scholar: 'DeLone & McLean(2003)', scale: 'IS Success Model 변형', answer: 'DeLone & McLean(2003)의 정보시스템 성공모형을 유비쿼터스 교통시스템에 맞게 변형하여 시스템품질을 측정하였습니다.' }], defaultSelected: [0] },
-    'e-서비스품질': { options: [{ name: 'e-서비스품질(다차원)', scholar: 'Parasuraman et al.(2005)', scale: 'E-S-QUAL', answer: 'Parasuraman et al.(2005)의 E-S-QUAL 척도를 활용하여 전자서비스품질을 효율성, 시스템가용성, 이행성, 프라이버시 등의 차원으로 측정하였습니다.' }, { name: 'e-정보서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-거래서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-디자인서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-의사소통서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-안전성서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-브랜드이미지', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }], defaultSelected: [1, 2, 3, 4, 5, 6] },
+    'e-서비스품질': { options: [{ name: 'e-서비스품질(다차원)', scholar: 'Parasuraman et al.(2005), Wang et al.(2010), Yoo & Donthu(2001), 서현석(2011), 이문규(2002)', scale: 'E-S-QUAL', answer: 'Parasuraman et al.(2005)의 E-S-QUAL 척도를 활용하여 전자서비스품질을 효율성, 시스템가용성, 이행성, 프라이버시 등의 차원으로 측정하였습니다.' }, { name: 'e-정보서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-거래서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-디자인서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-의사소통서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-안전성서비스', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }, { name: 'e-브랜드이미지', scholar: 'Zeithaml et al.(2002)', scale: 'e-SQ', answer: '' }], defaultSelected: [1, 2, 3, 4, 5, 6] },
     '감정반응(PAD)': { options: [{ name: '즐거움(Pleasure)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'Mehrabian & Russell(1974)의 PAD 모델 중 즐거움 차원입니다.' }, { name: '각성(Arousal)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 각성 차원입니다.' }, { name: '지배(Dominance)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 지배 차원입니다.' }], defaultSelected: [0,1,2] },
     '감정반응요인(PAD)': { options: [{ name: '즐거움(Pleasure)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'Mehrabian & Russell(1974)의 PAD 모델 중 즐거움 차원입니다.' }, { name: '각성(Arousal)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 각성 차원입니다.' }, { name: '지배(Dominance)', scholar: 'Mehrabian & Russell(1974)', scale: 'PAD 척도', answer: 'PAD 모델 중 지배 차원입니다.' }], defaultSelected: [0,1,2] },
     '개인적 몰입': { options: [{ name: '개인적 몰입(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow 척도', answer: 'Csikszentmihalyi(1990)의 몰입이론에 기반하여 개인이 특정 활동에 완전히 몰입하는 심리적 경험을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -3366,15 +3388,15 @@ const PaperCompass = ({ onBack }) => {
     '리더십(Malcolm Baldrige)': { options: [{ name: '리더십(Malcolm Baldrige)', scholar: 'MBNQA(2019)', scale: '말콤볼드리지 기준 1범주', answer: '말콤볼드리지 국가품질상(MBNQA)의 리더십 범주에 기반하여 조직 리더십의 수준을 측정하였습니다.' }], defaultSelected: [0] },
     '사회적요인(SW관리체계/공유가치)': { options: [{ name: 'SW관리체계', scholar: 'DeLone & McLean(2003)', scale: 'IS Success Model 확장', answer: '소프트웨어 관리체계 측면의 사회적 요인입니다.' }, { name: '공유가치', scholar: 'Morgan & Hunt(1994)', scale: '관계마케팅 이론', answer: '조직 구성원 간 공유하는 가치 수준입니다.' }], defaultSelected: [0,1] },
     '성격 특성': { options: [{ name: '외향성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Costa & McCrae(1992)의 Big Five 성격모형 중 외향성 차원입니다.' }, { name: '신경증', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 신경증(정서적 불안정성) 차원입니다.' }, { name: '개방성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 경험에 대한 개방성 차원입니다.' }, { name: '친화성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 친화성 차원입니다.' }, { name: '성실성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 성실성 차원입니다.' }], defaultSelected: [0,1,2,3,4] },
-    '성격특성(Big5)': { options: [{ name: '외향성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Costa & McCrae(1992)의 Big Five 성격모형 중 외향성 차원입니다.' }, { name: '신경증', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 신경증 차원입니다.' }, { name: '개방성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 개방성 차원입니다.' }, { name: '친화성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 친화성 차원입니다.' }, { name: '성실성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 성실성 차원입니다.' }], defaultSelected: [0,1,2,3,4] },
+    '성격특성(Big5)': { options: [{ name: '외향성', scholar: 'Costa & McCrae(1992), 안창규·이경임(1996)', scale: 'NEO-PI-R(Big Five)', answer: 'Costa & McCrae(1992)의 Big Five 성격모형 중 외향성 차원입니다.' }, { name: '신경증', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 신경증 차원입니다.' }, { name: '개방성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 개방성 차원입니다.' }, { name: '친화성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 친화성 차원입니다.' }, { name: '성실성', scholar: 'Costa & McCrae(1992)', scale: 'NEO-PI-R(Big Five)', answer: 'Big Five 중 성실성 차원입니다.' }], defaultSelected: [0,1,2,3,4] },
     '일의 의미': { options: [{ name: '일의 의미(단일차원)', scholar: 'Steger et al.(2012)', scale: 'WAMI(Work as Meaning Inventory)', answer: 'Steger et al.(2012)의 WAMI 척도를 활용하여 직무에서 느끼는 의미와 목적의식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '자기결정성(개인특성)': { options: [{ name: '자율성', scholar: 'Deci & Ryan(2000)', scale: 'SDT(자기결정성이론)', answer: 'Deci & Ryan(2000)의 자기결정성이론 중 자율성 욕구입니다.' }, { name: '유능성', scholar: 'Deci & Ryan(2000)', scale: 'SDT(자기결정성이론)', answer: '자기결정성이론 중 유능성 욕구입니다.' }, { name: '관계성', scholar: 'Deci & Ryan(2000)', scale: 'SDT(자기결정성이론)', answer: '자기결정성이론 중 관계성 욕구입니다.' }], defaultSelected: [0,1,2] },
     '자기표현(외면적/내면적)': { options: [{ name: '외면적 자기표현', scholar: 'Kim & Ko(2012)', scale: '자기표현 척도', answer: '외적으로 드러나는 자기표현(패션, 스타일 등)을 측정합니다.' }, { name: '내면적 자기표현', scholar: 'Kim & Ko(2012)', scale: '자기표현 척도', answer: '내적 가치나 신념의 표현을 측정합니다.' }], defaultSelected: [0,1] },
-    '조직후원인식(POS)': { options: [{ name: '조직후원인식(단일차원)', scholar: 'Eisenberger, Huchison & Sowa(1986), Shore & Tetrick(1991), Wayne et al.(1997), 서재현(2002), 김윤성(2002), 이인숙(2009)', scale: 'SPOS(Survey of Perceived Organizational Support)', answer: 'Eisenberger et al.(1986)의 SPOS 척도를 활용하여 조직이 구성원의 기여를 인정하고 복지를 배려한다고 지각하는 정도를 측정하였습니다.' }], defaultSelected: [0] },
+    '조직후원인식(POS)': { options: [{ name: '조직후원인식(단일차원)', scholar: 'Eisenberger, Huchison & Sowa(1986), Shore & Tetrick(1991), Wayne et al.(1997), 서재현(2002), 김윤성(2002), 이인숙(2009), Alle(1992), Garstk(1996), Shanock & Eisenberger(2006), Wayne, Shore & Lide(1997), 김영호(2010), 명규환(2007), 손성규(2018), 신금석(2012), 양현교(2009), 엄덕수(2013), 원종록(2019), 윤인한(2015), 이경호(2010)', scale: 'SPOS(Survey of Perceived Organizational Support)', answer: 'Eisenberger et al.(1986)의 SPOS 척도를 활용하여 조직이 구성원의 기여를 인정하고 복지를 배려한다고 지각하는 정도를 측정하였습니다.' }], defaultSelected: [0] },
     '팀 다양성': { options: [{ name: '팀 다양성(단일차원)', scholar: 'Harrison & Klein(2007)', scale: '다양성 척도', answer: 'Harrison & Klein(2007)의 다양성 유형론에 기반하여 팀 내 구성원의 인구통계적·기능적 다양성을 측정하였습니다.' }], defaultSelected: [0] },
     '학습동기(ARCS)': { options: [{ name: '주의집중(Attention)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'Keller(1987)의 ARCS 모형 중 주의집중 차원입니다.' }, { name: '관련성(Relevance)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 관련성 차원입니다.' }, { name: '자신감(Confidence)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 자신감 차원입니다.' }, { name: '만족감(Satisfaction)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 만족감 차원입니다.' }], defaultSelected: [0,1,2,3] },
     '상사성격5요인': { options: [{ name: '외향성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: 'McCrae & Costa(1992)의 Big Five 성격모형에 기반하여 상사의 외향성, 친화성, 성실성, 정서안정성, 개방성을 부하직원이 평가하는 방식으로 측정하였습니다.' }, { name: '친화성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }, { name: '성실성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }, { name: '정서안정성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }, { name: '개방성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }], defaultSelected: [0,1,2,3,4] },
-    '라포형성행동': { options: [{ name: '세심한 배려', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: 'Gremler & Gwinner(2008)의 라포형성행동 이론에 기반하여 세심한 배려, 예의 바름, 유대 형성, 정보 공유의 4개 하위차원으로 측정하였습니다.' }, { name: '예의 바름', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: '' }, { name: '유대 형성', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: '' }, { name: '정보 공유', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: '' }], defaultSelected: [0,1,2,3] },
+    '라포형성행동': { options: [{ name: '세심한 배려', scholar: 'Gremler & Gwinner(2008), 박봉녀(2023), 박혜미(2018), 이재희(2017), 이형주(2015), 최혜수(2021), 현성협(2015)', scale: '라포형성행동 척도', answer: 'Gremler & Gwinner(2008)의 라포형성행동 이론에 기반하여 세심한 배려, 예의 바름, 유대 형성, 정보 공유의 4개 하위차원으로 측정하였습니다.' }, { name: '예의 바름', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: '' }, { name: '유대 형성', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: '' }, { name: '정보 공유', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: '' }], defaultSelected: [0,1,2,3] },
     '고객경험가치': {
       options: [
         { name: '감성적경험가치', scholar: 'Sweeney & Soutar(2001), Mathwick(2001), 오동윤(2014), 김태숙(2016), 김양훈(2019), 남상민(2025)', scale: 'Sweeney & Soutar(2001), Mathwick(2001)의 경험가치 척도를 오동윤(2014), 김태숙(2016), 김양훈(2019)이 수정', answer: 'Sweeney & Soutar(2001)와 Mathwick(2001)의 경험가치 이론에 기반하여 감성적 경험가치, 인지적 경험가치, 서비스 경험가치의 3개 하위차원으로 총 14문항을 측정하였습니다.' },
@@ -3402,7 +3424,7 @@ const PaperCompass = ({ onBack }) => {
     '무사안일': { options: [{ name: '무사안일(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '보상만족': {
       options: [
-        { name: '임금만족', scholar: 'Scarpello, Huber & Vandenberg(1988), 정병재(2002), 장헌문(2009), 이택호(2014), 장영희(2018)', scale: '보상만족 척도', answer: '보상만족을 임금만족, 복리후생만족, 절차만족의 3개 하위요인으로 구분하여 측정하였습니다.' },
+        { name: '임금만족', scholar: 'Scarpello, Huber & Vandenberg(1988), 정병재(2002), 장헌문(2009), 이택호(2014), 장영희(2018), Doeringer & Piore(1971), Lawler(1971)', scale: '보상만족 척도', answer: '보상만족을 임금만족, 복리후생만족, 절차만족의 3개 하위요인으로 구분하여 측정하였습니다.' },
         { name: '복리후생만족', scholar: 'Doeringer & Piore(1971), 이택호(2014), 장영희(2018)', scale: '보상만족 척도', answer: '' },
         { name: '절차만족', scholar: 'Lawler(1971), 이택호(2014), 장영희(2018)', scale: '보상만족 척도', answer: '' },
       ],
@@ -3445,7 +3467,7 @@ const PaperCompass = ({ onBack }) => {
     '전문성': { options: [{ name: '전문성(단일차원)', scholar: 'Bansal & Voyer(2000), 왕러(2021)', scale: '유튜버 특성 척도', answer: '콘텐츠 유튜버의 전문성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '건설기술자의특성': {
       options: [
-        { name: '경력지향성', scholar: 'Gerpott et al.(1988), 한원규(2006)', scale: '건설기술자 특성 척도', answer: '건설기술자의 특성을 경력지향성, 개인역량, 이해관계자협력의 3개 하위요인으로 구분하여 측정하였습니다.' },
+        { name: '경력지향성', scholar: 'Gerpott et al.(1988), 한원규(2006), Derher & Ash(1990), Manning & Norburn(1989), 김용식(2010), 윤방섭(2004), 이루리(2014), 이지우(2000)', scale: '건설기술자 특성 척도', answer: '건설기술자의 특성을 경력지향성, 개인역량, 이해관계자협력의 3개 하위요인으로 구분하여 측정하였습니다.' },
         { name: '개인역량', scholar: 'Manning & Norburn(1989), 김용식(2010), 이지우(2000), 윤방섭(2004), 이루리(2014)', scale: '건설기술자 특성 척도', answer: '' },
         { name: '이해관계자협력', scholar: 'Dreher & Ash(1990), 한원규(2006)', scale: '건설기술자 특성 척도', answer: '' },
       ],
@@ -3453,14 +3475,97 @@ const PaperCompass = ({ onBack }) => {
     },
     '계획된행동이론': {
       options: [
-        { name: '행동에 대한 태도', scholar: 'Ajzen(1988), Ajzen & Fishbein(1980), Carr & Sequeira(2006), 진주형(2014)', scale: 'Ajzen(1991) TPB 척도', answer: 'Ajzen(1991)의 계획된 행동이론(TPB)에 기반하여 행동에 대한 태도, 주관적 규범, 지각된 행동통제의 3개 하위요인을 채택하였습니다.' },
+        { name: '행동에 대한 태도', scholar: 'Ajzen(1988), Ajzen & Fishbein(1980), Carr & Sequeira(2006), 진주형(2014), Ajzen and Fishbein(1980)', scale: 'Ajzen(1991) TPB 척도', answer: 'Ajzen(1991)의 계획된 행동이론(TPB)에 기반하여 행동에 대한 태도, 주관적 규범, 지각된 행동통제의 3개 하위요인을 채택하였습니다.' },
         { name: '주관적 규범', scholar: 'Ajzen(1988), Ajzen & Fishbein(1980), Carr & Sequeira(2006), 진주형(2014)', scale: 'TPB 척도', answer: '' },
         { name: '지각된 행동통제', scholar: 'Ajzen(1988), Ajzen & Fishbein(1980), Carr & Sequeira(2006), 진주형(2014)', scale: 'TPB 척도', answer: '' },
       ],
       defaultSelected: [0, 1, 2],
     },
-    '상호작용공정성': { options: [{ name: '상호작용공정성(단일차원)', scholar: 'Bies & Moag(1986), Colquitt(2001), 남상민(2016)', scale: 'Colquitt(2001) 조직공정성 척도', answer: '조직공정성의 하위요인인 상호작용공정성을 독립 변수로 단일차원 측정하였습니다.' }], defaultSelected: [0] },
+    '상호작용공정성': { options: [{ name: '상호작용공정성(단일차원)', scholar: 'Bies & Moag(1986), Colquitt(2001), 남상민(2016), Alexander & Ruderman(1987), Masterson, Lewis, Goldman, Taylor(2000), 곽경환(2023), 윤정호(2013), 조지연(2018), 이영만(2014), 전영민(2012), 정승훈(2014)', scale: 'Colquitt(2001) 조직공정성 척도', answer: '조직공정성의 하위요인인 상호작용공정성을 독립 변수로 단일차원 측정하였습니다.' }], defaultSelected: [0] },
     '정보공정성': { options: [{ name: '정보공정성(단일차원)', scholar: 'Colquitt(2001)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Colquitt(2001)은 상호작용공정성을 대인공정성과 정보공정성으로 세분화하였으며, 정보공정성을 독립 변수로 측정하였습니다.' }], defaultSelected: [0] },
+  
+    '권력거리성향': {
+      options: [
+        { name: '권력거리성향(단일차원)', scholar: 'Dorfman & Howell(1988), Farh et al.(2007), 전정호·설현도(2016), 박선규(2022), 김동진(2020), 정유림(2020)', scale: 'Dorfman & Howell(1988) / Farh et al.(2007) Power Distance Scale', answer: '상사와 부하 간 위계적 거리에 대한 개인의 수용 정도를 측정합니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '슈퍼리더십': {
+      options: [
+        { name: '모델링', scholar: 'Manz & Sims(1987), 박용진(2009), 이선영(2020)', scale: 'Manz & Sims(1987) Super Leadership Scale', answer: 'Manz & Sims(1987)의 슈퍼리더십 이론에서 제시한 4개 하위요인(모델링, 목표설정, 격려와 지도, 보상과 질책)을 채택합니다.' },
+        { name: '목표설정', scholar: 'Manz & Sims(1987), 박용진(2009)', scale: 'Super Leadership Scale', answer: '' },
+        { name: '격려와 지도', scholar: 'Manz & Sims(1987), 박용진(2009)', scale: 'Super Leadership Scale', answer: '' },
+        { name: '보상과 질책', scholar: 'Manz & Sims(1987), 박용진(2009)', scale: 'Super Leadership Scale', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '그릿(grit)': {
+      options: [
+        { name: '흥미유지(열정)', scholar: 'Duckworth & Quinn(2009), 이선영(2020)', scale: 'Short Grit Scale (Grit-S)', answer: 'Duckworth & Quinn(2009)의 Grit-S 척도를 사용합니다. 흥미유지(열정)와 노력지속(끈기)의 2요인 구조입니다.' },
+        { name: '노력지속(끈기)', scholar: 'Duckworth & Quinn(2009), 이선영(2020)', scale: 'Grit-S', answer: '' },
+      ],
+      defaultSelected: [0, 1],
+    },
+    '비윤리적 친조직행동(UPB)': {
+      options: [
+        { name: '비윤리적 친조직행동(단일차원)', scholar: 'Umphress et al.(2010), 정유림(2020)', scale: 'Umphress et al.(2010) UPB Scale', answer: '조직을 위해 비윤리적 행동을 기꺼이 하려는 의도를 측정합니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '신체화(Somatization)': {
+      options: [
+        { name: '신체화(단일차원)', scholar: 'Derogatis & Cleary(1977) SCL-90-R, 정유림(2020)', scale: 'SCL-90-R Somatization subscale', answer: '스트레스가 신체 증상으로 표출되는 정도를 측정합니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '직무과부하': {
+      options: [
+        { name: '직무과부하(단일차원)', scholar: 'Cousins et al.(2004), Beehr et al.(1976), 최병권(2013), 김동진(2020)', scale: 'Cousins et al.(2004) / Beehr et al.(1976)', answer: '업무량이 개인의 처리 능력을 초과하는 정도를 측정합니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '직업정체성': {
+      options: [
+        { name: '전문조직의 활용', scholar: 'Hall(1968), 민경홍(2010), 김동진(2020)', scale: 'Hall(1968) Professional Identity Scale', answer: 'Hall(1968)의 직업정체성 척도를 사용하며, 5개 하위요인으로 구성됩니다.' },
+        { name: '공공서비스에 대한 신념', scholar: 'Hall(1968), 민경홍(2010)', scale: 'Hall(1968)', answer: '' },
+        { name: '자체 규제에 대한 신념', scholar: 'Hall(1968), 민경홍(2010)', scale: 'Hall(1968)', answer: '' },
+        { name: '직업에 대한 소명의식', scholar: 'Hall(1968), 민경홍(2010)', scale: 'Hall(1968)', answer: '' },
+        { name: '자율성에 대한 신념', scholar: 'Hall(1968), 민경홍(2010)', scale: 'Hall(1968)', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3, 4],
+    },
+    '학습목표지향성': {
+      options: [
+        { name: '학습목표지향성(단일차원)', scholar: 'VandeWalle(1997), 이후석(2022)', scale: 'VandeWalle(1997) Goal Orientation Scale', answer: '새로운 기술과 역량 습득에 대한 지향성을 측정합니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '탈진(Burn-out)': {
+      options: [
+        { name: '정서적 탈진', scholar: 'Maslach & Jackson(1981) MBI, 권선덕(2000), 김남수(2002)', scale: 'MBI(Maslach Burnout Inventory)', answer: 'Maslach & Jackson(1981)의 MBI 척도를 사용합니다. 3요인 구조입니다.' },
+        { name: '비인간화', scholar: 'Maslach & Jackson(1981) MBI, 권선덕(2000)', scale: 'MBI', answer: '' },
+        { name: '개인적 성취감 감소', scholar: 'Maslach & Jackson(1981) MBI, 권선덕(2000)', scale: 'MBI', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '과업성과': {
+      options: [
+        { name: '과업성과(단일차원)', scholar: 'Williams & Anderson(1991), 이후석(2022)', scale: 'Williams & Anderson(1991) Task Performance Scale', answer: '조직이 공식적으로 요구하는 역할 내 행동을 측정합니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '인지적유연성': {
+      options: [
+        { name: '인지적유연성(단일차원)', scholar: 'Martin & Rubin(1995), Dennis & Vander Wal(2010), 이후석(2022), 이선영(2020)', scale: 'Martin & Rubin(1995) Cognitive Flexibility Scale', answer: '상황에 따라 사고방식을 유연하게 전환하는 능력을 측정합니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '의사소통능력': {
+      options: [
+        { name: '의사소통능력(단일차원)', scholar: 'Rubin(1991), 허경호(2003) GICC, 석희금(2024)', scale: '허경호(2003) GICC(Global Interpersonal Communication Competence Scale)', answer: 'Rubin(1991)의 의사소통능력 척도를 허경호(2003)가 한국판으로 표준화한 GICC를 사용합니다.' },
+      ],
+      defaultSelected: [0],
+    },
   };
 
   // 선택된 하위요인 상태 (변수명 → 인덱스 배열)
@@ -9194,6 +9299,8 @@ const PaperCompass = ({ onBack }) => {
     '테크노유스트레스': { type: 'variable', description: '테크노스트레스 수준이 관계를 약화', method: 'PROCESS Macro Model 1', common: false },
     '혁신성': { type: 'variable', description: '혁신성 수준이 관계를 조절', method: 'PROCESS Macro Model 1', common: false },
     '성격유형': { type: 'variable', description: '외향성/내향성 등 성격유형이 관계를 조절', method: 'PROCESS Macro Model 1 또는 다중집단분석', common: false },
+  
+    '권력거리성향': { desc: '상사-부하 간 위계적 거리 수용도', sources: '박선규(2022)', pairs: ['코칭리더십→혁신행동'] },
   };
 
   // ── 개별 논문 상세정보 DB (연구자별) ──
@@ -9645,6 +9752,14 @@ const PaperCompass = ({ onBack }) => {
     '박남수(2012)': { subject: '마음챙김에 근거한 스트레스 완화 프로그램(MBSR)이 조직구성원의 정신건강에 미치는 효과', sample: '조직구성원 40명 (실험집단 21명, 통제집단 19명), 8주간 실험연구', region: '국내', iv: '마음챙김', mv: '마음챙김', dv: '스트레스 반응, 소진, 자아존중감, 조직몰입, 창의성', result: 'MBSR → 마음챙김 수준 향상 (+); MBSR → 스트레스 반응 감소 (-); MBSR → 소진 감소 (-); MBSR → 자아존중감 증가 (+); MBSR → 조직몰입 증가 (+); MBSR → 창의성 증가 (+); 통제집단은 모든 변수에서 유의한 변화 없음' },
     '이창원(2019)': { subject: '테크노스트레스 유발요인과 테크노스트레스 구성요인과의 관계', sample: '첨단기술 도입 기업 종업원 620명', region: '국내', iv: '직무특성, 역할모호성, 대인관계, 조직분위기', mv: '', dv: '테크노스트레스', result: '부정적 조직분위기 → 테크노스트레스 강화 (+); 역할모호성 → 테크노스트레스 (+); 테크노-과부화 ← 직무특성, 역할모호성, 조직분위기 영향; 테크노-침해 ← 자율성, 역할모호성, 조직분위기 영향; 테크노-복잡성 ← 과업중요성, 피드백 영향; 테크노-불확실성 ← 피드백, 조직분위기, 자율성 영향; 유발요인은 테크노스트레스 구성요소별로 차별적으로 영향' },
     '신선해(2020)': { subject: '긍정심리자본, 심리적 주인의식, 직무만족 및 직무성과 간의 관계', sample: '공적·사적 서비스업 종업원 421명 (575부 배포, 501부 회수, 421부 분석)', region: '국내', iv: '긍정심리자본', mv: '심리적주인의식', dv: '직무만족, 직무성과', result: '자기효능감 → 심리적 주인의식 (+); 희망 → 심리적 주인의식 (+); 낙관주의 → 심리적 주인의식 (+); 복원력 → 심리적 주인의식 (비유의); 심리적 주인의식 → 직무만족 (+); 심리적 주인의식 → 직무성과 (+); 희망 → 직무만족 (+); 낙관주의 → 직무만족 (+); 자기효능감 → 직무만족 (비유의); 복원력 → 직무만족 (비유의); 낙관주의 → 직무성과 (+); 자기효능감/희망/복원력 → 직무성과 (비유의); 심리적 주인의식: 자기효능감·희망·낙관주의와 직무만족·직무성과 간 매개효과 유의; 심리적 주인의식: 복원력과 직무만족·직무성과 간 매개효과 비유의' },    '이경근, 박경규(2013)': { subject: '조직공정성의 개념과 효과성: 국내 상관연구의 통합분석', sample: '국내 상관연구 통합분석(메타분석)', region: '국내', iv: '분배공정성, 절차공정성, 상호작용공정성', mv: '', dv: '직무만족, 조직몰입, 조직시민행동, 이직의도', result: '분배공정성·절차공정성·상호작용공정성 모두 조직유효성 변수들과 정(+)의 상관; 메타분석 결과 조직공정성 하위차원별 효과크기 차이 확인' },
+    // ── 타교 논문 7편 추가 (2026-04-22) ──
+    '박선규(2022)': { subject: '코칭리더십이 혁신행동에 미치는 영향: 조직신뢰의 매개효과와 권력거리성향의 조절된 매개효과', sample: '국내 직장인 697명', region: '국내', iv: '코칭리더십', mv: '조직신뢰', dv: '혁신행동', mod: '권력거리성향', result: '코칭리더십 → 혁신행동 (+), 코칭리더십 → 조직신뢰 (+), 조직신뢰 → 혁신행동 (+), 조직신뢰의 부분매개효과 확인, 권력거리성향의 조절된 매개효과 유의' },
+    '김동진(2020)': { subject: '축구심판의 권력거리성향과 직무과부하, 직무스트레스, 직업정체성 및 직무만족도의 관계', sample: '국내 축구심판 117명', region: '국내', iv: '권력거리성향, 직무과부하, 직무스트레스', mv: '', dv: '직업정체성, 직무만족', result: '직무과부하 → 직무스트레스 (+), 직무스트레스 → 직무만족 (-), 인구통계학적 집단비교 실시' },
+    '정유림(2020)': { subject: '상사의 권력거리성향이 부하의 비윤리적 친조직행동 및 신체화에 미치는 영향', sample: '미국 Amazon MTurk 근로자 336명', region: '국외', iv: '권력거리성향', mv: '직무스트레스', dv: '비윤리적 친조직행동(UPB), 신체화(Somatization)', mod: '직무열의', result: '권력거리성향 → 비윤리적 친조직행동/신체화 (+), 직무스트레스의 부분매개효과, 직무열의의 조절된 매개효과 유의' },
+    '이후석(2022)': { subject: '서번트리더십이 과업성과에 미치는 영향: 심리적안전감, 인지적유연성, 학습목표지향성의 매개효과', sample: '국내 기업 조직구성원 311명', region: '국내', iv: '서번트리더십', mv: '심리적안전감, 인지적유연성, 학습목표지향성', dv: '과업성과', result: '서번트리더십 → 심리적안전감 (+), 심리적안전감 → 인지적유연성/학습목표지향성 (+), 순차적 매개효과 확인' },
+    '석희금(2024)': { subject: '간호사의 의사소통능력, 심리적안전감, 윤리적리더십이 직무배태성에 미치는 영향', sample: '국내 종합병원 간호사 162명', region: '국내', iv: '의사소통능력, 심리적안전감, 윤리적리더십', mv: '', dv: '직무배태성', result: '의사소통능력/심리적안전감/윤리적리더십 → 직무배태성 (+), 설명력 41.8%' },
+    '김남수(2002)': { subject: '종합병원 응급실 의사와 간호사의 탈진 요인에 관한 연구', sample: '서울 종합병원 응급실 의사·간호사 228명', region: '국내', iv: '자아존중감, 조직적 특성, 클라이언트 특성', mv: '', dv: '탈진(Burn-out)', result: '자아존중감 → 탈진 (-), 업무과다 → 탈진 (+), 보상 → 탈진 (-), 클라이언트 관계 → 탈진 (+), 설명력 54%' },
+    '이선영(2020)': { subject: '슈퍼리더십이 인지적유연성에 미치는 영향: 셀프리더십과 그릿의 순차적 매개효과', sample: '국내 대형항공사 객실승무원 297명', region: '국내', iv: '슈퍼리더십', mv: '셀프리더십, 그릿(grit)', dv: '인지적유연성', result: '슈퍼리더십 → 인지적유연성 (+), 순차적 매개효과(슈퍼리더십→셀프리더십→그릿→인지적유연성) 확인' },
   };
 
   // ── 선행연구 요약문 DB (변수 간 관계) ──
@@ -9742,7 +9857,7 @@ const PaperCompass = ({ onBack }) => {
           iv: fromVar,
           mv: '-',
           dv: toVar,
-          result: '(상세정보 미등록)',
+          result: fromVar + ' → ' + toVar + ' 관계 연구',
         });
       }
     });
