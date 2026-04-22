@@ -1019,7 +1019,7 @@ const PaperCompass = ({ onBack }) => {
     '보상공정성→이직의도': { count: 1, sources: 'SVU: 김종길(2025)', verdict: 'emerging' },
     // 신뢰
     '신뢰→조직몰입': { count: 4, sources: '박주현·윤병섭(2018), 박인규(2023), Mayer et al.(1995), Tan&Tan(2000)', verdict: 'strong' },
-    '신뢰→직무만족': { count: 4, sources: 'SVU: 차무홍(2023), 우성주(2021) / 박인규(2023) / 타교: Aryee et al.(2002)', verdict: 'moderate' },
+    '신뢰→직무만족': { count: 5, sources: 'SVU: 차무홍(2023), 우성주(2021) / 박인규(2023) / 김화자(2023) / 타교: Aryee et al.(2002)', verdict: 'moderate' },
     // 심리자본
     '심리자본→조직몰입': { count: 4, sources: '타교: Luthans et al.(2007) / McMurray et al.(2010), Youssef&Luthans(2007), Luthans&Youssef(2004)', verdict: 'emerging' },
     // 심리적안전감
@@ -1076,12 +1076,13 @@ const PaperCompass = ({ onBack }) => {
 
 // 정서적신뢰
 // 조직공정성
-    '조직공정성→심리적주인의식': { count: 1, sources: 'Chi&Han(2008)', verdict: 'weak' },
+    '조직공정성→심리적주인의식': { count: 2, sources: 'SVU: 김화자(2023), Chi&Han(2008)', verdict: 'weak' },
     '조직공정성→이직의도': { count: 2, sources: 'SVU: 장선연(2020) / 김미선(2014)', verdict: 'emerging' },
     '조직공정성→자기효능감': { count: 2, sources: 'SVU: 이명예(2023) / 이명예(2022)', verdict: 'weak' },
     '조직공정성→조직몰입': { count: 13, sources: 'SVU: 김종훈(2023) / 황찬성(2020), 장선연(2019), 장경수(2024), 이명예(2023), 황환성(2020), 엄재규(2017), 남상민(2016), 이명예(2022), 김준수(2020) / 타교: Jones et al.(2009), Roberts et al.(1999), Tang & Sarsfield-Baldwin(1996)', verdict: 'strong' },
     '조직공정성→조직시민행동': { count: 4, sources: 'SVU: 김미선(2014) / 이영수(2017), Moorman(1991), Ryan et al.(1996)', verdict: 'moderate' },
     '조직공정성→조직신뢰': { count: 2, sources: 'SVU: 황환성(2019) / 이영수(2017)', verdict: 'moderate' },
+    '조직공정성→신뢰': { count: 3, sources: 'SVU: 김화자(2023) / 황환성(2019) / 이영수(2017)', verdict: 'moderate' },
     '조직공정성→직무만족': { count: 10, sources: 'SVU: 김화자(2023) / 장선연(2019), 곽경환(2023), 엄재규(2017), 남상민(2016), 심은주(2025), 임재규(2017), Cohen-Charash&Spector(2001), Aryee et al.(2002), Charash&Spector(2001)', verdict: 'strong' },
     '조직공정성→직무태도': { count: 1, sources: 'SVU: 이영수(2017)', verdict: 'emerging' },
     '조직공정성→혁신행동': { count: 2, sources: 'SVU: / 이명예(2023) / 이명예(2022)', verdict: 'weak' },
@@ -1135,6 +1136,8 @@ const PaperCompass = ({ onBack }) => {
     '직무태도→조직시민행동': { count: 1, sources: 'SVU: 이영수(2017)', verdict: 'emerging' },
     // 직무특성
     '직무특성→조직몰입': { count: 4, sources: 'SVU: 심민선(2022) / 김진태(2025) / 유병선(2025) / 심민섭(2022)', verdict: 'emerging' },
+    '직무특성→심리적주인의식': { count: 1, sources: 'SVU: 유병선(2025)', verdict: 'emerging' },
+    '직무특성→직무만족': { count: 4, sources: 'SVU: 유병선(2025) / 김진태(2025), Hackman & Oldham(1976), Spector(1997)', verdict: 'moderate' },
     '직무특성→직무열의': { count: 1, sources: 'SVU: 심민선(2022)', verdict: 'emerging' },
     '직무특성→혁신행동': { count: 2, sources: 'SVU: 심민선(2022) / 심민섭(2022)', verdict: 'emerging' },
     // 진성리더십
@@ -1263,6 +1266,8 @@ const PaperCompass = ({ onBack }) => {
     // #31 최석봉(2018): 심리적주인의식→직무자율성→혁신행동(조직지원인식 조절)
     '심리적주인의식→직무자율성': { count: 1, sources: '타교: 최석봉(2018)', verdict: 'emerging' },
     '심리적주인의식→혁신행동': { count: 1, sources: '타교: 최석봉(2018)', verdict: 'emerging' },
+    '심리적주인의식→직무만족': { count: 2, sources: 'SVU: 유병선(2025) / 김화자(2023)', verdict: 'weak' },
+    '심리적주인의식→조직몰입': { count: 1, sources: 'SVU: 유병선(2025)', verdict: 'emerging' },
     '직무자율성→혁신행동': { count: 1, sources: '타교: 최석봉(2018)', verdict: 'emerging' },
 
     // ── 타학교 논문 DB 2차 (직무배태성 중심 18편) ──
@@ -2093,7 +2098,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '조직후원인식': {
       options: [
-        { name: '조직후원인식(단일차원)', scholar: 'Eisenberger(1986)', scale: 'SPOS(Survey of Perceived Organizational Support)', answer: 'Eisenberger et al.(1986)의 조직후원인식 척도(SPOS)를 사용하여 단일차원으로 측정하였습니다.' },
+        { name: '조직후원인식(단일차원)', scholar: 'Eisenberger, Huchison & Sowa(1986), Shore & Tetrick(1991), Wayne et al.(1997), 서재현(2002), 김윤성(2002), 이인숙(2009)', scale: 'SPOS(Survey of Perceived Organizational Support)', answer: 'Eisenberger et al.(1986)의 조직후원인식 척도(SPOS)를 사용하여 단일차원으로 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -2991,7 +2996,7 @@ const PaperCompass = ({ onBack }) => {
     '일의 의미': { options: [{ name: '일의 의미(단일차원)', scholar: 'Steger et al.(2012)', scale: 'WAMI(Work as Meaning Inventory)', answer: 'Steger et al.(2012)의 WAMI 척도를 활용하여 직무에서 느끼는 의미와 목적의식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '자기결정성(개인특성)': { options: [{ name: '자율성', scholar: 'Deci & Ryan(2000)', scale: 'SDT(자기결정성이론)', answer: 'Deci & Ryan(2000)의 자기결정성이론 중 자율성 욕구입니다.' }, { name: '유능성', scholar: 'Deci & Ryan(2000)', scale: 'SDT(자기결정성이론)', answer: '자기결정성이론 중 유능성 욕구입니다.' }, { name: '관계성', scholar: 'Deci & Ryan(2000)', scale: 'SDT(자기결정성이론)', answer: '자기결정성이론 중 관계성 욕구입니다.' }], defaultSelected: [0,1,2] },
     '자기표현(외면적/내면적)': { options: [{ name: '외면적 자기표현', scholar: 'Kim & Ko(2012)', scale: '자기표현 척도', answer: '외적으로 드러나는 자기표현(패션, 스타일 등)을 측정합니다.' }, { name: '내면적 자기표현', scholar: 'Kim & Ko(2012)', scale: '자기표현 척도', answer: '내적 가치나 신념의 표현을 측정합니다.' }], defaultSelected: [0,1] },
-    '조직후원인식(POS)': { options: [{ name: '조직후원인식(단일차원)', scholar: 'Eisenberger et al.(1986)', scale: 'SPOS(Survey of Perceived Organizational Support)', answer: 'Eisenberger et al.(1986)의 SPOS 척도를 활용하여 조직이 구성원의 기여를 인정하고 복지를 배려한다고 지각하는 정도를 측정하였습니다.' }], defaultSelected: [0] },
+    '조직후원인식(POS)': { options: [{ name: '조직후원인식(단일차원)', scholar: 'Eisenberger, Huchison & Sowa(1986), Shore & Tetrick(1991), Wayne et al.(1997), 서재현(2002), 김윤성(2002), 이인숙(2009)', scale: 'SPOS(Survey of Perceived Organizational Support)', answer: 'Eisenberger et al.(1986)의 SPOS 척도를 활용하여 조직이 구성원의 기여를 인정하고 복지를 배려한다고 지각하는 정도를 측정하였습니다.' }], defaultSelected: [0] },
     '팀 다양성': { options: [{ name: '팀 다양성(단일차원)', scholar: 'Harrison & Klein(2007)', scale: '다양성 척도', answer: 'Harrison & Klein(2007)의 다양성 유형론에 기반하여 팀 내 구성원의 인구통계적·기능적 다양성을 측정하였습니다.' }], defaultSelected: [0] },
     '학습동기(ARCS)': { options: [{ name: '주의집중(Attention)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'Keller(1987)의 ARCS 모형 중 주의집중 차원입니다.' }, { name: '관련성(Relevance)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 관련성 차원입니다.' }, { name: '자신감(Confidence)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 자신감 차원입니다.' }, { name: '만족감(Satisfaction)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 만족감 차원입니다.' }], defaultSelected: [0,1,2,3] },
     '상사성격5요인': { options: [{ name: '외향성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: 'McCrae & Costa(1992)의 Big Five 성격모형에 기반하여 상사의 외향성, 친화성, 성실성, 정서안정성, 개방성을 부하직원이 평가하는 방식으로 측정하였습니다.' }, { name: '친화성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }, { name: '성실성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }, { name: '정서안정성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }, { name: '개방성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }], defaultSelected: [0,1,2,3,4] },
@@ -8415,7 +8420,7 @@ const PaperCompass = ({ onBack }) => {
     '이상만(2025)': { subject: '중소전기공사기업 상사의 변혁적·거래적 리더십과 조직유효성 관계에서 셀프리더십의 매개효과', sample: '중소전기공사기업 구성원 (사무직/현장직)', region: '국내', iv: '변혁적리더십, 거래적리더십', mv: '셀프리더십', dv: '직무만족, 조직몰입', result: '변혁적리더십이(가) 직무만족에 유의한 정(+)의 영향, 셀프리더십의 매개효과 확인' },
     '김진태(2025)': { subject: '기계경비 기업 구성원의 직무특성, 보상인식과 성격특성이 조직 유효성에 미치는 영향', sample: '기계경비 기업 구성원', region: '국내', iv: '직무특성', mv: '-', dv: '직무만족, 조직몰입, 이직의도', result: '직무특성이(가) 직무만족에 유의한 정(+)의 영향' },
     '홍재일(2025)': { subject: '공공·민간직업능력개발훈련기관교사의 셀프리더십과 직무성과 관계에서 교사효능감과 혁신행동의 매개', sample: '직업능력개발훈련기관 교사', region: '국내', iv: '셀프리더십', mv: '자기효능감, 혁신행동', dv: '직무성과', result: '셀프리더십이(가) 직무성과에 유의한 정(+)의 영향, 자기효능감의 매개효과 확인' },
-    '유병선(2025)': { subject: '소방분야 종사자의 직무특성과 조직몰입 관계에서 심리적주인의식과 직무만족의 매개효과', sample: '소방분야 종사자', region: '국내', iv: '직무특성', mv: '직무만족', dv: '직무만족, 조직몰입', result: '직무특성이(가) 직무만족에 유의한 정(+)의 영향, 직무만족의 매개효과 확인' },
+    '유병선(2025)': { subject: '소방분야 종사자의 직무특성과 조직몰입 관계에서 심리적주인의식과 직무만족의 매개효과', sample: '소방분야 종사자', region: '국내', iv: '직무특성', mv: '심리적주인의식, 직무만족', dv: '조직몰입', result: '직무특성→심리적주인의식→조직몰입, 직무특성→직무만족→조직몰입 매개효과 확인' },
     '남상민(2025)': { subject: '베이커리카페의 고객경험가치와 고객충성도 관계에서 고객만족 및 브랜드신뢰의 매개효과와 성격유형의 조절효과', sample: '독립형 베이커리카페 고객', region: '국내', iv: '고객경험가치', mv: '고객만족', dv: '고객충성도', result: '고객경험가치이(가) 고객충성도에 유의한 정(+)의 영향, 고객만족의 매개효과 확인' },
     '김종길(2025)': { subject: '중소 소방기업의 보상공정성과 조직유효성 관계에서 보상만족 매개효과', sample: '중소 소방기업 구성원', region: '국내', iv: '보상공정성', mv: '-', dv: '직무만족, 조직몰입, 이직의도', result: '보상공정성이(가) 직무만족에 유의한 정(+)의 영향' },
     '박종석(2025)': { subject: '한국폴리텍대학 산업설비 교수의 변혁적 리더십이 학습성과에 미치는 영향', sample: '한국폴리텍대학 산업설비 교수', region: '국내', iv: '변혁적리더십', mv: '-', dv: '자기효능감', result: '변혁적리더십이(가) 자기효능감에 유의한 정(+)의 영향' },
@@ -8431,7 +8436,7 @@ const PaperCompass = ({ onBack }) => {
     '김천욱(2023)': { subject: '은행서비스 환경에서 라포형성행동과 고객충성도 간에 고객태도와 고객만족도의 매개효과 연구', sample: '은행 고객 (청년/중장년)', region: '국내', iv: '라포형성행동', mv: '고객만족', dv: '고객충성도', result: '라포형성행동이(가) 고객충성도에 유의한 정(+)의 영향, 고객만족의 매개효과 확인' },
     '최영철(2023)': { subject: '중소건설기업의 직무배태성, 직무만족, 조직몰입, LMX, 이직의도 관계 연구 -설계업과 시공업의 비교분석 -', sample: '중소건설기업 구성원', region: '국내', iv: '직무배태성', mv: '직무만족, LMX', dv: '이직의도', result: '직무배태성이(가) 이직의도에 유의한 부(-)의 영향, 직무만족의 매개효과 확인' },
     '김선희(2023)': { subject: '소재 부품 장비 제조업과 오프라인 온라인 유통업의 중소기업구성원의 셀프리더십이 혁신행동에 미치는 영향 : 자기효능감, 조직몰입의 매개효과', sample: '중소기업 구성원 (제조/유통)', region: '국내', iv: '셀프리더십', mv: '자기효능감, 조직몰입', dv: '혁신행동', result: '셀프리더십이(가) 혁신행동에 유의한 정(+)의 영향, 자기효능감의 매개효과 확인' },
-    '김화자(2023)': { subject: '중소제조기업의 조직공정성과 직무만족 관계에서 심리적주인의식과 신뢰의 매개효과', sample: '중소제조기업 구성원', region: '국내', iv: '조직공정성', mv: '-', dv: '직무만족', result: '조직공정성이(가) 직무만족에 유의한 정(+)의 영향' },
+    '김화자(2023)': { subject: '중소제조기업의 조직공정성과 직무만족 관계에서 심리적주인의식과 신뢰의 매개효과', sample: '중소제조기업 구성원', region: '국내', iv: '조직공정성', mv: '심리적주인의식, 신뢰', dv: '직무만족', result: '조직공정성→심리적주인의식→직무만족, 조직공정성→신뢰→직무만족 매개효과 확인' },
     '강태만(2023)': { subject: '커넥터제조기업의 상사의 진정성 리더십과 직무만족 관계에서 LMX의 매개효과 및 POS의 조절효과 연구', sample: '커넥터제조기업 구성원', region: '국내', iv: '진성리더십', mv: 'LMX', dv: '직무만족', mod: '조직후원인식(POS)', result: '진성리더십이(가) 직무만족에 유의한 정(+)의 영향, LMX의 매개효과 확인, POS의 조절효과 확인' },
     '김태학(2023)': { subject: '초등학교장의 변혁적 리더십이 LMX와 감성지능을 매개로 조직몰입에 미치는 영향', sample: '초등학교 교사', region: '국내', iv: '변혁적리더십', mv: 'LMX', dv: '조직몰입', result: '변혁적리더십이(가) 조직몰입에 유의한 정(+)의 영향, LMX의 매개효과 확인' },
     '이명예(2023)': { subject: '지방자치단체의 조직공정성과 혁신행동 관계에서 자기효능감과 조직몰입의 매개효과 연구', sample: '지방자치단체 공무원', region: '국내', iv: '조직공정성', mv: '자기효능감, 조직몰입', dv: '혁신행동', result: '조직공정성이(가) 혁신행동에 유의한 정(+)의 영향, 자기효능감의 매개효과 확인' },
