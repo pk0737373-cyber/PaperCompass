@@ -1866,6 +1866,11 @@ const PaperCompass = ({ onBack }) => {
     '직무 만족':'직무만족','직무 몰입':'직무몰입','직무 성과':'직무성과',
     '조직 몰입':'조직몰입','조직 성과':'조직성과',
     '조직시민 행동':'조직시민행동','혁신 행동':'혁신행동',
+    '지속사용 의도':'지속사용의도','지속 사용의도':'지속사용의도','지속사용 의향':'지속사용의도',
+    '상사의 변혁적 리더십':'변혁적리더십','상사의 변혁적리더십':'변혁적리더십',
+    '컨설팅만족도':'컨설팅 만족도','컨설턴트역량':'컨설턴트 역량',
+    '지각된용이성':'지각된 용이성','지각된유용성':'지각된 유용성',
+    '문화적가치':'문화적 가치',
   };
   // ── 변수명 정규화 검색 유틸 ──
   // 조사/접사를 제거하여 DB 키와 매칭 (설문항 데이터는 건드리지 않음, 검색용으로만 사용)
@@ -3380,14 +3385,29 @@ const PaperCompass = ({ onBack }) => {
     },
     'AI가상비서서비스특성': { options: [{ name: 'AI가상비서서비스특성(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '생성형AI유능함': { options: [{ name: '생성형AI유능함(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '공직동기(PSM)': { options: [{ name: '공직동기(PSM)(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '공직동기(PSM)': {
+      options: [
+        { name: '공공정책호감도', scholar: 'Perry & Hondeghem(2008b), 이근주(2005)', scale: 'Perry(1996) PSM 척도', answer: 'Perry(1996)의 공직동기(PSM) 이론에 기반하여 공공정책호감도, 공익몰입, 동정심, 희생정신의 4개 하위요인을 채택하였습니다.' },
+        { name: '공익몰입', scholar: 'Perry & Hondeghem(2008b), 이근주(2005)', scale: 'Perry(1996) PSM 척도', answer: '' },
+        { name: '동정심', scholar: 'Perry & Hondeghem(2008b), 이근주(2005)', scale: 'Perry(1996) PSM 척도', answer: '' },
+        { name: '희생정신', scholar: 'Perry & Hondeghem(2008b), 이근주(2005)', scale: 'Perry(1996) PSM 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
     '관계 품질': { options: [{ name: '관계 품질(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '내재적동기': { options: [{ name: '내재적동기(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '대인관계': { options: [{ name: '대인관계(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '대인공정성': { options: [{ name: '대인공정성(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '동의성': { options: [{ name: '동의성(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '무사안일': { options: [{ name: '무사안일(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '보상만족': { options: [{ name: '보상만족(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '보상만족': {
+      options: [
+        { name: '임금만족', scholar: 'Scarpello, Huber & Vandenberg(1988), 정병재(2002), 장헌문(2009), 이택호(2014), 장영희(2018)', scale: '보상만족 척도', answer: '보상만족을 임금만족, 복리후생만족, 절차만족의 3개 하위요인으로 구분하여 측정하였습니다.' },
+        { name: '복리후생만족', scholar: 'Doeringer & Piore(1971), 이택호(2014), 장영희(2018)', scale: '보상만족 척도', answer: '' },
+        { name: '절차만족', scholar: 'Lawler(1971), 이택호(2014), 장영희(2018)', scale: '보상만족 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
     '상사특성': { options: [{ name: '상사특성(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '소속감': { options: [{ name: '소속감(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '소진': { options: [{ name: '소진(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -3406,10 +3426,40 @@ const PaperCompass = ({ onBack }) => {
     '팀 환경': { options: [{ name: '팀 환경(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '평등': { options: [{ name: '평등(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '프로세스 혁신': { options: [{ name: '프로세스 혁신(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '학습성과': { options: [{ name: '학습성과(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '학습조직': { options: [{ name: '학습조직(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '학습성과': { options: [{ name: '학습성과(단일차원)', scholar: 'Grundy et al.(2002), Iwasaki & Haavitz(2004), 홍현표(2014), 권인아(2019), 노아리(2020), 정은주(2021)', scale: 'Grundy et al.(2002) 학습성과 척도', answer: '학습성과를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '학습조직': { options: [{ name: '학습조직(단일차원)', scholar: 'Tracey & Tews(2005), 배상현(2018), 김정현(2020), 박은경(2021)', scale: 'Tracey & Tews(2005) 학습조직 척도', answer: 'Tracey & Tews(2005)의 학습조직 척도를 기반으로 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '조직 지원': { options: [{ name: '조직 지원(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '개방성': { options: [{ name: '개방성(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '문화적 가치': { options: [{ name: '문화적 가치(단일차원)', scholar: 'Hofstede(2001), 정미라(2012)', scale: 'Hofstede(2001) 문화적 가치 척도', answer: 'Hofstede(2001)의 문화적 가치 이론에 기반하여 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '컨설턴트 역량': { options: [{ name: '컨설턴트 역량(단일차원)', scholar: 'Rynning(1992), Cheney et al.(1990), 윤성환(2008), 박준환(2015)', scale: 'Rynning(1992) 컨설턴트 역량 척도', answer: 'Rynning(1992)의 컨설턴트 역량 이론에 기반하여 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '컨설팅 만족도': { options: [{ name: '컨설팅 만족도(단일차원)', scholar: 'Wakefield & Blodgett(1996), Hunt(1977), 최명규(2014), 채준원(2010)', scale: 'Wakefield & Blodgett(1996) 만족도 척도', answer: 'Wakefield & Blodgett(1996)의 만족도 척도를 기반으로 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지각된 용이성': { options: [{ name: '지각된 용이성(단일차원)', scholar: 'Davis(1989), 김재환(2023), 이보영(2024)', scale: 'Davis(1989) TAM 척도', answer: 'Davis(1989)의 기술수용모형(TAM)에서 제시한 지각된 용이성 개념을 채택하여 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지각된 유용성': { options: [{ name: '지각된 유용성(단일차원)', scholar: 'Davis(1989), 김세화(2024)', scale: 'Davis(1989) TAM 척도', answer: 'Davis(1989)의 기술수용모형(TAM)에서 제시한 지각된 유용성 개념을 채택하여 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '예방행동': { options: [{ name: '예방행동(단일차원)', scholar: 'Rosenstock(1974), 이병관 외(2008)', scale: 'Rosenstock(1974) 건강신념모형(HBM) 척도', answer: 'Rosenstock(1974)의 건강신념모형(HBM)에 기반하여 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지각된개연성': { options: [{ name: '지각된개연성(단일차원)', scholar: 'Rosenstock(1974), 이병관 외(2008)', scale: 'HBM 척도', answer: 'Rosenstock(1974)의 건강신념모형(HBM)에서 제시한 지각된 개연성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지각된심각성': { options: [{ name: '지각된심각성(단일차원)', scholar: 'Rosenstock(1974), 이병관 외(2008)', scale: 'HBM 척도', answer: 'Rosenstock(1974)의 건강신념모형(HBM)에서 제시한 지각된 심각성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지각된유익성': { options: [{ name: '지각된유익성(단일차원)', scholar: 'Rosenstock(1974), 이병관 외(2008)', scale: 'HBM 척도', answer: 'Rosenstock(1974)의 건강신념모형(HBM)에서 제시한 지각된 유익성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '지각된장애성': { options: [{ name: '지각된장애성(단일차원)', scholar: 'Rosenstock(1974), 이병관 외(2008)', scale: 'HBM 척도', answer: 'Rosenstock(1974)의 건강신념모형(HBM)에서 제시한 지각된 장애성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '매력성': { options: [{ name: '매력성(단일차원)', scholar: 'Braunstein & Zhang(2005), 왕러(2021)', scale: '유튜버 특성 척도', answer: '콘텐츠 유튜버의 매력성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '신뢰성': { options: [{ name: '신뢰성(단일차원)', scholar: 'Bartram & Casimir(2006), 정예진(2021), 왕러(2021)', scale: '유튜버 특성 척도', answer: '콘텐츠 유튜버의 신뢰성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '전문성': { options: [{ name: '전문성(단일차원)', scholar: 'Bansal & Voyer(2000), 왕러(2021)', scale: '유튜버 특성 척도', answer: '콘텐츠 유튜버의 전문성을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '건설기술자의특성': {
+      options: [
+        { name: '경력지향성', scholar: 'Gerpott et al.(1988), 한원규(2006)', scale: '건설기술자 특성 척도', answer: '건설기술자의 특성을 경력지향성, 개인역량, 이해관계자협력의 3개 하위요인으로 구분하여 측정하였습니다.' },
+        { name: '개인역량', scholar: 'Manning & Norburn(1989), 김용식(2010), 이지우(2000), 윤방섭(2004), 이루리(2014)', scale: '건설기술자 특성 척도', answer: '' },
+        { name: '이해관계자협력', scholar: 'Dreher & Ash(1990), 한원규(2006)', scale: '건설기술자 특성 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '계획된행동이론': {
+      options: [
+        { name: '행동에 대한 태도', scholar: 'Ajzen(1988), Ajzen & Fishbein(1980), Carr & Sequeira(2006), 진주형(2014)', scale: 'Ajzen(1991) TPB 척도', answer: 'Ajzen(1991)의 계획된 행동이론(TPB)에 기반하여 행동에 대한 태도, 주관적 규범, 지각된 행동통제의 3개 하위요인을 채택하였습니다.' },
+        { name: '주관적 규범', scholar: 'Ajzen(1988), Ajzen & Fishbein(1980), Carr & Sequeira(2006), 진주형(2014)', scale: 'TPB 척도', answer: '' },
+        { name: '지각된 행동통제', scholar: 'Ajzen(1988), Ajzen & Fishbein(1980), Carr & Sequeira(2006), 진주형(2014)', scale: 'TPB 척도', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '상호작용공정성': { options: [{ name: '상호작용공정성(단일차원)', scholar: 'Bies & Moag(1986), Colquitt(2001), 남상민(2016)', scale: 'Colquitt(2001) 조직공정성 척도', answer: '조직공정성의 하위요인인 상호작용공정성을 독립 변수로 단일차원 측정하였습니다.' }], defaultSelected: [0] },
     '정보공정성': { options: [{ name: '정보공정성(단일차원)', scholar: 'Colquitt(2001)', scale: 'Colquitt(2001) 조직공정성 척도', answer: 'Colquitt(2001)은 상호작용공정성을 대인공정성과 정보공정성으로 세분화하였으며, 정보공정성을 독립 변수로 측정하였습니다.' }], defaultSelected: [0] },
   };
 
@@ -4032,6 +4082,10 @@ const PaperCompass = ({ onBack }) => {
     '컨설턴트역량': ['박성준(2022)'],
     '컨설팅만족도': ['박성준(2022)'],
     '컨설팅활용도': ['박성준(2022)'],
+    '문화적 가치': ['이경영(2022)'],
+    '컨설턴트 역량': ['박성준(2022)'],
+    '컨설팅 만족도': ['박성준(2022)'],
+    '지각된 용이성': ['김기동(2024)'],
     // ── SVU 미등록 86개 일괄 등록 ──
     '가치지향성': ['홍진기(2016)'],
     '갈등결과만족': ['강성민(2013)'],
@@ -8787,6 +8841,41 @@ const PaperCompass = ({ onBack }) => {
       '동료지원': [
         '동료들은 학습한 내용을 서로 공유한다',
         '동료들은 학습 활동에 대해 격려해 준다',
+      ],
+    },
+    '문화적 가치': {
+      // 출처: 이경영(2022), Hofstede(2001), 정미라(2012), Likert 5점
+      '문화적 가치(단일차원)': [
+        '나는 이 지역의 문화적 가치를 높이 평가한다',
+        '이 지역의 고유한 문화적 특성은 보존할 가치가 있다',
+        '이 지역의 문화유산은 중요한 자산이다',
+      ],
+    },
+    '컨설턴트 역량': {
+      // 출처: 박성준(2022), Rynning(1992), Cheney et al.(1990), Likert 5점
+      '컨설턴트 역량(단일차원)': [
+        '컨설턴트는 해당 분야에 대한 전문지식이 충분하다',
+        '컨설턴트는 문제 해결 능력이 뛰어나다',
+        '컨설턴트는 고객의 요구를 정확히 파악한다',
+        '컨설턴트는 효과적인 의사소통 능력을 갖추고 있다',
+      ],
+    },
+    '컨설팅 만족도': {
+      // 출처: 박성준(2022), Wakefield & Blodgett(1996), Hunt(1977), Likert 5점
+      '컨설팅 만족도(단일차원)': [
+        '컨설팅 서비스에 전반적으로 만족한다',
+        '컨설팅 결과가 기대에 부합하였다',
+        '컨설팅 과정이 체계적이었다',
+        '컨설팅을 통해 실질적인 도움을 받았다',
+      ],
+    },
+    '지각된 용이성': {
+      // 출처: 김기동(2024), Davis(1989) TAM, Likert 5점
+      '지각된 용이성(단일차원)': [
+        '이 시스템은 사용법을 배우기 쉽다',
+        '이 시스템을 능숙하게 사용하기 쉽다',
+        '이 시스템을 사용하는 것은 어렵지 않다',
+        '이 시스템의 조작 방법은 명확하고 이해하기 쉽다',
       ],
     },
   };
