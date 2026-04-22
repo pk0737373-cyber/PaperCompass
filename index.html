@@ -1650,6 +1650,58 @@ const PaperCompass = ({ onBack }) => {
     '신뢰/상사신뢰': ['신뢰','상사신뢰','조직신뢰'],
     '성격/성격5요인': ['성격','성격특성','성격5요인','성격특성(Big5)'],
   };
+  // ── 변수명 정규화 검색 유틸 ──
+  // 조사/접사를 제거하여 DB 키와 매칭 (설문항 데이터는 건드리지 않음, 검색용으로만 사용)
+  const _normalizeForSearch = (name) => {
+    if (!name) return '';
+    return name
+      .replace(/\s+/g, '')            // 공백 제거
+      .replace(/^(대중의|상사의|구성원의|직원의|조직의|기업의|개인의|부하직원의)/g, '')  // 앞쪽 수식어 제거
+      .replace(/의$/g, '')             // 끝 '의' 제거
+      .replace(/(에\s*대한|간의|과의|와의|으로의|에서의)/g, '') // 조사구 제거
+      .replace(/\s+/g, '');            // 다시 공백 정리
+  };
+
+  // 다양한 정규화 변형을 생성 (한류스타의 활동 → [한류스타의활동, 활동, 한류스타활동] 등)
+  const _normalizeVariants = (name) => {
+    if (!name) return [''];
+    const s = name.replace(/\s+/g, '');
+    const variants = new Set();
+    variants.add(s);
+    // Variant 1: 접두사+의 전체 제거 (대중의행위의도 → 행위의도)
+    variants.add(s.replace(/^(대중|상사|구성원|직원|조직|기업|개인|부하직원|한류스타|리더|부하|종업원|근로자|팀원|관리자|경영자|소비자|고객)의/g, ''));
+    // Variant 2: 소유격 의만 제거 (한류스타의활동 → 한류스타활동)
+    variants.add(s.replace(/의(?=[가-힣])/g, ''));
+    // Variant 3: 조사구 제거
+    variants.add(s.replace(/(에대한|간의|과의|와의|으로의|에서의)/g, ''));
+    // Variant 4: 끝 의 제거
+    variants.add(s.replace(/의$/, ''));
+    return [...variants].filter(v => v.length > 0);
+  };
+
+  // DB 객체에서 정규화 매칭으로 키 찾기 (exact → normalized → multi-variant fallback)
+  const _findDBKey = (dbObj, varName) => {
+    if (!dbObj || !varName) return null;
+    // 1. 정확한 매칭
+    if (dbObj[varName] !== undefined) return varName;
+    // 2. 기본 정규화 매칭
+    const normalized = _normalizeForSearch(varName);
+    for (const key of Object.keys(dbObj)) {
+      if (_normalizeForSearch(key) === normalized) return key;
+    }
+    // 3. 다중 변형 매칭 (한류스타의 활동 ↔ 한류스타활동 등)
+    const inputVariants = _normalizeVariants(varName);
+    for (const key of Object.keys(dbObj)) {
+      const keyVariants = _normalizeVariants(key);
+      for (const iv of inputVariants) {
+        for (const kv of keyVariants) {
+          if (iv === kv) return key;
+        }
+      }
+    }
+    return null;
+  };
+
   const _expandVar = (v) => {
     if (_varAliases[v]) return _varAliases[v];
     // 슬래시 포함 시 분리
@@ -1674,7 +1726,7 @@ const PaperCompass = ({ onBack }) => {
       return { key: exactKey, data: researchPairDB[exactKey] };
     }
 
-    // 2) 별칭/슬래시 분리 후 각 파트로 시도 + 부분문자열 매칭
+    // 2) 별칭/슬래시 분리 후 각 파트로 시도 + 부분문자열/정규화 매칭
     const fromParts = _expandVar(fromVar);
     const toParts = _expandVar(toVar);
     const allKeys = Object.keys(researchPairDB);
@@ -1682,17 +1734,21 @@ const PaperCompass = ({ onBack }) => {
     const addEntry = (k) => { if (!matchedEntries.some(e => e.key === k)) matchedEntries.push({ key: k, data: researchPairDB[k] }); };
 
     for (const fp of fromParts) {
+      const normFp = _normalizeForSearch(fp);
       for (const tp of toParts) {
+        const normTp = _normalizeForSearch(tp);
         // 정확한 키 시도
         const tryKey = `${fp}→${tp}`;
         if (researchPairDB[tryKey]) addEntry(tryKey);
-        // DB 키 전체 스캔: 부분문자열 매칭 (예: "신뢰" → "조직신뢰", "상사신뢰" 등)
+        // DB 키 전체 스캔: 부분문자열 + 정규화 매칭
         for (const dbKey of allKeys) {
           const arr = dbKey.split('→');
           if (arr.length !== 2) continue;
           const [dbIv, dbDv] = arr;
-          const ivMatch = dbIv === fp || (fp.length >= 2 && (dbIv.includes(fp) || fp.includes(dbIv)));
-          const dvMatch = dbDv === tp || (tp.length >= 2 && (dbDv.includes(tp) || tp.includes(dbDv)));
+          const normDbIv = _normalizeForSearch(dbIv);
+          const normDbDv = _normalizeForSearch(dbDv);
+          const ivMatch = dbIv === fp || normDbIv === normFp || (fp.length >= 2 && (dbIv.includes(fp) || fp.includes(dbIv)));
+          const dvMatch = dbDv === tp || normDbDv === normTp || (tp.length >= 2 && (dbDv.includes(tp) || tp.includes(dbDv)));
           if (ivMatch && dvMatch) addEntry(dbKey);
         }
       }
@@ -9066,7 +9122,8 @@ const PaperCompass = ({ onBack }) => {
 
   // 산업분류별 SVU 선배논문 필터링 함수
   const getIndustryFilteredSvuPapers = (varName) => {
-    const allPapers = svuScaleUsage[varName] || [];
+    const _svuKey = _findDBKey(svuScaleUsage, varName);
+    const allPapers = _svuKey ? svuScaleUsage[_svuKey] : [];
     if (selectedIndustry === '전체') return { matched: allPapers, matchType: '전체', total: allPapers.length };
     
     // 1단계: 동일 산업군 매칭
@@ -9099,10 +9156,13 @@ const PaperCompass = ({ onBack }) => {
   // 하위요인 기반으로 flat 문항 목록 가져오기 (선택된 하위요인만)
   // 전체 문항 (선택 필터 없이) — 내부용
   const getAllSurveyItemsByFactor = (varName) => {
-    let theory = subFactorTheory[varName];
-    let factorItems = surveyItemsByFactor[varName];
-    // 변수명 정규화 fallback: '조직몰입도'→'조직몰입', '직무만족도'→'직무만족' 등
-    let resolvedName = varName;
+    // 정규화 매칭: '한류스타의 활동' → '한류스타활동', '대중의 행위의도' → '행위의도' 등
+    const _theoryKey = _findDBKey(subFactorTheory, varName);
+    const _itemsKey = _findDBKey(surveyItemsByFactor, varName);
+    let theory = _theoryKey ? subFactorTheory[_theoryKey] : null;
+    let factorItems = _itemsKey ? surveyItemsByFactor[_itemsKey] : null;
+    let resolvedName = _theoryKey || _itemsKey || varName;
+    // 추가 fallback: '도' 접미사 변형
     if (!theory || !factorItems) {
       const candidates = [
         varName.replace(/도$/, ''),       // 조직몰입도 → 조직몰입
@@ -9110,10 +9170,12 @@ const PaperCompass = ({ onBack }) => {
         varName.replace(/성$/, ''),        // possible suffix
       ].filter(c => c !== varName);
       for (const candidate of candidates) {
-        if (subFactorTheory[candidate] && surveyItemsByFactor[candidate]) {
-          theory = subFactorTheory[candidate];
-          factorItems = surveyItemsByFactor[candidate];
-          resolvedName = candidate;
+        const tKey = _findDBKey(subFactorTheory, candidate);
+        const iKey = _findDBKey(surveyItemsByFactor, candidate);
+        if (tKey && iKey) {
+          theory = subFactorTheory[tKey];
+          factorItems = surveyItemsByFactor[iKey];
+          resolvedName = tKey;
           break;
         }
       }
@@ -9490,14 +9552,16 @@ const PaperCompass = ({ onBack }) => {
     return merged;
   };
   const getDVs = () => {
-    const manualBase = dataSource === 'svu' ? svuDVMapping[selectedIV] : allDVMapping[selectedIV];
+    const _dvMapKey = dataSource === 'svu' ? (_findDBKey(svuDVMapping, selectedIV) || selectedIV) : (_findDBKey(allDVMapping, selectedIV) || selectedIV);
+    const manualBase = dataSource === 'svu' ? svuDVMapping[_dvMapKey] : allDVMapping[_dvMapKey];
     // researchPairDB에서 IV→* 경로 자동 탐색
     const autoFromPairDB = [];
     if (selectedIV) {
       const manualNames = new Set((manualBase || []).map(v => v.name));
+      const _normIV = _normalizeForSearch(selectedIV);
       for (const pairKey of Object.keys(researchPairDB)) {
         const parts = pairKey.split('→');
-        if (parts.length === 2 && parts[0] === selectedIV && !manualNames.has(parts[1])) {
+        if (parts.length === 2 && (parts[0] === selectedIV || _normalizeForSearch(parts[0]) === _normIV) && !manualNames.has(parts[1])) {
           const pair = researchPairDB[pairKey];
           const dvName = parts[1];
           const svuCount = (pair.sources?.match(/SVU/g) || []).length;
@@ -9616,11 +9680,12 @@ const PaperCompass = ({ onBack }) => {
     // 4) ★ 새로운 조합 제안: M→DV 경로만 있는 변수 (IV→M은 아직 연구 안 됨)
     const newComboDiscovered = [];
     const existingMVNames = new Set([...manualNames, ...autoDiscovered.map(m => m.name), ...userDiscovered.map(m => m.name)]);
+    const _normDV0 = selectedDVs[0] ? _normalizeForSearch(selectedDVs[0]) : '';
     for (const pairKey of Object.keys(researchPairDB)) {
       const parts = pairKey.split('→');
       if (parts.length !== 2) continue;
       // M→DV 경로 탐색: parts[1]이 선택된 DV이고, parts[0]이 후보 MV
-      if (parts[1] === selectedDVs[0]) {
+      if (parts[1] === selectedDVs[0] || (_normDV0 && _normalizeForSearch(parts[1]) === _normDV0)) {
         const candidate = parts[0];
         if (candidate === selectedIV || selectedDVs.includes(candidate)) continue;
         if (existingMVNames.has(candidate)) continue; // 이미 양방향 경로로 발견된 건 제외
@@ -11522,9 +11587,11 @@ const PaperCompass = ({ onBack }) => {
         rg.variables.forEach(v => {
           const byFactor = v.byFactor;
           const isNoScholarly = byFactor.length > 0 && byFactor[0].noScholarly;
-          // 변수명 정규화 fallback (조직몰입도→조직몰입 등)
-          const resolvedVName = subFactorTheory[v.name] ? v.name
-            : (subFactorTheory[v.name.replace(/도$/, '')] ? v.name.replace(/도$/, '') : v.name);
+          // 변수명 정규화 fallback (조직몰입도→조직몰입, 한류스타의 활동→한류스타활동 등)
+          const _resolvedKey = _findDBKey(subFactorTheory, v.name)
+            || _findDBKey(subFactorTheory, v.name.replace(/도$/, ''))
+            || _findDBKey(subFactorTheory, v.name + '도');
+          const resolvedVName = _resolvedKey || v.name;
           const theory = subFactorTheory[resolvedVName];
 
           // noScholarly 변수: 경고 문항 5개로 표시
@@ -11563,7 +11630,8 @@ const PaperCompass = ({ onBack }) => {
           // 전체 DB 기반 활용논문 출처 (SVU + 인용논문 + 타대학 + 해외 통합) — theory 유무 관계없이 표시
           const dbUsage = getScaleUsageFromUserDB(resolvedVName);
           // svuScaleUsage(하드코딩)과 dbUsage.svu(DB) 합치고 중복 제거
-          const svuHardcoded = svuScaleUsage[resolvedVName] || svuScaleUsage[v.name] || [];
+          const _svuKey2 = _findDBKey(svuScaleUsage, resolvedVName) || _findDBKey(svuScaleUsage, v.name);
+          const svuHardcoded = _svuKey2 ? svuScaleUsage[_svuKey2] : [];
           const allSvuPapers = [...new Set([...svuHardcoded, ...dbUsage.svu])];
           if (allSvuPapers.length > 0) {
             if (selectedIndustry !== '전체') {
@@ -11742,6 +11810,7 @@ const PaperCompass = ({ onBack }) => {
       const matrixRows = [];
       const _varMatchesMatrix = (dbVar, uiVar) => {
         if (dbVar === uiVar) return true;
+        if (_normalizeForSearch(dbVar) === _normalizeForSearch(uiVar)) return true;
         const pts = _expandVar(uiVar);
         return pts.some(p => p.length >= 2 && (dbVar.includes(p) || p.includes(dbVar)));
       };
@@ -12736,7 +12805,8 @@ const PaperCompass = ({ onBack }) => {
       variables.forEach((variable, vi) => {
         const byFactor = getAutoSurveyItemsByFactor(variable);
         const isNoScholarly = byFactor.length > 0 && byFactor[0].noScholarly;
-        const theory = subFactorTheory[variable];
+        const _theoryKey4 = _findDBKey(subFactorTheory, variable);
+        const theory = _theoryKey4 ? subFactorTheory[_theoryKey4] : null;
         const role = varRoles[variable] || '';
 
         if (isNoScholarly) {
@@ -12764,7 +12834,8 @@ const PaperCompass = ({ onBack }) => {
         }
         // 전체 DB 기반 활용논문 출처 (SVU + 인용논문 + 타대학 + 해외 통합) — theory 유무 관계없이 표시
         const dbUsage = getScaleUsageFromUserDB(variable);
-        const svuHardcoded = svuScaleUsage[variable] || [];
+        const _svuKey3 = _findDBKey(svuScaleUsage, variable);
+        const svuHardcoded = _svuKey3 ? svuScaleUsage[_svuKey3] : [];
         const allSvuPapers = [...new Set([...svuHardcoded, ...dbUsage.svu])];
         if (allSvuPapers.length > 0) {
           if (selectedIndustry !== '전체') {
@@ -12904,6 +12975,7 @@ const PaperCompass = ({ onBack }) => {
       const matrixRows = [];
       const _varMatchesMatrix = (dbVar, uiVar) => {
         if (dbVar === uiVar) return true;
+        if (_normalizeForSearch(dbVar) === _normalizeForSearch(uiVar)) return true;
         const pts = _expandVar(uiVar);
         return pts.some(p => p.length >= 2 && (dbVar.includes(p) || p.includes(dbVar)));
       };
