@@ -1859,6 +1859,7 @@ const PaperCompass = ({ onBack }) => {
     '상사 신뢰':'상사신뢰','조직 신뢰':'조직신뢰','팀 신뢰':'팀신뢰',
     '심리적 자본':'심리자본','긍정심리자본(K-PPC)':'긍정심리자본','심리적자본':'심리자본',
     '조직몰입도':'조직몰입','직무만족도':'직무만족','고객만족도':'고객만족',
+    '성격유형':'성격유형(외향성)','고객경험가치(단일차원)':'고객경험가치',
     '정서적 몰입':'정서적몰입','규범적 몰입':'규범적몰입','지속적 몰입':'지속적몰입',
     '상사 지지':'상사지원','상사지지':'상사지원',
     '자기 효능감':'자기효능감','자기효능':'자기효능감',
@@ -1910,6 +1911,13 @@ const PaperCompass = ({ onBack }) => {
     // 1.6. 괄호 제거 매칭: "셀프리더십(ASLQ)" → "셀프리더십"
     const noParen = varName.replace(/\(.*?\)/g,'').trim();
     if (noParen !== varName && dbObj[noParen] !== undefined) return noParen;
+    // 1.6b. 역방향 괄호 매칭: "성격유형" → DB에 "성격유형(외향성)" 있으면 매칭
+    if (!varName.includes('(')) {
+      const ns = varName.replace(/\s+/g,'');
+      for (const key of Object.keys(dbObj)) {
+        if (key.includes('(') && key.replace(/\(.*?\)/g,'').trim().replace(/\s+/g,'') === ns) return key;
+      }
+    }
     // 1.7. "적" 변형 매칭: "분배적공정성" ↔ "분배공정성"
     const noJeok = varName.replace(/\s+/g,'').replace(/적(?=[가-힣])/g,'');
     if (noJeok !== varName.replace(/\s+/g,'') && dbObj[noJeok] !== undefined) return noJeok;
@@ -2727,7 +2735,13 @@ const PaperCompass = ({ onBack }) => {
     },
     '성격유형(외향성)': {
       options: [
-        { name: '성격유형-외향성(단일차원)', scholar: 'Costa & McCrae(1992), 남상민(2025)', scale: 'NEO-PI-R Big Five 외향성 척도', answer: 'Costa & McCrae(1992)의 Big Five 성격 모형에서 외향성(Extraversion) 차원을 측정하였습니다. 사교성, 활동성, 긍정적 정서 등을 18문항으로 측정하였습니다.' },
+        { name: '성격유형-외향성(단일차원)', scholar: 'Eysenck(1975), 이현수(1985), 김나경(2011), 이원석(2012), 남상민(2025)', scale: 'Eysenck(1975)의 성격유형 이론에 기반, 이현수(1985) 한국판 아이젱크 성격검사(KEPI), 김나경(2011)·이원석(2012) 수정', answer: 'Eysenck(1975)의 성격유형 이론에 기반하여 외향성-내향성 차원을 측정하였습니다. 이현수(1985)의 한국판 아이젱크 성격검사(KEPI)를 김나경(2011), 이원석(2012)이 수정한 18문항 척도를 사용하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '성격유형': {
+      options: [
+        { name: '성격유형-외향성(단일차원)', scholar: 'Eysenck(1975), 이현수(1985), 김나경(2011), 이원석(2012), 남상민(2025)', scale: 'Eysenck(1975)의 성격유형 이론에 기반, 이현수(1985) 한국판 아이젱크 성격검사(KEPI)', answer: 'Eysenck(1975)의 성격유형 이론에 기반하여 외향성-내향성 차원을 측정하였습니다. 이현수(1985)의 한국판 아이젱크 성격검사(KEPI)를 김나경(2011), 이원석(2012)이 수정한 18문항 척도를 사용하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -3356,7 +3370,14 @@ const PaperCompass = ({ onBack }) => {
     '학습동기(ARCS)': { options: [{ name: '주의집중(Attention)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'Keller(1987)의 ARCS 모형 중 주의집중 차원입니다.' }, { name: '관련성(Relevance)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 관련성 차원입니다.' }, { name: '자신감(Confidence)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 자신감 차원입니다.' }, { name: '만족감(Satisfaction)', scholar: 'Keller(1987)', scale: 'ARCS 동기설계 모형', answer: 'ARCS 모형 중 만족감 차원입니다.' }], defaultSelected: [0,1,2,3] },
     '상사성격5요인': { options: [{ name: '외향성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: 'McCrae & Costa(1992)의 Big Five 성격모형에 기반하여 상사의 외향성, 친화성, 성실성, 정서안정성, 개방성을 부하직원이 평가하는 방식으로 측정하였습니다.' }, { name: '친화성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }, { name: '성실성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }, { name: '정서안정성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }, { name: '개방성', scholar: 'McCrae & Costa(1992)', scale: 'Big Five(NEO-PI-R) 상사평가용', answer: '' }], defaultSelected: [0,1,2,3,4] },
     '라포형성행동': { options: [{ name: '세심한 배려', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: 'Gremler & Gwinner(2008)의 라포형성행동 이론에 기반하여 세심한 배려, 예의 바름, 유대 형성, 정보 공유의 4개 하위차원으로 측정하였습니다.' }, { name: '예의 바름', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: '' }, { name: '유대 형성', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: '' }, { name: '정보 공유', scholar: 'Gremler & Gwinner(2008)', scale: '라포형성행동 척도', answer: '' }], defaultSelected: [0,1,2,3] },
-    '고객경험가치': { options: [{ name: '고객경험가치(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '고객경험가치': {
+      options: [
+        { name: '감성적경험가치', scholar: 'Sweeney & Soutar(2001), Mathwick(2001), 오동윤(2014), 김태숙(2016), 김양훈(2019), 남상민(2025)', scale: 'Sweeney & Soutar(2001), Mathwick(2001)의 경험가치 척도를 오동윤(2014), 김태숙(2016), 김양훈(2019)이 수정', answer: 'Sweeney & Soutar(2001)와 Mathwick(2001)의 경험가치 이론에 기반하여 감성적 경험가치, 인지적 경험가치, 서비스 경험가치의 3개 하위차원으로 총 14문항을 측정하였습니다.' },
+        { name: '인지적경험가치', scholar: 'Sweeney & Soutar(2001), Mathwick(2001), 오동윤(2014), 김태숙(2016), 김양훈(2019)', scale: '동일 척도의 인지적 경험가치 하위차원', answer: '' },
+        { name: '서비스경험가치', scholar: 'Sweeney & Soutar(2001), Mathwick(2001), 오동윤(2014), 김태숙(2016), 김양훈(2019)', scale: '동일 척도의 서비스 경험가치 하위차원', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
     'AI가상비서서비스특성': { options: [{ name: 'AI가상비서서비스특성(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '생성형AI유능함': { options: [{ name: '생성형AI유능함(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '공직동기(PSM)': { options: [{ name: '공직동기(PSM)(단일차원)', scholar: '선행연구', scale: '연구자 척도', answer: '단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -8571,9 +8592,26 @@ const PaperCompass = ({ onBack }) => {
       ],
     },
     '고객경험가치': {
-      // 출처: 남상민(2025), Schmitt(1999), Pine & Gilmore(1998) 경험경제 이론, Likert 5점
-      '고객경험가치(단일차원)': [
-        '(설문항은 해당 논문의 감각적·감정적·인지적·행동적·관계적 경험가치 문항을 참조하십시오) [출처: 남상민(2025)]',
+      // 출처: 남상민(2025), Sweeney & Soutar(2001), Mathwick(2001), 오동윤(2014), 김태숙(2016), 김양훈(2019), Likert 5점, 14문항
+      '감성적경험가치': [
+        '이 카페에서 느끼는 감정은 긍정적이다',
+        '이 카페의 분위기가 마음에 든다',
+        '이 카페에서의 경험은 즐겁다',
+        '이 카페는 감성적으로 편안하다',
+        '이 카페에서 특별한 감정을 느낀다',
+      ],
+      '인지적경험가치': [
+        '이 카페는 나에게 새로운 경험을 제공한다',
+        '이 카페는 호기심을 자극한다',
+        '이 카페에서 배울 점이 있다',
+        '이 카페의 메뉴는 독창적이다',
+        '이 카페는 창의적인 공간이다',
+      ],
+      '서비스경험가치': [
+        '이 카페의 서비스는 친절하다',
+        '이 카페의 서비스 응대가 빠르다',
+        '이 카페의 직원은 전문적이다',
+        '이 카페의 서비스에 대해 만족한다',
       ],
     },
     '고객태도': {
@@ -8652,7 +8690,17 @@ const PaperCompass = ({ onBack }) => {
       ],
     },
     '성격유형(외향성)': {
-      // 출처: 남상민(2025), Costa & McCrae(1992) NEO-PI-R Big Five, Likert 5점, 18문항
+      // 출처: 남상민(2025), Eysenck(1975), 이현수(1985) KEPI, 김나경(2011), 이원석(2012), Likert 5점, 18문항
+      '성격유형-외향성(단일차원)': [
+        '나는 사람들과 어울리는 것을 좋아한다',
+        '나는 파티나 사교모임에 참석하는 것을 즐긴다',
+        '나는 새로운 사람을 만나는 것이 즐겁다',
+        '나는 활동적이고 에너지가 넘친다',
+        '나는 대화를 주도하는 편이다',
+      ],
+    },
+    '성격유형': {
+      // 출처: 남상민(2025), Eysenck(1975), 이현수(1985) KEPI, 김나경(2011), 이원석(2012), Likert 5점, 18문항
       '성격유형-외향성(단일차원)': [
         '나는 사람들과 어울리는 것을 좋아한다',
         '나는 파티나 사교모임에 참석하는 것을 즐긴다',
