@@ -1623,7 +1623,10 @@ const PaperCompass = ({ onBack }) => {
     '공정성인식→직무스트레스': { count: 1, sources: '오준환(2017)', verdict: 'emerging' },
     '직무특성→이직의도': { count: 1, sources: '김진태(2025)', verdict: 'emerging' },
     '고객경험가치→고객충성도': { count: 1, sources: '남상민(2025)', verdict: 'emerging' },
-    '고객경험가치→고객만족': { count: 1, sources: '남상민(2025)', verdict: 'emerging' },
+    '고객경험가치→고객만족': { count: 6, sources: '김태숙(2016), 박준서(2021), 김찬용(2021), 문재정(2021), 이은경(2022), 양성미(2023)', verdict: 'strong' },
+    '고객경험가치→브랜드신뢰': { count: 6, sources: '안정선(2005), 이경민(2015), 황예진(2016), 이세영(2017), 조연주(2019), 정경운(2024)', verdict: 'strong' },
+    '브랜드신뢰→고객충성도': { count: 4, sources: '김진영(2003), 오가준(2018), 이윤영(2019), 정경운(2024)', verdict: 'moderate' },
+    '고객만족→고객충성도': { count: 4, sources: '이시후(2009), 이윤주(2013), 윤영화(2018), 오창숙(2020)', verdict: 'moderate' },
     '라포형성행동→고객충성도': { count: 3, sources: '곽진희(2024), 김천욱(2023), 유병선(2024)', verdict: 'weak' },
     '라포형성행동→고객만족': { count: 3, sources: '곽진희(2024), 김천욱(2023), 유병선(2024)', verdict: 'weak' },
     '보상공정성→보상만족': { count: 1, sources: '기유경(2024)', verdict: 'emerging' },
@@ -1833,8 +1836,35 @@ const PaperCompass = ({ onBack }) => {
   // ── 변수명 별칭 매핑 (복합개념 → 하위변수) ──
   const _varAliases = {
     '조직유효성': ['조직유효성','조직몰입','직무만족','조직성과','직무성과'],
-    '신뢰/상사신뢰': ['신뢰','상사신뢰','조직신뢰'],
-    '성격/성격5요인': ['성격','성격특성','성격5요인','성격특성(Big5)'],
+    '신뢰/상사신뢰': ['신뢰','상사신뢰','조직신뢰','팀신뢰','팀 신뢰'],
+    '성격/성격5요인': ['성격','성격특성','성격5요인','성격특성(Big5)','성격 Big-5','성격유형'],
+  };
+  // ── 변수명 별명 정규화 테이블 (띄어쓰기·접미사·괄호 변형 자동 해소) ──
+  const _varAliasMap = {
+    '변혁적 리더십':'변혁적리더십','변혁적리더쉽':'변혁적리더십',
+    '윤리적 리더십':'윤리적리더십','윤리적리더쉽':'윤리적리더십',
+    '진성 리더십':'진성리더십','진성리더쉽':'진성리더십','진정성 리더십':'진성리더십',
+    '거래적 리더십':'거래적리더십','거래적리더쉽':'거래적리더십',
+    '코칭 리더십':'코칭리더십',
+    '감성 리더십':'감성리더십',
+    '공유 리더십':'공유리더십',
+    '임파워링 리더십':'임파워링리더십',
+    '포용적 리더십':'포용적리더십',
+    '서번트 리더십':'서번트리더십','섬김 리더십':'서번트리더십',
+    '셀프리더십(ASLQ)':'셀프리더십','자기리더십':'셀프리더십',
+    '분배 공정성':'분배공정성','분배적 공정성':'분배공정성','분배적공정성':'분배공정성',
+    '절차 공정성':'절차공정성','절차적 공정성':'절차공정성','절차적공정성':'절차공정성',
+    '상호작용 공정성':'상호작용공정성','상호작용적 공정성':'상호작용공정성',
+    '전반적 조직공정성':'조직공정성',
+    '상사 신뢰':'상사신뢰','조직 신뢰':'조직신뢰','팀 신뢰':'팀신뢰',
+    '심리적 자본':'심리자본','긍정심리자본(K-PPC)':'긍정심리자본','심리적자본':'심리자본',
+    '조직몰입도':'조직몰입','직무만족도':'직무만족',
+    '정서적 몰입':'정서적몰입','규범적 몰입':'규범적몰입','지속적 몰입':'지속적몰입',
+    '상사 지지':'상사지원','상사지지':'상사지원',
+    '자기 효능감':'자기효능감','자기효능':'자기효능감',
+    '직무 만족':'직무만족','직무 몰입':'직무몰입','직무 성과':'직무성과',
+    '조직 몰입':'조직몰입','조직 성과':'조직성과',
+    '조직시민 행동':'조직시민행동','혁신 행동':'혁신행동',
   };
   // ── 변수명 정규화 검색 유틸 ──
   // 조사/접사를 제거하여 DB 키와 매칭 (설문항 데이터는 건드리지 않음, 검색용으로만 사용)
@@ -1870,6 +1900,19 @@ const PaperCompass = ({ onBack }) => {
     if (!dbObj || !varName) return null;
     // 1. 정확한 매칭
     if (dbObj[varName] !== undefined) return varName;
+    // 1.5. alias 매핑 매칭
+    const aliased = _varAliasMap[varName] || _varAliasMap[varName.replace(/\s+/g,'')];
+    if (aliased && dbObj[aliased] !== undefined) return aliased;
+    // 역방향: varName이 canonical이고 DB에 alias 형태로 있을 수 있음
+    for (const [alias, canon] of Object.entries(_varAliasMap)) {
+      if (canon === varName && dbObj[alias] !== undefined) return alias;
+    }
+    // 1.6. 괄호 제거 매칭: "셀프리더십(ASLQ)" → "셀프리더십"
+    const noParen = varName.replace(/\(.*?\)/g,'').trim();
+    if (noParen !== varName && dbObj[noParen] !== undefined) return noParen;
+    // 1.7. "적" 변형 매칭: "분배적공정성" ↔ "분배공정성"
+    const noJeok = varName.replace(/\s+/g,'').replace(/적(?=[가-힣])/g,'');
+    if (noJeok !== varName.replace(/\s+/g,'') && dbObj[noJeok] !== undefined) return noJeok;
     // 2. 기본 정규화 매칭
     const normalized = _normalizeForSearch(varName);
     for (const key of Object.keys(dbObj)) {
@@ -2006,6 +2049,9 @@ const PaperCompass = ({ onBack }) => {
   const [customIVInput, setCustomIVInput] = useState('');
   const [customDVInput, setCustomDVInput] = useState('');
   const [customMediatorInput, setCustomMediatorInput] = useState('');
+  const [ivSearchFilter, setIvSearchFilter] = useState('');
+  const [dvSearchFilter, setDvSearchFilter] = useState('');
+  const [medSearchFilter, setMedSearchFilter] = useState('');
   const [showVerification, setShowVerification] = useState(null); // mediator name to show detail
 
   // ── 하위요인 이론 DB: 학자/척도 근거 + 발표 답변 제안 ──
@@ -2584,6 +2630,80 @@ const PaperCompass = ({ onBack }) => {
     '고객충성도': {
       options: [
         { name: '고객충성도(단일차원)', scholar: 'Tellis(1988)', scale: '연구자 재구성(Tellis 1988, Chadhuri&Holbrook 2001, 최현정 2023)', answer: 'Tellis(1988)의 재구매, 추가구매, 반복구매, 지속구매 개념과 Chadhuri&Holbrook(2001)의 행동적·태도적 충성도를 바탕으로 단일차원 8문항으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '브랜드신뢰': {
+      options: [
+        { name: '브랜드신뢰(단일차원)', scholar: 'Chaudhuri & Holbrook(2001), Delgado-Ballester(2004), 김양훈(2020), 양성연(2023)', scale: 'Chaudhuri & Holbrook(2001), Delgado-Ballester(2004)의 브랜드신뢰 척도를 김양훈(2020), 양성연(2023)이 국내 연구에 적용', answer: 'Chaudhuri & Holbrook(2001)의 브랜드 정직성·신뢰성 개념과 Delgado-Ballester(2004)의 일관성·예측가능성 요인을 바탕으로 김양훈(2020), 양성연(2023)이 국내 외식·서비스 맥락에서 활용한 단일차원 5문항으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    // ── PDF 일괄 추출 자동 등록 ──
+    '교사효능감': {
+      options: [
+        { name: '교사효능감(단일차원)', scholar: 'Tschannen-Moran & Woolfolk Hoy(2001), 홍재일(2025)', scale: 'Tschannen-Moran & Woolfolk Hoy(2001)의 교사효능감 척도(TSES)를 홍재일(2025)이 직업능력개발훈련 맥락에 적용', answer: 'Tschannen-Moran & Woolfolk Hoy(2001)의 교사효능감 척도를 기반으로, 수업지도·학생지도·학교업무 수행에 대한 교사의 자기효능 신념을 단일차원 10문항으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '학습지원환경': {
+      options: [
+        { name: '조직지원', scholar: 'Noe & Schmitt(1986), 최민석(2024)', scale: 'Noe & Schmitt(1986)의 학습전이 환경 척도를 국내 R&D 맥락에 적용', answer: 'Noe & Schmitt(1986)의 학습환경 요인을 바탕으로 조직 차원의 학습지원을 측정하였습니다.' },
+        { name: '동료지원', scholar: 'Noe & Schmitt(1986), 최민석(2024)', scale: '동일 척도의 동료지원 하위차원', answer: '동료 간 지식공유, 학습 격려, 피드백 등 동료 차원의 학습지원을 측정합니다.' },
+      ],
+      defaultSelected: [0, 1],
+    },
+    '게임만족': {
+      options: [
+        { name: '게임만족(단일차원)', scholar: 'Oliver(1980), 김기준(2025)', scale: '고객만족 이론을 게임 맥락에 적용', answer: 'Oliver(1980)의 기대-불일치 모형에 기반하여 게임 이용 후 만족도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '게임몰입': {
+      options: [
+        { name: '게임몰입(단일차원)', scholar: 'Csikszentmihalyi(1990), 김기준(2025)', scale: '몰입 이론을 게임 맥락에 적용', answer: 'Csikszentmihalyi(1990)의 몰입(Flow) 이론에 기반하여 게임 이용 시 몰입 경험을 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '연주몰입경험': {
+      options: [
+        { name: '목적', scholar: 'Csikszentmihalyi(1990), Jackson & Marsh(1996), 김진우(2025)', scale: 'Flow State Scale(FSS)', answer: 'Jackson & Marsh(1996)의 FSS 척도를 피아노 연주 맥락에 적용하였습니다.' },
+        { name: '시간변형', scholar: '', scale: '', answer: '' },
+        { name: '자아의식상실', scholar: '', scale: '', answer: '' },
+        { name: '집중도-보상', scholar: '', scale: '', answer: '' },
+        { name: '행위인식통합', scholar: '', scale: '', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3, 4],
+    },
+    '자기유능감': {
+      options: [
+        { name: '자기유능감(단일차원)', scholar: 'Deci & Ryan(1985), 김진우(2025)', scale: '자기결정이론(SDT) 기반 유능감 척도', answer: 'Deci & Ryan(1985)의 자기결정이론에서 기본심리욕구 중 유능감을 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '자아존중감': {
+      options: [
+        { name: '자아존중감(단일차원)', scholar: 'Rosenberg(1965), 김진우(2025)', scale: 'Rosenberg Self-Esteem Scale(RSES)', answer: 'Rosenberg(1965)의 자아존중감 척도(RSES) 10문항을 사용하여 전반적 자아존중감을 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '채널충성도': {
+      options: [
+        { name: '채널충성도(단일차원)', scholar: 'Oliver(1999), 정은수(2023)', scale: '충성도 척도를 유튜브 채널 맥락에 적용', answer: 'Oliver(1999)의 충성도 이론을 유튜브 구독자 맥락에 적용하여 재방문·추천·지속시청 의도를 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '컨설턴트역량': {
+      options: [
+        { name: '능력', scholar: 'Rynning(1992), Cheney et al(1992), 박성준(2022)', scale: '컨설턴트 역량 모델', answer: '산업안전 컨설턴트의 역량을 능력, 지식, 자세의 3개 차원으로 측정하였습니다.' },
+        { name: '지식', scholar: '', scale: '', answer: '' },
+        { name: '자세', scholar: '', scale: '', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2],
+    },
+    '공연만족도': {
+      options: [
+        { name: '공연만족도(단일차원)', scholar: 'Oliver(1980), 김진우(2025)', scale: '만족도 척도를 피아노 공연 맥락에 적용', answer: '연주자의 공연에 대한 전반적 만족도를 측정하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -3760,7 +3880,7 @@ const PaperCompass = ({ onBack }) => {
     'CEO브랜드이미지': ['안영노(2025)'],
     'CEO평판': ['안영노(2025)'],
     '기업평판': ['안영노(2025)'],
-    '고객충성도': ['안영노(2025)'],
+    '고객충성도': ['안영노(2025)', '남상민(2025)'],
     '안영노(2025)_CEO브랜드이미지': { scholar: '이경렬(2004), 최현정(2023)', scale: '연구자 재구성 24문항', items: 'CEO는 사업의 추진과 운영에 집중한다 / CEO는 재무 상태를 잘 관리한다 / CEO는 해내는 능력(결과)을 중요시한다 / CEO는 조직을 경영하는 역량이 뛰어나다 / CEO는 인화와 조직 융화 능력이 뛰어나다 외 19항목' },
     '안영노(2025)_CEO평판': { scholar: 'Burson-Marsteller(2003), 문효진(2004), 박영실(2024)', scale: '연구자 재구성 12문항', items: 'CEO는 기업목표를 위한 명확한 비전을 제시한다 / CEO는 제시한 정책과 약속을 성실히 이행할 것이라고 생각된다 / CEO는 위기관리 능력이 뛰어나다 외 9항목' },
     '안영노(2025)_기업평판': { scholar: 'Fombrun(1996), 문효진(2004), 최현정(2023)', scale: '연구자 재구성 11문항', items: '이 기업은 미래에 대한 명확한 비전을 제시하고 있다 / 이 기업은 가격에 걸맞는 제품과 서비스를 생산하고 있다 / 이 기업은 수익성이 높은 기업이다 외 8항목' },
@@ -3788,6 +3908,55 @@ const PaperCompass = ({ onBack }) => {
     '노조몰입': ['김정균(2023)'],
     '수퍼리더십': ['장해양(2022)'],
     '조직성과': ['권영민(2017)'],
+    '브랜드신뢰': ['남상민(2025)'],
+    '고객경험가치': ['남상민(2025)'],
+    '남상민(2025)_고객경험가치': { scholar: 'Sweeney & Soutar(2001), Mathwick(2001), 오동윤(2014), 김태숙(2016), 김양훈(2019)', scale: '연구자 재구성(감성적·인지적·서비스 경험가치) 14문항', items: '이 카페를 이용할 때 일상에서의 탈출을 느낀다 / 이 카페를 이용할 때 삶의 활력을 얻는다 / 이 카페를 이용할 때 심리적으로 편안하다 / 이 카페에서 순수하게 즐거움을 만끽한다 / 이 카페의 메뉴는 시각적으로 이쁘다 외 9항목' },
+    '남상민(2025)_고객만족': { scholar: 'Oliver(1980), Parasuraman et al.(1988), 김헌철(2013), 윤선미(2015), 김태숙(2016)', scale: '연구자 재구성 4문항', items: '이 카페의 전체적 서비스는 나의 마음에 든다 / 이 카페를 방문한 것은 나에게 좋은 경험이다 / 이 카페를 방문한 것에 전반적으로 만족한다 / 내가 제공받을 수 있는 서비스 수준과 비교했을 때 서비스에 만족한다' },
+    '남상민(2025)_브랜드신뢰': { scholar: 'Chaudhuri & Holbrook(2001), Delgado-Ballester(2004), 김양훈(2020), 양성연(2023)', scale: '연구자 재구성 5문항', items: '나는 이 카페의 브랜드 명성을 신뢰한다 / 나는 이 카페의 브랜드를 믿는다 / 나는 이 카페의 음식 품질을 신뢰한다 / 이 카페의 브랜드는 나를 실망시키지 않는다 / 이 카페의 브랜드는 나를 안심하게 한다' },
+    '남상민(2025)_고객충성도': { scholar: 'Jacoby & Chestnut(1978), Oliver(1999), 노기엽(2008), 관뢰(2013), 김태숙(2016), 임성연(2024)', scale: '연구자 재구성 4문항', items: '나는 이 카페를 다시 방문할 것이다 / 나는 앞으로도 이 카페를 계속 이용할 것이다 / 나는 이 카페를 주변 사람들에게 이용하도록 추천할 것이다 / 이 카페에 대해 주변 사람들에게 긍정적으로 말할 것이다' },
+    // ── PDF 일괄 추출 자동 반영 (62편 SVU 논문) ──
+    'POS품질': ['박경애(2024)'],
+    '건강가치성': ['장국현(2016)'],
+    '건설기술자의특성': ['이창수(2015)'],
+    '게임만족': ['김기준(2025)'],
+    '게임몰입': ['김기준(2025)'],
+    '경영성과': ['신동근(2018)'],
+    '계획된행동이론': ['이창수(2015)'],
+    '고객만족도': ['박경애(2024)'],
+    '고객신뢰': ['박경애(2024)'],
+    '공연만족도': ['김진우(2025)'],
+    '교사효능감': ['홍재일(2025)'],
+    '구독자만족': ['정은수(2023)'],
+    '기관신뢰': ['김종억(2018)'],
+    '기관이미지': ['김종억(2018)'],
+    '대응성': ['장국현(2016)'],
+    '매력성': ['정은수(2023)'],
+    '보상인식': ['장선연(2019)'],
+    '분배공정성': ['이영수(2017)'],
+    '상호작용공정성': ['이영수(2017)'],
+    '생성형AI서비스특성': ['김기동(2024)'],
+    '서비스품질': ['김종억(2018)'],
+    '성격유형': ['남상민(2025)'],
+    '신뢰성': ['정은수(2023)'],
+    '연주몰입경험': ['김진우(2025)'],
+    '예방행동': ['장국현(2016)'],
+    '이용자만족도': ['김종억(2018)'],
+    '자기유능감': ['김진우(2025)'],
+    '자아존중감': ['김진우(2025)'],
+    '재계약의도': ['박성준(2022)'],
+    '전문성': ['정은수(2023)'],
+    '절차공정성': ['이영수(2017)'],
+    '지각된개연성': ['장국현(2016)'],
+    '지각된심각성': ['장국현(2016)'],
+    '지각된용이성': ['김기동(2024)'],
+    '지각된유용성': ['김기동(2024)'],
+    '지각된유익성': ['장국현(2016)'],
+    '지각된장애성': ['장국현(2016)'],
+    '지속사용의도': ['김기동(2024)', '박경애(2024)'],
+    '채널충성도': ['정은수(2023)'],
+    '컨설턴트역량': ['박성준(2022)'],
+    '컨설팅만족도': ['박성준(2022)'],
+    '컨설팅활용도': ['박성준(2022)'],
   };
 
 
@@ -5926,6 +6095,49 @@ const PaperCompass = ({ onBack }) => {
         '이 기업에 친밀감을 느낀다',
         '이 기업 브랜드를 타 브랜드보다 선호한다',
         '이 기업 브랜드에 대해 주변에 추천할 의사가 있고 타인에게 구전할 의사가 있다',
+      ],
+    },
+    '브랜드신뢰': {
+      '브랜드신뢰(단일차원)': [
+        '나는 이 카페의 브랜드 명성을 신뢰한다',
+        '나는 이 카페의 브랜드를 믿는다',
+        '나는 이 카페의 음식 품질을 신뢰한다',
+        '이 카페의 브랜드는 나를 실망시키지 않는다',
+        '이 카페의 브랜드는 나를 안심하게 한다',
+      ],
+    },
+    // ── PDF 일괄 추출 자동 반영 ──
+    '교사효능감': {
+      '교사효능감(단일차원)': [
+        '나는 수업에 필요한 다양한 자료를 확보하거나 제작할 수 있다',
+        '나는 수업에 필요한 다양한 매체를 사용할 수 있다',
+        '나는 교수학습 상황에 맞는 효과적인 교수방법들을 적용할 수 있다',
+        '나는 공개수업 및 연구수업을 통해 나의 수업을 기꺼이 다른 사람에게 보여줄 수 있다',
+        '나는 문제행동을 보이는 학생들을 적절한 방법으로 지도할 수 있다',
+        '나는 개인적 고민을 가지고 있는 훈련생(학생)의 상담지도를 할 수 있다',
+        '나는 학교의 중요한 기획업무를 맡게 된다면 효율적으로 수행할 수 있다',
+        '나는 대규모 교내행사를 맡게 된다면 원활하게 진행할 수 있다',
+        '나는 동료교사들과 학교업무와 관련된 조언을 주고받을 수 있다',
+        '나는 동료교사들과 깊이 있는 대화를 나눌 수 있다',
+      ],
+    },
+    '진정성리더십_설문': {
+      '자아인식': [
+        '우리 CEO(상사)는 자신이 말하고자 하는 바를 정확히 알고 있다',
+        '우리 CEO(상사)는 실수를 했을 때 이를 솔직히 인정한다',
+        '우리 CEO(상사)는 다른 사람들이 그들의 생각을 솔직히 말하도록 격려한다',
+      ],
+      '균형잡힌 정보처리': [
+        '우리 CEO(상사)는 결론을 내리기 전에 다양한 관점을 분석한다',
+        '우리 CEO(상사)는 자신의 입장에 반대되는 관점도 경청한다',
+      ],
+      '내면화된 도덕관점': [
+        '우리 CEO(상사)는 자신의 행동이 도덕적 기준에 부합하도록 노력한다',
+        '우리 CEO(상사)는 자신의 핵심 가치에 따라 의사결정을 한다',
+      ],
+      '관계적 투명성': [
+        '우리 CEO(상사)는 다른 사람과의 관계에서 개방적이고 솔직하다',
+        '우리 CEO(상사)는 자신의 감정을 숨기지 않는다',
       ],
     },
     '경력지향성': {
@@ -8525,6 +8737,7 @@ const PaperCompass = ({ onBack }) => {
     '신뢰': { type: 'variable', description: '신뢰 수준이 관계를 조절', method: 'PROCESS Macro Model 1', common: false },
     '테크노유스트레스': { type: 'variable', description: '테크노스트레스 수준이 관계를 약화', method: 'PROCESS Macro Model 1', common: false },
     '혁신성': { type: 'variable', description: '혁신성 수준이 관계를 조절', method: 'PROCESS Macro Model 1', common: false },
+    '성격유형': { type: 'variable', description: '외향성/내향성 등 성격유형이 관계를 조절', method: 'PROCESS Macro Model 1 또는 다중집단분석', common: false },
   };
 
   // ── 개별 논문 상세정보 DB (연구자별) ──
@@ -8709,7 +8922,7 @@ const PaperCompass = ({ onBack }) => {
     '김진태(2025)': { subject: '기계경비 기업 구성원의 직무특성, 보상인식과 성격특성이 조직 유효성에 미치는 영향', sample: '기계경비 기업 구성원', region: '국내', iv: '직무특성', mv: '-', dv: '직무만족, 조직몰입, 이직의도', result: '직무특성이(가) 직무만족에 유의한 정(+)의 영향' },
     '홍재일(2025)': { subject: '공공·민간직업능력개발훈련기관교사의 셀프리더십과 직무성과 관계에서 교사효능감과 혁신행동의 매개', sample: '직업능력개발훈련기관 교사', region: '국내', iv: '셀프리더십', mv: '자기효능감, 혁신행동', dv: '직무성과', result: '셀프리더십이(가) 직무성과에 유의한 정(+)의 영향, 자기효능감의 매개효과 확인' },
     '유병선(2025)': { subject: '소방분야 종사자의 직무특성과 조직몰입 관계에서 심리적주인의식과 직무만족의 매개효과', sample: '소방분야 종사자', region: '국내', iv: '직무특성', mv: '심리적주인의식, 직무만족', dv: '조직몰입', result: '직무특성→심리적주인의식→조직몰입, 직무특성→직무만족→조직몰입 매개효과 확인' },
-    '남상민(2025)': { subject: '베이커리카페의 고객경험가치와 고객충성도 관계에서 고객만족 및 브랜드신뢰의 매개효과와 성격유형의 조절효과', sample: '독립형 베이커리카페 고객', region: '국내', iv: '고객경험가치', mv: '고객만족', dv: '고객충성도', result: '고객경험가치이(가) 고객충성도에 유의한 정(+)의 영향, 고객만족의 매개효과 확인' },
+    '남상민(2025)': { subject: '베이커리카페의 고객경험가치와 고객충성도 관계에서 고객만족 및 브랜드신뢰의 매개효과와 성격유형의 조절효과', sample: '비프랜차이즈 베이커리카페 고객 415명', region: '국내', iv: '고객경험가치', mv: '고객만족, 브랜드신뢰', dv: '고객충성도', mod: '성격유형', result: '고객경험가치→고객충성도 유의, 고객만족·브랜드신뢰의 매개효과 확인, 성격유형(외향성)의 조절효과 확인' },
     '김종길(2025)': { subject: '중소 소방기업의 보상공정성과 조직유효성 관계에서 보상만족 매개효과', sample: '중소 소방기업 구성원', region: '국내', iv: '보상공정성', mv: '-', dv: '직무만족, 조직몰입, 이직의도', result: '보상공정성이(가) 직무만족에 유의한 정(+)의 영향' },
     '박종석(2025)': { subject: '한국폴리텍대학 산업설비 교수의 변혁적 리더십이 학습성과에 미치는 영향', sample: '한국폴리텍대학 산업설비 교수', region: '국내', iv: '변혁적리더십', mv: '-', dv: '자기효능감', result: '변혁적리더십이(가) 자기효능감에 유의한 정(+)의 영향' },
     '이진성(2025)': { subject: '소방엔지니어링 기업 구성원의 셀프리더십이 조직몰입에 미치는 영향', sample: '소방엔지니어링 기업 구성원', region: '국내', iv: '셀프리더십', mv: '직무만족', dv: '조직몰입', mod: '자기효능감', result: '셀프리더십이(가) 조직몰입에 유의한 정(+)의 영향, 직무만족의 매개효과 확인, 자기효능감의 조절효과 확인' },
@@ -11105,9 +11318,11 @@ const PaperCompass = ({ onBack }) => {
     ];
 
     const tiers = dataSource === 'svu' ? svuTiers : allTiers;
+    const ivFilterNorm = ivSearchFilter.replace(/\s+/g, '').toLowerCase();
+    const filteredTiers = ivFilterNorm ? tiers.map(t => ({...t, items: t.items.filter(v => v.name.replace(/\s+/g, '').toLowerCase().includes(ivFilterNorm))})) : tiers;
 
     return (
-      React.createElement("div", {className: "w-full max-w-3xl mx-auto"}, React.createElement("h2", {className: "text-2xl font-bold mb-2", style: { color: '#1F3864' }}, "Step 1. 독립변수 선택"), React.createElement("p", {className: "text-gray-600 mb-4"}, "연구에 사용할 독립변수를 선택하거나 직접 입력하세요."), React.createElement(DataSourceTabs, null), tiers.map(tier => tier.items.length > 0 && (
+      React.createElement("div", {className: "w-full max-w-3xl mx-auto"}, React.createElement("h2", {className: "text-2xl font-bold mb-2", style: { color: '#1F3864' }}, "Step 1. 독립변수 선택"), React.createElement("p", {className: "text-gray-600 mb-4"}, "연구에 사용할 독립변수를 선택하거나 직접 입력하세요."), React.createElement(DataSourceTabs, null), React.createElement("div", {className: "relative mb-4"}, React.createElement("input", {type: "text", value: ivSearchFilter, onChange: e => setIvSearchFilter(e.target.value), placeholder: "변수명 검색...", className: "w-full px-4 py-2.5 pl-10 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 bg-gray-50 transition", style: {fontSize: '14px'}}), React.createElement("svg", {className: "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400", width: 16, height: 16, fill: "none", stroke: "currentColor", strokeWidth: 2, viewBox: "0 0 24 24"}, React.createElement("circle", {cx: 11, cy: 11, r: 8}), React.createElement("path", {d: "M21 21l-4.35-4.35"})), ivSearchFilter && React.createElement("button", {onClick: () => setIvSearchFilter(''), className: "absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 text-lg font-bold", style: {lineHeight: 1}}, "\u00D7")), filteredTiers.map(tier => tier.items.length > 0 && (
           React.createElement("div", {key: tier.label, className: "mb-5"}, React.createElement("div", {className: "flex items-center gap-2 mb-2"}, React.createElement("div", {className: "w-3 h-3 rounded-full", style: { backgroundColor: tier.color }}), React.createElement("span", {className: "text-xs font-bold text-gray-500 uppercase tracking-wide"}, tier.label)), React.createElement("div", {className: "space-y-1.5"}, dataSource === 'svu' ? (
                 tier.items.map(iv => (
                   React.createElement(RowCard, {key: iv.name, name: iv.name, selected: selectedIV === iv.name, onClick: () => setSelectedIV(iv.name), count: iv.count, maxCount: svuMax, desc: _descLookup(variableDesc, iv.name), badges: [
@@ -11168,12 +11383,14 @@ const PaperCompass = ({ onBack }) => {
 
   const renderStep2 = () => {
     const dvs = getDVs();
+    const dvFilterNorm = dvSearchFilter.replace(/\s+/g, '').toLowerCase();
+    const filteredDVs = dvFilterNorm ? dvs.filter(v => v.name.replace(/\s+/g, '').toLowerCase().includes(dvFilterNorm)) : dvs;
     const maxCount = dataSource === 'svu' ? Math.max(...dvs.map(v => v.count || 0), 1) : Math.max(...dvs.map(v => v.total || 0), 1);
 
     return (
       React.createElement("div", {className: "w-full max-w-3xl mx-auto"}, React.createElement("h2", {className: "text-2xl font-bold mb-2", style: { color: '#1F3864' }}, "Step 2. 종속변수 선택"), React.createElement("p", {className: "text-gray-600 mb-4"}, " 독립변수: ", React.createElement("span", {className: "font-bold", style: { color: '#2E75B6' }}, selectedIV), !svuIVs.find(v => v.name === selectedIV) && !allIVs.find(v => v.name === selectedIV) && (
             React.createElement("span", {className: "ml-2 px-1.5 py-0.5 rounded text-xs font-bold text-purple-700 bg-purple-100"}, "사용자 정의")
-          )), React.createElement(DataSourceTabs, null), React.createElement("div", {className: "space-y-1.5"}, dvs.map(dv => {
+          )), React.createElement(DataSourceTabs, null), React.createElement("div", {className: "relative mb-4"}, React.createElement("input", {type: "text", value: dvSearchFilter, onChange: e => setDvSearchFilter(e.target.value), placeholder: "변수명 검색...", className: "w-full px-4 py-2.5 pl-10 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 bg-gray-50 transition", style: {fontSize: '14px'}}), React.createElement("svg", {className: "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400", width: 16, height: 16, fill: "none", stroke: "currentColor", strokeWidth: 2, viewBox: "0 0 24 24"}, React.createElement("circle", {cx: 11, cy: 11, r: 8}), React.createElement("path", {d: "M21 21l-4.35-4.35"})), dvSearchFilter && React.createElement("button", {onClick: () => setDvSearchFilter(''), className: "absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 text-lg font-bold", style: {lineHeight: 1}}, "\u00D7")), React.createElement("div", {className: "space-y-1.5"}, filteredDVs.map(dv => {
             const cnt = dataSource === 'svu' ? (dv.count || 0) : (dv.total || 0);
             const ivToDvResult = verifyIVtoDV(selectedIV, dv.name);
             return (
@@ -11267,9 +11484,12 @@ const PaperCompass = ({ onBack }) => {
     };
     const sortedExisting = sortWithSurveyPriority(existingMeds);
     const sortedNewCombo = sortWithSurveyPriority(newComboMeds);
+    const medFilterNorm = medSearchFilter.replace(/\s+/g, '').toLowerCase();
+    const filteredExisting = medFilterNorm ? sortedExisting.filter(v => v.name.replace(/\s+/g, '').toLowerCase().includes(medFilterNorm)) : sortedExisting;
+    const filteredNewCombo = medFilterNorm ? sortedNewCombo.filter(v => v.name.replace(/\s+/g, '').toLowerCase().includes(medFilterNorm)) : sortedNewCombo;
 
     return (
-      React.createElement("div", {className: "w-full max-w-3xl mx-auto"}, React.createElement("h2", {className: "text-2xl font-bold mb-2", style: { color: '#1F3864' }}, "Step 3. 매개변수 선택"), React.createElement("p", {className: "text-gray-600 mb-1"}, "최대 3개까지 선택. 선행연구 ", React.createElement("strong", null, "채택 가능 여부"), "를 자동 검증합니다."), React.createElement("p", {className: "text-gray-500 text-sm mb-4"}, " 경로: ", React.createElement("span", {style: { color: '#2E75B6' }}, selectedIV), " → ", React.createElement("span", {className: "text-purple-600 font-semibold"}, "???"), " → ", React.createElement("span", {style: { color: '#F57C00' }}, selectedDV)), React.createElement(DataSourceTabs, null), React.createElement("div", {className: "mb-4 flex flex-wrap gap-2 text-xs"}, [
+      React.createElement("div", {className: "w-full max-w-3xl mx-auto"}, React.createElement("h2", {className: "text-2xl font-bold mb-2", style: { color: '#1F3864' }}, "Step 3. 매개변수 선택"), React.createElement("p", {className: "text-gray-600 mb-1"}, "최대 3개까지 선택. 선행연구 ", React.createElement("strong", null, "채택 가능 여부"), "를 자동 검증합니다."), React.createElement("p", {className: "text-gray-500 text-sm mb-4"}, " 경로: ", React.createElement("span", {style: { color: '#2E75B6' }}, selectedIV), " → ", React.createElement("span", {className: "text-purple-600 font-semibold"}, "???"), " → ", React.createElement("span", {style: { color: '#F57C00' }}, selectedDV)), React.createElement(DataSourceTabs, null), React.createElement("div", {className: "relative mb-4"}, React.createElement("input", {type: "text", value: medSearchFilter, onChange: e => setMedSearchFilter(e.target.value), placeholder: "변수명 검색...", className: "w-full px-4 py-2.5 pl-10 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 bg-gray-50 transition", style: {fontSize: '14px'}}), React.createElement("svg", {className: "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400", width: 16, height: 16, fill: "none", stroke: "currentColor", strokeWidth: 2, viewBox: "0 0 24 24"}, React.createElement("circle", {cx: 11, cy: 11, r: 8}), React.createElement("path", {d: "M21 21l-4.35-4.35"})), medSearchFilter && React.createElement("button", {onClick: () => setMedSearchFilter(''), className: "absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 text-lg font-bold", style: {lineHeight: 1}}, "\u00D7")), React.createElement("div", {className: "mb-4 flex flex-wrap gap-2 text-xs"}, [
             { label: '✅ 강추', bg: '#E8F5E9', color: '#2E7D32' },
             { label: '🔵 가능', bg: '#E3F2FD', color: '#1565C0' },
             { label: '⚠️ 주의', bg: '#FFF8E1', color: '#F57C00' },
@@ -11278,8 +11498,8 @@ const PaperCompass = ({ onBack }) => {
           ].map(l => (
             React.createElement("span", {key: l.label, className: "px-2 py-0.5 rounded font-bold", style: { backgroundColor: l.bg, color: l.color }}, l.label)
           ))),
-          sortedExisting.length > 0 && React.createElement("div", {className: "mb-2"}, React.createElement("h3", {className: "text-sm font-bold text-gray-700 mb-2 flex items-center gap-2"}, React.createElement("span", {className: "w-2 h-2 rounded-full", style: {backgroundColor: '#2E7D32'}}), "기존 검증 경로 ", React.createElement("span", {className: "text-xs font-normal text-gray-500"}, "(IV→MV, MV→DV 양방향 선행연구 존재)")), React.createElement("div", {className: "space-y-1.5"}, sortedExisting.map(renderMedCard))),
-          sortedNewCombo.length > 0 && React.createElement("div", {className: "mt-4 mb-2"}, React.createElement("h3", {className: "text-sm font-bold mb-2 flex items-center gap-2", style: {color: '#0277BD'}}, React.createElement("span", {className: "w-2 h-2 rounded-full", style: {backgroundColor: '#0288D1'}}), "새로운 조합 제안 ", React.createElement("span", {className: "text-xs font-normal text-gray-500"}, "(MV→DV 경로는 검증됨, IV→MV는 새로운 연구 기회)")), React.createElement("p", {className: "text-xs text-gray-500 mb-2 ml-4"}, "아래 변수들은 ", React.createElement("strong", null, selectedDV), "와는 선행연구가 있지만, ", React.createElement("strong", null, selectedIV), "와는 아직 연구되지 않은 조합입니다. 새 논문 주제로 적합합니다!"), React.createElement("div", {className: "space-y-1.5"}, sortedNewCombo.map(renderMedCard))), React.createElement("div", {className: "mt-6 p-5 bg-white rounded-lg border-2 border-dashed border-gray-300"}, React.createElement("h4", {className: "font-semibold text-sm mb-2", style: { color: '#1F3864' }}, "직접 입력"), React.createElement("div", {className: "flex gap-2"}, React.createElement("input", {type: "text", value: customMediatorInput, onChange: e => setCustomMediatorInput(e.target.value), placeholder: "예: 교육만족, 직무자율성, 심리적 자본...", className: "flex-1 px-3 py-2 border-2 border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-400", onKeyDown: e => {
+          filteredExisting.length > 0 && React.createElement("div", {className: "mb-2"}, React.createElement("h3", {className: "text-sm font-bold text-gray-700 mb-2 flex items-center gap-2"}, React.createElement("span", {className: "w-2 h-2 rounded-full", style: {backgroundColor: '#2E7D32'}}), "기존 검증 경로 ", React.createElement("span", {className: "text-xs font-normal text-gray-500"}, "(IV→MV, MV→DV 양방향 선행연구 존재)")), React.createElement("div", {className: "space-y-1.5"}, filteredExisting.map(renderMedCard))),
+          filteredNewCombo.length > 0 && React.createElement("div", {className: "mt-4 mb-2"}, React.createElement("h3", {className: "text-sm font-bold mb-2 flex items-center gap-2", style: {color: '#0277BD'}}, React.createElement("span", {className: "w-2 h-2 rounded-full", style: {backgroundColor: '#0288D1'}}), "새로운 조합 제안 ", React.createElement("span", {className: "text-xs font-normal text-gray-500"}, "(MV→DV 경로는 검증됨, IV→MV는 새로운 연구 기회)")), React.createElement("p", {className: "text-xs text-gray-500 mb-2 ml-4"}, "아래 변수들은 ", React.createElement("strong", null, selectedDV), "와는 선행연구가 있지만, ", React.createElement("strong", null, selectedIV), "와는 아직 연구되지 않은 조합입니다. 새 논문 주제로 적합합니다!"), React.createElement("div", {className: "space-y-1.5"}, filteredNewCombo.map(renderMedCard))), React.createElement("div", {className: "mt-6 p-5 bg-white rounded-lg border-2 border-dashed border-gray-300"}, React.createElement("h4", {className: "font-semibold text-sm mb-2", style: { color: '#1F3864' }}, "직접 입력"), React.createElement("div", {className: "flex gap-2"}, React.createElement("input", {type: "text", value: customMediatorInput, onChange: e => setCustomMediatorInput(e.target.value), placeholder: "예: 교육만족, 직무자율성, 심리적 자본...", className: "flex-1 px-3 py-2 border-2 border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-400", onKeyDown: e => {
                 if (e.key === 'Enter' && customMediatorInput.trim() && selectedMediators.length < 3) {
                   toggleMediator(customMediatorInput.trim()); setCustomMediatorInput('');
                 }
