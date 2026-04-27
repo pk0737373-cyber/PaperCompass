@@ -1993,7 +1993,14 @@ const PaperCompass = ({ onBack }) => {
     const lookup = _lookupPairDB(parts[0], parts[1]);
     return lookup ? lookup.data : null;
   };
+  // ★ 성능 최적화: _lookupPairDB 결과 캐시 (PaperCompass 인스턴스 동안 유지)
+  const _lookupCache = React.useRef({});
+  // dbVersion 바뀌면 캐시 초기화
+  React.useEffect(() => { _lookupCache.current = {}; }, [dbVersion]);
   const _lookupPairDB = (fromVar, toVar) => {
+    const cacheKey = fromVar + '→' + toVar;
+    if (_lookupCache.current[cacheKey] !== undefined) return _lookupCache.current[cacheKey];
+    const _result = (() => {
     // 1) 정확한 키 먼저 시도 (슬래시 없는 단순 변수일 때만 즉시 반환)
     const exactKey = `${fromVar}→${toVar}`;
     if (!fromVar.includes('/') && !toVar.includes('/') && researchPairDB[exactKey]) {
@@ -2055,6 +2062,9 @@ const PaperCompass = ({ onBack }) => {
       });
     }
     return { key: matchedEntries.map(e => e.key).join('+'), data: { count: totalCount, sources: mergedSources.join(', '), verdict: bestVerdict }, merged: true };
+    })();
+    _lookupCache.current[cacheKey] = _result;
+    return _result;
   };
 
   // IV→DV 직접 경로 검증 함수
@@ -16055,7 +16065,7 @@ const PaperCompass = ({ onBack }) => {
 
   return (
     React.createElement("div", {className: "min-h-screen flex flex-col", style: { backgroundColor: '#FFFFFF' }}, React.createElement("div", {className: "border-b-2 border-gray-200", style: { backgroundColor: '#F8F9FA' }}, React.createElement("div", {className: "max-w-6xl mx-auto px-4 py-6"}, onBack && React.createElement("button", {onClick: onBack, style:{background:'none',border:'none',color:'#2E75B6',fontSize:'12px',cursor:'pointer',padding:0,marginBottom:'6px',display:'block',textDecoration:'underline'}}, "← 홈으로 돌아가기"), React.createElement("h1", {className: "text-3xl font-bold", style: { color: '#1F3864' }}, React.createElement("span", {style: { letterSpacing: '0.05em' }}, "논문나침반"), React.createElement("span", {className: "text-lg font-normal text-gray-500 ml-3"}, "PaperCompass")), React.createElement("p", {className: "text-gray-600 text-sm mt-2"}, "SVU 스마트시티·융합기술경영전공 | 14단계 논문작성 가이드"))), currentStep >= 1 && (
-        React.createElement("div", {className: "bg-white border-b-2 border-gray-200 sticky top-0 z-10"}, React.createElement("div", {className: "max-w-6xl mx-auto px-4 py-4"}, React.createElement("button", {onClick: () => { setCurrentStep(0); setTopicAnalysis(null); }, className: "text-xs text-gray-400 hover:text-blue-600 underline mb-2 block"}, " ← 연구 주제 입력으로 돌아가기 "), React.createElement("div", {className: "flex items-center gap-1"}, Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map(step => (
+        React.createElement("div", {className: "bg-white border-b-2 border-gray-200 sticky top-0 z-10"}, React.createElement("div", {className: "max-w-6xl mx-auto px-4 py-4"}, React.createElement("button", {onClick: () => { setCurrentStep(0); setTopicAnalysis(null); setSelectedIVs([]); setSelectedDVs([]); setSelectedMediators([]); setSelectedModerators([]); setResearchTopicInput(''); }, className: "text-xs text-gray-400 hover:text-blue-600 underline mb-2 block"}, " ← 연구 주제 입력으로 돌아가기 "), React.createElement("div", {className: "flex items-center gap-1"}, Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map(step => (
                 React.createElement(React.Fragment, {key: step}, React.createElement("div", {onClick: () => {
                       if (step <= currentStep || (step <= 3 && canProceed())) {
                         if (step < currentStep) {
