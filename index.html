@@ -17932,4 +17932,781 @@ function exportUserDBtoExcel(papers) {
   const toolRows = [['논문No','변수명','역할','원전출처','척도명','하위요인','문항수','척도','논문제목']];
   papers.forEach((p,pi) => {
     (p.variables||[]).filter(v=>v.name).forEach(v => {
-      toolRows.push([pi+1, v.name, v.role, v.source, v.s
+      toolRows.push([pi+1, v.name, v.role, v.source, v.scale||'', v.dimensions, v.itemCount, v.scale, p.title]);
+    });
+  });
+  const wsTools = XLSX.utils.aoa_to_sheet(toolRows);
+  wsTools['!cols'] = [{wch:8},{wch:18},{wch:6},{wch:30},{wch:20},{wch:35},{wch:8},{wch:12},{wch:50}];
+  XLSX.utils.book_append_sheet(wb, wsTools, '측정도구_전체');
+
+  // 미분류 시트
+  const uncatPapers = papers.filter(p => !categories.includes(p.category||''));
+  if(uncatPapers.length){
+    const uncatRows = [['No','저자','연도','논문제목','소속대학','메모']];
+    uncatPapers.forEach((p,i) => uncatRows.push([i+1, p.authors, p.year, p.title, p.university, p.memo||'']));
+    const wsUncat = XLSX.utils.aoa_to_sheet(uncatRows);
+    wsUncat['!cols'] = [{wch:5},{wch:20},{wch:6},{wch:60},{wch:20},{wch:30}];
+    XLSX.utils.book_append_sheet(wb, wsUncat, '미분류');
+  }
+
+  XLSX.writeFile(wb, `사용자_논문DB_${new Date().toISOString().slice(0,10)}.xlsx`);
+}
+
+const PaperDBBuilder = ({ onBack }) => {
+  const [view, setView] = useState('list'); // list | add | detail | bulkPreview
+  const [papers, setPapers] = useState(getDB());
+  const [editIdx, setEditIdx] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [toast, setToast] = useState(null);
+  // ── 일괄 업로드 미리보기 state ──
+  const [bulkParsed, setBulkParsed] = useState([]); // 파싱된 논문 목록 [{...paper, _checked:true, _status:'ok'|'dup'|'error'}]
+  const [bulkProgress, setBulkProgress] = useState({current:0, total:0, parsing:false});
+  const [dragOver, setDragOver] = useState(false);
+  const [expandedIdx, setExpandedIdx] = useState(null); // 미리보기에서 펼친 논문 인덱스
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [catFilter, setCatFilter] = useState('전체');
+
+  const showToast = (msg, type='success') => { setToast({msg, type}); setTimeout(()=>setToast(null), 3000); };
+
+  const emptyPaper = () => ({
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+    title:'', authors:'', year:'', journal:'', university:'', sampleSize:'', method:'', analysisMethod:'', result:'', region:'',
+    category: 'SVU논문',  // 'SVU논문' | '타대학논문' | '해외논문' | '국내인용논문' | '기타'
+    advisor: '',
+    variables: [{ name:'', role:'독립', dimensions:'', itemCount:'', scale:'5점 Likert', source:'', koreanSource:'', alpha:'' }],
+    surveyItems: [{ variable:'', dimension:'', itemNo:1, text:'', source:'' }],
+    references: '',
+    addedAt: new Date().toISOString().slice(0,10),
+    memo: ''
+  });
+
+  const [form, setForm] = useState(emptyPaper());
+
+  const isDuplicate = (title, year, authors) => findSimilarInDB(title, year, papers, editIdx, authors) !== null;
+
+  const handleSave = () => {
+    if(!form.title.trim()) { showToast('논문 제목을 입력하세요.', 'error'); return; }
+    if(!form.authors.trim()) { showToast('저자를 입력하세요.', 'error'); return; }
+    if(isDuplicate(form.title, form.year, form.authors)) {
+      if(!confirm('⚠️ 동일/유사한 논문이 이미 DB에 있습니다!\n\n그래도 저장하시겠습니까?')) return;
+    }
+
+    try {
+    let updated;
+    const cleanForm = {...form, needsReview: false};
+    if(editIdx !== null) {
+      updated = [...papers]; updated[editIdx] = cleanForm;
+      showToast('✅ 논문 정보가 수정되었습니다.');
+    } else {
+      updated = [...papers, cleanForm];
+      showToast('✅ 새 논문이 DB에 추가되었습니다!');
+    }
+    saveDB(updated); setPapers(updated);
+    setForm(emptyPaper()); setEditIdx(null); setView('list');
+    } catch(err) { showToast('❌ 저장 중 오류: '+err.message, 'error'); }
+  };
+
+  const handleDelete = (idx) => {
+    if(!confirm(`"${papers[idx].title}" 논문을 삭제하시겠습니까?`)) return;
+    const updated = papers.filter((_,i) => i !== idx);
+    saveDB(updated); setPapers(updated);
+    showToast('🗑️ 삭제되었습니다.');
+    if(view === 'detail') setView('list');
+  };
+
+  const handleEdit = (idx) => { setForm({...papers[idx]}); setEditIdx(idx); setView('add'); };
+
+  const addVariable = () => setForm({...form, variables: [...form.variables, {name:'',role:'독립',dimensions:'',itemCount:'',scale:'5점 Likert',source:'',koreanSource:'',alpha:''}]});
+  const removeVariable = (i) => setForm({...form, variables: form.variables.filter((_,j)=>j!==i)});
+  const updateVariable = (i, field, val) => { const v=[...form.variables]; v[i]={...v[i],[field]:val}; setForm({...form, variables:v}); };
+
+  const addSurveyItem = () => setForm({...form, surveyItems: [...form.surveyItems, {variable:'',dimension:'',itemNo:form.surveyItems.length+1,text:'',source:''}]});
+  const removeSurveyItem = (i) => setForm({...form, surveyItems: form.surveyItems.filter((_,j)=>j!==i)});
+  const updateSurveyItem = (i, field, val) => { const s=[...form.surveyItems]; s[i]={...s[i],[field]:val}; setForm({...form, surveyItems:s}); };
+
+  const exportJSON = () => {
+    const blob = new Blob([JSON.stringify(papers, null, 2)], {type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = `논문DB_${new Date().toISOString().slice(0,10)}.json`; a.click();
+    showToast('📥 JSON 파일로 내보내기 완료!');
+  };
+
+  // ── PDF 업로드 자동입력 ──
+  const handlePdfUpload = async (goToAdd=true) => {
+    const input = document.createElement('input'); input.type='file'; input.accept='.pdf';
+    input.onchange = async (e) => {
+      const file = e.target.files[0]; if(!file) return;
+      setPdfLoading(true);
+      try {
+        const result = await parseSVUpdf(file);
+        const newForm = {
+          ...emptyPaper(),
+          title: result.title,
+          authors: result.authors,
+          year: result.year,
+          university: result.university,
+          sampleSize: result.sampleSize,
+          method: result.method,
+          analysisMethod: result.analysisMethod,
+          category: result.category || 'SVU논문',
+          variables: result.variables,
+          region: result.sampleSize || '',
+          result: '',
+          memo: `PDF 자동 추출 (${result.totalPages}페이지) — ${file.name}`,
+        };
+        setForm(newForm); setEditIdx(null);
+        if(goToAdd) setView('add');
+        setPdfLoading(false);
+        showToast(`✅ PDF에서 자동 추출 완료! (${result.variables.length}개 변수 감지)`);
+      } catch(err) {
+        setPdfLoading(false);
+        showToast('❌ PDF 파싱 오류: '+err.message, 'error');
+      }
+    };
+    input.click();
+  };
+
+  // ── 다중 PDF 일괄 업로드 (미리보기 방식) ──
+  const processBulkPdfs = async (files) => {
+    if(!files.length) return;
+    setBulkProgress({current:0, total:files.length, parsing:true});
+    setBulkParsed([]);
+    setView('bulkPreview');
+    const results = [];
+    for(let i=0; i<files.length; i++){
+      setBulkProgress({current:i+1, total:files.length, parsing:true});
+      const file = files[i];
+      try {
+        const result = await parseSVUpdf(file);
+        if(!result.title) { results.push({_fileName:file.name, _status:'error', _error:'제목 추출 실패', _checked:false, title:'', authors:'', year:'', category:'기타', variables:[]}); continue; }
+        const dupMatch = findSimilarInDB(result.title, result.year, papers, -1, result.authors);
+        const isDup = dupMatch !== null;
+        results.push({
+          ...emptyPaper(),
+          title: result.title, authors: result.authors, year: result.year,
+          university: result.university, sampleSize: result.sampleSize,
+          method: result.method, analysisMethod: result.analysisMethod,
+          category: result.category || 'SVU논문',
+          advisor: result.advisor || '',
+          variables: result.variables,
+          priorStudies: result.priorStudies || [],
+          memo: `PDF 자동추출 — ${file.name}`,
+          addedAt: new Date().toISOString().slice(0,10),
+          _fileName: file.name,
+          _status: isDup ? 'dup' : 'ok',
+          _dupInfo: dupMatch ? `${dupMatch.paper.authors||''}(${dupMatch.paper.year||''}) "${(dupMatch.paper.title||'').slice(0,30)}..."` : '',
+          _checked: !isDup, // 중복이면 체크 해제
+          _varCount: result.variables.filter(v=>v.name).length,
+          _pages: result.totalPages,
+        });
+      } catch(err) {
+        results.push({_fileName:file.name, _status:'error', _error:err.message, _checked:false, title:'(파싱 실패)', authors:'', year:'', category:'기타', variables:[]});
+      }
+    }
+    setBulkParsed(results);
+    setBulkProgress({current:files.length, total:files.length, parsing:false});
+  };
+
+  const handleBulkPdfUpload = () => {
+    const input = document.createElement('input'); input.type='file'; input.accept='.pdf'; input.multiple=true;
+    input.onchange = (e) => processBulkPdfs(Array.from(e.target.files));
+    input.click();
+  };
+
+  // 드래그앤드롭 핸들러
+  const handleDrop = (e) => { e.preventDefault(); setDragOver(false); const files = Array.from(e.dataTransfer.files).filter(f=>f.type==='application/pdf'); if(files.length) processBulkPdfs(files); };
+  const handleDragOver = (e) => { e.preventDefault(); setDragOver(true); };
+  const handleDragLeave = () => setDragOver(false);
+
+  // 미리보기에서 개별 항목 수정
+  const updateBulkItem = (idx, field, val) => { const u=[...bulkParsed]; u[idx]={...u[idx],[field]:val}; setBulkParsed(u); };
+  const toggleBulkCheck = (idx) => { const u=[...bulkParsed]; u[idx]._checked=!u[idx]._checked; setBulkParsed(u); };
+  const toggleBulkAll = (checked) => { setBulkParsed(bulkParsed.map(p=>({...p, _checked: p._status!=='error' ? checked : false}))); };
+
+  // 미리보기 변수 수정
+  const updateBulkVar = (pIdx, vIdx, field, val) => {
+    const u=[...bulkParsed]; const vars=[...u[pIdx].variables]; vars[vIdx]={...vars[vIdx],[field]:val}; u[pIdx]={...u[pIdx],variables:vars}; setBulkParsed(u);
+  };
+  const addBulkVar = (pIdx) => {
+    const u=[...bulkParsed]; u[pIdx]={...u[pIdx],variables:[...u[pIdx].variables,{name:'',role:'독립',dimensions:'',itemCount:'',scale:'5점 Likert',source:'',koreanSource:'',alpha:''}]}; setBulkParsed(u);
+  };
+  const removeBulkVar = (pIdx, vIdx) => {
+    const u=[...bulkParsed]; u[pIdx]={...u[pIdx],variables:u[pIdx].variables.filter((_,i)=>i!==vIdx)}; setBulkParsed(u);
+  };
+
+  // 확인 후 일괄 저장
+  const saveBulkParsed = () => {
+    const toSave = bulkParsed.filter(p=>p._checked && p._status!=='error');
+    if(!toSave.length){ showToast('저장할 논문이 없습니다.','error'); return; }
+    const current = [...papers];
+    let added=0;
+    toSave.forEach(p => {
+      const clean = {...p};
+      delete clean._fileName; delete clean._status; delete clean._checked; delete clean._varCount; delete clean._pages; delete clean._error;
+      clean.id = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+      // 최종 중복 체크
+      if(!findSimilarInDB(clean.title, clean.year, current, -1, clean.authors)){
+        current.push(clean); added++;
+      }
+    });
+    saveDB(current); setPapers(current);
+    showToast(`✅ ${added}편이 DB에 저장되었습니다!`);
+    setBulkParsed([]); setView('list');
+  };
+
+  const importJSON = () => {
+    const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
+    input.onchange = (e) => {
+      const file = e.target.files[0]; if(!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const imported = JSON.parse(ev.target.result);
+          if(!Array.isArray(imported)) { showToast('올바른 JSON 형식이 아닙니다.', 'error'); return; }
+          let added = 0, skipped = 0;
+          const current = [...papers];
+          imported.forEach(p => {
+            if(findSimilarInDB(p.title, p.year, current, -1, p.authors)) { skipped++; }
+            else { current.push({...emptyPaper(), ...p, id: Date.now().toString(36)+Math.random().toString(36).slice(2,6)}); added++; }
+          });
+          saveDB(current); setPapers(current);
+          showToast(`📂 가져오기 완료! 추가 ${added}편, 중복 ${skipped}편`);
+        } catch { showToast('JSON 파싱 오류', 'error'); }
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  };
+
+  const filtered = papers.filter(p => {
+    const matchSearch = !searchTerm || p.title.includes(searchTerm) || p.authors.includes(searchTerm) ||
+      (p.variables||[]).some(v => v.name.includes(searchTerm));
+    const matchCat = catFilter === '전체' || (p.category||'기타') === catFilter;
+    return matchSearch && matchCat;
+  });
+
+  const catCounts = {
+    '전체': papers.length,
+    'SVU논문': papers.filter(p=>(p.category||'기타')==='SVU논문').length,
+    '타대학논문': papers.filter(p=>(p.category||'기타')==='타대학논문').length,
+    '해외논문': papers.filter(p=>(p.category||'기타')==='해외논문').length,
+    '국내인용논문': papers.filter(p=>(p.category||'기타')==='국내인용논문').length,
+    '기타': papers.filter(p=>!p.category || !['SVU논문','타대학논문','해외논문','국내인용논문'].includes(p.category)).length,
+  };
+  const stats = {
+    total: papers.length,
+    vars: [...new Set(papers.flatMap(p => (p.variables||[]).map(v => v.name)).filter(Boolean))].length,
+    items: papers.reduce((s,p) => s + (p.surveyItems||[]).filter(i=>i.text).length, 0),
+  };
+  const catColors = {'전체':'#1F3864','SVU논문':'#1F3864','타대학논문':'#7B3F00','해외논문':'#1a6b3a','국내인용논문':'#6B3FA0','기타':'#888'};
+  const catBg = {'전체':'#EEF3FB','SVU논문':'#EEF3FB','타대학논문':'#FFF5EC','해외논문':'#EDF7EF','국내인용논문':'#F3EEF8','기타':'#f5f5f5'};
+
+  const inputStyle = {width:'100%',padding:'9px 12px',borderRadius:'8px',border:'1px solid #d0d0d0',fontSize:'13px',fontFamily:'Arial',outline:'none',boxSizing:'border-box'};
+  const labelStyle = {fontSize:'12px',fontWeight:'bold',color:'#1F3864',marginBottom:'4px',display:'block'};
+  const sectionStyle = {background:'#fff',borderRadius:'12px',padding:'20px',marginBottom:'16px',border:'1px solid #e8e8e8'};
+  const btnPrimary = {background:'#1F3864',color:'#fff',border:'none',borderRadius:'8px',padding:'10px 20px',fontSize:'13px',fontWeight:'bold',cursor:'pointer'};
+  const btnSecondary = {background:'#f0f0f0',color:'#555',border:'1px solid #ddd',borderRadius:'8px',padding:'8px 16px',fontSize:'12px',cursor:'pointer'};
+  const btnDanger = {background:'#fff',color:'#C0392B',border:'1px solid #C0392B',borderRadius:'8px',padding:'6px 12px',fontSize:'11px',cursor:'pointer'};
+
+  // ── TOAST ──
+  const toastEl = toast ? h('div',{style:{position:'fixed',top:'20px',left:'50%',transform:'translateX(-50%)',
+    background:toast.type==='error'?'#C0392B':'#27AE60',color:'#fff',padding:'12px 28px',borderRadius:'10px',
+    fontSize:'14px',fontWeight:'bold',zIndex:9999,boxShadow:'0 4px 20px rgba(0,0,0,0.2)',animation:'fadeIn 0.3s'}},toast.msg) : null;
+
+  // ── BULK PREVIEW VIEW (PDF 일괄 업로드 미리보기) ──
+  if(view === 'bulkPreview') {
+    const checkedCount = bulkParsed.filter(p=>p._checked).length;
+    const okCount = bulkParsed.filter(p=>p._status==='ok').length;
+    const dupCount = bulkParsed.filter(p=>p._status==='dup').length;
+    const errCount = bulkParsed.filter(p=>p._status==='error').length;
+    return h('div',{style:{minHeight:'100vh',background:'linear-gradient(160deg,#FFF8F0 0%,#ffffff 60%)',padding:'20px'}},
+      toastEl,
+      h('div',{style:{maxWidth:'1100px',margin:'0 auto'}},
+        // 헤더
+        h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'20px'}},
+          h('div',null,
+            h('h1',{style:{fontSize:'26px',fontWeight:'bold',color:'#1F3864',marginBottom:'4px'}},'📄 PDF 일괄 분석 결과'),
+            h('p',{style:{fontSize:'13px',color:'#888'}},
+              bulkProgress.parsing
+                ? `분석 중... ${bulkProgress.current}/${bulkProgress.total}편`
+                : `총 ${bulkParsed.length}편 분석 완료 — 확인 후 저장하세요`)
+          ),
+          h('div',{style:{display:'flex',gap:'10px'}},
+            h('button',{onClick:()=>{setBulkParsed([]);setView('list');},
+              style:{background:'#f0f0f0',color:'#555',border:'1px solid #ddd',borderRadius:'8px',padding:'10px 20px',fontSize:'13px',cursor:'pointer'}},'← 취소'),
+            !bulkProgress.parsing && h('button',{onClick:saveBulkParsed,disabled:!checkedCount,
+              style:{background:checkedCount?'#27AE60':'#ccc',color:'#fff',border:'none',borderRadius:'8px',padding:'10px 24px',fontSize:'14px',fontWeight:'bold',cursor:checkedCount?'pointer':'not-allowed',boxShadow:checkedCount?'0 2px 10px rgba(39,174,96,0.3)':'none'}},
+              `✅ 선택한 ${checkedCount}편 DB에 저장`)
+          )
+        ),
+        // 진행 바
+        bulkProgress.parsing && h('div',{style:{background:'#e0e0e0',borderRadius:'8px',height:'8px',marginBottom:'16px',overflow:'hidden'}},
+          h('div',{style:{width:`${(bulkProgress.current/bulkProgress.total*100)}%`,height:'100%',background:'linear-gradient(90deg,#C0392B,#E74C3C)',borderRadius:'8px',transition:'width 0.3s'}})
+        ),
+        // 요약 카드
+        !bulkProgress.parsing && h('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'10px',marginBottom:'16px'}},
+          ...[
+            ['📄 분석 완료',bulkParsed.length+'편','#1F3864','#EEF3FB'],
+            ['✅ 추가 가능',okCount+'편','#27AE60','#EDF7EF'],
+            ['⚠️ 중복',dupCount+'편','#E67E22','#FFF5EC'],
+            ['❌ 실패',errCount+'편','#C0392B','#FFF0F0']
+          ].map(([label,val,color,bg])=>
+            h('div',{key:label,style:{background:bg,borderRadius:'10px',padding:'12px',textAlign:'center',border:`1px solid ${color}22`}},
+              h('div',{style:{fontSize:'11px',color:'#888'}},label),
+              h('div',{style:{fontSize:'20px',fontWeight:'bold',color}},val))
+          )
+        ),
+        // 전체 선택/해제
+        !bulkProgress.parsing && h('div',{style:{display:'flex',gap:'12px',alignItems:'center',marginBottom:'12px'}},
+          h('label',{style:{fontSize:'13px',color:'#555',cursor:'pointer',display:'flex',alignItems:'center',gap:'6px'}},
+            h('input',{type:'checkbox',checked:checkedCount===bulkParsed.filter(p=>p._status!=='error').length,
+              onChange:e=>toggleBulkAll(e.target.checked)}),
+            '전체 선택/해제'),
+          h('span',{style:{fontSize:'12px',color:'#888'}},`(${checkedCount}편 선택됨)`)
+        ),
+        // 논문 카드 리스트
+        h('div',{style:{display:'flex',flexDirection:'column',gap:'10px'}},
+          bulkParsed.map((p, idx) => {
+            const isExpanded = expandedIdx === idx;
+            const statusIcon = p._status==='ok' ? '✅' : p._status==='dup' ? '⚠️' : '❌';
+            const statusColor = p._status==='ok' ? '#27AE60' : p._status==='dup' ? '#E67E22' : '#C0392B';
+            const statusLabel = p._status==='ok' ? '추가 가능' : p._status==='dup' ? ('중복: ' + (p._dupInfo||'기존 DB에 유사 논문 존재')) : '파싱 실패';
+            return h('div',{key:idx,style:{background:'#fff',borderRadius:'12px',border:`2px solid ${p._checked?statusColor:'#e0e0e0'}`,overflow:'hidden',transition:'all 0.2s'}},
+              // 요약 행 (클릭으로 펼침)
+              h('div',{style:{display:'flex',alignItems:'center',gap:'12px',padding:'14px 16px',cursor:'pointer',background:p._checked?`${statusColor}08`:'#fafafa'},
+                onClick:()=>setExpandedIdx(isExpanded?null:idx)},
+                h('input',{type:'checkbox',checked:!!p._checked,disabled:p._status==='error',
+                  onChange:(e)=>{e.stopPropagation();toggleBulkCheck(idx);},
+                  style:{width:'18px',height:'18px',cursor:'pointer'}}),
+                h('span',{style:{fontSize:'16px'}},statusIcon),
+                h('div',{style:{flex:1,minWidth:0}},
+                  h('div',{style:{fontSize:'14px',fontWeight:'bold',color:'#1F3864',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},
+                    p.title || '(제목 없음)'),
+                  h('div',{style:{fontSize:'12px',color:'#888',marginTop:'2px'}},
+                    [p.authors, p.year, p.category, p.variables?.filter(v=>v.name).length+'개 변수'].filter(Boolean).join(' · '))
+                ),
+                h('span',{style:{fontSize:'11px',padding:'3px 10px',borderRadius:'12px',background:`${statusColor}15`,color:statusColor,fontWeight:'bold',whiteSpace:'nowrap'}},statusLabel),
+                h('span',{style:{fontSize:'16px',color:'#999',transform:isExpanded?'rotate(180deg)':'rotate(0)',transition:'transform 0.2s'}},'▼')
+              ),
+              // 펼침 상세 (수정 가능)
+              isExpanded && h('div',{style:{padding:'16px',borderTop:'1px solid #eee',background:'#FAFBFF'}},
+                // 기본 정보 수정
+                h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px',marginBottom:'14px'}},
+                  ...[['제목','title'],['저자','authors'],['연도','year'],['대학','university'],['카테고리','category'],['표본크기','sampleSize'],['연구대상','region'],['연구결과','result']].map(([label,field])=>
+                    h('div',{key:field},
+                      h('label',{style:{fontSize:'11px',fontWeight:'bold',color:'#1F3864',display:'block',marginBottom:'3px'}},label),
+                      field==='category'
+                        ? h('select',{value:p[field]||'',onChange:e=>updateBulkItem(idx,field,e.target.value),
+                            style:{width:'100%',padding:'7px 10px',borderRadius:'6px',border:'1px solid #d0d0d0',fontSize:'12px'}},
+                            ...['SVU논문','타대학논문','해외논문','국내인용논문','기타'].map(opt=>h('option',{key:opt,value:opt},opt)))
+                        : h('input',{value:p[field]||'',onChange:e=>updateBulkItem(idx,field,e.target.value),
+                            style:{width:'100%',padding:'7px 10px',borderRadius:'6px',border:'1px solid #d0d0d0',fontSize:'12px',boxSizing:'border-box'}})
+                    )
+                  )
+                ),
+                // 변수 수정
+                h('div',{style:{marginBottom:'10px'}},
+                  h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'8px'}},
+                    h('span',{style:{fontSize:'12px',fontWeight:'bold',color:'#6B3FA0'}},'📊 변수 ('+p.variables.filter(v=>v.name).length+'개)'),
+                    h('button',{onClick:()=>addBulkVar(idx),style:{fontSize:'11px',color:'#27AE60',background:'#EDF7EF',border:'1px solid #27AE60',borderRadius:'6px',padding:'3px 10px',cursor:'pointer'}},'+변수 추가')
+                  ),
+                  p.variables.map((v,vi) =>
+                    h('div',{key:vi,style:{display:'flex',gap:'6px',marginBottom:'6px',alignItems:'center'}},
+                      h('input',{value:v.name||'',placeholder:'변수명',onChange:e=>updateBulkVar(idx,vi,'name',e.target.value),
+                        style:{flex:2,padding:'6px 8px',borderRadius:'6px',border:'1px solid #d0d0d0',fontSize:'12px'}}),
+                      h('select',{value:v.role||'독립',onChange:e=>updateBulkVar(idx,vi,'role',e.target.value),
+                        style:{flex:1,padding:'6px',borderRadius:'6px',border:'1px solid #d0d0d0',fontSize:'12px'}},
+                        ...['독립','매개','종속','조절'].map(r=>h('option',{key:r,value:r},r))),
+                      h('input',{value:v.dimensions||'',placeholder:'하위차원',onChange:e=>updateBulkVar(idx,vi,'dimensions',e.target.value),
+                        style:{flex:2,padding:'6px 8px',borderRadius:'6px',border:'1px solid #d0d0d0',fontSize:'12px'}}),
+                      h('button',{onClick:()=>removeBulkVar(idx,vi),style:{color:'#C0392B',background:'none',border:'none',fontSize:'16px',cursor:'pointer',padding:'2px 6px'}},'✕')
+                    )
+                  )
+                ),
+                // 파일 정보
+                h('div',{style:{fontSize:'11px',color:'#aaa',marginTop:'8px'}},
+                  '📁 ', p._fileName, p._pages ? ` (${p._pages}페이지)` : '',
+                  p._error ? ` | ❌ ${p._error}` : '')
+              )
+            );
+          })
+        )
+      )
+    );
+  }
+
+  // ── LIST VIEW ──
+  if(view === 'list') return h('div',{style:{minHeight:'100vh',background:'linear-gradient(160deg,#f0f4ff 0%,#ffffff 60%)',padding:'20px'}},
+    toastEl,
+    h('div',{style:{maxWidth:'960px',margin:'0 auto'}},
+      h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'24px'}},
+        h('div',null,
+          h('h1',{style:{fontSize:'28px',fontWeight:'bold',color:'#1F3864',marginBottom:'4px'}},'🗄️ 논문 DB 구축'),
+          h('p',{style:{fontSize:'13px',color:'#888'}},'논문 정보를 직접 입력하여 나만의 연구 데이터베이스를 구축하세요.')
+        ),
+        h('button',{onClick:onBack,style:btnSecondary},'← 홈으로')
+      ),
+      // Stats bar - summary
+      h('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'12px',marginBottom:'12px'}},
+        ...[['📄 등록 논문',stats.total+'편'],['📊 고유 변수',stats.vars+'개'],['📝 설문항목',stats.items+'개']].map(([label,val])=>
+          h('div',{key:label,style:{background:'#fff',borderRadius:'10px',padding:'14px',textAlign:'center',border:'1px solid #e8e8e8'}},
+            h('div',{style:{fontSize:'11px',color:'#888',marginBottom:'4px'}},label),
+            h('div',{style:{fontSize:'22px',fontWeight:'bold',color:'#1F3864'}},val)
+          )
+        )
+      ),
+      // ── 드래그앤드롭 영역 ──
+      h('div',{
+        onDrop:handleDrop, onDragOver:handleDragOver, onDragLeave:handleDragLeave,
+        onClick:handleBulkPdfUpload,
+        style:{border: dragOver ? '3px dashed #C0392B' : '3px dashed #ccc',
+          borderRadius:'16px', padding: '30px 20px', textAlign:'center', marginBottom:'20px',
+          background: dragOver ? '#FFF0F0' : '#FAFBFF', cursor:'pointer', transition:'all 0.3s'}
+      },
+        h('div',{style:{fontSize:'40px',marginBottom:'8px'}}, '📄'),
+        h('div',{style:{fontSize:'16px',fontWeight:'bold',color: dragOver ? '#C0392B' : '#1F3864',marginBottom:'4px'}},
+          dragOver ? '여기에 놓으세요!' : 'PDF 파일을 여기에 드래그하거나 클릭하세요'),
+        h('div',{style:{fontSize:'12px',color:'#888'}}, '여러 PDF를 한번에 끌어다 놓으면 자동 분석 → 미리보기 → 확인 후 저장')
+      ),
+      // Category filter tabs
+      h('div',{style:{display:'flex',gap:'8px',marginBottom:'20px',flexWrap:'wrap'}},
+        ...['전체','SVU논문','타대학논문','해외논문','국내인용논문','기타'].filter(c => c==='전체' || catCounts[c]>0).map(cat =>
+          h('button',{key:cat,onClick:()=>setCatFilter(cat),
+            style:{background: catFilter===cat ? (catColors[cat]||'#1F3864') : '#fff',
+              color: catFilter===cat ? '#fff' : (catColors[cat]||'#666'),
+              border: `1.5px solid ${catColors[cat]||'#1F3864'}`,
+              borderRadius:'20px',padding:'6px 14px',fontSize:'12px',fontWeight:'bold',
+              cursor:'pointer',transition:'all 0.2s'}},
+            `${cat} (${catCounts[cat]||0})`)
+        )
+      ),
+      // Action buttons
+      h('div',{style:{display:'flex',gap:'10px',marginBottom:'20px',flexWrap:'wrap',alignItems:'center'}},
+        h('button',{onClick:()=>handlePdfUpload(true),disabled:pdfLoading,
+          style:{background:'#C0392B',color:'#fff',border:'none',borderRadius:'8px',padding:'10px 20px',fontSize:'13px',fontWeight:'bold',cursor:pdfLoading?'wait':'pointer',boxShadow:'0 2px 8px rgba(192,57,43,0.3)'}},
+          pdfLoading ? '⏳ 분석 중...' : '📄 PDF 업로드 → 자동입력'),
+        h('button',{onClick:handleBulkPdfUpload,disabled:pdfLoading,
+          style:{background:'#7B3F00',color:'#fff',border:'none',borderRadius:'8px',padding:'10px 20px',fontSize:'13px',fontWeight:'bold',cursor:pdfLoading?'wait':'pointer',boxShadow:'0 2px 8px rgba(123,63,0,0.3)'}},
+          pdfLoading ? '⏳ 처리 중...' : '📚 PDF 여러개 일괄등록'),
+        h('button',{onClick:()=>{setForm(emptyPaper());setEditIdx(null);setView('add');},style:btnPrimary},'+ 직접 입력'),
+        h('button',{onClick:exportJSON,style:btnSecondary,disabled:!papers.length},'📥 JSON'),
+        h('button',{onClick:importJSON,style:btnSecondary},'📂 가져오기'),
+        papers.length > 0 && h('button',{onClick:()=>exportUserDBtoExcel(papers),
+          style:{background:'#1a6b3a',color:'#fff',border:'none',borderRadius:'8px',padding:'10px 20px',fontSize:'13px',fontWeight:'bold',cursor:'pointer',boxShadow:'0 2px 8px rgba(26,107,58,0.3)'}},
+          '📊 사용자_논문DB.xlsx 내보내기'),
+        papers.length > 0 && h('button',{onClick:()=>{
+          if(confirm(`⚠️ 사용자 논문 DB 전체(${papers.length}편)를 삭제하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다.`)) {
+            localStorage.removeItem(DB_KEY);
+            setPapers([]);
+            showToast('🗑️ 사용자 논문 DB가 초기화되었습니다.');
+          }
+        },style:{background:'#fff',color:'#C0392B',border:'1.5px solid #C0392B',borderRadius:'8px',padding:'10px 20px',fontSize:'13px',fontWeight:'bold',cursor:'pointer'}},
+          '🗑️ DB 전체 삭제'),
+      ),
+      pdfLoading && h('div',{style:{background:'#FFF3CD',borderRadius:'8px',padding:'12px 16px',marginBottom:'16px',border:'1px solid #FFD93D',fontSize:'13px',color:'#664D03',display:'flex',alignItems:'center',gap:'8px'}},
+        h('span',{style:{animation:'spin 1s linear infinite',display:'inline-block'}},'⏳'),
+        'PDF를 분석하고 있습니다... 논문 구조를 자동으로 파싱합니다.'
+      ),
+      // Search
+      h('input',{value:searchTerm,onChange:e=>setSearchTerm(e.target.value),placeholder:'🔍 논문 제목, 저자, 변수명으로 검색...',
+        style:{...inputStyle,marginBottom:'16px',fontSize:'14px',padding:'12px 16px'}}),
+      // Paper list
+      filtered.length === 0
+        ? h('div',{style:{textAlign:'center',padding:'60px 20px',color:'#aaa'}},
+            h('div',{style:{fontSize:'48px',marginBottom:'12px'}}, papers.length ? '🔍' : '📭'),
+            h('p',{style:{fontSize:'15px'}}, papers.length ? '검색 결과가 없습니다.' : '등록된 논문이 없습니다.'),
+            !papers.length && h('p',{style:{fontSize:'13px',marginTop:'8px'}},'위의 "새 논문 추가" 버튼으로 시작하세요!')
+          )
+        : filtered.map((p, idx) => {
+            const realIdx = papers.indexOf(p);
+            return h('div',{key:p.id,style:{background:'#fff',borderRadius:'12px',padding:'16px 20px',marginBottom:'10px',
+              border:'1px solid #e8e8e8',cursor:'pointer',transition:'all 0.2s'},
+              onClick:()=>{setEditIdx(realIdx);setView('detail');},
+              onMouseEnter:e=>{e.currentTarget.style.borderColor='#1F3864';e.currentTarget.style.boxShadow='0 2px 12px rgba(31,56,100,0.1)';},
+              onMouseLeave:e=>{e.currentTarget.style.borderColor='#e8e8e8';e.currentTarget.style.boxShadow='none';}
+            },
+              h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}},
+                h('div',{style:{flex:1}},
+                  h('div',{style:{display:'flex',alignItems:'center',gap:'8px',marginBottom:'4px'}},
+                    h('div',{style:{fontSize:'14px',fontWeight:'bold',color:'#1F3864',flex:1}},p.title || '(제목 없음)'),
+                    p.category && h('span',{style:{background:catBg[p.category]||'#f5f5f5',color:catColors[p.category]||'#888',
+                      padding:'2px 8px',borderRadius:'10px',fontSize:'10px',fontWeight:'bold',whiteSpace:'nowrap',
+                      border:`1px solid ${catColors[p.category]||'#ccc'}22`}},p.category)
+                  ),
+                  h('div',{style:{fontSize:'12px',color:'#666'}}, `${p.authors||''} (${p.year||''}) · ${p.journal||''}`),
+                  h('div',{style:{display:'flex',gap:'6px',marginTop:'8px',flexWrap:'wrap',alignItems:'center'}},
+                    p.needsReview && h('span',{
+                      onClick:(e)=>{e.stopPropagation(); handleEdit(realIdx);},
+                      style:{background:'#FFF3CD',color:'#856404',padding:'3px 10px',borderRadius:'12px',fontSize:'11px',fontWeight:'bold',cursor:'pointer',border:'1px solid #FFECB5'}},
+                      '\u26A0\uFE0F \uBCC0\uC218 \uD655\uC778\uD544\uC694 (\uD074\uB9AD\uD558\uC5EC \uC218\uC815)'),
+                    ...(p.variables||[]).filter(v=>v.name).map((v,vi)=>
+                      h('span',{key:vi,style:{background:v.role==='독립'?'#EEF3FB':v.role==='매개'?'#FFF5EC':v.role==='종속'?'#EDF7EF':'#f5f5f5',
+                        color:v.role==='독립'?'#1F3864':v.role==='매개'?'#7B3F00':v.role==='종속'?'#1a6b3a':'#666',
+                        padding:'3px 10px',borderRadius:'12px',fontSize:'11px',fontWeight:'bold'}},
+                        `${v.role}: ${v.name}`)
+                    )
+                  )
+                ),
+                h('div',{style:{fontSize:'11px',color:'#bbb',whiteSpace:'nowrap',marginLeft:'12px'}},p.addedAt||'')
+              )
+            );
+          })
+    )
+  );
+
+  // ── DETAIL VIEW ──
+  if(view === 'detail' && editIdx !== null) {
+    const p = papers[editIdx];
+    return h('div',{style:{minHeight:'100vh',background:'linear-gradient(160deg,#f0f4ff 0%,#ffffff 60%)',padding:'20px'}},
+      toastEl,
+      h('div',{style:{maxWidth:'800px',margin:'0 auto'}},
+        h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'20px'}},
+          h('button',{onClick:()=>setView('list'),style:btnSecondary},'← 목록으로'),
+          h('div',{style:{display:'flex',gap:'8px'}},
+            h('button',{onClick:()=>handleEdit(editIdx),style:btnPrimary},'✏️ 수정'),
+            h('button',{onClick:()=>handleDelete(editIdx),style:btnDanger},'🗑️ 삭제')
+          )
+        ),
+        h('div',{style:sectionStyle},
+          h('div',{style:{display:'flex',alignItems:'center',gap:'12px',marginBottom:'12px'}},
+            h('h2',{style:{fontSize:'18px',fontWeight:'bold',color:'#1F3864',flex:1,margin:0}},p.title),
+            p.category && h('span',{style:{background:catBg[p.category]||'#f5f5f5',color:catColors[p.category]||'#888',
+              padding:'4px 12px',borderRadius:'12px',fontSize:'12px',fontWeight:'bold',
+              border:`1.5px solid ${catColors[p.category]||'#ccc'}33`}},p.category)
+          ),
+          h('div',{style:{fontSize:'13px',color:'#555',lineHeight:'2'}},
+            h('div',null,`👤 저자: ${p.authors||'-'}`),
+            h('div',null,`📅 연도: ${p.year||'-'}`),
+            h('div',null,`📰 학술지: ${p.journal||'-'}`),
+            h('div',null,`🏫 소속: ${p.university||'-'}`),
+            p.advisor && h('div',null,`👨‍🏫 지도교수: ${p.advisor}`),
+            h('div',null,`👥 표본: ${p.sampleSize||'-'}`),
+            h('div',null,`🔬 연구방법: ${p.method||'-'}`),
+            h('div',null,`📈 분석방법: ${p.analysisMethod||'-'}`),
+            h('div',null,`🎯 연구대상: ${p.region||'-'}`),
+            h('div',null,`📋 연구결과: ${p.result||'-'}`)
+          )
+        ),
+        // Variables
+        h('div',{style:sectionStyle},
+          h('h3',{style:{fontSize:'15px',fontWeight:'bold',color:'#1F3864',marginBottom:'12px'}},'📊 측정변수'),
+          ...(p.variables||[]).filter(v=>v.name).map((v,i) => h('div',{key:i,style:{background:'#f8f9fc',borderRadius:'8px',padding:'12px',marginBottom:'8px',border:'1px solid #eee'}},
+            h('div',{style:{display:'flex',gap:'8px',alignItems:'center',marginBottom:'6px'}},
+              h('span',{style:{background:v.role==='독립'?'#1F3864':v.role==='매개'?'#7B3F00':'#1a6b3a',color:'#fff',padding:'2px 10px',borderRadius:'10px',fontSize:'11px',fontWeight:'bold'}},v.role),
+              h('span',{style:{fontWeight:'bold',fontSize:'14px',color:'#333'}},v.name)
+            ),
+            h('div',{style:{fontSize:'12px',color:'#666',lineHeight:'1.8'}},
+              v.dimensions && h('div',null,`하위요인: ${v.dimensions}`),
+              v.itemCount && h('div',null,`문항수: ${v.itemCount}`),
+              h('div',null,`척도: ${v.scale||'-'}`),
+              v.source && h('div',null,`원전: ${v.source}`),
+              v.koreanSource && h('div',null,`한국적용: ${v.koreanSource}`),
+              v.alpha && h('div',null,`Cronbach α: ${v.alpha}`)
+            )
+          ))
+        ),
+        // Survey items
+        (p.surveyItems||[]).filter(s=>s.text).length > 0 && h('div',{style:sectionStyle},
+          h('h3',{style:{fontSize:'15px',fontWeight:'bold',color:'#1F3864',marginBottom:'12px'}},'📝 설문항목'),
+          ...(p.surveyItems||[]).filter(s=>s.text).map((s,i) => h('div',{key:i,style:{padding:'8px 0',borderBottom:'1px solid #f0f0f0',fontSize:'13px'}},
+            h('span',{style:{color:'#1F3864',fontWeight:'bold',marginRight:'8px'}},`${s.variable||''} ${s.dimension?'('+s.dimension+')':''} #${s.itemNo||i+1}`),
+            h('span',{style:{color:'#333'}},s.text)
+          ))
+        ),
+        p.memo && h('div',{style:sectionStyle},
+          h('h3',{style:{fontSize:'15px',fontWeight:'bold',color:'#1F3864',marginBottom:'8px'}},'📌 메모'),
+          h('p',{style:{fontSize:'13px',color:'#555',whiteSpace:'pre-wrap'}},p.memo)
+        )
+      )
+    );
+  }
+
+  // ── ADD/EDIT VIEW ──
+  return h('div',{style:{minHeight:'100vh',background:'linear-gradient(160deg,#f0f4ff 0%,#ffffff 60%)',padding:'20px'}},
+    toastEl,
+    h('div',{style:{maxWidth:'800px',margin:'0 auto'}},
+      h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'20px'}},
+        h('h1',{style:{fontSize:'22px',fontWeight:'bold',color:'#1F3864'}}, editIdx !== null ? '✏️ 논문 수정' : '📄 새 논문 추가'),
+        h('div',{style:{display:'flex',gap:'8px'}},
+          editIdx===null && h('button',{onClick:()=>handlePdfUpload(false),disabled:pdfLoading,
+            style:{background:'#C0392B',color:'#fff',border:'none',borderRadius:'8px',padding:'8px 16px',fontSize:'12px',fontWeight:'bold',cursor:'pointer'}},
+            pdfLoading ? '⏳ 분석 중...' : '📄 PDF에서 자동입력'),
+          h('button',{onClick:()=>{setView('list');setEditIdx(null);setForm(emptyPaper());},style:btnSecondary},'← 취소')
+        )
+      ),
+      // ── 기본정보 ──
+      h('div',{style:sectionStyle},
+        h('h3',{style:{fontSize:'15px',fontWeight:'bold',color:'#1F3864',marginBottom:'14px'}},'1️⃣ 논문 기본정보'),
+        h('div',{style:{display:'grid',gridTemplateColumns:'1fr',gap:'10px'}},
+          h('div',null, h('label',{style:labelStyle},'논문 제목 *'), h('input',{style:inputStyle,value:form.title,onChange:e=>setForm({...form,title:e.target.value}),placeholder:'논문 전체 제목을 입력하세요'})),
+          h('div',{style:{display:'grid',gridTemplateColumns:'1fr 100px',gap:'10px'}},
+            h('div',null, h('label',{style:labelStyle},'저자 *'), h('input',{style:inputStyle,value:form.authors,onChange:e=>setForm({...form,authors:e.target.value}),placeholder:'예: 홍길동, 김철수'})),
+            h('div',null, h('label',{style:labelStyle},'발표연도'), h('input',{style:inputStyle,value:form.year,onChange:e=>setForm({...form,year:e.target.value}),placeholder:'2024'}))
+          ),
+          h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px'}},
+            h('div',null, h('label',{style:labelStyle},'학술지'), h('input',{style:inputStyle,value:form.journal,onChange:e=>setForm({...form,journal:e.target.value}),placeholder:'학술지명, 권(호), 페이지'})),
+            h('div',null, h('label',{style:labelStyle},'소속 대학'), h('input',{style:inputStyle,value:form.university,onChange:e=>setForm({...form,university:e.target.value}),placeholder:'서울대학교, 고려대학교 등'}))
+          ),
+          h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px'}},
+            h('div',null, h('label',{style:labelStyle},'표본크기'), h('input',{style:inputStyle,value:form.sampleSize,onChange:e=>setForm({...form,sampleSize:e.target.value}),placeholder:'N=300'})),
+            h('div',null, h('label',{style:labelStyle},'연구방법'), h('select',{style:inputStyle,value:form.method,onChange:e=>setForm({...form,method:e.target.value})},
+              h('option',{value:'',disabled:true},'-- 선택 --'),
+              ...['설문조사','실험연구','사례연구','혼합방법','메타분석','질적연구'].map(o=>h('option',{key:o,value:o},o)))),
+            h('div',null, h('label',{style:labelStyle},'분석방법'), h('input',{style:inputStyle,value:form.analysisMethod,onChange:e=>setForm({...form,analysisMethod:e.target.value}),placeholder:'SEM, 회귀분석 등'}))
+          ),
+          h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px'}},
+            h('div',null, h('label',{style:labelStyle},'연구대상'), h('input',{style:inputStyle,value:form.region||'',onChange:e=>setForm({...form,region:e.target.value}),placeholder:'예: 중소기업 직원 300명, 대학생'})),
+            h('div',null, h('label',{style:labelStyle},'연구결과'), h('input',{style:inputStyle,value:form.result||'',onChange:e=>setForm({...form,result:e.target.value}),placeholder:'예: IV→DV 긍정(+), MV 매개효과 유의'}))
+          ),
+          h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px',marginTop:'4px'}},
+            h('div',null, h('label',{style:labelStyle},'논문 분류'),
+              h('select',{style:{...inputStyle,fontWeight:'bold',color:catColors[form.category]||'#333'},value:form.category||'기타',
+                onChange:e=>setForm({...form,category:e.target.value})},
+                ...['SVU논문','타대학논문','해외논문','국내인용논문','기타'].map(o=>h('option',{key:o,value:o},o)))),
+            h('div',null, h('label',{style:labelStyle},'지도교수'), h('input',{style:inputStyle,value:form.advisor||'',onChange:e=>setForm({...form,advisor:e.target.value}),placeholder:'지도교수 이름'}))
+          )
+        )
+      ),
+      // ── 측정변수 ──
+      h('div',{style:sectionStyle},
+        h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'14px'}},
+          h('h3',{style:{fontSize:'15px',fontWeight:'bold',color:'#1F3864'}},'2️⃣ 측정변수 (척도 정보)'),
+          h('button',{onClick:addVariable,style:{...btnSecondary,fontSize:'11px',padding:'6px 12px'}},'+변수 추가')
+        ),
+        ...form.variables.map((v,i) => h('div',{key:i,style:{background:'#f8f9fc',borderRadius:'10px',padding:'14px',marginBottom:'10px',border:'1px solid #eee',position:'relative'}},
+          form.variables.length > 1 && h('button',{onClick:()=>removeVariable(i),style:{position:'absolute',top:'8px',right:'8px',background:'none',border:'none',color:'#ccc',cursor:'pointer',fontSize:'16px'}},'×'),
+          h('div',{style:{display:'grid',gridTemplateColumns:'1fr 100px',gap:'8px',marginBottom:'8px'}},
+            h('div',null, h('label',{style:labelStyle},`변수명 #${i+1}`), h('input',{style:inputStyle,value:v.name,onChange:e=>updateVariable(i,'name',e.target.value),placeholder:'예: 조직공정성'})),
+            h('div',null, h('label',{style:labelStyle},'역할'), h('select',{style:inputStyle,value:v.role,onChange:e=>updateVariable(i,'role',e.target.value)},
+              ...['독립','매개','종속','조절'].map(o=>h('option',{key:o,value:o},o))))
+          ),
+          h('div',{style:{display:'grid',gridTemplateColumns:'1fr 80px 100px',gap:'8px',marginBottom:'8px'}},
+            h('div',null, h('label',{style:labelStyle},'하위요인'), h('input',{style:inputStyle,value:v.dimensions,onChange:e=>updateVariable(i,'dimensions',e.target.value),placeholder:'분배, 절차, 상호작용'})),
+            h('div',null, h('label',{style:labelStyle},'문항수'), h('input',{style:inputStyle,value:v.itemCount,onChange:e=>updateVariable(i,'itemCount',e.target.value),placeholder:'18'})),
+            h('div',null, h('label',{style:labelStyle},'척도'), h('select',{style:inputStyle,value:v.scale,onChange:e=>updateVariable(i,'scale',e.target.value)},
+              ...['5점 Likert','7점 Likert','6점 Likert','4점 Likert','10점','기타'].map(o=>h('option',{key:o,value:o},o))))
+          ),
+          h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 80px',gap:'8px'}},
+            h('div',null, h('label',{style:labelStyle},'원전 출처'), h('input',{style:inputStyle,value:v.source,onChange:e=>updateVariable(i,'source',e.target.value),placeholder:'Colquitt(2001)'})),
+            h('div',null, h('label',{style:labelStyle},'한국적용 출처'), h('input',{style:inputStyle,value:v.koreanSource,onChange:e=>updateVariable(i,'koreanSource',e.target.value),placeholder:'홍길동(2020)'})),
+            h('div',null, h('label',{style:labelStyle},'α값'), h('input',{style:inputStyle,value:v.alpha,onChange:e=>updateVariable(i,'alpha',e.target.value),placeholder:'.92'}))
+          )
+        ))
+      ),
+      // ── 설문항목 ──
+      h('div',{style:sectionStyle},
+        h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'14px'}},
+          h('h3',{style:{fontSize:'15px',fontWeight:'bold',color:'#1F3864'}},'3️⃣ 설문항목 (선택)'),
+          h('button',{onClick:addSurveyItem,style:{...btnSecondary,fontSize:'11px',padding:'6px 12px'}},'+항목 추가')
+        ),
+        ...form.surveyItems.map((s,i) => h('div',{key:i,style:{display:'grid',gridTemplateColumns:'120px 100px 40px 1fr 30px',gap:'6px',marginBottom:'8px',alignItems:'end'}},
+          h('div',null, i===0&&h('label',{style:labelStyle},'변수명'), h('input',{style:{...inputStyle,fontSize:'12px'},value:s.variable,onChange:e=>updateSurveyItem(i,'variable',e.target.value),placeholder:'변수명'})),
+          h('div',null, i===0&&h('label',{style:labelStyle},'차원'), h('input',{style:{...inputStyle,fontSize:'12px'},value:s.dimension,onChange:e=>updateSurveyItem(i,'dimension',e.target.value),placeholder:'하위요인'})),
+          h('div',null, i===0&&h('label',{style:labelStyle},'#'), h('input',{style:{...inputStyle,fontSize:'12px',textAlign:'center'},value:s.itemNo,onChange:e=>updateSurveyItem(i,'itemNo',e.target.value)})),
+          h('div',null, i===0&&h('label',{style:labelStyle},'설문항목 텍스트'), h('input',{style:{...inputStyle,fontSize:'12px'},value:s.text,onChange:e=>updateSurveyItem(i,'text',e.target.value),placeholder:'나는 현재 조직에 계속 남고 싶다'})),
+          h('button',{onClick:()=>removeSurveyItem(i),style:{background:'none',border:'none',color:'#ccc',cursor:'pointer',fontSize:'14px',padding:'8px'}},'×')
+        ))
+      ),
+      // ── 메모 ──
+      h('div',{style:sectionStyle},
+        h('h3',{style:{fontSize:'15px',fontWeight:'bold',color:'#1F3864',marginBottom:'10px'}},'4️⃣ 참고문헌 / 메모'),
+        h('textarea',{style:{...inputStyle,height:'80px',resize:'vertical'},value:form.references,onChange:e=>setForm({...form,references:e.target.value}),placeholder:'주요 참고문헌 목록 (줄바꿈으로 구분)'}),
+        h('textarea',{style:{...inputStyle,height:'60px',resize:'vertical',marginTop:'8px'},value:form.memo,onChange:e=>setForm({...form,memo:e.target.value}),placeholder:'기타 메모 (특이사항, 한계점 등)'})
+      ),
+      // ── 저장 버튼 ──
+      h('div',{style:{display:'flex',justifyContent:'center',gap:'12px',padding:'20px 0'}},
+        h('button',{onClick:handleSave,style:{...btnPrimary,padding:'14px 40px',fontSize:'15px'}}, editIdx !== null ? '💾 수정 저장' : '💾 DB에 저장'),
+        h('button',{onClick:()=>{setView('list');setEditIdx(null);setForm(emptyPaper());},style:{...btnSecondary,padding:'14px 30px',fontSize:'14px'}},'취소')
+      )
+    )
+  );
+};
+
+// ══════════════════════════════════════════════════════════════
+// ██  HOME SCREEN  ██
+// ══════════════════════════════════════════════════════════════
+const HomeScreen = ({ onSelect }) => {
+  const cards = [
+    {id:'thesis',icon:'📄',title:'일반 논문 작성',sub:'석사·박사·학술지',
+      desc:'연구주제 자동분석 → 연구모형 설계 → 설문지 자동생성 → 구글폼 연동까지 9단계 가이드.',
+      features:[`총 ${dbStats.total||204}편 논문 DB 기반 (SVU+타학교+인용)`,'연구변수·경로 자동 추천','설문지 자동 생성','구글폼 내보내기'],color:'#1F3864',bg:'#EEF3FB'},
+    {id:'stats',icon:'📊',title:'설문 결과 통계 검토',sub:'SPSS·SmartPLS·AMOS',
+      desc:'엑셀 데이터 업로드 → 빈도·기술통계·신뢰도·상관·회귀·매개효과를 논문 결과표 형식으로 자동 출력.',
+      features:['xlsx/xls 파일 업로드','Cronbach α 자동계산','회귀·매개효과 자동분석','논문 결과표 형식 + 복사 기능'],color:'#1a6b3a',bg:'#EDF7EF'},
+    {id:'paperdb',icon:'🏗️',title:'논문 DB 구축',sub:'공사중 🚧',
+      desc:'현재 기능 개선 작업 중입니다. 빠른 시일 내에 더 안정적인 PDF 자동 추출 기능으로 찾아뵙겠습니다!',
+      features:['🚧 기능 업그레이드 진행 중','📄 PDF 자동 파싱 고도화','📚 일괄등록 안정화','🔜 곧 오픈 예정'],color:'#999',bg:'#f5f5f5',disabled:true},
+  ];
+  return h('div',{style:{minHeight:'100vh',background:'linear-gradient(160deg,#f0f4ff 0%,#ffffff 60%)'}},
+    h('div',{style:{textAlign:'center',padding:'52px 24px 28px'}},
+      h('h1',{style:{fontSize:'38px',fontWeight:'bold',color:'#1F3864',marginBottom:'8px',display:'flex',alignItems:'center',justifyContent:'center',gap:'10px'}},
+        h('svg',{width:'44',height:'44',viewBox:'0 0 100 100',style:{verticalAlign:'middle'}},
+          h('circle',{cx:'50',cy:'50',r:'46',fill:'none',stroke:'#1F3864',strokeWidth:'4'}),
+          h('circle',{cx:'50',cy:'50',r:'40',fill:'none',stroke:'#B8860B',strokeWidth:'2'}),
+          h('polygon',{points:'50,12 58,50 50,44 42,50',fill:'#C0392B'}),
+          h('polygon',{points:'50,88 42,50 50,56 58,50',fill:'#1F3864'}),
+          h('line',{x1:'50',y1:'8',x2:'50',y2:'16',stroke:'#1F3864',strokeWidth:'2'}),
+          h('line',{x1:'50',y1:'84',x2:'50',y2:'92',stroke:'#1F3864',strokeWidth:'2'}),
+          h('line',{x1:'8',y1:'50',x2:'16',y2:'50',stroke:'#1F3864',strokeWidth:'2'}),
+          h('line',{x1:'84',y1:'50',x2:'92',y2:'50',stroke:'#1F3864',strokeWidth:'2'}),
+          h('text',{x:'50',y:'9',textAnchor:'middle',fontSize:'8',fill:'#C0392B',fontWeight:'bold'},'N'),
+          h('text',{x:'50',y:'98',textAnchor:'middle',fontSize:'8',fill:'#1F3864',fontWeight:'bold'},'S'),
+          h('text',{x:'96',y:'53',textAnchor:'middle',fontSize:'8',fill:'#1F3864',fontWeight:'bold'},'E'),
+          h('text',{x:'4',y:'53',textAnchor:'middle',fontSize:'8',fill:'#1F3864',fontWeight:'bold'},'W'),
+          h('circle',{cx:'50',cy:'50',r:'4',fill:'#B8860B'})
+        ),
+        '논문나침반'
+      ),
+      h('p',{style:{fontSize:'16px',color:'#666',marginBottom:'4px'}},'PaperCompass — 서울벤처대학원대학교 스마트시티·융합기술경영전공'),
+      h('p',{style:{fontSize:'13px',color:'#aaa',marginTop:'4px'}},'어떤 작업을 도와드릴까요?')
+    ),
+    h('div',{style:{maxWidth:'1080px',margin:'0 auto',padding:'0 20px 60px',display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'24px'}},
+      ...cards.map(card=>h('div',{
+        key:card.id,onClick:()=>{if(card.disabled){alert('🚧 공사중입니다!\n\n기능 업그레이드 진행 중이니 조금만 기다려주세요.');return;}onSelect(card.id);},
+        style:{background:card.disabled?'#fafafa':'#fff',borderRadius:'18px',padding:'28px',cursor:card.disabled?'not-allowed':'pointer',border:`2px solid ${card.disabled?'#ddd':card.bg}`,
+          boxShadow:'0 4px 20px rgba(0,0,0,0.06)',transition:'all 0.22s',position:'relative',overflow:'hidden',opacity:card.disabled?0.7:1},
+        onMouseEnter:e=>{e.currentTarget.style.transform='translateY(-5px)';e.currentTarget.style.boxShadow='0 14px 36px rgba(0,0,0,0.13)';},
+        onMouseLeave:e=>{e.currentTarget.style.transform='translateY(0)';e.currentTarget.style.boxShadow='0 4px 20px rgba(0,0,0,0.06)';}
+      },
+        h('div',{style:{fontSize:'42px',marginBottom:'12px'}}),
+        h('div',{style:{position:'absolute',top:'20px',right:'20px',fontSize:'36px',opacity:.18}},card.icon),
+        h('h2',{style:{fontSize:'21px',fontWeight:'bold',color:card.color,marginBottom:'4px'}},`${card.icon} ${card.title}`),
+        h('p',{style:{fontSize:'11px',color:'#999',marginBottom:'12px',fontWeight:'bold',textTransform:'uppercase',letterSpacing:'0.06em'}},card.sub),
+        h('p',{style:{fontSize:'13px',color:'#555',lineHeight:'1.75',marginBottom:'18px'}},card.desc),
+        h('ul',{style:{paddingLeft:'0',listStyle:'none',marginBottom:'20px'}},
+          ...card.features.map((f,i)=>h('li',{key:i,style:{fontSize:'12px',color:card.color,marginBottom:'5px',display:'flex',alignItems:'flex-start',gap:'6px'}},
+            h('span',{style:{fontWeight:'bold',marginTop:'1px'}},'✓'),f
+          ))
+        ),
+        h('div',{style:{background:card.disabled?'#bbb':card.color,color:'#fff',borderRadius:'8px',padding:'10px 16px',textAlign:'center',fontSize:'13px',fontWeight:'bold'}},card.disabled?'🚧 준비 중...':''+card.title+' 시작하기 →')
+      ))
+    ),
+    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',maxWidth:'1080px',margin:'0 auto',padding:'16px 20px 24px'}},
+      h('button',{onClick:()=>{ if(confirm('로그아웃 하시겠습니까?')) location.reload(); },
+        style:{background:'none',border:'1px solid #ccc',borderRadius:'8px',padding:'6px 14px',fontSize:'12px',color:'#888',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px'}},
+        '🔓 로그아웃'),
+      h('span',{style:{fontSize:'12px',color:'#bbb'}},`SVU ${dbStats.svu||''}편 + 타학교 ${dbStats.otherUni||''}편 + 인용논문 ${dbStats.citation||''}편 총 ${dbStats.total||''}편 분석 기반 | © jskwon. All rights reserved.`)
+    )
+  );
+};
+
+// ══════════════════════════════════════════════════════════════
+// ██  APP  ██
+// ══════════════════════════════════════════════════════════════
+const App = () => {
+  const [mode, setMode] = useState(null);
+  if(!mode) return h(HomeScreen, {onSelect:setMode});
+  if(mode==='thesis') return h(PaperCompass, {onBack:()=>setMode(null)});
+  if(mode==='phd') return h(PhdCompass, {onBack:()=>setMode(null)});
+  if(mode==='stats') return h(StatsAnalyzer, {onBack:()=>setMode(null)});
+  if(mode==='paperdb') return h(PaperDBBuilder, {onBack:()=>setMode(null)});
+  return null;
+};
+
+      ReactDOM.render(React.createElement(App), document.getElementById('root'));
+    } catch(e) {
+      document.getElementById('root').innerHTML = '<pre style="color:red;padding:20px;white-space:pre-wrap">Error: ' + e.message + '\n\n' + e.stack + '</pre>';
+    }
+  </script>
+</body>
+</html>
