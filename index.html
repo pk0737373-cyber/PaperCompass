@@ -549,6 +549,36 @@ const PaperCompass = ({ onBack }) => {
     '환경성과': '환경 보호·지속가능성 관련 성과 수준',
     '사회적요인(SW관리체계/공유가치)': '소프트웨어 관리 체계와 공유 가치 등 사회적 요인',
     '기술적요인(정보품질/시스템품질/서비스품질)': '정보·시스템·서비스 품질 등 기술적 요인',
+    // ── 2026-04-29 추가: 직무특성 매개효과 연구 3편(유병선/배순정/윤순자)에서 추출 ──
+    '직업소명의식': '자신의 직업이 사회적으로 의미 있고 가치 있다는 신념과 사명감 — Dik & Duffy(2009), Hall & Chandler(2005). 하위요인: 열정·가치감·기여도·천직의식',
+    '소명의식': '직업소명의식의 별칭 — 일을 단순한 생계 수단이 아닌 천직(calling)으로 인식하는 정도',
+    '직업적소명': '직업소명의식의 별칭',
+    '천직의식': '현재의 일이 자신에게 가장 적합한 일이며 평생 헌신할 가치가 있다고 느끼는 의식 (직업소명의식 하위요인)',
+    '직무특성_5요인(JDS)': 'Hackman & Oldham(1975, 1976, 1980)의 직무진단조사(JDS) 5요인 - 기능다양성/과업정체성/과업중요성/자율성/피드백',
+    '기능다양성': '직무 수행에 다양한 기술과 능력이 요구되는 정도 (직무특성 하위요인) - Hackman & Oldham(1976)',
+    '과업정체성': '직무의 처음부터 끝까지 일관성 있게 수행할 수 있는 정도 (직무특성 하위요인) - Hackman & Oldham(1976)',
+    '직무정체성': '과업정체성의 별칭 - 직무의 완결성 인식',
+    '과업중요성': '직무가 조직 내·외부 사람들의 삶에 미치는 영향의 정도 (직무특성 하위요인) - Hackman & Oldham(1976)',
+    '직무중요성': '과업중요성의 별칭 - 직무가 조직과 동료에게 미치는 영향',
+    '직무자율성': '직무 수행 시 작업 일정·방법 결정에 대한 자유와 재량의 정도 (직무특성 하위요인)',
+    '직무피드백': '업무 수행 결과에 대한 정보를 직접·간접적으로 얻는 정도 (직무특성 하위요인)',
+    '대인관계특성': '직무 수행 시 동료·상사와의 상호작용 정도 (장기요양 등 서비스직 직무특성에 추가되는 요인)',
+    '심리적주인의식(직무대상)': '자신의 직무를 자기 것처럼 느끼는 심리적 소유감 - Pierce et al.(2001), Avey et al.(2009)',
+    '감정노동_빈도': '감정 표현이 요구되는 빈도 (Morris & Feldman 1996의 차원)',
+    '감정노동_주의정도': '감정 표현 시 요구되는 주의력의 정도 (Morris & Feldman 1996)',
+    '감정노동_부조화': '실제 감정과 표현 감정 간의 불일치 (Morris & Feldman 1996)',
+    '감정부조화': '실제 감정과 표현 감정 간의 갈등 - 감정노동 핵심 차원',
+    '표면행위': '실제 감정을 숨기고 외적 표현만 조작하는 감정 조절 (Hochschild 1983, Ashforth & Humphrey 1993)',
+    '내면행위': '요구되는 감정을 실제로 느끼려고 노력하는 깊은 감정 조절 (Hochschild 1983)',
+    '직무만족_내적': '직무 자체에서 얻는 보람·성취감 등 내재적 만족 (MSQ - Weiss et al.)',
+    '직무만족_외적': '보수·승진·근무환경·동료관계 등 외재적 요인 만족 (MSQ)',
+    '교사혁신성': '교수 방법·업무 처리에서 새로운 방식을 시도하는 정도 (교사 직무만족 하위요인 - 노종희 2001)',
+    '교사교육의식': '교직에 대한 보람·자부심 등 전문직 의식 (교사 직무만족 하위요인 - 노종희 2001)',
+    '교사발전성': '교사로서 자기 계발과 연수에 적극 참여하는 정도 (노종희 2001)',
+    '긍정심리자본_복원력': '역경에서 회복하고 적응하는 능력 (Luthans 2007의 PsyCap 4요인 중 하나)',
+    '긍정심리자본_희망': '목표 달성 의지(agency)와 경로(pathway) 사고 (Luthans 2007)',
+    '긍정심리자본_낙관주의': '긍정적 결과에 대한 일반화된 기대 (Luthans 2007, Carver & Scheier 1998)',
+    '긍정심리자본_자기효능감': '특정 과업에서의 자기효능감 (Bandura 1997, Stajkovic & Luthans 1998)',
   };
 
   const svuDVMapping = {
@@ -572,6 +602,14 @@ const PaperCompass = ({ onBack }) => {
       { name: '이직의도', count: 1 },
       { name: '혁신행동', count: 1 },
       { name: '조직시민행동', count: 1 },
+    ],
+    // ── 2026-04-29 추가: 직무특성 IV 매핑 ──
+    '직무특성': [
+      { name: '직무만족', count: 4 },     // 유병선(2025), 윤순자(2020), 배순정(2020), 김진태(2025)
+      { name: '조직몰입', count: 4 },     // 유병선(2025), 김진태(2025), 심민섭(2022), 심민선(2022)
+      { name: '혁신행동', count: 2 },     // 심민선(2022), 심민섭(2022)
+      { name: '직무열의', count: 1 },     // 심민선(2022)
+      { name: '이직의도', count: 1 },     // 김진태(2025)
     ],
   };
 
@@ -668,6 +706,16 @@ const PaperCompass = ({ onBack }) => {
       { name: '직무성과', svuCount: 0, extCount: 1, total: 1 },
       { name: '이직의도', svuCount: 0, extCount: 1, total: 1 },
     ],
+    // ── 2026-04-29 추가: 직무특성 IV 매핑 (Hackman & Oldham 모형 + 후속 연구) ──
+    '직무특성': [
+      { name: '직무만족', svuCount: 4, extCount: 6, total: 10 },   // SVU: 유병선·윤순자·배순정·김진태 / 외부: 한은희(2018), 김광희(2018), 장수중(2018), 김희연(2019), 안은선(2017), Spector(1997), Hackman & Oldham(1976) 등
+      { name: '조직몰입', svuCount: 4, extCount: 3, total: 7 },    // SVU: 유병선·김진태·심민섭·심민선 / 외부: 이수화(2006), 김용철(2009), 이인숙(2009)
+      { name: '혁신행동', svuCount: 2, extCount: 1, total: 3 },    // SVU: 심민선·심민섭
+      { name: '직무열의', svuCount: 1, extCount: 1, total: 2 },    // SVU: 심민선(2022)
+      { name: '이직의도', svuCount: 1, extCount: 2, total: 3 },    // SVU: 김진태(2025) / 외부: 김영애(2015), 김태성(2017)
+      { name: '직무성과', svuCount: 0, extCount: 2, total: 2 },    // 외부: Fried & Ferris(1987), 한태영 등
+      { name: '심리적주인의식', svuCount: 1, extCount: 1, total: 2, aiRecommended: true },  // 유병선(2025)에서 매개로 사용
+    ],
   };
 
   const svuMediatorMapping = {
@@ -706,6 +754,22 @@ const PaperCompass = ({ onBack }) => {
       { name: '자기효능감', count: 1 },
       { name: '심리적주인의식', count: 0, aiRecommended: true },
       { name: '조직신뢰', count: 0, aiRecommended: true },
+    ],
+    // ── 2026-04-29 추가: 직무특성 IV → 직무만족/조직몰입 DV 매개변수 ──
+    '직무특성_직무만족': [
+      { name: '직업소명의식', count: 1 },        // 윤순자(2020): 부분매개 확인
+      { name: '긍정심리자본', count: 1 },        // 윤순자(2020): 다양성→내적만족 부분매개
+      { name: '감정노동', count: 1 },            // 배순정(2020): 내면행위 부분매개
+      { name: '심리적주인의식', count: 0, aiRecommended: true },  // 유병선(2025) — 조직몰입 경로지만 직무만족과도 연결됨
+      { name: '직무열의', count: 0, aiRecommended: true },
+      { name: 'LMX', count: 0, aiRecommended: true },
+    ],
+    '직무특성_조직몰입': [
+      { name: '심리적주인의식', count: 1 },      // 유병선(2025): 부분/완전매개 확인
+      { name: '직무만족', count: 1 },            // 유병선(2025): 부분/완전매개 확인 (가장 강력)
+      { name: '직업소명의식', count: 0, aiRecommended: true },
+      { name: '긍정심리자본', count: 0, aiRecommended: true },
+      { name: '조직후원인식', count: 0, aiRecommended: true },    // 유병선(2025) 조절변수였지만 매개로도 가능
     ],
   };
 
@@ -827,6 +891,28 @@ const PaperCompass = ({ onBack }) => {
       { name: '셀프리더십', svuCount: 0, extCount: 1, total: 1 },
       { name: '직무만족', svuCount: 0, extCount: 1, total: 1 },
     ],
+    // ── 2026-04-29 추가: 직무특성 IV → 직무만족/조직몰입 매개경로 ──
+    '직무특성_직무만족': [
+      { name: '직업소명의식', svuCount: 1, extCount: 2, total: 3 },        // SVU: 윤순자(2020) / 외부: 차원철(2018), 백경애(2019), 김지선(2015), 정은주(2007)
+      { name: '긍정심리자본', svuCount: 1, extCount: 2, total: 3 },        // SVU: 윤순자(2020) / 외부: 김주엽·이혜진(2014), 김태성(2017), Luthans(2007)
+      { name: '감정노동', svuCount: 1, extCount: 2, total: 3, hot: true }, // SVU: 배순정(2020) / 외부: Hochschild(1983), Morris & Feldman(1996), 김승언(2012)
+      { name: '심리적주인의식', svuCount: 1, extCount: 1, total: 2, aiRecommended: true },  // 유병선(2025) 직무만족 경로
+      { name: '직무열의', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+      { name: 'LMX', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+      { name: '자기효능감', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+    ],
+    '직무특성_조직몰입': [
+      { name: '심리적주인의식', svuCount: 1, extCount: 2, total: 3, hot: true },     // SVU: 유병선(2025) / 외부: Pierce et al.(2001), Avey et al.(2009), Van Dyne & Pierce(2004)
+      { name: '직무만족', svuCount: 1, extCount: 2, total: 3 },             // SVU: 유병선(2025) / 외부: Mathieu & Zajac(1990), Locke(1976)
+      { name: '직업소명의식', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+      { name: '긍정심리자본', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+      { name: '조직후원인식', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+      { name: 'LMX', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+    ],
+    '직무특성_혁신행동': [
+      { name: '직무열의', svuCount: 1, extCount: 1, total: 2 },              // 심민선(2022)
+      { name: '직무만족', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+    ],
   };
 
   const svuDefaultDVs = [
@@ -913,6 +999,9 @@ const PaperCompass = ({ onBack }) => {
     'LMX→직무성과': { count: 1, sources: '타교: Gerstner&Day(1997)', verdict: 'strong' },
     // 감정노동
     '감정노동→조직유효성': { count: 1, sources: 'SVU: 김영미(2019)', verdict: 'emerging' },
+    '감정노동→직무만족': { count: 6, sources: 'SVU: 배순정(2020) / 외부: Hochschild(1983), Morris & Feldman(1996), 김승언(2012), 최정임(2013), 우연백(2016), Grandey(2000), Pugh(2001), Wharton(1993)', verdict: 'moderate' },
+    '직업소명의식→직무만족': { count: 6, sources: 'SVU: 윤순자(2020) / 외부: 차원철(2018), 백경애(2019), 정은주(2007), 송진호(2016), Dik & Duffy(2009), Hall & Chandler(2005), Wang & Dai(2017)', verdict: 'strong' },
+    '소명의식→직무만족': { count: 6, sources: 'SVU: 윤순자(2020) / 외부: 차원철(2018), 백경애(2019), 정은주(2007), 송진호(2016), Dik & Duffy(2009)', verdict: 'strong' },
     // 공정성 지각
 // 공정성인식
     '공정성인식→이직의도': { count: 1, sources: 'SVU: 오준환(2017)', verdict: 'emerging' },
@@ -1151,11 +1240,16 @@ const PaperCompass = ({ onBack }) => {
     // 직무태도
     '직무태도→조직시민행동': { count: 1, sources: 'SVU: 이영수(2017)', verdict: 'emerging' },
     // 직무특성
-    '직무특성→조직몰입': { count: 4, sources: 'SVU: 심민선(2022) / 김진태(2025) / 유병선(2025) / 심민섭(2022)', verdict: 'emerging' },
-    '직무특성→심리적주인의식': { count: 1, sources: 'SVU: 유병선(2025)', verdict: 'emerging' },
-    '직무특성→직무만족': { count: 4, sources: 'SVU: 유병선(2025) / 김진태(2025), Hackman & Oldham(1976), Spector(1997)', verdict: 'moderate' },
+    '직무특성→조직몰입': { count: 7, sources: 'SVU: 심민선(2022) / 김진태(2025) / 유병선(2025) / 심민섭(2022) / 타교: 이수화(2006), 김용철(2009), 이인숙(2009), Hackman & Oldham(1976)', verdict: 'moderate' },
+    '직무특성→심리적주인의식': { count: 1, sources: 'SVU: 유병선(2025), Pierce et al.(2001), Avey et al.(2009)', verdict: 'emerging' },
+    '직무특성→직무만족': { count: 7, sources: 'SVU: 유병선(2025) / 김진태(2025) / 윤순자(2020) / 배순정(2020), Hackman & Oldham(1976), Spector(1997), Locke(1976), Weiss & Cropanzano(1996)', verdict: 'strong' },
     '직무특성→직무열의': { count: 1, sources: 'SVU: 심민선(2022)', verdict: 'emerging' },
     '직무특성→혁신행동': { count: 2, sources: 'SVU: 심민선(2022) / 심민섭(2022)', verdict: 'emerging' },
+    // ── 2026-04-29 추가: 직무특성→매개변수 경로 (윤순자/배순정/유병선) ──
+    '직무특성→감정노동': { count: 3, sources: 'SVU: 배순정(2020) / 외부: Hochschild(1983), Morris & Feldman(1996), Ashforth & Humphrey(1993), Grandey(2000), 김승언(2012), 우연백(2016)', verdict: 'moderate' },
+    '직무특성→직업소명의식': { count: 4, sources: 'SVU: 윤순자(2020) / 외부: 차원철(2018), 백경애(2019), 정은주(2007), Dik & Duffy(2009), Hall & Chandler(2005)', verdict: 'moderate' },
+    '직무특성→소명의식': { count: 4, sources: 'SVU: 윤순자(2020) / 외부: 차원철(2018), 백경애(2019), 정은주(2007), Dik & Duffy(2009)', verdict: 'moderate' },
+    '직무특성→긍정심리자본': { count: 3, sources: 'SVU: 윤순자(2020) / 외부: 김주엽·이혜진(2014), 김태성(2017), Luthans, Youssef & Avolio(2007), 강기노(2018)', verdict: 'moderate' },
     // 진성리더십
     '진성리더십→LMX': { count: 2, sources: 'SVU: / 강태만(2023) / 강태만(2022)', verdict: 'weak' },
     '진성리더십→직무만족': { count: 2, sources: 'SVU: / 강태만(2023) / 강태만(2022)', verdict: 'weak' },
@@ -2420,6 +2514,22 @@ const PaperCompass = ({ onBack }) => {
     '조직후원인식': {
       options: [
         { name: '조직후원인식(단일)', scholar: 'Eisenberger, Huchison & Sowa(1986), Shore & Tetrick(1991), Wayne et al.(1997), 서재현(2002), 김윤성(2002), 이인숙(2009), Kanter(1968), Porter et al.(1974), 최송아(2018)', scale: 'SPOS(Survey of Perceived Organizational Support)', answer: 'Eisenberger et al.(1986)의 조직후원인식 척도(SPOS)를 사용하여 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    // ── 2026-04-29 추가: 직업소명의식 / 소명의식 ──
+    '직업소명의식': {
+      options: [
+        { name: '열정', scholar: 'Dik & Duffy(2009), Hall & Chandler(2005), 윤순자(2020), 차원철(2018), 백경애(2019), 김지선(2015), 송진호(2016)', scale: 'CVQ(Calling and Vocation Questionnaire) 기반 한국적 재구성', answer: 'Dik & Duffy(2009)의 직업소명의식 이론에 기반하여 열정·가치감·기여도·천직의식의 4개 하위요인을 채택하였으며, 윤순자(2020)가 재구성한 한국형 척도로 측정하였습니다.' },
+        { name: '가치감', scholar: 'Dik & Duffy(2009), Hall & Chandler(2005), 윤순자(2020)', scale: 'CVQ', answer: '' },
+        { name: '기여도', scholar: 'Dik & Duffy(2009), 윤순자(2020), 정은주(2007)', scale: 'CVQ', answer: '' },
+        { name: '천직의식', scholar: 'Dik & Duffy(2009), Hall & Chandler(2005), 윤순자(2020)', scale: 'CVQ', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3],
+    },
+    '소명의식': {
+      options: [
+        { name: '소명의식(단일차원)', scholar: 'Dik & Duffy(2009), Hall & Chandler(2005), 차원철(2018), 백경애(2019), 김지선(2015), 정은주(2007), 송진호(2016), 박현식(2010), 윤순자(2020)', scale: 'CVQ(Calling and Vocation Questionnaire) 단일차원', answer: 'Dik & Duffy(2009)의 소명의식 개념을 단일 차원으로 측정하였으며, 직업을 천직(calling)으로 인식하는 정도를 평가하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -4520,6 +4630,153 @@ const PaperCompass = ({ onBack }) => {
   '홍동기(2019)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '홍완기(2015)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '홍인기(2014)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
+  // ─────────────────────────────────────────────────────────────
+  // 2026-04-29 추가: 직무특성 매개효과 연구 3편 + 인용 선행연구
+  // ─────────────────────────────────────────────────────────────
+  // ── 신규 본문 2편 (유병선(2025)은 기존 등재됨) ──
+  '배순정(2020)': { title: '교원의 직무특성이 직무만족에 미치는 영향: 감정노동 매개효과 검증', source: 'SVU', type: '박사' },
+  '윤순자(2020)': { title: '장기요양기관 종사자들의 직무특성이 직무만족에 미치는 영향: 직업소명의식과 긍정심리자본의 매개효과', source: '경희대', type: '석사' },
+  // ── 인용 선행연구: 해외 원전 (직무특성/심리적주인의식/직무만족/감정노동/긍정심리자본) ──
+  'Pierce et al.(2001)': { title: 'Toward a theory of psychological ownership in organizations', source: 'AMR', type: '해외원전' },
+  'Pierce, Kostova & Dirks(2003)': { title: 'The state of psychological ownership: Integrating and extending a century of research', source: 'Rev. Gen. Psych.', type: '해외원전' },
+  'Pierce, O\'Driscoll & Coghlan(2004)': { title: 'Work environment structure and psychological ownership: The mediating effects of control', source: 'J. Soc. Psych.', type: '해외원전' },
+  'Pierce & Gardner(2004)': { title: 'Self-esteem within the work and organizational context: A review', source: 'J. Mgmt', type: '해외원전' },
+  'Pierce, Rubenfeld & Morgan(1991)': { title: 'Employee ownership: A conceptual model of process and effects', source: 'AMR', type: '해외원전' },
+  'Van Dyne & Pierce(2004)': { title: 'Psychological ownership and feelings of possession: Three field studies predicting employee attitudes and OCB', source: 'JOB', type: '해외원전' },
+  'Avey et al.(2009)': { title: 'Psychological ownership: Theoretical extensions, measurement and relation to work outcomes', source: 'JOB', type: '해외원전' },
+  'Hackman & Oldham(1975)': { title: 'Development of the Job Diagnostic Survey', source: 'J. Applied Psych', type: '해외원전' },
+  'Hackman & Oldham(1976)': { title: 'Motivation through the design of work: Test of a theory', source: 'OBHP', type: '해외원전' },
+  'Hackman & Oldham(1980)': { title: 'Work redesign', source: '단행본 (Addison-Wesley)', type: '해외원전' },
+  'Hackman & Lawler(1971)': { title: 'Employee reactions to job characteristics', source: 'J. Applied Psych', type: '해외원전' },
+  'Sims, Szilagyi & Keller(1976)': { title: 'The measurement of job characteristics', source: 'AMJ', type: '해외원전' },
+  'Turner & Lawrence(1965)': { title: 'Industrial jobs and the worker', source: '단행본 (Harvard)', type: '해외원전' },
+  'Fried & Ferris(1987)': { title: 'The validity of the Job Characteristics Model: A review and meta-analysis', source: 'Personnel Psych.', type: '해외' },
+  'Wiener(1982)': { title: 'Commitment in organizations: A normative view', source: 'AMR', type: '해외원전' },
+  'Mowday, Porter & Steers(1982)': { title: 'Employee-organization linkages: The psychology of commitment, absenteeism, and turnover', source: '단행본', type: '해외원전' },
+  'Bateman & Strasser(1983)': { title: 'A longitudinal analysis of the antecedents of organizational commitment', source: 'AMJ', type: '해외원전' },
+  'Brockner et al.(1988)': { title: 'Predictors of survivors\' job involvement following layoffs', source: 'JOB', type: '해외원전' },
+  'O\'Reilly & Chatman(1986)': { title: 'Organizational commitment and psychological attachment: The effects of compliance, identification, and internalization on prosocial behavior', source: 'J. Applied Psych', type: '해외원전' },
+  'Steers(1977)': { title: 'Antecedents and outcomes of organizational commitment', source: 'ASQ', type: '해외원전' },
+  'Eisenberger et al.(1986)': { title: 'Perceived organizational support', source: 'J. Applied Psych', type: '해외원전' },
+  'Shore & Tetrick(1991)': { title: 'A construct validity study of the Survey of Perceived Organizational Support', source: 'J. Applied Psych', type: '해외원전' },
+  'Wayne, Shore & Liden(1997)': { title: 'Perceived organizational support and leader-member exchange: A social exchange perspective', source: 'AMJ', type: '해외원전' },
+  'Weiss & Cropanzano(1996)': { title: 'Affective Events Theory: A theoretical discussion of the structure, causes and consequences of affective experiences at work', source: 'Res. in OB', type: '해외원전' },
+  'Smith, Kendall & Hulin(1969)': { title: 'The measurement of satisfaction in work and retirement (JDI)', source: '단행본', type: '해외원전' },
+  'Spector(1985)': { title: 'Measurement of human service staff satisfaction: Development of the Job Satisfaction Survey', source: 'AJCP', type: '해외원전' },
+  'Hoppock(1935)': { title: 'Job satisfaction', source: '단행본', type: '해외원전' },
+  'Herzberg(1966)': { title: 'Work and the nature of man', source: '단행본', type: '해외원전' },
+  'Vroom(1965)': { title: 'Motivation in management', source: '단행본', type: '해외원전' },
+  'Lawler(1973)': { title: 'Motivation in work organizations', source: '단행본', type: '해외원전' },
+  'McCormick & Tiffin(1974)': { title: 'Industrial Psychology', source: '단행본', type: '해외원전' },
+  'Hochschild(1979)': { title: 'Emotion work, feeling rules, and social structure', source: 'AJS', type: '해외원전' },
+  'Hochschild(1983)': { title: 'The managed heart: Commercialization of human feeling', source: '단행본 (UC Press)', type: '해외원전' },
+  'Morris & Feldman(1996)': { title: 'The dimensions, antecedents, and consequences of emotional labor', source: 'AMR', type: '해외원전' },
+  'Morris & Feldman(1997)': { title: 'Managing emotions in the workplace', source: 'J. Mgmt Issues', type: '해외원전' },
+  'Ashforth & Humphrey(1993)': { title: 'Emotional labor in service roles: The influence of identity', source: 'AMR', type: '해외원전' },
+  'Grandey(2000)': { title: 'Emotional regulation in the workplace: A new way to conceptualize emotional labor', source: 'JOHP', type: '해외원전' },
+  'Wharton(1993)': { title: 'The affective consequences of service work: Managing emotions on the job', source: 'Work & Occup.', type: '해외원전' },
+  'Rafaeli & Sutton(1989)': { title: 'The expression of emotion in organizational life', source: 'Res. in OB', type: '해외원전' },
+  'Brotheridge & Lee(2003)': { title: 'Development and validation of the Emotional Labour Scale', source: 'JOOP', type: '해외원전' },
+  'Pugh(2001)': { title: 'Service with a smile: Emotional contagion in the service encounter', source: 'AMJ', type: '해외원전' },
+  'Cordes & Dougherty(1993)': { title: 'A review and an integration of research on job burnout', source: 'AMR', type: '해외원전' },
+  'Dik & Duffy(2009)': { title: 'Calling and vocation at work: Definitions and prospects for research and practice', source: 'Counseling Psych.', type: '해외원전' },
+  'Hall & Chandler(2005)': { title: 'Psychological success: When the career is a calling', source: 'JOB', type: '해외원전' },
+  'Wang & Dai(2017)': { title: 'Calling: A literature review', source: 'JHRSS', type: '해외' },
+  'Luthans(2002)': { title: 'Positive organizational behavior: Developing and managing psychological strengths', source: 'AME', type: '해외원전' },
+  'Luthans, Luthans & Luthans(2004)': { title: 'Positive psychological capital: Beyond human and social capital', source: 'Bus. Horizons', type: '해외원전' },
+  'Luthans, Youssef & Avolio(2007)': { title: 'Psychological capital: Developing the human competitive edge', source: '단행본 (Oxford UP)', type: '해외원전' },
+  'Stajkovic & Luthans(1998)': { title: 'Self-efficacy and work-related performance: A meta-analysis', source: 'Psych Bulletin', type: '해외원전' },
+  'Bandura(1997)': { title: 'Self-efficacy: The exercise of control', source: '단행본 (Freeman)', type: '해외원전' },
+  'Masten(2001)': { title: 'Ordinary magic: Resilience processes in development', source: 'Am. Psychologist', type: '해외원전' },
+  'Seligman & Csikszentmihalyi(2000)': { title: 'Positive psychology: An introduction', source: 'Am. Psychologist', type: '해외원전' },
+  'Carver & Scheier(1998)': { title: 'On the self-regulation of behavior', source: '단행본 (Cambridge UP)', type: '해외원전' },
+  'Baron & Kenny(1986)': { title: 'The moderator-mediator variable distinction in social psychological research', source: 'JPSP', type: '해외원전' },
+  'Block(1987)': { title: 'The empowered manager: Positive political skills at work', source: '단행본', type: '해외원전' },
+  'Pierce & Gardner(2009)': { title: 'Self-esteem and self-efficacy within the organizational context', source: 'J. Mgrl Psych', type: '해외원전' },
+  'Mayhew et al.(2007)': { title: 'A study of the antecedents and consequences of psychological ownership in organizational settings', source: 'J. Soc. Psych.', type: '해외' },
+  'Davis & Wilson(2000)': { title: 'Principals\' efforts to empower teachers: Effects on teacher motivation, job satisfaction, and stress', source: 'Clearing House', type: '해외' },
+  'Guy & Newman(2004)': { title: 'Women\'s jobs, men\'s jobs: Sex segregation and emotional labor', source: 'Public Admin Review', type: '해외' },
+  'Hargreaves(2001)': { title: 'Emotional geographies of teaching', source: 'Teachers College Record', type: '해외원전' },
+  'Isenbarger & Zembylas(2006)': { title: 'The emotional labour of caring in teaching', source: 'Teaching & Teacher Education', type: '해외' },
+  'Zembylas(2004)': { title: 'The emotional characteristics of teaching: An ethnographic study', source: 'Teaching & Teacher Education', type: '해외' },
+  'Brown(2011)': { title: 'Emotion matters: Exploring the emotional labour of teaching', source: '학위논문', type: '해외' },
+  'Humphrey(2000)': { title: 'The importance of job characteristics to emotional displays', source: 'JOB', type: '해외' },
+  'Maslow(1970)': { title: 'Motivation and personality', source: '단행본', type: '해외원전' },
+  // ── 인용 선행연구: 국내 (척도 원전 / 한국 적용) ──
+  '노종희(2001)': { title: '교사 직무만족 질문지(TJSQ) 개발 연구', source: '교육행정학연구', type: '학술지' },
+  '김학기(2009)': { title: '직무특성이 경찰공무원의 조직몰입에 미치는 영향', source: '학위논문', type: '석사' },
+  '임영규(2011)': { title: '경찰공무원의 직무특성이 직무만족과 직무성과에 미치는 영향', source: '학위논문', type: '박사' },
+  '김승언(2012)': { title: '감정노동이 직무소진과 직무만족에 미치는 영향', source: '학위논문', type: '석사' },
+  '최정임(2013)': { title: '감정노동이 직무만족에 미치는 영향', source: '학위논문', type: '석사' },
+  '우연백(2016)': { title: '교사의 감정노동이 직무만족에 미치는 영향', source: '학위논문', type: '석사' },
+  '김명희(2011)': { title: '교사 직무만족도 척도 활용에 관한 연구', source: '학위논문', type: '석사' },
+  '이경희(2013)': { title: '교사 직무만족 척도 수정·보완 연구', source: '학위논문', type: '석사' },
+  '김영일(2016)': { title: '교원의 직무만족 척도 수정·보완 연구', source: '학위논문', type: '박사' },
+  '안은선(2017)': { title: '장기요양기관 요양보호사의 직무특성과 직무만족·소진', source: '학위논문', type: '석사' },
+  '차원철(2018)': { title: '장기요양기관 종사자 의사소통과 소명의식과 직무만족', source: '학위논문', type: '석사' },
+  '백경애(2019)': { title: '보육교사의 직업소명의식 및 긍정심리자본과 직무만족도', source: '학위논문', type: '석사' },
+  '김지선(2015)': { title: '소명의식이 삶의 만족에 미치는 영향', source: '학위논문', type: '석사' },
+  '홍성미(2017)': { title: '보육교사 소명의식과 행복감의 관계', source: '학위논문', type: '석사' },
+  '정은주(2007)': { title: '공공서비스 신념과 소명의식이 장기요양요원 직무만족에 미치는 영향', source: '학위논문', type: '석사' },
+  '박수현·이형룡(2018)': { title: '심리적주인의식이 조직시민행동에 미치는 영향', source: '관광연구저널', type: '학술지' },
+  '박수현·이형룡(2019)': { title: '심리적주인의식과 직무만족·이직의도의 관계', source: '관광연구저널', type: '학술지' },
+  '서재현(2002)': { title: '조직지원인식, 상사지원, LMX 및 절차적 공정성이 조직몰입과 OCB에 미치는 영향', source: '경영학연구', type: '학술지' },
+  '이수화(2006)': { title: '직무특성과 조직몰입의 관계', source: '학위논문', type: '석사' },
+  '김용철(2009)': { title: '직무특성이 조직몰입에 미치는 영향', source: '학위논문', type: '석사' },
+  '윤용준(2020)': { title: '장기요양시설의 의사소통과 책임감이 직무만족에 미치는 영향', source: '학위논문', type: '석사' },
+  '한은희(2018)': { title: '장기요양기관 종사자의 직무특성과 직무만족', source: '학위논문', type: '석사' },
+  '김광희(2018)': { title: '장기요양기관 종사자의 직무특성과 직무만족', source: '학위논문', type: '석사' },
+  '장수중(2018)': { title: '장기요양기관 종사자의 직무만족 영향요인', source: '학위논문', type: '석사' },
+  '김희연(2019)': { title: '장기요양기관 종사자의 직무특성과 직무만족', source: '학위논문', type: '석사' },
+  '강기노(2018)': { title: '간호사의 사회적 교환관계, 긍정심리자본, 조직몰입의 관계', source: '학위논문', type: '석사' },
+  '김미경(2018)': { title: '노인 장기요양기관 간호업무 종사자 직무만족', source: '학위논문', type: '석사' },
+  '김성숙(2018)': { title: '변혁적 리더십과 긍정심리자본', source: '학위논문', type: '석사' },
+  '김영애(2015)': { title: '재가방문요양보호사의 직무특성과 이직의도', source: '학위논문', type: '석사' },
+  '김영태(2014)': { title: '노인요양시설 리더십과 조직유효성', source: '학위논문', type: '석사' },
+  '김혜진(2019)': { title: '치과위생사의 긍정심리자본과 직무만족', source: '학위논문', type: '석사' },
+  '김태성(2017)': { title: '재가방문 요양보호사의 직무특성과 직무만족', source: '학위논문', type: '석사' },
+  '신인숙(2010)': { title: '재가노인복지시설 요양보호사 직무만족', source: '학위논문', type: '석사' },
+  '송진호(2016)': { title: '직장인의 소명의식, 일몰입, 직무만족', source: '학위논문', type: '석사' },
+  '박현식(2010)': { title: '장기요양보험서비스 종사자의 소명의식과 직무만족', source: '학위논문', type: '석사' },
+  '최용득·이동섭(2010)': { title: '긍정심리자본의 선행요인과 결과: 메타분석적 검토', source: '인사·조직연구', type: '학술지' },
+  '강신걸(2017)': { title: '교원의 감정노동에 관한 연구', source: '학위논문', type: '박사' },
+  '강찬조(2012)': { title: '교사 직무만족 영향요인 연구', source: '학위논문', type: '석사' },
+  '김상묵·김영종(2005)': { title: '공공서비스 종사자의 직무특성과 직무만족', source: '한국행정학보', type: '학술지' },
+  '권혁기·박봉규(2011)': { title: '교사의 감정노동과 소진', source: '관광경영학연구', type: '학술지' },
+  '김갑성(2014)': { title: '교원의 직무특성과 직무만족', source: '학위논문', type: '석사' },
+  '김경화(2009)': { title: '교사의 직무만족 영향요인', source: '학위논문', type: '석사' },
+  '김범준(2001)': { title: '교사의 직무특성과 직무만족 관계', source: '학위논문', type: '석사' },
+  '김상준(2013)': { title: '교원의 감정노동과 직무만족', source: '학위논문', type: '석사' },
+  '김성환(2013)': { title: '교사의 직무특성과 직무만족', source: '학위논문', type: '석사' },
+  '김영일·유기웅(2016)': { title: '교원의 직무만족 척도 개발 및 타당화', source: '교육행정학연구', type: '학술지' },
+  '김정원(2005)': { title: '교사 직무만족 연구', source: '학위논문', type: '박사' },
+  '김지은·한금선(2015)': { title: '간호사의 감정노동과 직무만족', source: '학술지', type: '학술지' },
+  '고지성(2010)': { title: '교사의 감정노동과 직무만족', source: '학위논문', type: '석사' },
+  '고재천(2001)': { title: '교사의 직무만족과 헌신', source: '학위논문', type: '박사' },
+  '정수영(2011)': { title: '교사의 감정노동에 관한 연구', source: '학위논문', type: '석사' },
+  '곽종우·김병조(2012)': { title: '소방공무원의 직무특성과 조직몰입', source: '학술지', type: '학술지' },
+  '김동진(2010)': { title: '소방공무원의 직무만족 영향요인', source: '학위논문', type: '석사' },
+  '김민호(2025)': { title: '소방공무원의 직무특성과 조직몰입', source: '학위논문', type: '석사' },
+  '김영호(2010)': { title: '소방공무원의 직무특성과 직무만족', source: '학위논문', type: '석사' },
+  '김우진(2010)': { title: '소방공무원의 직무특성 연구', source: '학위논문', type: '석사' },
+  '김윤성(2002)': { title: '조직지원인식과 조직몰입', source: '학위논문', type: '석사' },
+  '김희숙(2021)': { title: '소방공무원의 직무특성과 조직몰입', source: '학위논문', type: '석사' },
+  '박미소(2012)': { title: '소방공무원의 직무특성과 직무만족', source: '학위논문', type: '석사' },
+  '신승균(2009)': { title: '소방공무원의 조직몰입 연구', source: '학위논문', type: '석사' },
+  '양현선·한태영(2018)': { title: '심리적 주인의식과 조직몰입', source: '학술지', type: '학술지' },
+  '이미영(2021)': { title: '심리적 주인의식 측정도구 한국적 적용', source: '학위논문', type: '석사' },
+  '이정은·최병창(2017)': { title: '소방공무원의 직무만족 연구', source: '학술지', type: '학술지' },
+  '이유진 외(2005)': { title: '심리적 주인의식과 조직시민행동', source: '학술지', type: '학술지' },
+  '임은영(2020)': { title: '소방공무원의 직무특성과 조직몰입', source: '학위논문', type: '석사' },
+  '장동인(2015)': { title: '소방공무원의 조직유효성 연구', source: '학위논문', type: '박사' },
+  '장혜진(2013)': { title: '조직몰입에 관한 연구', source: '학위논문', type: '석사' },
+  '정진항(2024)': { title: '소방공무원의 직무특성과 조직몰입', source: '학위논문', type: '석사' },
+  '정용영(2019)': { title: '소방공무원의 직무만족 영향요인', source: '학위논문', type: '박사' },
+  '정해옥·양동휘(2020)': { title: '소방공무원의 직무특성과 조직몰입', source: '학술지', type: '학술지' },
+  '조경호(1998)': { title: '한국 행정학에서의 조직몰입 연구', source: '한국행정학보', type: '학술지' },
+  '조한용·김광지·박기용(2011)': { title: '조직지원인식과 조직몰입', source: '학술지', type: '학술지' },
+  '최용희(2020)': { title: '소방공무원의 직무만족 연구', source: '학위논문', type: '석사' },
+  '홍영호(2015)': { title: '소방공무원의 조직몰입 연구', source: '학위논문', type: '석사' },
 };
 
   // SVU 논문 DB에서 각 변수별 측정도구를 활용한 SVU 학위논문 목록
@@ -4527,7 +4784,7 @@ const PaperCompass = ({ onBack }) => {
     'LMX': ['강태만(2023)', '김남환(2019)', '김영미(2019)', '김정균(2023)', '김창섭(2021)', '김태학(2023)', '도철구(2019)', '박성헌(2025)', '박인규(2023)', '조원희(2023)', '최영철(2023)', '황남연(2023)', '황환성(2019)'],
     'LMX(상사-부하 교환관계)': ['김창섭(2021)'],
     '교육만족': ['박진우(2024)'],
-    '긍정심리자본': ['김백경(2023)', '어영미(2018)', '엄재규(2016)'],
+    '긍정심리자본': ['김백경(2023)', '어영미(2018)', '엄재규(2016)', '윤순자(2020)'],
     '변혁적리더십': ['김명철(2017)', '김백경(2023)', '김태학(2023)', '박성헌(2025)', '박인규(2023)', '박종석(2025)', '이상만(2025)', '장경수(2024)', '정용희(2024)', '조원희(2023)', '지세영(2025)', '차무흥(2023)', '허경영(2016)', '황남연(2020)', '황남연(2023)'],
     '셀프리더십': ['김남환(2019)', '김선희(2023)', '김진성(2023)', '도철구(2019)', '명호(2023)', '이대근(2017)', '이상만(2025)', '이진성(2025)', '이희준(2022)', '임종인(2021)', '최민석(2024)', '최용래(2021)', '최재영(2019)', '홍재일(2025)'],
     '신뢰': ['김명철(2017)', '김화자(2023)', '우성주(2020)', '차무흥(2023)', '황남연(2023)'],
@@ -4543,20 +4800,22 @@ const PaperCompass = ({ onBack }) => {
     '조직신뢰': ['기유경(2024)', '이영수(2017)', '조영준(2018)', '최재영(2019)', '황환성(2019)'],
     '조직유효성': ['기유경(2024)', '김명철(2017)', '김영미(2019)', '김종길(2025)', '김진태(2025)', '박성헌(2025)', '이상만(2025)'],
     '조직후원인식': ['유병선(2025)', '장경수(2024)', '황환성(2019)'],
-    '직무만족': ['강태만(2023)', '곽경환(2023)', '기유경(2024)', '김남환(2019)', '김종길(2025)', '김종훈(2023)', '김진성(2023)', '김진태(2025)', '김창섭(2021)', '김화자(2023)', '남상민(2015)', '명호(2023)', '박성헌(2025)', '박인규(2023)', '백성현(2024)', '안병찬(2022)', '엄재규(2016)', '우성주(2020)', '유병선(2025)', '이대근(2017)', '이도연(2016)', '이상만(2025)', '이진성(2025)', '임종인(2021)', '장경수(2024)', '장선연(2019)', '정수형(2018)', '지세영(2025)', '차무흥(2023)', '최민석(2024)', '최상국(2019)', '최영철(2023)', '최용래(2021)', '황남연(2023)'],
+    '직무만족': ['강태만(2023)', '곽경환(2023)', '기유경(2024)', '김남환(2019)', '김종길(2025)', '김종훈(2023)', '김진성(2023)', '김진태(2025)', '김창섭(2021)', '김화자(2023)', '남상민(2015)', '명호(2023)', '박성헌(2025)', '박인규(2023)', '배순정(2020)', '백성현(2024)', '안병찬(2022)', '엄재규(2016)', '우성주(2020)', '유병선(2025)', '윤순자(2020)', '이대근(2017)', '이도연(2016)', '이상만(2025)', '이진성(2025)', '임종인(2021)', '장경수(2024)', '장선연(2019)', '정수형(2018)', '지세영(2025)', '차무흥(2023)', '최민석(2024)', '최상국(2019)', '최영철(2023)', '최용래(2021)', '황남연(2023)'],
     '직무몰입': ['권영민(2017)'],
     '직무성과': ['남상민(2015)', '박진우(2024)', '이도연(2016)', '정수형(2018)', '홍재일(2025)'],
     '직무스트레스': ['김승연(2017)', '백성현(2024)'],
     '직무열의': ['김진성(2023)', '박성헌(2025)', '심민섭(2022)', '차무흥(2023)'],
-    '직무특성': ['김진태(2025)', '심민섭(2022)', '유병선(2025)'],
+    '직무특성': ['김진태(2025)', '배순정(2020)', '심민섭(2022)', '유병선(2025)', '윤순자(2020)'],
     '진정성리더십': ['강태만(2023)', '김명철(2017)', '우성주(2020)'],
     '창의적리더십': ['조영준(2018)'],
     '혁신행동': ['김선희(2023)', '김진성(2023)', '명호(2023)', '심민섭(2022)', '이명예(2023)', '이희준(2022)', '최민석(2024)', '홍재일(2025)'],
-    '감정노동': ['김영미(2019)'],
+    '감정노동': ['김영미(2019)', '배순정(2020)'],
     '거래적리더십': ['이상만(2025)', '황남연(2023)'],
     '근무환경': ['안병찬(2022)', '임종인(2023)'],
     '마음챙김': ['정수형(2018)'],
-    '심리적주인의식': ['김화자(2023)', '유병선(2025)'],
+    '심리적주인의식': ['김화자(2023)', '유병선(2025)', '유병선(2026)'],
+    '직업소명의식': ['윤순자(2020)'],
+    '소명의식': ['윤순자(2020)', '차원철(2018)', '백경애(2019)', '김지선(2015)', '홍성미(2017)', '정은주(2007)', '송진호(2016)', '박현식(2010)'],
     '자기결정성': ['권영민(2017)', '박세언(2015)', '이도연(2016)'],
     '직무배태성': ['최영철(2023)'],
     '직무소진': ['김승연(2017)', '백성현(2024)'],
@@ -4769,6 +5028,24 @@ const PaperCompass = ({ onBack }) => {
   // ── 2026-04-28 신규 등록: 백홍기(2021), 김주연(2024) 박사학위논문 ──
   '백홍기(2021)': { type: '박사', title: '상사의 변혁적 리더십이 부하의 혁신과업행동에 미치는 영향: 일의 의미의 매개효과와 조직시민행동의 조절된 매개효과를 중심으로', source: '가천대학교 대학원 박사학위논문' },
   '김주연(2024)': { type: '박사', title: '변혁적 리더십이 혁신행동과 조직시민행동에 미치는 영향: 직무열의의 매개효과를 중심으로', source: '신한대학교 대학원 글로벌경영학과 박사학위논문' },
+  // ── 2026-04-29 신규 등록: 직무특성 매개효과 연구 3편 (윤순자, 배순정 / 유병선은 기존 등재) ──
+  '윤순자(2020)': { type: '석사', title: '장기요양기관 종사자들의 직무특성이 직무만족에 미치는 영향: 직업소명의식과 긍정심리자본의 매개효과', source: '경희대학교 공공대학원 사회복지학과 석사학위논문' },
+  '배순정(2020)': { type: '박사', title: '교원의 직무특성이 직무만족에 미치는 영향: 감정노동 매개효과 검증', source: '서울벤처대학원대학교 사회복지상담학과 상담심리전공 박사학위논문' },
+  // ── 척도/문항 detail entry: 유병선(2025) 소방분야 박사 ──
+  '유병선(2025)_직무특성': { scholar: 'Hackman & Oldham(1976), Sims, Szilagyi & Keller(1976), 이수화(2006), 김용철(2009), 이인숙(2009), 배순정(2020)', scale: '연구자 재구성 26문항(다양성5/정체성5/중요성6/자율성4/피드백6, 5점 Likert)', items: '[다양성] 나의 업무는 여러 가지 지식을 필요로 한다 / 나의 업무는 여러 가지 기술을 필요로 한다 / 나는 다양한 일을 수행한다 / 나의 업무는 다양한 재능을 필요로 한다 / 나의 업무는 다양한 속성으로 이루어져 있다 [정체성] 나는 업무를 맡아 시작하면 끝까지 수행한다 / 나는 맡은 업무의 결과를 가시적으로 확인할 수 있다 / 나는 업무에 대한 권한을 알고 있다 / 나는 업무에서 나의 책임을 알고 있다 / 나는 조직의 목표와 목적을 알고 있다 [중요성] 나의 업무는 조직의 목표와 중요한 관련성이 있다 / 나의 업무 성과는 공익적으로 가치가 크다 / 나의 업무는 다른 업무들과 많이 연계되어 있다 / 내가 하는 업무는 없어서는 안 되는 중요한 업무이다 / 나의 업무는 조직에서 중요한 부분을 차지한다 / 나의 업무 결과에 따라 많은 사람들이 영향을 받는다 [자율성] 나는 업무수행 시 스스로 결정할 수 있는 권한이 있다 / 나는 업무 순서를 스스로 결정할 수 있다 / 나는 업무 방법을 스스로 결정할 수 있다 / 나는 업무 범위를 스스로 결정할 수 있다 [피드백] 나는 업무수행에서 개인적인 아이디어를 적용한다 / 나는 업무를 잘 수행하고 있는지를 알 수 있다 / 나는 업무수행 후 업무성과 정도를 알 수 있다 / 업무를 잘 수행하고 있는지 서로 알려 준다 / 상사가 나의 업무수행에 대하여 알려 준다 / 업무에 대한 중간평가와 사후 평가를 알 수 있다' },
+  '유병선(2025)_심리적주인의식': { scholar: 'Pierce et al.(2001), Avey et al.(2009), 박수현·이형룡(2018, 2019), 이미영(2021), 김화자(2023)', scale: '연구자 재구성 5문항, 5점 Likert', items: '나는 우리 회사를 나의 회사라고 생각한다 / 나는 우리 회사에 대해 개인적으로 높은 주인의식을 느낀다 / 나는 우리 회사의 매출증대를 위해 스스로 노력한다 / 나는 장기적으로 우리 회사에 도움이 될 수 있는 새롭고 혁신적인 직무수행방안을 제안하려고 노력한다 / 내가 근무하고 있는 이곳은 우리 모두의 회사라고 생각한다' },
+  '유병선(2025)_직무만족': { scholar: 'Weiss & Cropanzano(1996), 김병한(2017), 김남환(2019), 김화자(2023)', scale: '연구자 재구성 8문항, 5점 Likert', items: '나는 업무에서 즐거움을 느낀다 / 나는 다른 직원들보다 내가 맡은 일을 더 좋아한다 / 나는 업무를 결코 지겹다고 생각하지 않는다 / 나는 열정을 가지고 직무를 수행하고 있다 / 나의 업무와 직무에 만족하고 있다 / 나는 나의 업무에 흥미를 가지고 있다 / 나의 일은 다른 직원이 중요하게 생각하고 있다 / 나는 맡은 업무를 충실히 수행했을 때 어느 정도 성취감을 느끼는 편이다' },
+  '유병선(2025)_조직후원인식': { scholar: 'Eisenberger, Huntington, Hutchison & Sowa(1986), Shore & Tetrick(1991), Wayne et al.(1997), 서재현(2002), 김윤성(2002), 이인숙(2009)', scale: '연구자 재구성 5문항(SPOS 단축형), 5점 Likert', items: '우리 회사는 나의 초과노력을 인정한다 / 우리 회사는 나의 복지에 관심이 있다 / 우리 회사는 나의 의견을 중요하게 생각한다 / 우리 회사는 나의 일을 재미있게 해주려고 노력한다 / 우리 회사는 업무에 필요한 훈련과 교육개발을 지원해준다' },
+  '유병선(2025)_조직몰입': { scholar: 'Kanter(1968), Porter, Steers, Mowday & Boulian(1974), Wiener(1982), Meyer & Allen(1990), 장혜진(2008), 이인숙(2009)', scale: '연구자 재구성 5문항, 5점 Likert', items: '이곳의 일은 나의 적성에 맞는 일이다 / 나는 회사의 목적과 성과달성에 기여한다 / 나는 회사에서 정서적으로 애착과 일체감을 느낀다 / 나는 이곳 구성원으로 만족한다 / 나는 이곳이 더 잘되길 바라며 자발적으로 노력하는 편이다' },
+  // ── 척도/문항 detail entry: 윤순자(2020) 장기요양기관 석사 ──
+  '윤순자(2020)_직무특성': { scholar: 'Hackman & Oldham(1980), 안은선(2017), 한은희(2018), 김광희(2018), 김희연(2019)', scale: '재구성 13문항(다양성4/중요성4/자율성3/대인관계2, 5점 Likert)', items: '[다양성] 나의 업무는 다양하다 / 나의 업무는 여러 가지 지식을 필요로 한다 / 나는 내가 가지고 있는 여러 가지 기술과 지식을 적절히 잘 사용하고 있다 / 나의 업무는 아주 단순하고 반복적이다 [중요성] 나의 업무는 센터의 목표와 중요한 관련성이 있다 / 나의 업무는 센터에서 중요한 부분을 차지한다 / 나의 업무 수행 결과는 센터와 동료들에게 영향을 미친다 / 업무를 수행하면 할수록 책임감 느낀다 [자율성] 업무 순서와 방법의 결정이 비교적 자유롭다 / 필요한 일을 스스로 찾아서 자유롭게 수행한다 / 업무수행과정에서 개인적 판단이 많이 허용된다 [대인관계] 나의 상사와 동료들은 업무를 잘 수행하고 있는지 서로 알려준다 / 우리 센터는 동료간에 서로 잘 도와준다' },
+  '윤순자(2020)_직업소명의식': { scholar: 'Dik & Duffy(2009), Hall & Chandler(2005), 차원철(2018), 백경애(2019), 김지선(2015), 홍성미(2017), 정은주(2007), 송진호(2016)', scale: '재구성 12문항(열정3/가치감3/기여도3/천직의식3, 분석에는 9문항 사용, 5점 Likert)', items: '[열정] 나의 일은 나를 열심히 하도록 만든다 / 요양서비스의 질을 높이려고 노력한다 / 요양기관 종사자라는 직업을 자랑스럽게 생각한다 [가치감] 내가 하고 있는 일이 세상과 사회를 더 살기 좋은 곳으로 만든다는 신념을 갖고 있다 / 내 직업과 업무는 매우 의미 있고 가치 있는 일이라고 생각한다 / 근무환경이나 보수에 상관없이 일 자체로서 사명감을 느낀다 [기여도] 내가 하고 있는 일을 통해 공공의 이익에 기여하고 있다 / 내 일이 사회에 조금이라도 기여할 수 있다는 것을 생각하면 진정으로 보람과 행복을 느낀다 / 요양기관 종사자라는 직업은 사회에서 반드시 필요한 직종의 하나이다 [천직의식] 일이 내 삶의 원동력이며, 평생 이 일을 계속해도 행복할 것 같다 / 지금 하고 있는 일을 위해 내가 존재하는 것처럼 느낄 정도로 나에게 가장 적합한 일이라고 생각한다 / 현재 내가 하는 일은 마땅히 해야 할 일이며, 내가 가장 잘 할 수 있는 일이다' },
+  '윤순자(2020)_긍정심리자본': { scholar: 'Luthans, Youssef & Avolio(2007), Stajkovic & Luthans(1998), Bandura(1997), Carver & Scheier(1998), Masten(2001), 김주엽·이혜진(2014), 김성숙(2018), 김혜진(2019), 강기노(2018)', scale: '재구성 13문항(자기효능감3/희망2/낙관성5/복원력3, 분석에는 8문항 사용 — 낙관성 제외, 5점 Likert)', items: '[자기효능감] 나의 업무 분야에서 목표를 설정할 자신이 있다 / 센터에서 회의를 하거나 업무를 위한 토론을 할 때 자신 있게 내 의견을 이야기한다 / 장기적인 문제를 분석하여 해결책을 찾는 일에 자신이 있다 [희망] 내가 계획안 목표가 달성 되리라 생각한다 / 목표를 달성하기 위한 다양한 방법들을 생각한다 [복원력] 어려움에 부딪히더라도 그것을 벗어날 수 있는 다양한 방법을 생각해 낼 수 있다 / 어려운 상황에 대한 경험이 있기 때문에 센터에서의 힘든 시간들을 잘 극복해 낼 수 있다 / 스트레스를 잘 극복하는 편이다' },
+  '윤순자(2020)_직무만족': { scholar: 'Locke(1976), Smith, Kendall & Hulin(1969), Herzberg(1966), Weiss & Cropanzano(1996), MSQ, 박현식(2010), 정은주(2007), 김미경(2018), 김태성(2017), 안은선(2017), 신인숙(2010)', scale: '재구성 12문항(내적6/외적4 = 분석 10문항, 5점 Likert)', items: '[내재적 만족] 나의 직업은 평생 직업으로 좋은 직업이다 / 지금 수행하고 있는 업무에 많은 애착과 보람을 느낀다 / 나의 직업은 사회적으로 인정받는 직업이다 / 노인분들을 도우면서 보람과 성취감을 느낀다 / 현재의 일에 대해 나의 능력을 발휘할 수 있다고 생각한다 / 현재 하고 있는 업무 자체가 재미있다 [외재적 만족] 타 직업에 비하여 내 직업에 만족한다 / 내가 기울인 노력에 대한 대우에 대체로 만족한다 / 내가 속한 기관에 대해서 강한 소속감을 느낀다 / 나의 상사는 내가 직무를 성공적으로 수행하는데 필요한 정보, 조언을 잘해준다' },
+  // ── 척도/문항 detail entry: 배순정(2020) 교원 박사 (SVU) ──
+  '배순정(2020)_직무특성': { scholar: 'Hackman & Oldham(1976), 김학기(2009), 임영규(2011)', scale: '재구성 19문항(기능다양성4/직무정체성3/직무중요성4/자율성4/피드백4, 5점 Likert; 정체성5번 문항 제거)', items: '[기능다양성] 나의 직무는 서로 성격이 다른 일들로 이루어져 있다 / 나의 직무는 다양한 기술과 고도의 지식이 요구되어 진다 / 나의 직무는 초보자가 혼자 수행하기 어렵다 / 나의 직무는 아주 단순하고 반복적이다 (역채점) [직무정체성] 나의 직무는 조직전체 직무와 밀접한 관련이 있다 / 나의 직무는 다른 직무와 비교 할 때 독립적이다 / 나의 직무는 처음부터 끝까지 책임지고 완성하도록 되어 있다 [직무중요성] 나의 직무는 우리 조직에서 중요한 부분을 차지하고 있다 / 나의 직무처리 결과는 다른 동료와 조직에 많은 영향을 미친다 / 나의 직무가 잘못 수행되면 조직에 커다란 영향을 미친다 / 우리 조직의 직무 중에서 내가 맡고 있는 직무가 가장 중요하다 [자율성] 다른 직무에 비해 나의 직무는 대부분 자율적인 재량권이 있다 / 직무수행 방법과 절차의 결정이 비교적 자유롭다 / 직무수행 과정에서 나의 개인적 판단이 많이 허용된다 / 직무수행 방법은 상급자 지시보다 나의 의견이 많이 작용된다 [피드백] 직무수행 결과가 잘 되었는지의 여부를 스스로 파악할 수 있다 / 직무수행 중이라도 잘못된 사항은 즉시 파악이 가능하다 / 상급자나 동료들로부터 직무결과나 과정에 대한 정보를 얻는다 / 직무수행과정 중에 잘 진행되고 있는지의 여부를 확인할 수 있다' },
+  '배순정(2020)_감정노동': { scholar: 'Hochschild(1979, 1983), Morris & Feldman(1996), Ashforth & Humphrey(1993), 김승언(2012), 최정임(2013), 우연백(2016)', scale: '재구성 19문항(빈도3/주의정도3/감정부조화2/표면행위5/내면행위6, 5점 Likert; 표면행위5의 13번 문항 제거)', items: '[빈도] 나는 직장생활을 잘 하기 위해 실제 감정을 숨겨야 하는 경우가 많다 / 나는 학생(학부모)가 나에게 따뜻함과 친절함을 느낄 수 있도록 가식적으로 노력할 때가 많다 / 나는 직장 내에서 진짜로 웃는 경우보다 거짓으로 웃는 경우 더 많다 [주의정도] 나는 직장생활을 하면서 실제의 감정을 표현하는 것이 대단히 어렵다고 느낀다 / 나는 학생(학부모)를 미소로서 응대하는 것이 어렵다 / 나는 기분이 나쁠 때에도 학생(학부모)들에게 표현하지 않으려고 최선을 다한다 [감정부조화] 나는 학생(학부모)들을 위하여 나의 실제 감정을 왜곡한다 / 나는 표현하는 행동과 나의 실제 감정 때문에 혼란스러울 때가 많다 [표면행위] 나의 업무는 학생(학부모)들에게 인위적으로 혹은 직업적으로 친절할 것을 요구한다 / 나는 업무 중에 밝은 표정을 유지하기 위하여 나의 감정을 위장하거나 관리한다 / 나의 업무는 실제로 느끼지 않은 감정을 겉으로 표현할 것을 요구한다 / 나의 업무는 어떠한 상황에서는 나의 진실한 감정을 감출 것을 요구한다 / 나의 업무는 사람들이 나를 어떻게 대우하는 것과 상관없이 친절할 것을 요구한다 [내면행위] 나는 직장에서 감정적인 문제들을 잘 다루고 있다고 생각한다 / 나는 격앙된 학생이나 학부모들을 안정시키는데 능숙하다 / 나는 직장동료들이 편안함을 느끼도록 잘 도와준다 / 나는 업무에 필요한 감정을 실제로도 느끼려고 노력한다 / 나는 동료들 간의 충돌을 완화시켜 평화를 유지하려고 노력한다 / 나는 동료들이 업무 중에 스트레스와 어려움을 극복할 수 있도록 도와준다' },
+  '배순정(2020)_직무만족': { scholar: '노종희(2001) TJSQ, 김명희(2011), 이경희(2013), 김영일(2016)', scale: '재구성 15문항(혁신성4/교육의식4/발전성4/자율성3, 5점 Likert)', items: '[혁신성] 나는 새로운 교수 방법을 사용한다 / 나는 담당업무를 창의적으로 처리한다 / 나는 혁신적인 아이디어로 업무를 개선한다 / 나는 새로운 방식으로 학급 또는 업무관련 일을 경영한다 [교육의식] 나는 교직생활에 보람을 느낀다 / 나는 가르치는 일이 재미있다 / 나는 교원으로서 자부심을 느낀다 / 나는 교직을 전문직이라고 생각한다 [발전성] 나는 시간이 나면 연수에 참여한다 / 나는 교수-학습에 관한 토론을 많이 한다 / 나는 최신 교육정보를 자주 접한다 / 나는 교재연구를 충실히 한다 [자율성] 나는 업무 수행에 있어 간섭을 받지 않는다 / 나는 교수-학습에 관한 사항을 자율적으로 결정한다 / 나는 교육 문제에 대해서 자율적으로 대처한다' },
   };
 
 
@@ -5240,7 +5517,10 @@ const PaperCompass = ({ onBack }) => {
     '황창휘(2013)': 'SVU 논문 원본/지진피해평가시스템을 활용한 도심지 피해예측에 관한 연구 황창휘 2012.pdf',
     '황현정, 황용석, 이현종, 박지수, 신민호(2022)': '타학교 논문 원본/잠재프로파일 분석을 통한 고령층 집단 유형화와 영향요인 연구 디지털역량과 연령변수를 중심으.pdf',
     '황환성(2019)': 'SVU 논문 원본/중소 소방엔지니어링 기업의 조직공정성이 조직몰입에 미치는 영향 황환성 2019.pdf',
-    '황환성(2020)': 'SVU 논문 원본/중소 소방엔지니어링 기업의 조직공정성이 조직몰입에 미치는 영향 황환성 2019.pdf'
+    '황환성(2020)': 'SVU 논문 원본/중소 소방엔지니어링 기업의 조직공정성이 조직몰입에 미치는 영향 황환성 2019.pdf',
+    // ── 2026-04-29 신규 추가: 직무특성 매개효과 연구 2편 (유병선(2025)은 SVU 폴더에 기존 매핑) ──
+    '윤순자(2020)': '타학교 논문 원본/장기요양기관_직무특성_직무만족_직업소명의식_긍정심리자본_매개.pdf',
+    '배순정(2020)': '타학교 논문 원본/교원_직무특성_직무만족_감정노동_매개.pdf'
   };
 
 
@@ -5728,32 +6008,57 @@ const PaperCompass = ({ onBack }) => {
     },
     '직무특성': {
       // ── JDS Job Diagnostic Survey — Hackman & Oldham(1975, 1980) ──
-      // Organizational Behavior and Human Performance 16. 한국적용: 안정원(2016), 심민선(2022), 심민섭(2022), 유병선(2025), 김진태(2025)
-      // 5 핵심 차원 (Job Characteristics Model)
+      // Organizational Behavior and Human Performance 16. 한국적용: 안정원(2016), 심민선(2022), 심민섭(2022), 유병선(2025), 김진태(2025), 윤순자(2020), 배순정(2020)
+      // 5 핵심 차원 (Job Characteristics Model) — 각 8문항(AI 추천 5 + 사용자 선택 3)
       '기술다양성': [
         '나의 직무는 다양한 기술과 능력을 사용하도록 요구한다',
         '나의 직무는 복잡하고 수준 높은 기술을 필요로 한다',
         '나의 직무는 단순 반복적이지 않다',
+        '나의 업무는 여러 가지 지식을 필요로 한다',
+        '나의 업무는 다양한 재능을 필요로 한다',
+        '나는 다양한 일을 수행한다',
+        '나의 업무는 다양한 속성으로 이루어져 있다',
+        '나의 직무는 서로 성격이 다른 일들로 이루어져 있다',
       ],
       '직무정체성': [
         '내 직무는 처음부터 끝까지 완성하는 형태이다',
         '내 직무는 명확하고 분명한 결과물이 있다',
         '내가 한 일이 누구의 결과물인지 분명히 드러난다',
+        '나는 업무를 맡아 시작하면 끝까지 수행한다',
+        '나는 맡은 업무의 결과를 가시적으로 확인할 수 있다',
+        '나의 직무는 조직 전체 직무와 밀접한 관련이 있다',
+        '나의 직무는 다른 직무와 비교할 때 독립적이다',
+        '나는 업무에서 나의 책임과 권한을 명확히 알고 있다',
       ],
       '직무중요성': [
         '내 직무는 다른 사람의 삶이나 일에 중요한 영향을 미친다',
         '내 직무는 조직 외부 사람들에게도 중요하다',
         '내 직무 결과가 다른 사람의 안녕과 행복에 영향을 미친다',
+        '나의 업무는 조직의 목표와 중요한 관련성이 있다',
+        '내가 하는 업무는 없어서는 안 되는 중요한 업무이다',
+        '나의 업무 성과는 공익적으로 가치가 크다',
+        '나의 업무 결과에 따라 많은 사람들이 영향을 받는다',
+        '나의 직무가 잘못 수행되면 조직에 커다란 영향을 미친다',
       ],
       '자율성': [
         '나는 직무 수행 방법을 스스로 결정할 수 있다',
         '나는 직무 일정을 스스로 계획할 수 있다',
         '나는 업무 수행 시 상당한 재량권을 가진다',
+        '나는 업무수행 시 스스로 결정할 수 있는 권한이 있다',
+        '나는 업무 순서를 스스로 결정할 수 있다',
+        '나는 업무 범위를 스스로 결정할 수 있다',
+        '직무수행 과정에서 나의 개인적 판단이 많이 허용된다',
+        '직무수행 방법은 상급자 지시보다 나의 의견이 많이 작용된다',
       ],
       '피드백': [
         '나는 내 업무 수행 결과에 대한 피드백을 받는다',
         '나의 직무 자체가 업무 수행 정도에 대한 정보를 제공한다',
         '내 직무는 내가 잘하고 있는지 알 수 있게 해준다',
+        '나는 업무수행 후 업무성과 정도를 알 수 있다',
+        '상사가 나의 업무수행에 대하여 알려 준다',
+        '동료들로부터 직무 결과나 과정에 대한 정보를 얻는다',
+        '직무수행 중이라도 잘못된 사항은 즉시 파악이 가능하다',
+        '업무에 대한 중간평가와 사후 평가를 알 수 있다',
       ],
     },
     '조직유효성': {
@@ -6107,18 +6412,106 @@ const PaperCompass = ({ onBack }) => {
       ],
     },
     '감정노동': {
+      // ── 감정노동 척도: Hochschild(1983), Morris & Feldman(1996), Ashforth & Humphrey(1993), Grandey(2000) ──
+      // 한국적용: 김승언(2012), 최정임(2013), 우연백(2016), 배순정(2020)
+      // 5 하위차원 × 약 8문항 (AI 추천 5 + 사용자 선택 3 시나리오 지원)
+      '빈도': [
+        '나는 직장생활을 잘 하기 위해 실제 감정을 숨겨야 하는 경우가 많다',
+        '나는 상대방이 나에게 따뜻함과 친절함을 느낄 수 있도록 가식적으로 노력할 때가 많다',
+        '나는 직장 내에서 진짜로 웃는 경우보다 거짓으로 웃는 경우 더 많다',
+        '나는 하루에도 여러 번 감정을 조절해야 한다',
+        '나는 자주 감정을 표현해야 하는 상황에 놓인다',
+      ],
+      '주의정도': [
+        '나는 직장생활을 하면서 실제의 감정을 표현하는 것이 대단히 어렵다고 느낀다',
+        '나는 상대방을 미소로서 응대하는 것이 어렵다',
+        '나는 기분이 나쁠 때에도 상대방에게 표현하지 않으려고 최선을 다한다',
+        '나는 감정을 통제하는 데 많은 에너지를 쏟는다',
+        '나는 감정 표현에 신경을 많이 써야 한다',
+      ],
+      '감정부조화': [
+        '나는 상대방을 위하여 나의 실제 감정을 왜곡한다',
+        '나는 표현하는 행동과 나의 실제 감정 때문에 혼란스러울 때가 많다',
+        '내가 표현해야 하는 감정과 실제 감정 사이의 차이가 크다',
+        '나는 일하는 동안 감정의 충돌을 자주 경험한다',
+        '나는 감정 부조화 때문에 스트레스를 받는다',
+      ],
       '표면행위(Surface Acting)': [
         '나는 실제로 느끼지 않는 감정을 표현해야 할 때가 있다',
-        '나는 고객(상대방) 앞에서 실제 감정을 숨기고 다른 감정을 보여준다',
+        '나는 상대방 앞에서 실제 감정을 숨기고 다른 감정을 보여준다',
         '나는 업무 중 가면을 쓰고 있는 것처럼 느낄 때가 있다',
         '나는 실제 기분과 다른 감정을 표현하기 위해 노력한다',
         '나는 업무상 필요한 감정 표현을 위해 연기를 한다',
+        '나의 업무는 실제로 느끼지 않은 감정을 겉으로 표현할 것을 요구한다',
+        '나의 업무는 어떤 상황에서는 나의 진실한 감정을 감출 것을 요구한다',
+        '나는 업무 중에 밝은 표정을 유지하기 위해 나의 감정을 위장하거나 관리한다',
       ],
       '내면행위(Deep Acting)': [
-        '나는 고객(상대방)에게 보여야 할 감정을 실제로 느끼려고 노력한다',
+        '나는 상대방에게 보여야 할 감정을 실제로 느끼려고 노력한다',
         '나는 적절한 감정을 표현하기 위해 실제 감정 상태를 변화시키려 한다',
         '나는 업무에서 요구하는 감정을 진심으로 느끼려고 노력한다',
         '나는 긍정적인 감정을 표현하기 위해 즐거운 경험을 떠올린다',
+        '나는 직장에서 감정적인 문제들을 잘 다루고 있다고 생각한다',
+        '나는 격앙된 상대방을 안정시키는데 능숙하다',
+        '나는 직장 동료들이 편안함을 느끼도록 잘 도와준다',
+        '나는 동료들 간의 충돌을 완화시켜 평화를 유지하려고 노력한다',
+      ],
+    },
+    // ── 2026-04-29 추가: 직업소명의식 (Dik & Duffy, 2009; 윤순자, 2020) ──
+    // CVQ(Calling and Vocation Questionnaire) 기반, 한국적용: 윤순자(2020), 차원철(2018), 백경애(2019)
+    // 4 하위차원 × 8문항 = 32문항 (AI 추천 5개 + 사용자 선택 3개 시나리오 지원)
+    '직업소명의식': {
+      '열정': [
+        '나의 일은 나를 열심히 하도록 만든다',
+        '나는 내 일을 사랑한다',
+        '내 직업은 내 인생에서 매우 중요한 부분이다',
+        '나는 나의 직업을 자랑스럽게 생각한다',
+        '나는 내가 하는 일에 진심으로 관심이 있다',
+        '내가 하는 일은 나에게 강한 동기를 부여한다',
+        '나는 일을 할 때 살아있다는 느낌을 받는다',
+        '나는 내 일에 강한 애착을 느낀다',
+      ],
+      '가치감': [
+        '내가 하고 있는 일이 세상과 사회를 더 살기 좋은 곳으로 만든다는 신념을 갖고 있다',
+        '내 직업과 업무는 매우 의미 있고 가치 있는 일이라고 생각한다',
+        '근무환경이나 보수에 상관없이 일 자체로서 사명감을 느낀다',
+        '나는 내 일이 단순한 직업 그 이상이라고 생각한다',
+        '나는 내 일을 통해 더 큰 목적에 기여하고 있다고 느낀다',
+        '내가 하는 일은 도덕적으로 중요한 의미를 가진다',
+        '나의 직업은 내 가치관과 일치한다',
+        '나는 내 일이 사회적으로 가치 있는 일이라고 확신한다',
+      ],
+      '기여도': [
+        '내가 하고 있는 일을 통해 공공의 이익에 기여하고 있다',
+        '내 일이 사회에 조금이라도 기여할 수 있다는 것을 생각하면 진정으로 보람과 행복을 느낀다',
+        '내 직업은 사회에서 반드시 필요한 직종의 하나이다',
+        '내가 하는 일은 다른 사람의 삶에 긍정적 영향을 미친다',
+        '내 일은 우리 사회에 도움이 되는 활동이다',
+        '나는 내 일을 통해 다른 사람을 돕는다는 보람을 느낀다',
+        '내 직업은 공동체를 위한 봉사라고 생각한다',
+        '내가 일을 잘하면 사회 전체에도 도움이 된다',
+      ],
+      '천직의식': [
+        '일이 내 삶의 원동력이며, 평생 이 일을 계속해도 행복할 것 같다',
+        '지금 하고 있는 일을 위해 내가 존재하는 것처럼 느낄 정도로 나에게 가장 적합한 일이라고 생각한다',
+        '현재 내가 하는 일은 마땅히 해야 할 일이며, 내가 가장 잘 할 수 있는 일이다',
+        '나는 이 일이 나의 천직이라고 느낀다',
+        '나의 직업은 운명처럼 다가왔다',
+        '내 일은 나의 정체성을 형성하는 핵심 부분이다',
+        '나는 다른 어떤 일보다 지금 하는 일을 하고 싶다',
+        '내 직업은 단순한 생계 수단이 아니라 소명이다',
+      ],
+    },
+    '소명의식': {
+      '소명의식(단일차원)': [
+        '나는 내 직업이 천직이라고 느낀다',
+        '내 일은 단순한 직업이 아니라 소명이다',
+        '나는 내 일을 통해 세상에 기여하고 있다고 느낀다',
+        '내 직업은 내가 가장 잘 할 수 있는 일이다',
+        '나는 평생 이 일을 계속하고 싶다',
+        '내 일은 나에게 깊은 의미를 준다',
+        '나는 내 일을 통해 사회에 도움이 된다고 믿는다',
+        '내 직업은 나의 가치관과 일치한다',
       ],
     },
     '감정고갈': {
@@ -11720,6 +12113,9 @@ const PaperCompass = ({ onBack }) => {
     '이도형·이승희(2012)': { subject: '조직지원인식→혁신행동 관련 연구', sample: '국내 학술지', region: '국내', iv: '조직지원인식', mv: '-', dv: '혁신행동', result: '조직지원인식이 혁신행동에 미치는 영향' },
     '전화익·윤관식(2014)': { subject: '혁신행동→직무성과 관련 연구', sample: '국내 학술지', region: '국내', iv: '혁신행동', mv: '-', dv: '직무성과', result: '혁신행동이 직무성과에 미치는 영향' },
     '주재식(2008)': { subject: '혁신행동→직무성과 관련 연구', sample: '국내 학술지', region: '국내', iv: '혁신행동', mv: '-', dv: '직무성과', result: '혁신행동이 직무성과에 미치는 영향' },
+    // ── 2026-04-29 추가: 직무특성 매개효과 연구 2편 (유병선(2025)은 기존 등재) ──
+    '윤순자(2020)': { subject: '장기요양기관 종사자들의 직무특성이 직무만족에 미치는 영향: 직업소명의식과 긍정심리자본의 매개효과', sample: '경기 동두천·양주 노인 장기요양기관 종사자 134부 (배부 150·회수 140·불성실 6 제외)', region: '국내', iv: '직무특성(중요성/다양성/자율성/대인관계)', mv: '직업소명의식, 긍정심리자본', dv: '직무만족(내적/외적)', result: '직무특성→직무만족 부분채택; 직업소명의식의 부분매개 확인(다양성→내적, 중요성·자율성·대인관계→외적); 긍정심리자본1(자기효능감+희망)의 부분매개 일부 확인(다양성→내적); 긍정심리자본2(복원력) 매개효과 미확인' },
+    '배순정(2020)': { subject: '교원의 직무특성이 직무만족에 미치는 영향: 감정노동 매개효과 검증', sample: '경기도 초등학교 교원 606부 (배포 685·회수 667·불성실 61 제외, 회수율 97.4%)', region: '국내', iv: '직무특성(기능다양성/직무정체성/직무중요성/자율성/피드백)', mv: '감정노동(빈도/주의정도/감정부조화/표면행위/내면행위)', dv: '직무만족(혁신성/교육의식/발전성/자율성)', result: '직무특성→직무만족 5개 모두 채택(피드백 β=.25 가장 강함); 직무특성→감정노동은 기능다양성·직무중요성만 채택; 감정노동→직무만족은 주의정도(-)·내면행위(+)만 채택; 감정노동(내면행위)의 부분매개 확인' },
   };
 
   // ── 선행연구 요약문 DB (변수 간 관계) ──
@@ -11746,7 +12142,13 @@ const PaperCompass = ({ onBack }) => {
     '신뢰→직무만족': '신뢰는 직무만족에 정(+)의 영향을 미치는 것으로 검증되었다(차무홍, 2023; 우성주, 2021). 상사에 대한 인지적·정서적 신뢰가 직무만족을 높이는 것으로 나타났다.',
     '조직문화→조직몰입': '조직문화는 조직몰입에 유의한 영향을 미치는 것으로 나타났다(황남연, 2021). 특히 관계지향 문화와 혁신지향 문화가 구성원의 조직몰입을 높이는 것으로 확인되었다.',
     '근무환경→조직몰입': '근무환경은 조직몰입에 정(+)의 영향을 미치는 것으로 나타났다(안병찬, 2023). 물리적·심리적으로 양호한 근무환경이 구성원의 조직에 대한 몰입을 높이는 것으로 확인되었다.',
-    '직무특성→조직몰입': '직무특성은 조직몰입에 정(+)의 영향을 미치는 것으로 나타났다(심민선, 2022). 기술다양성, 자율성, 피드백 등 풍부한 직무특성이 조직몰입을 높이는 것으로 확인되었다.',
+    '직무특성→조직몰입': '직무특성은 조직몰입에 정(+)의 영향을 미치는 것으로 나타났다(심민선, 2022; 유병선, 2025; 김진태, 2025). 기술다양성, 자율성, 피드백 등 풍부한 직무특성이 조직몰입을 높이는 것으로 확인되었다.',
+    '직무특성→직무만족': '직무특성은 직무만족에 정(+)의 영향을 미치는 것으로 다수 검증되었다(유병선, 2025; 윤순자, 2020; 배순정, 2020; 김진태, 2025). Hackman & Oldham(1976)의 직무특성모형이 제시한 5개 핵심차원이 직무만족의 주요 선행요인으로 확인되었다.',
+    '직무특성→감정노동': '직무특성은 감정노동에 영향을 미치는 것으로 검증되었다(배순정, 2020). 특히 기능다양성과 직무중요성이 감정노동을 증가시키는 것으로 나타났으며, 이는 Morris & Feldman(1996)이 제시한 감정노동 4차원 이론과 부합한다.',
+    '직무특성→직업소명의식': '직무특성은 직업소명의식에 정(+)의 영향을 미치는 것으로 검증되었다(윤순자, 2020). 특히 직무중요성·다양성·대인관계 차원이 종사자의 소명의식 형성에 기여하는 것으로 확인되었다(Dik & Duffy, 2009).',
+    '직무특성→긍정심리자본': '직무특성은 긍정심리자본에 부분적으로 정(+)의 영향을 미치는 것으로 나타났다(윤순자, 2020). 다양성은 자기효능감·희망에, 중요성·대인관계는 복원력에 기여하는 것으로 확인되었다(Luthans et al., 2007).',
+    '감정노동→직무만족': '감정노동은 직무만족에 양면적인 영향을 미치는 것으로 검증되었다(배순정, 2020). 특히 내면행위(Deep Acting)는 직무만족에 정(+)의 영향을, 주의정도와 표면행위는 부(-)의 영향을 미치는 것으로 나타났다(Hochschild, 1983; Morris & Feldman, 1996).',
+    '직업소명의식→직무만족': '직업소명의식은 직무만족에 강한 정(+)의 영향을 미치는 것으로 검증되었다(윤순자, 2020; 차원철, 2018; 백경애, 2019). 자신의 일을 천직(calling)으로 인식할수록 직무에 대한 만족도가 증가하는 것으로 확인되었다(Dik & Duffy, 2009).',
     '긍정심리자본→직무만족': '긍정심리자본은 직무만족에 정(+)의 영향을 미치는 것으로 나타났다. 자기효능감, 희망, 복원력, 낙관주의가 직무에 대한 긍정적 태도를 형성하는 것으로 확인되었다.',
     '긍정심리자본→조직몰입': '긍정심리자본은 조직몰입에 정(+)의 영향을 미치는 것으로 나타났다(임재규, 2017). 긍정적 심리적 역량이 조직에 대한 헌신을 높이는 것으로 확인되었다.',
   };
