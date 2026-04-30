@@ -119,11 +119,18 @@ const PaperCompass = ({ onBack }) => {
   const [advisorName, setAdvisorName] = useState('');             // 지도교수 이름 (예: 황찬규)
   const [researcherProgram, setResearcherProgram] = useState(''); // 학위 과정 (예: 석사과정 / 박사과정)
   const [surveyMonth, setSurveyMonth] = useState('');             // 설문 실시 연월 (예: 2025년 5월)
+  const [surveyScale, setSurveyScale] = useState(5);              // 5/6/7점 Likert 척도 선택 (기본 5점)
   const [showFormIntroEditor, setShowFormIntroEditor] = useState(true);  // Step 8 진입 시 기본 펼침
   const [showSurveyPreview, setShowSurveyPreview] = useState(false);
   const [editingItemKey, setEditingItemKey] = useState(null);
   const [thesisType, setThesisType] = useState('master'); // 'journal', 'master', or 'doctoral'
   const [copied, setCopied] = useState(false);
+  const [copied2, setCopied2] = useState(false);  // 연락처 수집 폼 코드 복사용
+  // ── Apps Script 실행 후 받은 Google Forms URL 저장 (Word 결과물에 출력) ──
+  const [formViewUrl, setFormViewUrl] = useState('');         // 본 설문 응답용 URL (/viewform)
+  const [formEditUrl, setFormEditUrl] = useState('');         // 본 설문 편집용 URL (/edit)
+  const [contactFormViewUrl, setContactFormViewUrl] = useState(''); // 연락처 폼 응답용 URL
+  const [contactFormEditUrl, setContactFormEditUrl] = useState(''); // 연락처 폼 편집용 URL
   const [checklist, setChecklist] = useState({});
   const [dataSource, setDataSource] = useState('svu'); // 'svu' or 'all'
   const [sampleSize, setSampleSize] = useState(300);
@@ -13574,10 +13581,25 @@ const PaperCompass = ({ onBack }) => {
       items: f.items.map((item, idx) => {
         const key = `${varName}__${f.factor}__${idx}`;
         const text = customSurveyTexts[key] || item;
-        // 응답자에게 보여지는 설문에서 λ 값 제거 (연구자용 통계값)
-        return text.replace(/\s*\[λ=[^\]]*\]/g, '');
+        // 응답자에게 보여지는 설문에서 λ 값 + 역채점 표기 모두 제거 (응답 왜곡 방지)
+        return text.replace(/\s*\[λ=[^\]]*\]/g, '').replace(/\s*\(역채점\)|\s*\(R\)\s*/g, '').trim();
       })
     }));
+  };
+  // ── 역채점 문항 식별·표시 헬퍼 ──
+  // 응답자에게는 절대 노출 안 됨 / 연구자 검토 화면에서만 빨간 라벨로 강조
+  const _isReverseItem = (text) => /\(역채점\)|\(R\)/.test(String(text || ''));
+  const _stripReverseMarker = (text) => String(text || '').replace(/\s*\(역채점\)|\s*\(R\)\s*/g, '').trim();
+  const _renderItemWithReverseBadge = (text) => {
+    const isRev = _isReverseItem(text);
+    if (!isRev) return text;
+    const clean = _stripReverseMarker(text);
+    return React.createElement(React.Fragment, null,
+      clean, ' ',
+      React.createElement("span", {style: {display: 'inline-block', padding: '1px 7px', borderRadius: 3, fontSize: 10, fontWeight: 'bold', backgroundColor: '#FFEBEE', color: '#C62828', border: '1px solid #FFCDD2', verticalAlign: 'middle', marginLeft: 4},
+        title: '역채점 문항: 분석 시 (6 - 응답값) 또는 (8 - 응답값)으로 변환 필요. 응답자에게는 표시되지 않습니다.'},
+        '⚠ 역채점')
+    );
   };
 
   // 호환용: flat 문항 리스트 (기존 코드 호환)
@@ -14318,13 +14340,16 @@ const PaperCompass = ({ onBack }) => {
     let pn = 0;
 
     // 1. IV → DV 직접효과 (parent + sub-hypotheses)
+    //    선배 논문 형식: 하위가설은 IV 이름을 다시 적지 않고 하위요인 이름만 사용
+    //    예) H1: 변혁적리더십은(는) 조직몰입에 유의한 정(+)의 영향을 미칠 것이다.
+    //         H1-1: 카리스마은(는) 조직몰입에 유의한 정(+)의 영향을 미칠 것이다.
     selectedIVs.forEach(iv => {
       selectedDVs.forEach(dv => {
         pn += 1;
-        h.push(`H${pn}: ${iv}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미친다.`);
+        h.push(`H${pn}: ${iv}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미칠 것이다.`);
         if (_hasMultipleSubs(iv)) {
           _getSubNames(iv).forEach((sub, si) => {
-            h.push(`H${pn}-${si + 1}: ${iv}의 ${sub}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미친다.`);
+            h.push(`H${pn}-${si + 1}: ${sub}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미칠 것이다.`);
           });
         }
       });
@@ -14333,10 +14358,10 @@ const PaperCompass = ({ onBack }) => {
     selectedIVs.forEach(iv => {
       selectedMediators.forEach(med => {
         pn += 1;
-        h.push(`H${pn}: ${iv}은(는) ${med}에 유의한 ${_getDirection(med)}의 영향을 미친다.`);
+        h.push(`H${pn}: ${iv}은(는) ${med}에 유의한 ${_getDirection(med)}의 영향을 미칠 것이다.`);
         if (_hasMultipleSubs(iv)) {
           _getSubNames(iv).forEach((sub, si) => {
-            h.push(`H${pn}-${si + 1}: ${iv}의 ${sub}은(는) ${med}에 유의한 ${_getDirection(med)}의 영향을 미친다.`);
+            h.push(`H${pn}-${si + 1}: ${sub}은(는) ${med}에 유의한 ${_getDirection(med)}의 영향을 미칠 것이다.`);
           });
         }
       });
@@ -14345,39 +14370,39 @@ const PaperCompass = ({ onBack }) => {
     selectedMediators.forEach(med => {
       selectedDVs.forEach(dv => {
         pn += 1;
-        h.push(`H${pn}: ${med}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미친다.`);
+        h.push(`H${pn}: ${med}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미칠 것이다.`);
         if (_hasMultipleSubs(med)) {
           _getSubNames(med).forEach((sub, si) => {
-            h.push(`H${pn}-${si + 1}: ${med}의 ${sub}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미친다.`);
+            h.push(`H${pn}-${si + 1}: ${sub}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미칠 것이다.`);
           });
         }
       });
     });
-    // 4. 매개효과 (parent + IV 하위요인 분해)
+    // 4. 매개효과 (parent + IV 하위요인 분해) — 미래시제 통일
     if (selectedMediators.length > 0) {
       selectedIVs.forEach(iv => {
         selectedDVs.forEach(dv => {
           selectedMediators.forEach(med => {
             pn += 1;
-            h.push(`H${pn}: ${iv}이(가) ${dv}에 미치는 영향은 ${med}를 통해 매개된다.`);
+            h.push(`H${pn}: ${iv}이(가) ${dv}에 미치는 영향은 ${med}를 통해 매개될 것이다.`);
             if (_hasMultipleSubs(iv)) {
               _getSubNames(iv).forEach((sub, si) => {
-                h.push(`H${pn}-${si + 1}: ${iv}의 ${sub}이(가) ${dv}에 미치는 영향은 ${med}를 통해 매개된다.`);
+                h.push(`H${pn}-${si + 1}: ${sub}이(가) ${dv}에 미치는 영향은 ${med}를 통해 매개될 것이다.`);
               });
             }
           });
         });
       });
     }
-    // 5. 조절효과 (parent + IV 하위요인 분해)
+    // 5. 조절효과 (parent + IV 하위요인 분해) — 미래시제 통일
     selectedModerators.forEach(mod => {
       selectedIVs.forEach(iv => {
         selectedDVs.forEach(dv => {
           pn += 1;
-          h.push(`H${pn}: ${mod}은(는) ${iv}이(가) ${dv}에 미치는 영향을 조절한다.`);
+          h.push(`H${pn}: ${mod}은(는) ${iv}이(가) ${dv}에 미치는 영향을 조절할 것이다.`);
           if (_hasMultipleSubs(iv)) {
             _getSubNames(iv).forEach((sub, si) => {
-              h.push(`H${pn}-${si + 1}: ${mod}은(는) ${iv}의 ${sub}이(가) ${dv}에 미치는 영향을 조절한다.`);
+              h.push(`H${pn}-${si + 1}: ${mod}은(는) ${sub}이(가) ${dv}에 미치는 영향을 조절할 것이다.`);
             });
           }
         });
@@ -15821,7 +15846,32 @@ const PaperCompass = ({ onBack }) => {
                     ) : (
                       React.createElement("span", {className: "px-2 py-0.5 rounded-full text-xs font-medium", style: { backgroundColor: '#FFF3E0', color: '#E65100' }}, " 커스텀 변수 ")
                     ), _indMatchBadge && React.createElement("span", {className: "px-2 py-0.5 rounded-full text-xs font-medium", style: { backgroundColor: _indMatchBadge.bg, color: _indMatchBadge.color, cursor: 'help' }, title: _indMatchBadge.tip}, _indMatchBadge.label)), React.createElement("div", {className: "flex items-center gap-3"}, subs && React.createElement("span", {className: "text-xs text-gray-500 hidden sm:inline"}, subs.join(', ')), React.createElement("span", {className: "text-sm font-medium", style: { color: '#2E75B6' }}, getAutoSurveyItemsByFactor(v).reduce((sum, f) => sum + f.items.length, 0), "문항"), React.createElement(ChevronRight, {size: 16, className: `text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`}))), isExpanded && theory && (
-                  React.createElement("div", {className: "p-4 border-t", style: { borderColor: '#E3F2FD', backgroundColor: '#FAFBFF' }}, React.createElement("div", {className: "mb-4"}, React.createElement("div", {className: "flex items-center gap-2 mb-2"}, React.createElement("span", {className: "text-xs font-bold", style: { color: '#1565C0' }}, "✨ 추천 하위요인"), React.createElement("span", {className: "text-xs text-gray-400"}, "(선행논문 기반 — 기본 선택됨)"), React.createElement("span", {className: "ml-auto text-xs", style: { color: '#1565C0' }}, (() => {
+                  React.createElement("div", {className: "p-4 border-t", style: { borderColor: '#E3F2FD', backgroundColor: '#FAFBFF' }},
+                    // ── ⚠ 원전 측정 단위 경고 (단일/다차원) ──
+                    (() => {
+                      const optCount = theory.options.length;
+                      const isUnidim = optCount === 1 || theory.options.every(o => /\(단일차원|단일\)|단일/.test(o.name || ''));
+                      const cur = selectedSubFactors[v] || theory.defaultSelected;
+                      const userCount = cur.length;
+                      // 경고 케이스 1: 원전 단일차원인데 사용자가 임의 분리한 경우
+                      // 경고 케이스 2: 원전 다차원인데 일부만 사용
+                      let warning = null;
+                      if (isUnidim && userCount > 1) {
+                        warning = { color: '#C62828', bg: '#FFEBEE', icon: '⚠', text: '원전이 단일차원으로 개발된 척도입니다. 임의 분리 시 측정 타당도가 깨집니다. 단일차원으로 사용하세요.' };
+                      } else if (!isUnidim && userCount < optCount && userCount > 0) {
+                        warning = { color: '#E65100', bg: '#FFF3E0', icon: 'ℹ', text: `원전은 ${optCount}차원 척도입니다. ${userCount}개만 선택하면 일부 차원만 측정 — 지도교수님과 상의하세요.` };
+                      }
+                      return React.createElement("div", {className: "mb-3 p-2 rounded text-xs flex items-start gap-2",
+                        style: { background: warning ? warning.bg : '#F3F4F6', border: `1px solid ${warning ? warning.color + '40' : '#E5E7EB'}`, color: warning ? warning.color : '#6B7280' }},
+                        React.createElement("span", {style: {fontSize: 14, lineHeight: 1}}, warning ? warning.icon : '📐'),
+                        React.createElement("span", null,
+                          React.createElement("strong", null, '원전 측정 단위: '),
+                          isUnidim ? '단일차원' : `${optCount}차원 (${theory.options.map(o => o.name.replace(/\s*\(.+?\)\s*/g, '')).slice(0, 4).join('·')}${optCount > 4 ? ' 등' : ''})`,
+                          warning && React.createElement("span", {style: {display: 'block', marginTop: 3}}, warning.text)
+                        )
+                      );
+                    })(),
+                    React.createElement("div", {className: "mb-4"}, React.createElement("div", {className: "flex items-center gap-2 mb-2"}, React.createElement("span", {className: "text-xs font-bold", style: { color: '#1565C0' }}, "✨ 추천 하위요인"), React.createElement("span", {className: "text-xs text-gray-400"}, "(선행논문 기반 — 기본 선택됨)"), React.createElement("span", {className: "ml-auto text-xs", style: { color: '#1565C0' }}, (() => {
                             const cur = selectedSubFactors[v] || theory.defaultSelected;
                             return `${cur.length}개 선택 / 전체 ${theory.options.length}개`;
                           })())), React.createElement("div", {className: "space-y-2"}, theory.defaultSelected.map(idx => {
@@ -15966,7 +16016,7 @@ const PaperCompass = ({ onBack }) => {
                                       style: { borderColor: isSelected ? '#2E75B6' : '#ccc', backgroundColor: isSelected ? '#2E75B6' : '#fff', minWidth: '16px' }},
                                       isSelected && React.createElement("span", {style: { color: '#fff', fontSize: '10px', lineHeight: '1' }}, "✓")
                                     ),
-                                    React.createElement("span", {className: "text-xs leading-relaxed", style: { color: isSelected ? '#333' : '#888' }}, item),
+                                    React.createElement("span", {className: "text-xs leading-relaxed", style: { color: isSelected ? '#333' : '#888' }}, _renderItemWithReverseBadge(item)),
                                     isAiRecommended && React.createElement("span", {className: "ml-auto flex-shrink-0 text-xs px-1.5 py-0.5 rounded",
                                       style: { backgroundColor: '#E8F5E9', color: '#2E7D32', fontSize: '9px', whiteSpace: 'nowrap' }}, "기본 선택")
                                   );
@@ -16123,7 +16173,7 @@ const PaperCompass = ({ onBack }) => {
               const cleanItem = String(item || '').replace(/\s*\[λ=[^\]]*\]/g, '');
               const safeItem = _esc(cleanItem);
               if (!safeItem) return; // 빈 문항 skip
-              script += `  form.addScaleItem().setTitle('${itemNum}. [${safeFactor}] ${safeItem}').setBounds(1, 5).setLabels('전혀 그렇지 않다', '매우 그렇다').setRequired(true);\n`;
+              script += `  form.addScaleItem().setTitle('${itemNum}. [${safeFactor}] ${safeItem}').setBounds(1, ${surveyScale}).setLabels('전혀 그렇지 않다', '매우 그렇다').setRequired(true);\n`;
             });
           });
         }
@@ -16146,7 +16196,53 @@ const PaperCompass = ({ onBack }) => {
       return script;
     };
 
+    // ── 연락처 수집 폼 (보상 발송용, 본 설문과 분리) ──
+    const generateContactFormScript = () => {
+      const _esc = (s) => String(s == null ? '' : s)
+        .replace(/\\/g, '\\\\').replace(/[‘’]/g, "'").replace(/[“”]/g, '"')
+        .replace(/'/g, "\\'").replace(/\r\n|\r|\n/g, ' ').replace(/\t/g, ' ').trim();
+      const finalTitle = (customFormTitle && customFormTitle.trim()) || generateThesisTitle();
+      const safeTitle = _esc(finalTitle) || '연구 설문';
+      const _yearMonth = (surveyMonth && surveyMonth.trim()) || `${new Date().getFullYear()}년 ${new Date().getMonth()+1}월`;
+      const safeAffil = _esc(researcherAffil);
+      const safeName = _esc(researcherName);
+      const safeProgram = _esc(researcherProgram);
+      const safeEmail = _esc(researcherEmail);
+      const safeAdvisor = _esc(advisorName);
+      let s = `// Google Apps Script - [연락처 수집 폼] 자동 생성\n`;
+      s += `// 본 설문 폼과 별도로 운영되며, 응답자에게 보상(쿠폰 등)을 발송하기 위한 연락처만 수집합니다.\n`;
+      s += `// 사용법: Google Apps Script(script.google.com) 새 프로젝트 → 코드 붙여넣기 → 저장 → ▶ 실행\n\n`;
+      s += `function createContactForm() {\n`;
+      s += `  var form = FormApp.create('[연락처 수집] ${safeTitle}');\n`;
+      s += `  form.setDescription('안녕하십니까?\\n\\n본 폼은 「${safeTitle}」 학위논문 설문조사에 응답해 주신 분들께 약속드린 보상(모바일 쿠폰)을 발송하기 위한 ${'\\u201c'}연락처 수집 전용 폼${'\\u201d'}입니다.\\n\\n` +
+        `※ 본 설문지(응답 내용)와 본 폼(연락처)은 ${'\\u201c'}완전히 분리하여 운영${'\\u201d'}됩니다. 두 폼은 서로 다른 구글 스프레드시트에 저장되며, 연구자는 응답 내용과 연락처를 연결할 수 없습니다.\\n\\n` +
+        `※ 수집된 연락처는 보상 발송 후 즉시 폐기됩니다.\\n\\n` +
+        `※ 본 설문 응답을 완료하지 않으셨다면 보상이 지급되지 않을 수 있습니다.\\n\\n` +
+        `${_yearMonth}` + (safeAffil ? `\\n\\n연구자: ${safeAffil}` : '') + (safeProgram || safeName ? `\\n        ${safeProgram}${safeProgram && safeName ? ' ' : ''}${safeName}` : '') + (safeEmail ? `\\n        ${safeEmail}` : '') + (safeAdvisor ? `\\n지도교수: ${safeAdvisor} 교수` : '') + `');\n\n`;
+      s += `  // ── 응답자 정보 ──\n`;
+      s += `  form.addSectionHeaderItem().setTitle('보상 발송용 연락처').setHelpText('아래 정보 중 한 가지 이상 입력해 주세요. (이름은 필수)');\n`;
+      s += `  form.addTextItem().setTitle('이름').setRequired(true);\n`;
+      s += `  form.addTextItem().setTitle('카카오톡 ID 또는 카카오톡 연결 휴대폰 번호').setHelpText('카카오톡 알림톡으로 보상을 받으시려면 입력').setRequired(false);\n`;
+      s += `  form.addTextItem().setTitle('휴대폰 번호 (010-XXXX-XXXX)').setHelpText('SMS로 보상을 받으시려면 입력').setRequired(false);\n`;
+      s += `  form.addTextItem().setTitle('이메일').setHelpText('이메일로 보상을 받으시려면 입력').setRequired(false);\n\n`;
+      s += `  // ── 보상 선택 ──\n`;
+      s += `  form.addMultipleChoiceItem().setTitle('받고 싶은 보상').setChoiceValues([\n`;
+      s += `    '스타벅스 아메리카노 (4,500원)',\n`;
+      s += `    '편의점 모바일상품권 (5,000원)',\n`;
+      s += `    '치킨 쿠폰 (10,000원, 추첨)',\n`;
+      s += `    '보상 불필요 (학술 기여 차원)',\n`;
+      s += `  ]).setRequired(true);\n\n`;
+      s += `  // ── 본 설문 응답 확인용 (옵셔널) ──\n`;
+      s += `  form.addTextItem().setTitle('본 설문 응답 완료 시각 (대략)').setHelpText('예: 11월 15일 14:00 — 응답 매칭 확인용 (정확하지 않아도 OK)').setRequired(false);\n`;
+      s += `  form.addParagraphTextItem().setTitle('연구자에게 남기실 메시지 (선택)').setRequired(false);\n\n`;
+      s += `  Logger.log('연락처 폼 URL (응답자에게 공유): ' + form.getPublishedUrl());\n`;
+      s += `  Logger.log('편집 URL (본인용): ' + form.getEditUrl());\n`;
+      s += `}\n`;
+      return s;
+    };
+
     const scriptCode = generateGoogleFormScript();
+    const contactScriptCode = generateContactFormScript();
 
     // ── 단계별 안내 데이터 (각 단계에 제목·세부설명·tip) ──
     const guideSteps = [
@@ -16248,6 +16344,28 @@ const PaperCompass = ({ onBack }) => {
                   style: { padding: '8px 10px', borderRadius: '6px', border: '1px solid #D0D7E2', fontSize: '13px', gridColumn: 'span 2' }})
               )
             ),
+            // ── Likert 척도 점수 선택 (5/6/7점) ──
+            React.createElement("div", null,
+              React.createElement("label", {className: "block text-sm font-semibold mb-1", style: { color: '#1F3864' }}, "📊 Likert 척도"),
+              React.createElement("p", {className: "text-xs text-gray-500 mb-2"},
+                "본 연구에서 사용할 Likert 척도를 선택하세요. ",
+                React.createElement("strong", null, "원전 척도와 일치"), "시키는 것이 권장됩니다 (예: MLQ는 5점, UWES는 7점)."),
+              React.createElement("div", {style: {display: 'flex', gap: 8}},
+                [{val: 5, label: '5점 (가장 일반적)'}, {val: 6, label: '6점'}, {val: 7, label: '7점 (UWES 등)'}].map(opt =>
+                  React.createElement("label", {key: opt.val,
+                    style: {flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '8px 10px', borderRadius: 6,
+                      border: surveyScale === opt.val ? '2px solid #2E75B6' : '1px solid #D0D7E2',
+                      background: surveyScale === opt.val ? '#E3F2FD' : '#fff',
+                      cursor: 'pointer', fontSize: 12, fontWeight: surveyScale === opt.val ? 700 : 400,
+                      color: surveyScale === opt.val ? '#1F3864' : '#666' }},
+                    React.createElement("input", {type: 'radio', name: 'surveyScale', value: opt.val,
+                      checked: surveyScale === opt.val,
+                      onChange: () => setSurveyScale(opt.val),
+                      style: {accentColor: '#2E75B6'}}),
+                    opt.label)
+                )
+              )
+            ),
             // 인사말 본문
             React.createElement("div", null,
               React.createElement("div", {className: "flex items-center justify-between mb-1"},
@@ -16326,7 +16444,234 @@ const PaperCompass = ({ onBack }) => {
                   setCopied(true);
                   setTimeout(() => setCopied(false), 2000);
                 });
-              }, className: "px-3 py-1 rounded text-sm font-medium text-white transition", style: { backgroundColor: copied ? '#4CAF50' : '#2E75B6' }}, copied ? '복사 완료!' : '코드 복사')), React.createElement("pre", {className: "p-4 text-sm text-green-400 overflow-x-auto max-h-80 overflow-y-auto"}, React.createElement("code", null, scriptCode))), React.createElement("div", {className: "grid grid-cols-3 gap-4 mb-6"}, React.createElement("div", {className: "p-4 bg-blue-50 rounded-lg text-center"}, React.createElement("p", {className: "text-2xl font-bold", style: { color: '#2E75B6' }}, totalItems), React.createElement("p", {className: "text-xs text-gray-600"}, "설문 문항")), React.createElement("div", {className: "p-4 bg-purple-50 rounded-lg text-center"}, React.createElement("p", {className: "text-2xl font-bold", style: { color: '#9333EA' }}, getSurveyVariables().length), React.createElement("p", {className: "text-xs text-gray-600"}, "연구 변수")), React.createElement("div", {className: "p-4 bg-orange-50 rounded-lg text-center"}, React.createElement("p", {className: "text-2xl font-bold", style: { color: '#F57C00' }}, "Likert 5점"), React.createElement("p", {className: "text-xs text-gray-600"}, "척도"))), React.createElement("div", {className: "p-4 rounded-lg", style: { backgroundColor: '#FFF8E1', border: '1px solid #FFE082' }}, React.createElement("div", {className: "flex items-start gap-3"}, React.createElement(Lightbulb, {size: 20, style: { color: '#F57C00', flexShrink: 0, marginTop: 2 }}), React.createElement("p", {className: "text-sm text-gray-700"}, " Google Forms로 생성한 설문은 응답 데이터가 자동으로 Google Sheets에 저장됩니다. SPSS 분석 시 CSV로 다운로드하여 활용하세요. "))))
+              }, className: "px-3 py-1 rounded text-sm font-medium text-white transition", style: { backgroundColor: copied ? '#4CAF50' : '#2E75B6' }}, copied ? '복사 완료!' : '코드 복사')), React.createElement("pre", {className: "p-4 text-sm text-green-400 overflow-x-auto max-h-80 overflow-y-auto"}, React.createElement("code", null, scriptCode))), React.createElement("div", {className: "grid grid-cols-3 gap-4 mb-6"}, React.createElement("div", {className: "p-4 bg-blue-50 rounded-lg text-center"}, React.createElement("p", {className: "text-2xl font-bold", style: { color: '#2E75B6' }}, totalItems), React.createElement("p", {className: "text-xs text-gray-600"}, "설문 문항")), React.createElement("div", {className: "p-4 bg-purple-50 rounded-lg text-center"}, React.createElement("p", {className: "text-2xl font-bold", style: { color: '#9333EA' }}, getSurveyVariables().length), React.createElement("p", {className: "text-xs text-gray-600"}, "연구 변수")), React.createElement("div", {className: "p-4 bg-orange-50 rounded-lg text-center"}, React.createElement("p", {className: "text-2xl font-bold", style: { color: '#F57C00' }}, "Likert 5점"), React.createElement("p", {className: "text-xs text-gray-600"}, "척도"))), React.createElement("div", {className: "p-4 rounded-lg", style: { backgroundColor: '#FFF8E1', border: '1px solid #FFE082' }}, React.createElement("div", {className: "flex items-start gap-3"}, React.createElement(Lightbulb, {size: 20, style: { color: '#F57C00', flexShrink: 0, marginTop: 2 }}), React.createElement("p", {className: "text-sm text-gray-700"}, " Google Forms로 생성한 설문은 응답 데이터가 자동으로 Google Sheets에 저장됩니다. SPSS 분석 시 CSV로 다운로드하여 활용하세요. "))),
+            // ════════════════════════════════════════════════════
+            //  📨 연락처 수집 폼 (보상 발송용 - 본 설문과 분리)
+            // ════════════════════════════════════════════════════
+            React.createElement("div", {className: "rounded-lg border-2 overflow-hidden mt-8", style: { borderColor: '#7B1FA2', boxShadow: '0 4px 12px rgba(123, 31, 162, 0.12)' }},
+              React.createElement("div", {className: "p-4", style: { background: 'linear-gradient(135deg, #6A1B9A 0%, #AB47BC 100%)' }},
+                React.createElement("h3", {className: "font-bold text-white flex items-center gap-2", style: {fontSize: 17}},
+                  React.createElement("span", {style: {fontSize: 20}}, "📨"), " 연락처 수집 폼 (보상 발송용)"),
+                React.createElement("p", {className: "text-xs mt-1", style: {color: 'rgba(255,255,255,0.9)'}},
+                  "본 설문과 ", React.createElement("strong", null, "별도로 운영"),
+                  "되는 두 번째 폼입니다. 응답자에게 보상(쿠폰)을 보내려면 연락처가 필요한데, ",
+                  "익명성을 보장하려면 응답 내용과 분리해야 합니다.")
+              ),
+              React.createElement("div", {className: "p-4 bg-purple-50"},
+                React.createElement("p", {className: "text-xs leading-relaxed mb-3", style: {color: '#4A148C'}},
+                  "💡 ", React.createElement("strong", null, "운영 방식"),
+                  ": ① 본 설문지 URL과 이 연락처 수집 폼 URL을 ", React.createElement("strong", null, "함께"),
+                  " 응답자에게 전송 → ② 응답자가 본 설문 완료 후 연락처 폼에도 정보 입력 → ",
+                  "③ 두 폼은 각각 별도 Google Sheets에 저장되어 ", React.createElement("strong", null, "응답과 연락처는 절대 연결되지 않음"),
+                  " (IRB 승인·익명성 요건 충족)."
+                ),
+                React.createElement("div", {className: "bg-gray-900 rounded-lg overflow-hidden"},
+                  React.createElement("div", {className: "flex items-center justify-between px-4 py-2 bg-gray-800"},
+                    React.createElement("span", {className: "text-xs text-gray-400"}, "Apps Script · 연락처 수집 폼"),
+                    React.createElement("button", {onClick: () => {
+                      navigator.clipboard.writeText(contactScriptCode).then(() => {
+                        setCopied2(true);
+                        setTimeout(() => setCopied2(false), 2000);
+                      });
+                    }, className: "px-3 py-1 rounded text-xs font-medium text-white transition",
+                      style: { backgroundColor: copied2 ? '#4CAF50' : '#7B1FA2' }},
+                      copied2 ? '복사 완료!' : '연락처 폼 코드 복사')
+                  ),
+                  React.createElement("pre", {className: "p-4 text-xs text-green-400 overflow-x-auto max-h-72 overflow-y-auto"},
+                    React.createElement("code", null, contactScriptCode))
+                )
+              )
+            ),
+            // ════════════════════════════════════════════════════
+            //  🔗 Apps Script 실행 후 받은 URL 저장 (Word 결과물에 출력)
+            // ════════════════════════════════════════════════════
+            React.createElement("div", {className: "rounded-lg border-2 overflow-hidden mt-6", style: { borderColor: '#00897B' }},
+              React.createElement("div", {className: "p-4", style: { background: 'linear-gradient(135deg, #004D40 0%, #26A69A 100%)' }},
+                React.createElement("h3", {className: "font-bold text-white flex items-center gap-2", style: {fontSize: 17}},
+                  React.createElement("span", {style: {fontSize: 20}}, "🔗"), " 생성된 Google Forms URL 저장"),
+                React.createElement("p", {className: "text-xs mt-1", style: {color: 'rgba(255,255,255,0.9)'}},
+                  "Apps Script ▶ 실행 후 ", React.createElement("strong", null, "실행 로그"),
+                  "에 표시되는 ", React.createElement("strong", null, "설문 URL"),
+                  "과 ", React.createElement("strong", null, "편집 URL"),
+                  "을 아래에 붙여넣으면, ",
+                  React.createElement("strong", null, "9단계 결과물 → 워드/엑셀 변환"),
+                  " 시 자동 포함됩니다.")
+              ),
+              React.createElement("div", {className: "p-5 bg-teal-50 space-y-4"},
+                // 본 설문 URL 영역
+                React.createElement("div", {className: "p-3 rounded bg-white", style: {border: '1px solid #B2DFDB'}},
+                  React.createElement("h4", {className: "font-bold text-sm mb-3", style: {color: '#004D40'}},
+                    "📝 본 설문 (메인 폼) URL"),
+                  React.createElement("div", {className: "space-y-2"},
+                    React.createElement("div", null,
+                      React.createElement("label", {className: "text-xs font-medium", style: {color: '#00695C'}},
+                        "설문 응답 URL (응답자에게 배포할 링크)"),
+                      React.createElement("input", {
+                        type: "text",
+                        value: formViewUrl,
+                        onChange: e => setFormViewUrl(e.target.value),
+                        placeholder: "https://docs.google.com/forms/d/e/.../viewform",
+                        className: "w-full px-3 py-2 mt-1 text-xs border rounded font-mono",
+                        style: {borderColor: '#80CBC4', backgroundColor: '#F1F8F7'}
+                      })
+                    ),
+                    React.createElement("div", null,
+                      React.createElement("label", {className: "text-xs font-medium", style: {color: '#00695C'}},
+                        "편집 URL (본인 관리용 — 응답자에게 보내지 마세요)"),
+                      React.createElement("input", {
+                        type: "text",
+                        value: formEditUrl,
+                        onChange: e => setFormEditUrl(e.target.value),
+                        placeholder: "https://docs.google.com/forms/d/.../edit",
+                        className: "w-full px-3 py-2 mt-1 text-xs border rounded font-mono",
+                        style: {borderColor: '#80CBC4', backgroundColor: '#F1F8F7'}
+                      })
+                    )
+                  )
+                ),
+                // 연락처 폼 URL 영역
+                React.createElement("div", {className: "p-3 rounded bg-white", style: {border: '1px solid #CE93D8'}},
+                  React.createElement("h4", {className: "font-bold text-sm mb-3", style: {color: '#4A148C'}},
+                    "📨 연락처 수집 폼 URL (보상 발송용 · 선택)"),
+                  React.createElement("div", {className: "space-y-2"},
+                    React.createElement("div", null,
+                      React.createElement("label", {className: "text-xs font-medium", style: {color: '#6A1B9A'}},
+                        "연락처 응답 URL (응답자에게 본 설문과 함께 배포)"),
+                      React.createElement("input", {
+                        type: "text",
+                        value: contactFormViewUrl,
+                        onChange: e => setContactFormViewUrl(e.target.value),
+                        placeholder: "https://docs.google.com/forms/d/e/.../viewform",
+                        className: "w-full px-3 py-2 mt-1 text-xs border rounded font-mono",
+                        style: {borderColor: '#CE93D8', backgroundColor: '#F8F4FB'}
+                      })
+                    ),
+                    React.createElement("div", null,
+                      React.createElement("label", {className: "text-xs font-medium", style: {color: '#6A1B9A'}},
+                        "연락처 편집 URL (본인 관리용)"),
+                      React.createElement("input", {
+                        type: "text",
+                        value: contactFormEditUrl,
+                        onChange: e => setContactFormEditUrl(e.target.value),
+                        placeholder: "https://docs.google.com/forms/d/.../edit",
+                        className: "w-full px-3 py-2 mt-1 text-xs border rounded font-mono",
+                        style: {borderColor: '#CE93D8', backgroundColor: '#F8F4FB'}
+                      })
+                    )
+                  )
+                ),
+                // 안내 박스
+                React.createElement("div", {className: "p-3 rounded text-xs leading-relaxed", style: {backgroundColor: '#FFF3E0', border: '1px solid #FFB74D', color: '#5D4037'}},
+                  React.createElement("strong", null, "💡 입력 후 자동 저장"),
+                  ": 입력한 URL은 앱 메모리에 저장되며, ",
+                  React.createElement("strong", null, "9단계 결과물 → 워드/엑셀 다운로드"),
+                  " 시 부록(설문지) 끝부분에 자동으로 출력됩니다.",
+                  React.createElement("br", null),
+                  React.createElement("strong", null, "주의"),
+                  ": 새로고침(F5) 시 입력값이 초기화되므로, 따로 메모해두시거나 URL 받은 즉시 입력해주세요.")
+              )
+            ),
+            // ════════════════════════════════════════════════════
+            //  📋 응답자 모집·보상 가이드 (Step 8.5)
+            // ════════════════════════════════════════════════════
+            React.createElement("div", {className: "rounded-lg border-2 overflow-hidden mt-6", style: { borderColor: '#1565C0' }},
+              React.createElement("div", {className: "p-4", style: { background: 'linear-gradient(135deg, #0D47A1 0%, #42A5F5 100%)' }},
+                React.createElement("h3", {className: "font-bold text-white flex items-center gap-2", style: {fontSize: 17}},
+                  React.createElement("span", {style: {fontSize: 20}}, "📋"), " 응답자 모집·보상 가이드"),
+                React.createElement("p", {className: "text-xs mt-1", style: {color: 'rgba(255,255,255,0.9)'}},
+                  "학위논문 양적 연구의 가장 큰 현실적 어려움 — \"어떻게 충분한 응답자를 확보할 것인가\"")
+              ),
+              React.createElement("div", {className: "p-5 bg-white space-y-4"},
+                // 1. 모집 채널
+                React.createElement("div", null,
+                  React.createElement("h4", {className: "font-bold text-sm mb-2", style: {color: '#1565C0'}}, "🌐 1. 응답자 모집 채널"),
+                  React.createElement("ul", {className: "text-xs leading-relaxed space-y-1 pl-4", style: {color: '#37474F'}},
+                    React.createElement("li", null, "• ", React.createElement("strong", null, "1차 - 지인·동료"), ": 카카오톡 단톡방, 직장 동료, 학과 SNS (응답률 높음 60~80%)"),
+                    React.createElement("li", null, "• ", React.createElement("strong", null, "2차 - 소속 기관"), ": 회사·학교 게시판·이메일 공지 (지도교수 도움 요청)"),
+                    React.createElement("li", null, "• ", React.createElement("strong", null, "3차 - 온라인 커뮤니티"), ": 디시인사이드, 네이버 카페·블로그, 잡플래닛 (응답률 낮음 5~15%)"),
+                    React.createElement("li", null, "• ", React.createElement("strong", null, "4차 - 전문 패널"), ": 마크로밀엠브레인, 오픈서베이 (유료 50~150만원, 빠르고 표본 다양)")
+                  )
+                ),
+                // 2. 표본 추정
+                React.createElement("div", {className: "p-3 rounded", style: {backgroundColor: '#FFF8E1', border: '1px solid #FFE082'}},
+                  React.createElement("h4", {className: "font-bold text-sm mb-2", style: {color: '#E65100'}}, "📐 2. 배포 수 산출 (응답률 30~50% 기준)"),
+                  React.createElement("p", {className: "text-xs leading-relaxed", style: {color: '#5D4037'}},
+                    "필요 응답자 수 ", React.createElement("strong", null, "300명"), " → ",
+                    React.createElement("strong", null, "배포 700~1,000명 권장"), " (응답률 30~50% 가정).",
+                    React.createElement("br", null),
+                    "• 회귀분석: 변수 1개당 표본 10~20명 → 5변수면 100명 이상 (Hair et al. 2010)",
+                    React.createElement("br", null),
+                    "• SEM: 200명 이상 권장 / 매개·조절: 250~300명",
+                    React.createElement("br", null),
+                    "• G*Power 검정력 분석으로 정확한 산출 가능 (효과크기 0.15·power 0.80 기준)"
+                  )
+                ),
+                // 3. 보상
+                React.createElement("div", null,
+                  React.createElement("h4", {className: "font-bold text-sm mb-2", style: {color: '#1565C0'}}, "🎁 3. 보상 (예산 산출)"),
+                  React.createElement("table", {className: "w-full text-xs", style: {borderCollapse: 'collapse'}},
+                    React.createElement("thead", null,
+                      React.createElement("tr", {style: {backgroundColor: '#E3F2FD'}},
+                        React.createElement("th", {className: "border border-gray-300 px-2 py-1 text-left"}, "보상"),
+                        React.createElement("th", {className: "border border-gray-300 px-2 py-1 text-center"}, "1인당"),
+                        React.createElement("th", {className: "border border-gray-300 px-2 py-1 text-center"}, "300명"),
+                        React.createElement("th", {className: "border border-gray-300 px-2 py-1 text-left"}, "응답률"))),
+                    React.createElement("tbody", null,
+                      [['스타벅스 아메리카노', '4,500원', '135만원', '높음'],
+                       ['편의점 모바일상품권', '5,000원', '150만원', '높음'],
+                       ['치킨 쿠폰 (추첨 10명)', '20,000원', '20만원', '중간'],
+                       ['보상 없음 (학술 기여)', '0원', '0원', '낮음 (5~10%)']].map((row, i) =>
+                        React.createElement("tr", {key: i, style: {backgroundColor: i % 2 === 0 ? '#FAFAFA' : '#fff'}},
+                          ...row.map((cell, j) =>
+                            React.createElement("td", {key: j, className: "border border-gray-300 px-2 py-1",
+                              style: {textAlign: j === 0 || j === 3 ? 'left' : 'center'}}, cell))))
+                    ))
+                ),
+                // 4. 응답률 향상 팁
+                React.createElement("div", null,
+                  React.createElement("h4", {className: "font-bold text-sm mb-2", style: {color: '#1565C0'}}, "💪 4. 응답률 향상 팁"),
+                  React.createElement("ul", {className: "text-xs leading-relaxed space-y-1 pl-4", style: {color: '#37474F'}},
+                    React.createElement("li", null, "• 인사말에 ", React.createElement("strong", null, "구체적 응답 시간"), " 명시 (\"약 10분\")"),
+                    React.createElement("li", null, "• ", React.createElement("strong", null, "보상을 가장 먼저 강조"), " (\"응답 후 스타벅스 쿠폰 100% 증정\")"),
+                    React.createElement("li", null, "• 응답 기간 ", React.createElement("strong", null, "2~4주"), " 권장 (너무 짧으면 부담, 너무 길면 잊힘)"),
+                    React.createElement("li", null, "• ", React.createElement("strong", null, "중간 알림"), " 1회 (\"이번 주말까지 100명 추가 모집!\")"),
+                    React.createElement("li", null, "• 모바일 친화적 폼 (구글폼은 자동 모바일 최적화)")
+                  )
+                ),
+                // 5. IRB·연구윤리
+                React.createElement("div", {className: "p-3 rounded", style: {backgroundColor: '#FFEBEE', border: '1px solid #FFCDD2'}},
+                  React.createElement("h4", {className: "font-bold text-sm mb-2", style: {color: '#C62828'}}, "⚖ 5. IRB(연구윤리위원회) 승인 — 학위논문 필수"),
+                  React.createElement("p", {className: "text-xs leading-relaxed", style: {color: '#B71C1C'}},
+                    React.createElement("strong", null, "IRB 승인은 학위논문 제출 전 반드시 받아야 합니다."),
+                    " 본인이 다니는 ", React.createElement("strong", null, "학교 IRB(연구윤리위원회)"), "에 신청하세요. 신청 시 필요한 자료:",
+                    React.createElement("ul", {className: "mt-2 pl-4 space-y-0.5"},
+                      React.createElement("li", null, "• 연구계획서 (목적·방법·기간·대상자)"),
+                      React.createElement("li", null, "• 설문지 사본 (본 앱에서 자동 생성됨)"),
+                      React.createElement("li", null, "• 연구참여 동의서 (익명성·자발성 명시)"),
+                      React.createElement("li", null, "• ", React.createElement("strong", null, "응답과 연락처가 분리되어 운영됨을 명시"), " ← 두 폼 분리의 핵심 이유")
+                    ),
+                    React.createElement("strong", null, "심사 기간"), ": 일반 2~4주 / 신속 1주. 학위논문 일정에 미리 반영하세요."
+                  )
+                ),
+                // 6. 카카오 알림톡 자동 발송 (외부 도구 안내)
+                React.createElement("div", {className: "p-3 rounded", style: {backgroundColor: '#F1F8E9', border: '1px dashed #A5D6A7'}},
+                  React.createElement("h4", {className: "font-bold text-sm mb-1", style: {color: '#2E7D32'}}, "🤖 6. (선택) 카카오 알림톡·SMS 일괄 자동 발송"),
+                  React.createElement("p", {className: "text-xs leading-relaxed", style: {color: '#33691E'}},
+                    "100명 이상에게 보상을 일일이 보내기 힘들 때, 외부 자동화 도구를 활용할 수 있습니다.",
+                    React.createElement("br", null),
+                    "• ", React.createElement("a", {href: 'https://smartsms.aligo.in/', target: '_blank', rel: 'noopener', style: {color: '#2E7D32', textDecoration: 'underline'}}, "알리고(Aligo)"),
+                    " — 카카오 알림톡 + SMS 통합 (건당 ~30원)",
+                    React.createElement("br", null),
+                    "• ", React.createElement("a", {href: 'https://i.kakao.com/', target: '_blank', rel: 'noopener', style: {color: '#2E7D32', textDecoration: 'underline'}}, "카카오 i 비즈니스"),
+                    " — 카카오 공식 알림톡",
+                    React.createElement("br", null),
+                    "• ", React.createElement("a", {href: 'https://www.youtube.com/results?search_query=%EC%B9%B4%EC%B9%B4%EC%98%A4+%EC%95%8C%EB%A6%BC%ED%86%A1+%EC%9E%90%EB%8F%99+%EB%B0%9C%EC%86%A1+%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC', target: '_blank', rel: 'noopener', style: {color: '#2E7D32', textDecoration: 'underline'}}, "유튜브 튜토리얼 검색"),
+                    " — 'Google Sheets + 카카오 알림톡 자동 발송' 검색"
+                  )
+                )
+              )
+            )
+          )
     );
   };
 
@@ -16523,6 +16868,29 @@ const PaperCompass = ({ onBack }) => {
 
       const grandTotal = countSurveyItems();
 
+      // ── 역채점 문항 통계 (변수별 + 합계) ──
+      const reverseItemStats = [];
+      let totalReverseCount = 0;
+      variables.forEach(variable => {
+        const byFactor = getAutoSurveyItemsByFactor(variable);
+        if (byFactor.length > 0 && !byFactor[0].noScholarly) {
+          const reverseList = [];
+          let cumIdx = 0;
+          byFactor.forEach(fg => {
+            fg.items.forEach((item, ii) => {
+              cumIdx++;
+              if (_isReverseItem(item)) {
+                reverseList.push({ no: cumIdx, factor: fg.factor, item: _stripReverseMarker(item) });
+              }
+            });
+          });
+          if (reverseList.length > 0) {
+            reverseItemStats.push({ variable, items: reverseList });
+            totalReverseCount += reverseList.length;
+          }
+        }
+      });
+
       return (
         React.createElement("div", {className: "space-y-6"}, React.createElement("div", {className: "p-4 bg-blue-50 rounded-lg"}, React.createElement("p", {className: "text-sm font-semibold text-gray-700"}, '<', "표 Ⅲ-5", '>', " 연구를 위한 설문지 구성표")), React.createElement("div", {className: "bg-white rounded-lg border-2 border-gray-300 overflow-x-auto"}, React.createElement("table", {className: "w-full text-sm border-collapse"}, React.createElement("thead", null, React.createElement("tr", {style: { backgroundColor: '#F0F4FA' }}, React.createElement("th", {rowSpan: 2, className: "border border-gray-300 py-3 px-2 text-center font-bold", style: { color: '#1F3864', width: '60px' }}, "유형"), React.createElement("th", {rowSpan: 2, className: "border border-gray-300 py-3 px-2 text-center font-bold", style: { color: '#1F3864', width: '90px' }}, "변수"), React.createElement("th", {rowSpan: 2, className: "border border-gray-300 py-3 px-2 text-center font-bold", style: { color: '#1F3864', minWidth: '130px' }}, "하위변수"), React.createElement("th", {colSpan: 3, className: "border border-gray-300 py-2 px-2 text-center font-bold", style: { color: '#1F3864' }}, "설문항 구성"), React.createElement("th", {rowSpan: 2, className: "border border-gray-300 py-3 px-2 text-center font-bold", style: { color: '#1F3864', minWidth: '150px' }}, "출처")), React.createElement("tr", {style: { backgroundColor: '#F0F4FA' }}, React.createElement("th", {className: "border border-gray-300 py-2 px-1 text-center font-bold text-xs", style: { color: '#1F3864', width: '40px' }}, "번호"), React.createElement("th", {className: "border border-gray-300 py-2 px-1 text-center font-bold text-xs", style: { color: '#1F3864', width: '55px' }}, "문항"), React.createElement("th", {className: "border border-gray-300 py-2 px-1 text-center font-bold text-xs", style: { color: '#1F3864', width: '50px' }}, "문항수"))), React.createElement("tbody", null, tableRows.map((row, ri) => (
                   React.createElement("tr", {key: ri, style: row.noScholarly ? { backgroundColor: '#FFF8E1' } : {}}, row.renderRole && (
@@ -16580,7 +16948,31 @@ const PaperCompass = ({ onBack }) => {
                         })()
                       )
                     ))
-                )), React.createElement("tr", {style: { backgroundColor: '#F0F4FA' }}, React.createElement("td", {colSpan: 5, className: "border border-gray-300 py-3 px-3 text-center font-bold text-sm", style: { color: '#1F3864' }}, "합 계"), React.createElement("td", {className: "border border-gray-300 py-3 px-2 text-center font-bold text-lg", style: { color: '#2E75B6' }}, grandTotal), React.createElement("td", {className: "border border-gray-300 py-3 px-3"}))))), React.createElement("div", {className: "p-3 bg-gray-50 rounded-lg space-y-1"}, React.createElement("p", {className: "text-xs text-gray-500"}, "주) 5점 평정 척도 (1=전혀 그렇지 않다, 2=그렇지 않다, 3=보통이다, 4=그렇다, 5=매우 그렇다)"), React.createElement("p", {className: "text-xs text-gray-400 flex items-center gap-3 mt-1"}, React.createElement("span", null, React.createElement("span", {style: {color:'#1565C0',textDecoration:'underline',fontWeight:'600'}}, "파란색 링크"), " = 논문 원본 PDF 보기"), React.createElement("span", null, React.createElement("span", {style: {color:'#888',textDecoration:'underline',textDecorationStyle:'dotted'}}, "회색 링크"), " = 원본 미보유 (클릭 시 RISS 검색)"))))
+                )), React.createElement("tr", {style: { backgroundColor: '#F0F4FA' }}, React.createElement("td", {colSpan: 5, className: "border border-gray-300 py-3 px-3 text-center font-bold text-sm", style: { color: '#1F3864' }}, "합 계"), React.createElement("td", {className: "border border-gray-300 py-3 px-2 text-center font-bold text-lg", style: { color: '#2E75B6' }}, grandTotal), React.createElement("td", {className: "border border-gray-300 py-3 px-3"}))))),
+          // ── ⚠ 역채점 문항 안내 (있을 때만 표시) ──
+          totalReverseCount > 0 && React.createElement("div", {className: "p-4 rounded-lg", style: {backgroundColor: '#FFEBEE', border: '1px solid #FFCDD2'}},
+            React.createElement("p", {className: "text-sm font-bold mb-2", style: {color: '#C62828'}},
+              "⚠ 역채점(Reverse-coded) 문항 안내 — 총 ", totalReverseCount, "개"),
+            React.createElement("p", {className: "text-xs leading-relaxed mb-3", style: {color: '#5D4037'}},
+              "아래 문항들은 부정 진술로 측정되므로 ",
+              React.createElement("strong", null, surveyScale, "점 척도 기준 (", surveyScale + 1, " - 응답값)"),
+              "으로 ", React.createElement("strong", null, "역변환 후 분석"), "해야 합니다. ",
+              "Cronbach's α 산출, 요인분석, 회귀분석 등 모든 분석 전에 SPSS [변환→코딩변경]에서 처리하세요. ",
+              React.createElement("br", null),
+              React.createElement("strong", null, "응답자에게는 (역채점) 표시 없이 그대로 노출"), "되며, 이는 응답 왜곡 방지를 위한 학술 표준입니다."),
+            React.createElement("div", {className: "space-y-2"},
+              ...reverseItemStats.map(stat => React.createElement("div", {key: stat.variable, className: "p-2 bg-white rounded text-xs", style: {border: '1px solid #FFCDD2'}},
+                React.createElement("p", {className: "font-bold mb-1", style: {color: '#C62828'}},
+                  "▸ ", stat.variable, " (", stat.items.length, "개)"),
+                React.createElement("ul", {className: "space-y-0.5 pl-3", style: {color: '#37474F'}},
+                  ...stat.items.map((it, i) => React.createElement("li", {key: i},
+                    React.createElement("span", {style: {fontWeight: 600, color: '#1F3864'}}, "문항 ", it.no, ". "),
+                    "[", it.factor, "] ", it.item))
+                )
+              ))
+            )
+          ),
+          React.createElement("div", {className: "p-3 bg-gray-50 rounded-lg space-y-1"}, React.createElement("p", {className: "text-xs text-gray-500"}, "주) ", surveyScale, "점 평정 척도 (1=전혀 그렇지 않다 ~ ", surveyScale, "=매우 그렇다)" + (totalReverseCount > 0 ? " · 역채점 문항 " + totalReverseCount + "개 포함 (분석 시 역변환 필요)" : "")), React.createElement("p", {className: "text-xs text-gray-400 flex items-center gap-3 mt-1"}, React.createElement("span", null, React.createElement("span", {style: {color:'#1565C0',textDecoration:'underline',fontWeight:'600'}}, "파란색 링크"), " = 논문 원본 PDF 보기"), React.createElement("span", null, React.createElement("span", {style: {color:'#888',textDecoration:'underline',textDecorationStyle:'dotted'}}, "회색 링크"), " = 원본 미보유 (클릭 시 RISS 검색)"))))
       );
     };
 
@@ -16611,7 +17003,7 @@ const PaperCompass = ({ onBack }) => {
                   React.createElement("div", {key: fi}, React.createElement("div", {className: "flex items-center gap-2 mb-2"}, React.createElement("span", {className: "text-sm font-semibold", style: { color: '#2E75B6' }}, fg.factor), React.createElement("span", {className: "text-xs text-gray-400 ml-auto"}, fg.items.length, "문항")), React.createElement("div", {className: "space-y-1.5 ml-2"}, fg.items.map((item, idx) => {
                         globalIdx++;
                         return (
-                          React.createElement("div", {key: idx, className: "flex gap-3 p-2.5 bg-gray-50 rounded-lg"}, React.createElement("span", {className: "font-bold text-sm", style: { color: '#2E75B6', minWidth: 24 }}, globalIdx, "."), React.createElement("span", {className: "text-sm text-gray-800"}, item), React.createElement("span", {className: "text-xs text-gray-400 ml-auto whitespace-nowrap"}, "5점 Likert"))
+                          React.createElement("div", {key: idx, className: "flex gap-3 p-2.5 bg-gray-50 rounded-lg"}, React.createElement("span", {className: "font-bold text-sm", style: { color: '#2E75B6', minWidth: 24 }}, globalIdx, "."), React.createElement("span", {className: "text-sm text-gray-800 flex-1"}, _renderItemWithReverseBadge(item)), React.createElement("span", {className: "text-xs text-gray-400 ml-auto whitespace-nowrap"}, surveyScale, "점 Likert"))
                         );
                       })))
                 ))))
@@ -16906,7 +17298,7 @@ const PaperCompass = ({ onBack }) => {
                 '"본 연구의 모집단은 ○○이며, 표본추출방법은 편의표집(convenience sampling)을 사용하였다."',
                 `"총 ${sampleSize}부를 배포하여 ○○부를 회수하였고, 불성실 응답 ○부를 제외한 ○○부를 최종 분석에 사용하였다."`,
                 '"자료수집 기간은 2025년 ○월 ○일부터 ○월 ○일까지 ○주간이었다."',
-                `분석방법 기술: ① 빈도분석 ② 기술통계 ③ 신뢰도(Cronbach α) ④ ${isDoctoral ? '확인적 요인분석(CFA) ⑤ 구조방정식(SEM)' : '탐색적 요인분석(EFA) ⑤ 상관분석 ⑥ 다중회귀분석'}${medStr ? (isDoctoral ? ' ⑥ 매개효과(Bootstrap)' : ' ⑦ 매개효과(Baron&Kenny/Sobel)') : ''}`,
+                `분석방법 기술: ① 빈도분석 ② 기술통계 ③ 신뢰도(Cronbach α) ④ ${isDoctoral ? '확인적 요인분석(CFA) ⑤ 구조방정식(SEM)' : '탐색적 요인분석(EFA) ⑤ 상관분석 ⑥ 다중회귀분석'}${medStr ? ' ⑦ 매개효과: Hayes PROCESS Macro (Bootstrap 5,000회, 95% bias-corrected CI)' : ''}`,
               ],
               checklist: [
                 '모집단, 표집방법, 배포수, 회수수, 최종 분석수가 모두 기술되었는가?',
@@ -16998,24 +17390,28 @@ const PaperCompass = ({ onBack }) => {
               name: isDoctoral ? '5. 매개효과 검증' : '5. 매개효과 분석',
               pages: '2~4',
               guide: isDoctoral ? [
-                `Bootstrap 방법: 5,000회 재표집, 95% 신뢰구간`,
-                `간접효과: ${selectedIVs.join(', ')} → ${medStr} → ${selectedDV}`,
-                '"간접효과의 95% 신뢰구간이 0을 포함하지 않으므로(○.○○ ~ ○.○○) 매개효과가 유의한 것으로 나타났다."',
-                '직접효과 유의 시: 부분매개, 직접효과 비유의 시: 완전매개',
+                `Hayes PROCESS Macro Model 4 (단순매개) 또는 Model 7 (조절된 매개)`,
+                `Bootstrap: 5,000회 재표집, 95% bias-corrected 신뢰구간`,
+                `간접효과: ${selectedIVs.join(', ')} → ${medStr} → ${selectedDV} (a×b)`,
+                '"PROCESS Macro Bootstrap 검정 결과, 간접효과의 95% 신뢰구간이 0을 포함하지 않으므로([LLCI ~ ULCI]) 매개효과가 유의한 것으로 나타났다."',
+                '판정 기준: 직접효과(c\') 유의 + 간접효과 유의 → 부분매개 / 직접효과(c\') 비유의 + 간접효과 유의 → 완전매개',
+                '※ Baron & Kenny(1986) 3단계는 1980년대 방식으로 현재는 사용되지 않습니다. PROCESS Bootstrap을 사용하세요.',
               ] : [
-                `Baron & Kenny(1986) 3단계 절차:`,
-                `① 1단계: ${selectedIVs.join(', ')} → ${selectedDV} (전체효과 c 유의 확인)`,
-                `② 2단계: ${selectedIVs.join(', ')} → ${medStr} (경로 a 유의 확인)`,
-                `③ 3단계: ${selectedIVs.join(', ')} + ${medStr} → ${selectedDV} (경로 b 유의, 직접효과 c' 변화 확인)`,
-                '"Sobel 검정 결과, Z=○.○○(p<.001)로 간접효과가 통계적으로 유의한 것으로 나타났다."',
-                `직접효과(c') 유의 → 부분매개, 직접효과(c') 비유의 → 완전매개`,
+                // 위와 동일 (석사·박사 구분 없이 동일 권장)
+                `Hayes PROCESS Macro Model 4 (단순매개) 또는 Model 7 (조절된 매개)`,
+                `Bootstrap: 5,000회 재표집, 95% bias-corrected 신뢰구간`,
+                `간접효과: ${selectedIVs.join(', ')} → ${medStr} → ${selectedDV} (a×b)`,
+                '"PROCESS Macro Bootstrap 검정 결과, 간접효과의 95% 신뢰구간이 0을 포함하지 않으므로([LLCI ~ ULCI]) 매개효과가 유의한 것으로 나타났다."',
+                '판정 기준: 직접효과(c\') 유의 + 간접효과 유의 → 부분매개 / 직접효과(c\') 비유의 + 간접효과 유의 → 완전매개',
+                '※ Baron & Kenny(1986) 3단계는 1980년대 방식으로 현재는 사용되지 않습니다. PROCESS Bootstrap을 사용하세요.',
               ],
               checklist: [
-                isDoctoral ? 'Bootstrap 표본 수(5,000)와 신뢰구간이 보고되었는가?' : 'Baron & Kenny 3단계가 모두 보고되었는가?',
-                '간접효과(a×b)가 보고되었는가?',
+                'PROCESS Macro Model 번호와 Bootstrap 5,000회·95% 신뢰구간이 명시되었는가?',
+                '간접효과(a×b)와 95% LLCI·ULCI가 보고되었는가?',
                 '완전매개/부분매개 판정이 명시되었는가?',
+                '조건부 간접효과(조절된 매개)일 경우 조절변수 수준별 효과가 보고되었는가?',
               ],
-              tip: '앱의 "설문 결과 검토" → "매개효과" 탭에서 자동 산출된 Sobel Z와 매개유형을 활용하세요.',
+              tip: 'Hayes(2022) PROCESS Macro v4.2는 SPSS·SAS·R에서 모두 사용 가능합니다. 다운로드: processmacro.org',
             }] : []),
           ],
         },
@@ -17733,7 +18129,7 @@ const PaperCompass = ({ onBack }) => {
                                   onClick: () => setEditingItemKey(itemKey),
                                   className: "cursor-pointer hover:bg-blue-50 rounded px-1 py-0.5 transition block",
                                   title: "클릭하여 수정"
-                                }, item, isCustomized && React.createElement("span", {className: "ml-1 text-xs", style: { color: '#2E7D32' }}, "✓수정됨"))
+                                }, _stripReverseMarker(item), isCustomized && React.createElement("span", {className: "ml-1 text-xs", style: { color: '#2E7D32' }}, "✓수정됨"))
                               ),
                               [1, 2, 3, 4, 5].map(n => (
                                 React.createElement("td", {key: n, className: "text-center py-2 px-1"}, React.createElement("span", {className: "inline-block w-4 h-4 border-2 border-gray-400 rounded-full"}))
@@ -17745,7 +18141,37 @@ const PaperCompass = ({ onBack }) => {
           }),
         React.createElement("div", {className: "mb-4"}, React.createElement("h4", {className: "font-bold mb-3", style: { color: '#1F3864' }}, variables.length === 2 ? 'Ⅲ' : variables.length === 3 ? 'Ⅳ' : variables.length === 4 ? 'Ⅴ' : `${variables.length + 1}`, ". 인구통계학적 사항 "), React.createElement("div", {className: "space-y-2"}, surveyItems['인구통계학적'].map((item, idx) => (
                 React.createElement("div", {key: idx, className: "p-2 bg-gray-50 rounded text-sm"}, item)
-              )))), React.createElement("div", {className: "text-center p-4 bg-gray-50 rounded-lg mt-6"}, React.createElement("p", {className: "text-sm text-gray-600"}, "설문에 응해 주셔서 진심으로 감사드립니다."))))
+              )))),
+        // ── 🔗 Google Forms URL 섹션 (Step 8에서 입력된 경우만 표시) ──
+        (formViewUrl || formEditUrl || contactFormViewUrl || contactFormEditUrl) && React.createElement("div", {className: "mt-6 p-4 rounded-lg", style: {backgroundColor: '#F1F8F7', border: '1px solid #B2DFDB'}},
+          React.createElement("h4", {className: "font-bold mb-3", style: {color: '#004D40'}}, "🔗 ", "온라인 설문 링크 (Google Forms)"),
+          React.createElement("div", {className: "space-y-2 text-sm"},
+            formViewUrl && React.createElement("div", {className: "p-2 bg-white rounded", style: {border: '1px solid #B2DFDB'}},
+              React.createElement("p", {className: "font-semibold", style: {color: '#00695C'}}, "📝 본 설문 응답 URL"),
+              React.createElement("p", {className: "text-xs break-all mt-1", style: {color: '#37474F', fontFamily: 'monospace'}}, formViewUrl)
+            ),
+            formEditUrl && React.createElement("div", {className: "p-2 bg-white rounded", style: {border: '1px solid #B2DFDB'}},
+              React.createElement("p", {className: "font-semibold", style: {color: '#00695C'}}, "🛠 본 설문 편집 URL ", React.createElement("span", {className: "text-xs font-normal", style: {color: '#888'}}, "(연구자 관리용)")),
+              React.createElement("p", {className: "text-xs break-all mt-1", style: {color: '#37474F', fontFamily: 'monospace'}}, formEditUrl)
+            ),
+            contactFormViewUrl && React.createElement("div", {className: "p-2 bg-white rounded", style: {border: '1px solid #CE93D8'}},
+              React.createElement("p", {className: "font-semibold", style: {color: '#6A1B9A'}}, "📨 연락처 수집 폼 URL ", React.createElement("span", {className: "text-xs font-normal", style: {color: '#888'}}, "(보상 발송용)")),
+              React.createElement("p", {className: "text-xs break-all mt-1", style: {color: '#37474F', fontFamily: 'monospace'}}, contactFormViewUrl)
+            ),
+            contactFormEditUrl && React.createElement("div", {className: "p-2 bg-white rounded", style: {border: '1px solid #CE93D8'}},
+              React.createElement("p", {className: "font-semibold", style: {color: '#6A1B9A'}}, "🛠 연락처 폼 편집 URL ", React.createElement("span", {className: "text-xs font-normal", style: {color: '#888'}}, "(연구자 관리용)")),
+              React.createElement("p", {className: "text-xs break-all mt-1", style: {color: '#37474F', fontFamily: 'monospace'}}, contactFormEditUrl)
+            )
+          ),
+          React.createElement("p", {className: "text-xs mt-3 leading-relaxed", style: {color: '#5D4037'}},
+            "💡 ", React.createElement("strong", null, "Word 변환 시 자동 포함"),
+            ": 위 URL은 Step 8 [생성된 Google Forms URL 저장] 영역에서 입력한 값입니다. ",
+            "응답자에게 ", React.createElement("strong", null, "응답 URL"),
+            "만 배포하시고, ", React.createElement("strong", null, "편집 URL"),
+            "은 연구자 본인 관리용으로만 보관하세요."
+          )
+        ),
+        React.createElement("div", {className: "text-center p-4 bg-gray-50 rounded-lg mt-6"}, React.createElement("p", {className: "text-sm text-gray-600"}, "설문에 응해 주셔서 진심으로 감사드립니다."))))
       );
     };
 
@@ -17768,6 +18194,15 @@ const PaperCompass = ({ onBack }) => {
         [],
         ['연구가설'],
         ...hypotheses.map((h, i) => [h]),
+        // ── Google Forms URL (Step 8 입력값) ──
+        ...((formViewUrl || formEditUrl || contactFormViewUrl || contactFormEditUrl) ? [
+          [],
+          ['Google Forms 링크'],
+          ...(formViewUrl ? [['본 설문 응답 URL', formViewUrl]] : []),
+          ...(formEditUrl ? [['본 설문 편집 URL (관리용)', formEditUrl]] : []),
+          ...(contactFormViewUrl ? [['연락처 폼 응답 URL', contactFormViewUrl]] : []),
+          ...(contactFormEditUrl ? [['연락처 폼 편집 URL (관리용)', contactFormEditUrl]] : []),
+        ] : []),
       ];
       const wsModel = XLSX.utils.aoa_to_sheet(modelData);
       wsModel['!cols'] = [{ wch: 14 }, { wch: 50 }, { wch: 40 }];
@@ -18811,7 +19246,7 @@ const PaperCompass = ({ onBack }) => {
                                 onClick: () => setEditingItemKey(itemKey),
                                 className: "text-sm text-gray-700 mb-3 cursor-pointer hover:bg-blue-50 rounded px-1 py-0.5 transition",
                                 title: "클릭하여 수정"
-                              }, globalIdx, ". ", item, isCustomized && React.createElement("span", {className: "ml-2 text-xs px-1.5 py-0.5 rounded", style: { backgroundColor: '#E8F5E9', color: '#2E7D32' }}, "✓수정됨")),
+                              }, globalIdx, ". ", _renderItemWithReverseBadge(item), isCustomized && React.createElement("span", {className: "ml-2 text-xs px-1.5 py-0.5 rounded", style: { backgroundColor: '#E8F5E9', color: '#2E7D32' }}, "✓수정됨")),
                               !isEditing && React.createElement("div", {className: "flex gap-2 justify-between text-xs"}, ['전혀\n그렇지\n않다', '그렇지\n않다', '보통\n이다', '그렇다', '매우\n그렇다'].map((label, li) => (
                                   React.createElement("label", {key: li, className: "flex flex-col items-center gap-1 cursor-pointer"}, React.createElement("input", {type: "radio", name: `q${variable}${globalIdx}`, className: "w-4 h-4"}), React.createElement("span", {className: "text-xs text-center whitespace-pre-wrap"}, label))
                                 )))
@@ -19648,7 +20083,7 @@ const StatsAnalyzer = ({ onBack }) => {
           )
         ))
       );
-      if(activeTab==='med'&&result.reg&&result.reg.mediation) return h(Tbl,{id:'tbl_med',title:'매개효과 (Baron & Kenny + Sobel)'},
+      if(activeTab==='med'&&result.reg&&result.reg.mediation) return h(Tbl,{id:'tbl_med',title:'매개효과 (Sobel Z 검정) — 정확한 검증은 Hayes PROCESS Macro Bootstrap 권장'},
         h('thead',null,h('tr',null,TH('IV',{textAlign:'left'}),TH('c(전체)'),TH('a(IV→Med)'),TH('b(Med→DV)'),TH("c'(직접)"),TH('Sobel Z'),TH('매개유형'))),
         h('tbody',null,...result.reg.mediation.map((m,i)=>h('tr',{key:i,style:{background:i%2?'#f9f9f9':'#fff'}},TDL(m.iv,{fontWeight:'bold'}),
           TD(`${fmt(m.c)}${m.cSig}`),TD(`${fmt(m.a)}${m.aSig}`),TD(fmt(m.b)),TD(`${fmt(m.cPrime)}${m.cPrimeSig}`),
@@ -21394,14 +21829,7 @@ const HomeScreen = ({ onSelect }) => {
         '논문나침반'
       ),
       h('p',{style:{fontSize:'16px',color:'#666',marginBottom:'4px'}},'PaperCompass — 서울벤처대학원대학교 스마트시티·융합기술경영전공'),
-      h('p',{style:{fontSize:'13px',color:'#aaa',marginTop:'4px'}},'어떤 작업을 도와드릴까요?'),
-      // ── 사용자 책임 안내 (메인 홈에 한 번만) ──
-      h('div',{style:{maxWidth:'860px',margin:'18px auto 0',padding:'12px 16px',borderRadius:'10px',background:'#FFF8E1',border:'1px solid #FFD54F',borderLeft:'3px solid #F57C00',textAlign:'left'}},
-        h('p',{style:{fontSize:'12px',fontWeight:'bold',color:'#E65100',margin:'0 0 4px 0'}},'⚠ 학술적 책임은 연구자 본인에게 있습니다'),
-        h('p',{style:{fontSize:'11px',color:'#5D4037',margin:0,lineHeight:1.6}},
-          '본 앱은 ',h('strong',null,'데이터베이스 기반 참고 도구'),'입니다. 외부 AI나 자동 추정으로 생성된 정보는 없습니다. 제공되는 모든 선행연구·척도·매개경로·문항은 ',h('strong',null,'RISS·Google Scholar·DBpia 등에서 원문을 직접 확인'),'하신 후, 본인 연구 맥락에 맞게 검토하여 인용해 주세요. 「확장 추천」·「기본 선택」 라벨은 휴리스틱이므로 ',h('strong',null,'지도교수님과 반드시 상의'),'하시기 바랍니다.'
-        )
-      )
+      h('p',{style:{fontSize:'13px',color:'#aaa',marginTop:'4px'}},'어떤 작업을 도와드릴까요?')
     ),
     h('div',{style:{maxWidth:'1080px',margin:'0 auto',padding:'0 20px 60px',display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'24px'}},
       ...cards.map(card=>h('div',{
