@@ -15769,32 +15769,53 @@ const PaperCompass = ({ onBack }) => {
     const totalItems = countSurveyItems();
 
     const generateGoogleFormScript = () => {
+      // ── 안전한 문자열 escape: 작은따옴표/백슬래시/곡선따옴표/줄바꿈 모두 처리 ──
+      // 사용자 입력(변수명, 하위요인, 제목 등)에 ' " \ \n 등이 있어도 syntax error 방지
+      const _esc = (s) => {
+        return String(s == null ? '' : s)
+          .replace(/\\/g, '\\\\')        // 백슬래시 먼저
+          .replace(/[‘’]/g, "'")  // 곡선 작은따옴표 → 일반
+          .replace(/[“”]/g, '"')  // 곡선 큰따옴표 → 일반
+          .replace(/'/g, "\\'")          // 작은따옴표 escape
+          .replace(/\r\n|\r|\n/g, ' ')   // 줄바꿈 → 공백
+          .replace(/\t/g, ' ')           // 탭 → 공백
+          .trim();
+      };
       const vars = getSurveyVariables();
+      const safeTitle = _esc(generateThesisTitle()) || '설문지';
+      const safeTarget = _esc(surveyTarget) || '(대상 미입력)';
+      const totalMin = Math.max(1, Math.ceil(totalItems * 0.3));
+
       let script = `// Google Apps Script - 자동 설문지 생성\n`;
-      script += `// Google Forms에서 [확장 프로그램] → [Apps Script]에 붙여넣기\n\n`;
+      script += `// 사용법: Google Forms에서 [확장 프로그램] → [Apps Script] 클릭\n`;
+      script += `// 코드 전체를 붙여넣기 → 상단 함수 선택에서 'createSurveyForm' 선택 → ▶ 실행\n`;
+      script += `// 권한 승인 후 [실행 로그]에서 설문 URL 확인\n\n`;
       script += `function createSurveyForm() {\n`;
-      script += `  var form = FormApp.create('${generateThesisTitle()}');\n`;
-      script += `  form.setDescription('본 설문은 학술 연구 목적으로 실시되며, 응답 내용은 익명으로 처리됩니다.\\n대상: ${surveyTarget || '(대상 미입력)'}\\n소요시간: 약 ${Math.ceil(totalItems * 0.3)}분');\n\n`;
+      script += `  var form = FormApp.create('${safeTitle}');\n`;
+      script += `  form.setDescription('본 설문은 학술 연구 목적으로 실시되며, 응답 내용은 익명으로 처리됩니다.\\n대상: ${safeTarget}\\n소요시간: 약 ${totalMin}분');\n\n`;
 
       vars.forEach(v => {
         const byFactor = getCustomizedSurveyItems(v);
         const isNoScholarly = byFactor.length > 0 && byFactor[0].noScholarly;
-        script += `  // ${v}\n`;
-        script += `  form.addSectionHeaderItem().setTitle('${v}');\n`;
+        const safeV = _esc(v);
+        script += `  // ${safeV}\n`;
+        script += `  form.addSectionHeaderItem().setTitle('${safeV}');\n`;
         if (isNoScholarly) {
-          script += `  // ⚠ 선행연구 기반 설문항 미등록 — 연구자가 직접 추가 필요\n`;
+          script += `  // 선행연구 기반 설문항 미등록 — 연구자가 직접 추가 필요\n`;
           for (let wi = 1; wi <= 5; wi++) {
-            script += `  form.addTextItem().setTitle('${wi}. [${v}] ⚠ 선행연구 기반 설문항이 등록되어 있지 않습니다. 해당 변수의 측정 척도는 선행연구에서 직접 확인하세요.').setRequired(false);\n`;
+            script += `  form.addTextItem().setTitle('${wi}. [${safeV}] 선행연구 기반 설문항이 등록되어 있지 않습니다. 해당 변수의 측정 척도는 선행연구에서 직접 확인하세요.').setRequired(false);\n`;
           }
         } else {
           let itemNum = 0;
           byFactor.forEach(fg => {
-            script += `  // 하위요인: ${fg.factor}\n`;
+            const safeFactor = _esc(fg.factor);
+            script += `  // 하위요인: ${safeFactor}\n`;
             fg.items.forEach(item => {
               itemNum++;
-              const cleanItem = item.replace(/\s*\[λ=[^\]]*\]/g, '');
-              const escaped = cleanItem.replace(/'/g, "\\'");
-              script += `  form.addScaleItem().setTitle('${itemNum}. [${fg.factor}] ${escaped}').setBounds(1, 5).setLabels('전혀 그렇지 않다', '매우 그렇다').setRequired(true);\n`;
+              const cleanItem = String(item || '').replace(/\s*\[λ=[^\]]*\]/g, '');
+              const safeItem = _esc(cleanItem);
+              if (!safeItem) return; // 빈 문항 skip
+              script += `  form.addScaleItem().setTitle('${itemNum}. [${safeFactor}] ${safeItem}').setBounds(1, 5).setLabels('전혀 그렇지 않다', '매우 그렇다').setRequired(true);\n`;
             });
           });
         }
