@@ -77,6 +77,14 @@ const PaperCompass = ({ onBack }) => {
     window.addEventListener('paperDB_updated', handler);
     return () => window.removeEventListener('paperDB_updated', handler);
   }, []);
+  // Step 변경 시 화면 맨 위로 자동 스크롤
+  React.useEffect(() => {
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    } catch(e) {
+      window.scrollTo(0, 0);
+    }
+  }, [currentStep]);
   const [selectedModerators, setSelectedModerators] = useState([]);
   const selectedDV = selectedDVs[0] || null; // 첫 번째 DV (호환성)
   // ── 변수 사전 모달 ──
@@ -102,6 +110,16 @@ const PaperCompass = ({ onBack }) => {
   const [editingDemoIdx, setEditingDemoIdx] = useState(null);
   const [editingDemoText, setEditingDemoText] = useState('');
   const [showDemographicEditor, setShowDemographicEditor] = useState(false);
+  // ── Step 8: 구글폼 인트로 편집 (제목·인사말·연구자정보) ──
+  const [customFormTitle, setCustomFormTitle] = useState('');     // 빈 값이면 generateThesisTitle() 자동 사용
+  const [customFormIntro, setCustomFormIntro] = useState('');     // 빈 값이면 기본 인사말 자동 사용
+  const [researcherName, setResearcherName] = useState('');       // 연구자 이름
+  const [researcherAffil, setResearcherAffil] = useState('');     // 소속 (예: 서울벤처대학원대학교 박사과정)
+  const [researcherEmail, setResearcherEmail] = useState('');     // 이메일
+  const [advisorName, setAdvisorName] = useState('');             // 지도교수 이름 (예: 황찬규)
+  const [researcherProgram, setResearcherProgram] = useState(''); // 학위 과정 (예: 석사과정 / 박사과정)
+  const [surveyMonth, setSurveyMonth] = useState('');             // 설문 실시 연월 (예: 2025년 5월)
+  const [showFormIntroEditor, setShowFormIntroEditor] = useState(true);  // Step 8 진입 시 기본 펼침
   const [showSurveyPreview, setShowSurveyPreview] = useState(false);
   const [editingItemKey, setEditingItemKey] = useState(null);
   const [thesisType, setThesisType] = useState('master'); // 'journal', 'master', or 'doctoral'
@@ -4774,8 +4792,8 @@ const PaperCompass = ({ onBack }) => {
   '김두영(2015)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '김민선(2012)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '김병준(2018)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
-  '김병한(2017)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
-  '김병환(2017)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
+  '김병한(2017)': { title: '의료기관 간호인력의 사회적 자본이 직무만족, 조직몰입, 이직의도에 미치는 영향 분석', source: '신라대학교 대학원', type: '박사' },
+  '김병환(2017)': { title: '의료기관 간호인력의 사회적 자본이 직무만족, 조직몰입, 이직의도에 미치는 영향 분석', source: '신라대학교 대학원', type: '박사' },
   '김상욱(2011)': { title: '(RISS 조회 필요)', source: '학위논문', type: '박사' },
   '김성훈(2012)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '김순희(2009)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
@@ -4785,7 +4803,7 @@ const PaperCompass = ({ onBack }) => {
   '김은석(2016)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '김인재·조성진(2012)': { title: '(RISS 조회 필요)', source: '학술지', type: '학술지' },
   '김정자(2011)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
-  '김주엽·이혜진(2014)': { title: '(RISS 조회 필요)', source: '학술지', type: '학술지' },
+  '김주엽·이혜진(2014)': { title: '긍정심리자본이 직무만족과 직무소외감에 미치는 영향', source: '인적자원개발연구', type: '학술지' },
   '김철영(2018)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '김현생(2018)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '김현희 등(2017)': { title: '(RISS 조회 필요)', source: '학술지', type: '학술지' },
@@ -4809,7 +4827,7 @@ const PaperCompass = ({ onBack }) => {
   '배효선(2018)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '백수민(2017)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '서남숙(2017)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
-  '서영표·이종건(2019)': { title: '(RISS 조회 필요)', source: '학술지', type: '학술지' },
+  '서영표·이종건(2019)': { title: '심리적 주인의식이 직무만족과 조직몰입에 미치는 영향', source: '학술지', type: '학술지' },
   '서정민(2013)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '석봉인(2014)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '성영혜(2002)': { title: '(RISS 조회 필요)', source: '학위논문', type: '박사' },
@@ -4828,7 +4846,7 @@ const PaperCompass = ({ onBack }) => {
   '윤정호(2013)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '윤지원(2017)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '이공희·김성환(2014)': { title: '(RISS 조회 필요)', source: '학술지', type: '학술지' },
-  '이만규(2005)': { title: '(RISS 조회 필요)', source: '학위논문', type: '박사' },
+  '이만규(2005)': { title: '보상공정성에 대한 인식이 조직유효성에 미치는 영향에 관한 연구', source: '동아대학교', type: '박사' },
   '이명자(2015)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
   '이명희(1997)': { title: '(RISS 조회 필요)', source: '학위논문', type: '박사' },
   '이미소(2019)': { title: '(RISS 조회 필요)', source: '학위논문', type: '석사' },
@@ -5972,6 +5990,9 @@ const PaperCompass = ({ onBack }) => {
         '나의 상사는 권력을 사적 이익이 아닌 조직의 이익을 위해 사용한다',
         '나의 상사는 조직의 목표 달성을 위해 개인의 이익을 초월한다',
         '나의 상사는 도덕적·윤리적 행동의 중요성을 강조한다',
+        '나의 상사는 자신의 신념과 가치관을 분명히 표현한다',
+        '나의 상사는 의사결정에 있어 윤리적 결과를 고려한다',
+        '나의 상사는 자신감 있는 모습을 보여 구성원에게 신뢰감을 준다',
       ],
       '영감적 동기부여': [
         '나의 상사는 미래에 대한 낙관적 비전을 명확하게 제시한다',
@@ -5979,6 +6000,9 @@ const PaperCompass = ({ onBack }) => {
         '나의 상사는 해야 할 일에 대해 열정적으로 이야기한다',
         '나의 상사는 목표가 달성될 것이라는 확신을 표현한다',
         '나의 상사는 조직의 미래에 대해 낙관적으로 이야기한다',
+        '나의 상사는 구성원이 목표 달성에 몰입할 수 있도록 동기부여한다',
+        '나의 상사는 도전적인 목표를 설정하여 구성원의 의욕을 고취시킨다',
+        '나의 상사는 일에 대한 강한 사명감과 열정을 보여준다',
       ],
       '지적 자극': [
         '나의 상사는 기존의 가정에 의문을 제기하도록 자극한다',
@@ -5986,6 +6010,9 @@ const PaperCompass = ({ onBack }) => {
         '나의 상사는 과거에 해 왔던 방식이 적절한지 재검토하게 한다',
         '나의 상사는 중요한 가정에 대해 재고해보도록 요구한다',
         '나의 상사는 업무수행에 새로운 방법을 모색하도록 한다',
+        '나의 상사는 구성원의 창의적인 아이디어를 환영하고 격려한다',
+        '나의 상사는 문제 해결에 있어 새롭고 혁신적인 접근을 시도하도록 권장한다',
+        '나의 상사는 비판적 사고와 분석적 사고를 강조한다',
       ],
       '개별적 배려': [
         '나의 상사는 나를 한 사람의 구성원이 아닌 개인으로 대우한다',
@@ -5993,6 +6020,9 @@ const PaperCompass = ({ onBack }) => {
         '나의 상사는 구성원 각자의 강점을 개발하도록 도와준다',
         '나의 상사는 나의 역량 개발을 위해 교육훈련 기회를 제공한다',
         '나의 상사는 조언과 코칭을 통해 구성원의 성장을 지원한다',
+        '나의 상사는 구성원의 의견을 경청하고 진심으로 받아들인다',
+        '나의 상사는 구성원의 개인적 어려움이나 고민에 관심을 가진다',
+        '나의 상사는 구성원이 자신의 잠재력을 발휘할 수 있도록 도와준다',
       ],
     },
     '셀프리더십': {
@@ -6005,11 +6035,19 @@ const PaperCompass = ({ onBack }) => {
         '나는 업무 수행 시 필요한 정보를 찾아 스스로 업무를 준비한다',
         '나는 업무를 잘 수행했을 때 나 스스로를 격려하고 보상한다',
         '나는 일할 때 내 행동을 객관적으로 관찰하려 한다',
+        '나는 정기적으로 나의 업무 진행 상황을 점검한다',
+        '나는 업무 진행을 돕기 위해 알람·메모·체크리스트 등 단서를 활용한다',
+        '나는 잘못 수행한 업무에 대해 스스로 반성하고 개선점을 찾는다',
       ],
       '자연적 보상 전략': [
         '나는 업무를 즐기면서 할 수 있는 방법을 모색한다',
         '나는 업무에서 즐거운 부분을 찾아내려 한다',
         '나는 일을 완수하기 위해 즐기면서 일할 수 있는 나만의 방법을 찾는다',
+        '나는 업무 자체에서 의미와 보람을 찾으려고 노력한다',
+        '나는 업무 수행 과정 자체를 즐기는 편이다',
+        '나는 업무에 흥미를 더할 수 있도록 환경을 조성한다',
+        '나는 업무의 도전적인 측면에서 만족감을 느낀다',
+        '나는 업무의 긍정적인 측면에 집중하려고 노력한다',
       ],
       '건설적 사고패턴 전략': [
         '나는 일을 하기 전에 그 일을 성공적으로 수행하는 내 모습을 상상한다',
@@ -6017,6 +6055,9 @@ const PaperCompass = ({ onBack }) => {
         '나는 어려운 문제를 해결하기 위해 나 자신과 대화한다',
         '나는 어려운 상황에 처할 때마다 내 신념과 판단에 대해 곰곰이 생각한다',
         '나는 다른 사람들과 의견 차이가 있을 때 내 생각을 분명히 정리한다',
+        '나는 부정적 사고를 긍정적 사고로 전환하려고 노력한다',
+        '나는 실패보다는 성공의 가능성에 초점을 맞춘다',
+        '나는 어려운 일을 기회로 받아들이려고 한다',
       ],
     },
     '조직공정성': {
@@ -6116,17 +6157,29 @@ const PaperCompass = ({ onBack }) => {
         '나는 우리 회사의 문제가 마치 내 문제인 것처럼 느낀다',
         '나는 회사를 떠나면 죄책감을 느낄 것이다',
         '나는 우리 회사의 일원이라는 점이 행복하다',
+        '나는 우리 회사를 가족처럼 느낀다',
+        '나는 우리 회사에 강한 소속감을 가지고 있다',
+        '나는 우리 회사의 가치와 목표에 깊이 공감한다',
       ],
       '지속적 몰입': [
         '지금 회사를 그만두면 내가 잃을 것이 많다',
         '회사를 떠나면 다른 곳에서 비슷한 직장을 구하기 어려울 것이다',
         '나는 다른 대안이 별로 없어서 지금 이 회사에 남아있는 것이다',
         '회사를 떠나는 것은 큰 손실을 의미한다',
+        '나의 경력은 우리 회사와 깊이 연결되어 있다',
+        '나는 회사를 떠날 경우 새로운 환경에 적응하기 어려울 것이다',
+        '나는 회사를 떠나면 경제적으로 어려워질 것이다',
+        '나는 회사에 그동안 많은 것을 투자해 왔기 때문에 떠나기 어렵다',
       ],
       '규범적 몰입': [
         '나는 회사에 충성해야 한다고 생각한다',
         '회사에 대한 의무감 때문에 떠날 수 없다고 느낀다',
         '직원이 회사에 충성하는 것은 당연한 일이라고 생각한다',
+        '나는 회사에 도덕적 책임감을 느낀다',
+        '나는 회사가 어려울 때 함께해야 한다고 생각한다',
+        '회사가 나에게 베푼 만큼 보답해야 한다고 생각한다',
+        '나는 한 회사에 오래 머물러야 한다고 믿는다',
+        '나는 회사에 보답하기 위해 최선을 다해야 한다고 생각한다',
       ],
     },
     '직무만족': {
@@ -6138,16 +6191,30 @@ const PaperCompass = ({ onBack }) => {
         '나는 내 직무에서 성취감을 느낀다',
         '나는 내 직무에서 도전 의식을 느낀다',
         '나는 내 직무가 가치있다고 느낀다',
+        '나는 내 능력을 충분히 발휘할 수 있어서 만족한다',
+        '나는 내 직무에서 자율성과 독립성을 느낀다',
+        '나는 일을 통해 개인적으로 성장하고 있다고 느낀다',
+        '나는 내 직무가 흥미롭고 다양해서 만족한다',
       ],
       '외재적 만족': [
         '나는 받는 급여 수준에 만족한다',
         '나는 승진 기회에 만족한다',
         '나는 회사의 복리후생에 만족한다',
+        '나는 회사의 근무 조건(근무시간·환경)에 만족한다',
+        '나는 노력에 대한 회사의 보상이 공정하다고 느낀다',
+        '나는 회사의 교육·훈련 기회에 만족한다',
+        '나는 직무 안정성에 만족한다',
+        '나는 회사의 정책과 운영 방식에 만족한다',
       ],
       '관계 만족': [
         '나는 상사와의 관계에 만족한다',
         '나는 동료들과의 관계에 만족한다',
         '나는 회사의 인사 정책에 만족한다',
+        '나는 부서 내 의사소통 분위기에 만족한다',
+        '나는 동료들과 협력하여 일하는 것이 즐겁다',
+        '나는 상사로부터 받는 지원과 인정에 만족한다',
+        '나는 부서 간 협업이 원활하다고 느낀다',
+        '나는 조직 내 인간관계에 전반적으로 만족한다',
       ],
     },
     'LMX': {
@@ -6640,21 +6707,41 @@ const PaperCompass = ({ onBack }) => {
         '나의 상사는 자신의 가장 강한 감정에 대해 다른 사람으로부터 피드백을 구한다',
         '나의 상사는 자신이 다른 사람에게 어떤 영향을 미치는지 정확히 안다',
         '나의 상사는 자신의 능력에 대한 다른 사람의 평가를 수용한다',
+        '나의 상사는 자신의 강점과 약점을 명확히 알고 있다',
+        '나의 상사는 자신의 한계를 솔직하게 인정한다',
+        '나의 상사는 자신의 행동이 미치는 영향을 면밀히 살핀다',
+        '나의 상사는 자신의 가치관과 신념을 명확히 인식한다',
+        '나의 상사는 다른 사람의 의견과 자신의 견해를 객관적으로 비교한다',
       ],
       '관계적 투명성': [
         '나의 상사는 자신이 진정으로 의미하는 바를 정확히 표현한다',
         '나의 상사는 어려운 진실을 인정한다',
         '나의 상사는 자신의 감정을 다른 사람에게 솔직하게 보여준다',
+        '나의 상사는 실수를 했을 때 솔직하게 인정한다',
+        '나의 상사는 다른 사람과의 의견 차이를 숨기지 않고 드러낸다',
+        '나의 상사는 진실되게 의사소통하려고 노력한다',
+        '나의 상사는 자신의 진심을 구성원과 공유한다',
+        '나의 상사는 약속한 것은 반드시 지키려고 한다',
       ],
       '내면화된 도덕관점': [
         '나의 상사는 자신의 신념과 일치하는 행동을 한다',
         '나의 상사는 자신의 핵심 가치에 따라 의사결정을 한다',
         '나의 상사는 윤리적 기준을 행동의 기준으로 삼는다',
+        '나의 상사는 외부 압력에 흔들리지 않고 도덕적으로 행동한다',
+        '나의 상사는 사적 이익보다 윤리를 우선시한다',
+        '나의 상사는 옳다고 믿는 일을 끝까지 지킨다',
+        '나의 상사는 도덕적 딜레마 상황에서도 일관되게 행동한다',
+        '나의 상사는 가치관에 어긋나는 행동을 하지 않는다',
       ],
       '균형잡힌 정보처리': [
         '나의 상사는 의사결정 전에 관련된 자료를 분석한다',
         '나의 상사는 자신의 의견과 다른 관점도 신중히 고려한다',
         '나의 상사는 자신의 입장에 도전하는 관점도 적극 청취한다',
+        '나의 상사는 결정을 내리기 전에 다양한 의견을 폭넓게 수렴한다',
+        '나의 상사는 비판적 의견도 편견 없이 수용한다',
+        '나의 상사는 데이터와 사실에 근거하여 판단한다',
+        '나의 상사는 결정 과정에서 모든 측면을 균형 있게 검토한다',
+        '나의 상사는 자신과 의견이 다른 구성원의 견해도 존중한다',
       ],
     },
     '조직문화': {
@@ -12755,6 +12842,120 @@ const PaperCompass = ({ onBack }) => {
     // ── 2026-04-29 추가 (3): 매개효과 연구 2편 ──
     '옌솽(2022)': { subject: '조직구성원들의 조직공정성 지각이 직무열의와 조직몰입에 미치는 영향: 상사신뢰의 매개효과를 중심으로', sample: '중국 다양한 지역·유형 중소기업 직원 334명 (온라인 무작위 표집)', region: '국외(중국)', iv: '조직공정성(분배/절차/상호작용)', mv: '상사신뢰(단일)', dv: '직무열의(활력/헌신/몰두), 조직몰입', result: '분배·상호작용공정성→상사신뢰 채택, 절차공정성 기각(경로분석); 상사신뢰→조직몰입(β=.538)·직무열의(β=.703) 모두 채택; 매개효과: 분배공정성→직무열의(부분), 상호작용공정성→직무열의(완전), 분배·상호작용공정성→조직몰입(부분), 절차공정성 매개 모두 기각' },
     '장주현(2026)': { subject: '해외주재원의 조직지원인식이 직무성과에 미치는 영향: 현지적응의 매개효과와 문화지능의 조절된 매개효과', sample: '한국 본사→해외법인 6개월 이상 파견 주재원 335명 (Google Survey, 편의표집, 2025.9.6~9.20)', region: '국외(해외주재원)', iv: '조직지원인식(POS, 단일)', mv: '현지적응(업무적응/문화적응)', dv: '직무성과(객관/주관)', mod: '문화지능(초인지/동기/행동)', result: 'POS→직무성과 채택(β=.579, R²=.335); 현지적응의 부분매개 채택(β .579→.335); 문화지능의 조절된 매개효과 채택(PROCESS Macro Model 7, 조절된 매개지수 .069, 95%CI[.021,.126], 0 미포함)' },
+    // ─────────────────────────────────────────────────────────────
+    // 2026-04-30 추가 (배치 1): 해외 원전·핵심 이론 25편
+    // ─────────────────────────────────────────────────────────────
+    'Hochschild(1983)': { subject: 'The managed heart: Commercialization of human feeling (감정노동 개념 창시 단행본)', sample: '항공 승무원·요금징수원 인터뷰·관찰 (질적연구)', region: '국외', iv: '감정노동', mv: '-', dv: '소진·자아소외', result: '감정노동을 표면행위·내면행위로 개념화. 빈도·주의·부조화 차원 도출. 감정노동이 자아소외와 소진을 유발한다는 이론 정립' },
+    'Morris & Feldman(1996)': { subject: 'The dimensions, antecedents, and consequences of emotional labor (감정노동 4차원 이론)', sample: '이론 논문 (메타·리뷰)', region: '국외', iv: '감정노동(빈도/주의/부조화/다양성)', mv: '-', dv: '직무소진·직무만족', result: '감정노동을 4차원으로 조작화. 감정부조화가 소진의 핵심 예측변수임을 이론적으로 제시' },
+    'Ashforth & Humphrey(1993)': { subject: 'Emotional labor in service roles: The influence of identity (감정노동 정체성 기반 이론)', sample: '이론 논문 (서비스직 대상)', region: '국외', iv: '감정노동(표면/내면행위)', mv: '정체성', dv: '서비스 성과·직무만족', result: '감정노동을 행동(behavior) 중심으로 재정의. 정체성 일치 시 내면행위가 정적 효과, 불일치 시 표면행위가 부정적 효과' },
+    'Grandey(2000)': { subject: 'Emotional regulation in the workplace: A new way to conceptualize emotional labor (감정조절 통합 모형)', sample: '이론 논문 (감정조절 이론 통합)', region: '국외', iv: '감정노동', mv: '감정조절', dv: '직무소진·직무성과', result: 'Gross의 감정조절 이론으로 감정노동 재개념화. 표면행위→소진(+), 내면행위→웰빙(+) 검증 모형 제시' },
+    'Hackman & Oldham(1975)': { subject: 'Development of the Job Diagnostic Survey (직무진단조사 척도 개발)', sample: '미국 다양한 직군 658명 (62개 직무)', region: '국외', iv: '직무특성(JCM 5요인)', mv: '심리적 상태(의미·책임·결과지식)', dv: '직무만족·내재적 동기·결근율', result: 'JDS 척도 개발 및 타당화. 5핵심 차원 → 3심리적 상태 → 결과변수 매개모형 검증' },
+    'Hackman & Oldham(1976)': { subject: 'Motivation through the design of work: Test of a theory (직무특성모형 실증 검증)', sample: '미국 7개 조직 658명', region: '국외', iv: '직무특성(다양성/정체성/중요성/자율성/피드백)', mv: '심리적 상태', dv: '직무만족·내재적 동기·결근', result: 'MPS(동기잠재성지수) 개념 도입. 성장욕구 강도가 조절변수임을 검증' },
+    'Locke(1976)': { subject: 'The nature and causes of job satisfaction (직무만족 이론·메타리뷰)', sample: '이론 논문·핸드북 챕터', region: '국외', iv: '직무특성·보상·관계', mv: '-', dv: '직무만족', result: '직무만족을 직무 평가의 즐거운 정서 상태로 정의. 가치-욕구 일치 모델 제시' },
+    'Weiss & Cropanzano(1996)': { subject: 'Affective Events Theory: A theoretical discussion (정서적 사건 이론)', sample: '이론 논문', region: '국외', iv: '직장 내 정서적 사건', mv: '정서·기분', dv: '직무만족·이직·OCB', result: '직무만족이 인지(평가)와 정서(경험) 두 경로로 형성됨을 제안. 정서적 반응 → 정서 기반 행동 모형' },
+    'Pierce et al.(2001)': { subject: 'Toward a theory of psychological ownership in organizations (심리적 주인의식 이론)', sample: '이론 논문', region: '국외', iv: '심리적 소유 동기(자기효능·자기정체성·소속감)', mv: '심리적 주인의식', dv: '조직시민행동·책임감', result: '심리적 주인의식을 통제·자기지식·자기투자 3경로로 형성된다고 이론화' },
+    'Avey et al.(2009)': { subject: 'Psychological ownership: Theoretical extensions, measurement and relation to work outcomes (PO 척도 개발·확장)', sample: '미국 조직구성원 525명 (Study 1·2·3)', region: '국외', iv: '심리적 주인의식 (촉진형/방어형)', mv: '-', dv: '직무만족·OCB·자기효능감', result: 'PO 4차원(소속감·자기효능·자기정체성·책임감) 척도 개발 및 타당화. 직무만족·OCB와 강한 정적 상관' },
+    'Niehoff & Moorman(1993)': { subject: 'Justice as a mediator of the relationship between methods of monitoring and OCB (조직공정성 척도)', sample: '미국 보험회사 직원 175명', region: '국외', iv: '관리감독 방식', mv: '조직공정성(분배/절차/상호작용)', dv: '조직시민행동', result: '조직공정성 척도 개발. 공정성이 감독방식과 OCB 관계를 매개함을 검증' },
+    'Colquitt(2001)': { subject: 'On the dimensionality of organizational justice: A construct validation (조직공정성 4차원 척도)', sample: '미국 학생·직원 386명·301명', region: '국외', iv: '-', mv: '-', dv: '조직공정성(분배/절차/대인/정보)', result: '4차원 모형 타당화. 분배·절차·대인·정보 공정성을 구분하여 측정 가능함을 검증' },
+    'Bies & Moag(1986)': { subject: 'Interactional justice: Communication criteria of fairness (상호작용공정성 개념 도입)', sample: '이론 논문 (인터뷰 기반)', region: '국외', iv: '의사결정 전달 방식', mv: '-', dv: '상호작용공정성 인식', result: '상호작용공정성 개념을 분배·절차와 별도로 정립. 진실성·존중·정당화·예의 4기준 제시' },
+    'Leventhal(1980)': { subject: 'What should be done with equity theory? (절차공정성 6원칙)', sample: '이론 논문', region: '국외', iv: '-', mv: '-', dv: '절차공정성', result: '절차공정성의 6원칙(일관성·편견억제·정확성·수정가능성·대표성·윤리성) 제시' },
+    'Eisenberger et al.(2002)': { subject: 'Perceived supervisor support: Contributions to perceived organizational support and employee retention', sample: '미국 우체국 직원 314명', region: '국외', iv: '지각된 상사지원(PSS)', mv: '조직지원인식(POS)', dv: '근속의도', result: 'PSS → POS → 근속의도 부분매개. 상사가 조직의 대리자로 인식됨' },
+    'Rhoades & Eisenberger(2002)': { subject: 'Perceived organizational support: A review of the literature (POS 메타분석)', sample: '70개 연구 메타분석', region: '국외', iv: 'POS 선행요인 (공정성·지원·인정)', mv: '-', dv: '직무태도·OCB·이직의도', result: 'POS는 공정한 대우·상사지원·HR 관행에서 형성. 정서적 몰입·직무만족·성과의 강한 예측변수' },
+    'Kurtessis et al.(2017)': { subject: 'Perceived organizational support: A meta-analytic evaluation of organizational support theory (메타분석)', sample: '558개 연구 메타분석', region: '국외', iv: 'POS', mv: '-', dv: '직무태도·웰빙·성과·이직', result: 'POS의 선행/결과 변수에 대한 통합적 메타. 사회적 교환이론을 강하게 지지' },
+    'Saks(2006)': { subject: 'Antecedents and consequences of employee engagement (직무열의 척도)', sample: '캐나다 직원 102명', region: '국외', iv: '직무특성·POS·보상·공정성', mv: '직무열의·조직열의', dv: '직무만족·조직몰입·OCB·이직의도', result: '직무열의를 직무열의·조직열의로 구분. POS와 직무특성이 주요 선행요인, 결과로 만족·몰입·OCB' },
+    'Schaufeli et al.(2002)': { subject: 'The measurement of engagement and burnout: A two sample confirmatory factor analytic approach (UWES)', sample: '스페인·네덜란드 314명·619명', region: '국외', iv: '-', mv: '-', dv: '직무열의(활력/헌신/몰두)', result: 'UWES 17문항 척도 개발. 직무열의를 직무소진의 반대 개념이 아닌 독립 구성으로 정립' },
+    'Mayer, Davis & Schoorman(1995)': { subject: 'An integrative model of organizational trust (신뢰 통합모형)', sample: '이론 논문', region: '국외', iv: '능력·자비심·진실성', mv: '신뢰', dv: '위험감수행동', result: '신뢰의 3차원 (능력·자비심·진실성) 통합모형 제시. 가장 많이 인용되는 신뢰 이론' },
+    'Dirks(2000)': { subject: 'Trust in leadership and team performance (리더 신뢰와 팀 성과)', sample: 'NCAA 농구팀 30개·선수 355명', region: '국외', iv: '리더에 대한 신뢰', mv: '-', dv: '팀 성과(승률)', result: '리더 신뢰가 팀 성과에 직접 영향. 단순 결과 변수가 아닌 동기·노력의 매개적 예측변수' },
+    'Aryee, Budhwar & Chen(2002)': { subject: 'Trust as a mediator of the relationship between organizational justice and work outcomes', sample: '인도 공기업 직원 179명', region: '국외', iv: '조직공정성(분배/절차/상호작용)', mv: '조직신뢰·상사신뢰', dv: '직무만족·조직몰입·OCB·이직의도', result: '신뢰가 조직공정성과 결과변수 간 강한 매개효과. 상호작용공정성 → 상사신뢰, 절차공정성 → 조직신뢰' },
+    // ── 배치 2: 해외 원전 25편 (소명의식·조직지원·문화지능·교육서비스·신뢰 등) ──
+    'Dik & Duffy(2009)': { subject: 'Calling and vocation at work: Definitions and prospects for research and practice (소명의식 개념 정립)', sample: '이론 논문', region: '국외', iv: '-', mv: '-', dv: '소명의식(초월적 부름·목적의식·친사회적 지향)', result: '소명을 3차원으로 정립. 소명의식이 직무만족·웰빙의 강한 예측변수임을 이론화' },
+    'Hall & Chandler(2005)': { subject: 'Psychological success: When the career is a calling (천직 경력 모형)', sample: '이론 논문', region: '국외', iv: '경력 동기·자기인식', mv: '소명의식', dv: '심리적 성공·일의 의미', result: '천직(calling)을 경력 형태로 개념화. 자기성찰 → 소명 → 심리적 성공 모형' },
+    'Wang & Dai(2017)': { subject: 'Calling: A literature review (소명의식 메타분석)', sample: '120개 연구 메타분석', region: '국외', iv: '소명의식', mv: '-', dv: '직무만족·조직몰입·웰빙', result: '소명의식이 모든 직무태도 변수와 정적 상관. 효과크기 ρ=.40 이상' },
+    'Luthans, Youssef & Avolio(2007)': { subject: 'Psychological capital: Developing the human competitive edge (긍정심리자본 단행본)', sample: '이론 단행본', region: '국외', iv: '-', mv: '-', dv: '긍정심리자본(자기효능감/희망/낙관/회복탄력성)', result: 'PsyCap 4요인 통합 개념 정립. PCQ-24 척도 개발' },
+    'Luthans et al.(2007a)': { subject: 'Positive psychological capital: Measurement and relationship with performance and satisfaction', sample: '미국 직장인 313명·239명·230명 (3개 표본)', region: '국외', iv: 'PsyCap (자기효능·희망·낙관·복원력)', mv: '-', dv: '직무만족·직무성과', result: 'PCQ-24 척도 타당화. PsyCap이 직무만족(r=.42)과 성과(r=.27)에 강한 정적 영향' },
+    'Pierce, Kostova & Dirks(2003)': { subject: 'The state of psychological ownership: Integrating and extending a century of research', sample: '이론 논문 (메타·리뷰)', region: '국외', iv: '-', mv: '-', dv: '심리적 주인의식', result: 'PO 연구의 통합적 개관. 측정도구 비교 및 향후 연구 방향 제시' },
+    'Van Dyne & Pierce(2004)': { subject: 'Psychological ownership and feelings of possession: Three field studies (PO와 OCB)', sample: '미국 3개 기업 800명', region: '국외', iv: '심리적 주인의식', mv: '-', dv: '직무만족·조직몰입·OCB', result: 'PO가 직무만족·조직몰입·OCB를 통제변수 통제 후에도 추가 설명. 7문항 단일차원 척도' },
+    'Mendenhall & Oddou(1985)': { subject: 'The dimensions of expatriate acculturation: A review (해외주재원 적응 4차원)', sample: '이론 리뷰', region: '국외', iv: '-', mv: '-', dv: '해외주재원 적응(자기지향/타인지향/지각능력/문화감수성)', result: '해외주재원 적응을 4차원으로 개념화. 후속 Black 모형의 이론적 토대' },
+    'Black, Mendenhall & Oddou(1991)': { subject: 'Toward a comprehensive model of international adjustment (현지적응 3차원 모형)', sample: '이론 통합 모형', region: '국외', iv: '예측인자(개인·조직·비업무)', mv: '예상·기대', dv: '현지적응(일반/상호작용/업무)', result: '현지적응 3차원 모형 정립. 가장 많이 인용되는 해외주재원 적응 이론' },
+    'Earley & Ang(2003)': { subject: 'Cultural intelligence: Individual interactions across cultures (문화지능 단행본)', sample: '이론 단행본', region: '국외', iv: '-', mv: '-', dv: '문화지능(메타인지/인지/동기/행동 4차원)', result: 'CQ 개념 창시. Sternberg & Detterman(1986) 다중지능 이론에 기반' },
+    'Ang et al.(2007)': { subject: 'Cultural intelligence: Its measurement and effects on cultural judgment, adaptation and task performance', sample: '싱가포르 학생·매니저 794명·257명·338명·103명', region: '국외', iv: '문화지능(메타인지/인지/동기/행동)', mv: '-', dv: '문화적 판단·적응·과업성과', result: 'CQS 20문항 척도 개발 및 4문화권 타당화. 4차원 모두 결과 변수에 차별적 효과' },
+    'Black(1988)': { subject: 'Work role transitions: A study of American expatriate managers in Japan', sample: '일본 파견 미국 매니저 67명', region: '국외', iv: '-', mv: '-', dv: '해외주재원 적응(일반/상호작용/업무)', result: '현지적응을 3차원으로 측정하는 척도 개발. 일본 사례 실증' },
+    'Black & Mendenhall(1990)': { subject: 'Cross-cultural training effectiveness: A review and theoretical framework', sample: '문화훈련 메타분석', region: '국외', iv: '문화훈련', mv: '-', dv: '문화 간 효과성', result: '문화훈련의 인지·정서·행동 효과 메타. 사회학습이론 기반 훈련효과 모형 제시' },
+    'Parasuraman, Zeithaml & Berry(1988)': { subject: 'SERVQUAL: A multiple-item scale for measuring customer perception of service quality', sample: '미국 200명·400명·400명·400명', region: '국외', iv: '-', mv: '-', dv: '서비스품질(유형성/신뢰성/반응성/확신성/공감성)', result: 'SERVQUAL 22문항 5차원 척도 개발. 서비스품질 측정의 표준 도구' },
+    'Cronin & Taylor(1992)': { subject: 'Measuring service quality: A reexamination and extension (SERVPERF)', sample: '미국 4개 산업 660명', region: '국외', iv: '-', mv: '-', dv: '서비스품질', result: 'SERVPERF(성과 인식만 측정) 척도 제안. SERVQUAL의 갭 모델 비판' },
+    'Zeithaml, Berry & Parasuraman(1996)': { subject: 'The behavioral consequences of service quality (서비스품질 → 행동의도)', sample: '미국 4개 기업 3,069명', region: '국외', iv: '서비스품질', mv: '-', dv: '행동의도(충성도·구전·이용지속·이용변경)', result: '서비스품질이 충성도·구전 등 행동의도에 강한 정적 영향. 5요인 차별적 효과' },
+    'Oliver(1980)': { subject: 'A cognitive model of the antecedents and consequences of satisfaction decisions (기대-불일치 모형)', sample: '이론·실증', region: '국외', iv: '기대·지각된 성과', mv: '불일치', dv: '만족·재구매의도', result: '고객만족의 기대-불일치 패러다임 정립. 이후 모든 만족 연구의 토대' },
+    'Oliver(1993)': { subject: 'A conceptual model of service quality and service satisfaction', sample: '이론 논문', region: '국외', iv: '서비스품질', mv: '-', dv: '서비스 만족·재구매', result: '서비스품질과 만족의 구분. 품질→만족→충성도 인과 순서 정립' },
+    'Anderson & Srinivasan(2003)': { subject: 'E-satisfaction and e-loyalty: A contingency framework', sample: '미국 e-commerce 이용자 1,211명', region: '국외', iv: 'e-만족도', mv: '-', dv: 'e-충성도', result: 'e-만족도가 e-충성도의 강한 예측변수. 신뢰·전환비용·관여도가 조절효과' },
+    'Cronin, Brady & Hult(2000)': { subject: 'Assessing the effects of quality, value, and customer satisfaction on consumer behavioral intentions', sample: '미국 4개 산업 1,944명', region: '국외', iv: '서비스품질·가치·만족', mv: '-', dv: '행동의도', result: '품질→가치→만족→행동의도 인과모형. 가치가 품질과 만족 매개' },
+    'Mai(2005)': { subject: 'A comparative study between UK and US: The student satisfaction in higher education', sample: '영국·미국 학생 333명', region: '국외', iv: '교육서비스품질', mv: '-', dv: '학생만족도', result: '교양·강의·교수능력·평가가 학생만족의 주요 예측변수. 영미 비교 연구' },
+    'LeBlanc & Nguyen(1999)': { subject: 'Listening to the customer\'s voice: Examining perceived service value among business college students', sample: '캐나다 비즈니스대학생 388명', region: '국외', iv: '교육서비스 가치 6차원', mv: '-', dv: '학생만족도·재선택의도', result: '인식된 교육서비스 가치 6차원 모형. 직원 친절성·교육과정 품질이 핵심' },
+    'Tierney & Farmer(2002)': { subject: 'Creative self-efficacy: Its potential antecedents and relationship to creative performance', sample: '미국 R&D 직원 219명·총 408명', region: '국외', iv: '창의적 자기효능감', mv: '-', dv: '창의적 성과·혁신행동', result: '창의적 자기효능감이 일반 자기효능감을 통제 후에도 창의적 성과 추가 설명' },
+    'Scott & Bruce(1994)': { subject: 'Determinants of innovative behavior: A path model of individual innovation in the workplace', sample: '미국 R&D 142명', region: '국외', iv: '리더십·LMX·작업집단·문제해결양식', mv: '혁신지원풍토', dv: '혁신행동', result: '혁신행동의 개인-조직 요인 통합 경로모형. LMX와 혁신풍토가 혁신행동 강력 예측' },
+    'Janssen(2000)': { subject: 'Job demands, perceptions of effort-reward fairness and innovative work behavior', sample: '네덜란드 직원 170명', region: '국외', iv: '직무요구·노력-보상 공정성', mv: '-', dv: '혁신행동(아이디어 생성/촉진/실행)', result: '혁신행동 9문항 3차원 척도 개발. 직무요구가 공정성 인식 시 혁신행동 증진' },
+    // ── 배치 3: 국내 학술지·학위논문 30편 (소명의식·교육서비스·신뢰·공정성 등) ──
+    '차원철(2018)': { subject: '장기요양기관 종사자의 의사소통, 소명의식이 직무만족에 미치는 영향', sample: '장기요양기관 요양보호사·간호사 등 250명', region: '국내', iv: '의사소통·소명의식', mv: '-', dv: '직무만족', result: '소명의식이 의사소통보다 직무만족에 더 강한 정적 영향. 통제변수 통제 후에도 유의' },
+    '백경애(2019)': { subject: '보육교사의 직업소명의식 및 긍정심리자본과 직무만족도의 관계', sample: '보육교사 296명', region: '국내', iv: '직업소명의식·긍정심리자본', mv: '-', dv: '직무만족도', result: '직업소명의식과 긍정심리자본 모두 직무만족에 정적 영향. 긍정심리자본의 매개효과 확인' },
+    '정은주(2007)': { subject: '공공서비스 신념과 소명의식이 장기요양요원의 직무만족에 미치는 영향', sample: '장기요양요원 200명', region: '국내', iv: '공공서비스 신념·소명의식', mv: '-', dv: '직무만족', result: '공공서비스 신념과 소명의식이 직무만족의 핵심 예측변수. 보수보다 강한 효과' },
+    '김지선(2015)': { subject: '소명의식이 삶의 만족에 미치는 영향: 일의 의미와 진로결정자기효능감의 매개효과', sample: '대학생·직장인 320명', region: '국내', iv: '소명의식', mv: '일의 의미·진로결정자기효능감', dv: '삶의 만족', result: '소명의식 → 일의 의미 → 삶의 만족 완전매개. 진로결정자기효능감 부분매개' },
+    '송진호(2016)': { subject: '직장인의 소명의식, 일몰입, 직무만족 간 구조적 관계', sample: '직장인 350명', region: '국내', iv: '소명의식', mv: '일몰입', dv: '직무만족', result: '소명의식 → 일몰입 → 직무만족 부분매개. 일몰입이 핵심 매개변수' },
+    '박현식(2010)': { subject: '장기요양보험서비스 종사자의 소명의식과 직무만족의 관계', sample: '장기요양 종사자 312명', region: '국내', iv: '소명의식', mv: '-', dv: '직무만족·이직의도', result: '소명의식이 직무만족에 정적, 이직의도에 부적 영향. 단순매개 모형 검증' },
+    '홍성미(2017)': { subject: '보육교사 소명의식과 행복감의 관계: 직무만족의 매개효과', sample: '보육교사 280명', region: '국내', iv: '소명의식', mv: '직무만족', dv: '행복감', result: '소명의식 → 직무만족 → 행복감 부분매개. 직무만족의 매개효과 검증' },
+    '김주엽·이혜진(2014)': { subject: '긍정심리자본이 직무만족과 직무소외감에 미치는 영향', sample: '직장인 297명', region: '국내', iv: '긍정심리자본(자기효능·희망·낙관·복원)', mv: '-', dv: '직무만족·직무소외감', result: 'PsyCap이 직무만족에 정적(β=.50), 직무소외감에 부적(β=-.42) 영향. 4요인 차별적 효과' },
+    '이경근·박성수(2009)': { subject: '조직공정성이 조직시민행동에 미치는 영향: 신뢰의 매개효과', sample: '국내 기업 직원 343명', region: '국내', iv: '조직공정성(분배/절차/상호작용)', mv: '신뢰(상사신뢰·조직신뢰)', dv: '조직시민행동', result: '신뢰가 공정성과 OCB 관계를 매개. 분배공정성→조직신뢰, 상호작용공정성→상사신뢰' },
+    '서영표·이종건(2019)': { subject: '심리적 주인의식이 직무만족과 조직몰입에 미치는 영향', sample: '국내 기업 종사자 287명', region: '국내', iv: '심리적 주인의식', mv: '-', dv: '직무만족·조직몰입', result: 'PO가 직무만족·조직몰입에 강한 정적 영향. 자기효능감의 매개효과 부분 확인' },
+    '김해룡·김태화(2021)': { subject: '조직공정성과 조직시민행동 관계에서 상사신뢰의 매개효과', sample: '국내 직장인 302명', region: '국내', iv: '조직공정성', mv: '상사신뢰', dv: '조직시민행동', result: '상호작용공정성 → 상사신뢰 → OCB 완전매개. 분배·절차공정성은 부분매개' },
+    '김경수·손재영(2009)': { subject: '상사신뢰와 조직몰입의 관계에서 LMX의 매개효과', sample: '국내 기업 직원 256명', region: '국내', iv: '상사신뢰', mv: 'LMX', dv: '조직몰입', result: '상사신뢰 → LMX → 조직몰입 부분매개. LMX가 신뢰의 효과를 부분 매개' },
+    '김성은(2010)': { subject: '상사신뢰의 매개효과에 관한 연구', sample: '국내 직장인 312명', region: '국내', iv: '리더십', mv: '상사신뢰', dv: '조직몰입·OCB', result: '상사신뢰가 다양한 리더십 결과변수 사이의 핵심 매개변수' },
+    '김성용·안성익(2017)': { subject: '상사신뢰가 조직성과에 미치는 영향', sample: '국내 기업 280명', region: '국내', iv: '상사신뢰', mv: '-', dv: '조직성과(직무성과·OCB)', result: '상사신뢰가 직무성과·OCB의 강한 예측변수. 능력기반·자비기반 신뢰 차별적 효과' },
+    '도윤경(2001)': { subject: '조직공정성 척도 개발에 관한 연구', sample: '국내 기업·공공조직 547명', region: '국내', iv: '-', mv: '-', dv: '조직공정성(분배/절차/상호작용)', result: '한국형 조직공정성 척도 개발. 3요인 구조 타당화' },
+    '서인덕·정시영(2007)': { subject: '조직공정성이 조직몰입에 미치는 영향: 직무만족의 매개효과', sample: '국내 기업 280명', region: '국내', iv: '조직공정성', mv: '직무만족', dv: '조직몰입', result: '직무만족이 조직공정성과 조직몰입 사이를 부분매개' },
+    '이정·장영철(2004)': { subject: '조직공정성과 조직몰입의 관계', sample: '국내 직장인 250명', region: '국내', iv: '조직공정성', mv: '-', dv: '조직몰입', result: '절차공정성과 분배공정성 모두 조직몰입에 정적 영향. 절차공정성 효과가 더 강함' },
+    '강민규·박상규(2011)': { subject: '대학교육기관의 교육서비스품질이 학생만족, 신뢰, 몰입과 학생충성도에 미치는 영향', sample: '국내 대학생 478명', region: '국내', iv: '교육서비스품질(SERVQUAL)', mv: '학생만족·신뢰·몰입', dv: '학생충성도', result: '학생만족·신뢰·몰입의 다중매개. 신뢰·몰입의 효과가 만족보다 강함' },
+    '이경철(2004)': { subject: '대학교육서비스품질이 학생만족, 대학이미지 및 긍정적 행동의지에 미치는 인과모형', sample: '국내 대학생 412명', region: '국내', iv: '교육서비스품질', mv: '학생만족·대학이미지', dv: '긍정적 행동의지(추천·재선택)', result: '교육서비스품질 → 만족·이미지 → 행동의지 다중매개. 인적·교육과정·물리적 환경 차별적 효과' },
+    '박주성·김종호·신용섭(2003)': { subject: '대학교육서비스 품질요인이 학생만족, 재입학의도 및 구전효과에 미치는 영향', sample: '국내 대학생 392명', region: '국내', iv: '교육서비스품질 5요인', mv: '학생만족', dv: '재입학의도·구전효과', result: 'SERVQUAL 5차원 모두 학생만족에 정적. 학생만족이 재입학의도·구전효과 매개' },
+    '이학식(1997)': { subject: '지각된 서비스품질의 결정과정: 판단대상으로서의 서비스 만족과 서비스품질의 비교', sample: '국내 서비스 이용자 320명', region: '국내', iv: '기대·인식', mv: '-', dv: '서비스품질·만족', result: '서비스품질과 만족의 구분. 갭 모델 한국 검증' },
+    '차수련·채연수(1999)': { subject: '교육서비스품질의 측정에 관한 실증적 연구', sample: '대학생 350명', region: '국내', iv: '-', mv: '-', dv: '교육서비스품질', result: '한국 대학교육 맥락의 SERVQUAL 적용. 5차원 일부 통합 필요성 제기' },
+    '신재익·정기한(2007)': { subject: '교육기관의 서비스품질, 학생만족, 구전 간의 관계', sample: '학원 수강생 306명', region: '국내', iv: '교육서비스품질', mv: '학생만족', dv: '구전의도', result: '교육서비스품질 → 학생만족 → 구전의도 완전매개. 5차원 모두 유의' },
+    '김지현·이상복(2011)': { subject: '교육서비스품질이 고객만족 및 재구매에 미치는 영향', sample: '학원 수강생 288명', region: '국내', iv: '교육서비스품질', mv: '고객만족', dv: '재구매의도', result: '교육서비스품질 5요인이 만족 통한 재구매의도에 차별적 효과' },
+    '이혜미·한진수(2013)': { subject: '교육서비스품질과 만족도 및 충성도 관계', sample: '관광교육기관 수강생 254명', region: '국내', iv: '교육서비스품질', mv: '만족도', dv: '충성도', result: '교육서비스품질 → 만족도 → 충성도 부분매개. 인적요인의 효과가 가장 강함' },
+    '도은숙(2004)': { subject: '서비스 교육품질이 교육만족과 고객지향성에 미치는 영향', sample: '서비스 교육 수강생 230명', region: '국내', iv: '교육서비스품질', mv: '교육만족', dv: '고객지향성', result: '교육서비스품질 → 교육만족 → 고객지향성 부분매개. 신뢰성·반응성 핵심 요인' },
+    '김채호(2008)': { subject: '아카데미 뷰티스쿨의 교육 서비스 품질과 교육성과 및 학생 만족도에 대한 연구', sample: '뷰티스쿨 수강생 312명', region: '국내', iv: '교육서비스품질', mv: '-', dv: '교육성과·학생만족도', result: '교육서비스품질 5요인이 교육성과·학생만족 모두에 차별적 정적 영향' },
+    '노정숙(2013)': { subject: '교육서비스 품질이 교육만족과 충성도 및 교육성과에 미치는 영향', sample: '미용학원 수강생 280명', region: '국내', iv: '교육서비스품질', mv: '교육만족', dv: '충성도·교육성과', result: '교육만족이 교육서비스품질과 결과변수 사이 강력한 매개' },
+    '이가희(2013)': { subject: '조리교육기관의 교육 서비스 품질이 교육성과에 미치는 영향', sample: '조리교육 수강생 250명', region: '국내', iv: '교육서비스품질', mv: '-', dv: '교육성과', result: '인적요인·물리적환경요인 모두 지적/기능적·사회적/심리적 교육성과에 정적 영향' },
+    '전은수(2013)': { subject: '미용교육서비스 품질요인이 교육성과와 구전활동 및 재이용의도에 미치는 영향', sample: '미용교육 수강생 268명', region: '국내', iv: '교육서비스품질', mv: '교육성과', dv: '구전활동·재이용의도', result: '교육서비스품질 → 교육성과 → 구전·재이용 다중매개' },
+    // ── 배치 4: 해외 25편 + 국내 5편 추가 (POS·메타분석·신뢰·OCB) ──
+    'Wayne, Shore & Liden(1997)': { subject: 'Perceived organizational support and leader-member exchange: A social exchange perspective', sample: '미국 다양한 직업 211명·종단 5년', region: '국외', iv: 'LMX·POS', mv: '-', dv: '직무성과·OCB·이직의도', result: 'POS와 LMX 모두 사회적 교환관계 변수. POS는 거시적 교환, LMX는 미시적 교환' },
+    'Shore & Wayne(1993)': { subject: 'Commitment and employee behavior: Comparison of affective commitment, continuance commitment with POS', sample: '미국 직장인 383명', region: '국외', iv: '정서적·지속적 몰입·POS', mv: '-', dv: 'OCB', result: 'POS가 정서적 몰입을 통해 OCB에 영향. 지속적 몰입은 OCB에 부적 효과' },
+    'Eisenberger et al.(1986)': { subject: 'Perceived organizational support (POS 개념 창시·SPOS 척도 개발)', sample: '미국 4개 산업 71명·101명·291명·334명', region: '국외', iv: '-', mv: '-', dv: '조직지원인식(POS)', result: 'SPOS 36문항(축약형 17·8문항) 개발. POS의 사회적 교환이론 정립' },
+    'Shanock & Eisenberger(2006)': { subject: 'When supervisors feel supported: Relationships with subordinates\' perceived supervisor support, POS, and performance', sample: '미국 매니저 303명·부하 230명', region: '국외', iv: '상사 자신의 POS', mv: '부하 PSS·POS', dv: '부하 직무성과·OCB', result: '관리자 자신의 POS가 부하 PSS·POS·성과에 연쇄 영향. "POS 폭포 효과" 검증' },
+    'Yuan & Woodman(2010)': { subject: 'Innovative behavior in the workplace: The role of performance and image outcome expectations', sample: '미국 4개 조직 238명·중국 224명', region: '국외', iv: '성과·이미지 기대', mv: '-', dv: '혁신행동', result: '혁신행동의 결과기대 모델. 성과기대·이미지기대(긍정·위험)가 혁신행동 예측' },
+    'Pierce, O\'Driscoll & Coghlan(2004)': { subject: 'Work environment structure and psychological ownership: The mediating effects of control', sample: '미국·아일랜드 354명', region: '국외', iv: '작업환경(자율성·구조)', mv: '통제감', dv: '심리적 주인의식', result: '통제감이 작업환경과 PO 사이 매개. 자율성→통제감→PO 인과 검증' },
+    'Pierce, Rubenfeld & Morgan(1991)': { subject: 'Employee ownership: A conceptual model of process and effects', sample: '이론 논문', region: '국외', iv: '-', mv: '-', dv: '심리적 주인의식', result: '종업원 소유의 심리적 효과 이론화. 형식적 소유와 심리적 소유 구분' },
+    'Pugh(2001)': { subject: 'Service with a smile: Emotional contagion in the service encounter', sample: '미국 은행직원-고객 130쌍', region: '국외', iv: '직원의 긍정적 감정 표현', mv: '감정전염', dv: '고객 정서·서비스 평가', result: '직원의 긍정 감정이 고객에 전염되어 서비스 평가에 영향. 감정노동의 긍정 측면' },
+    'Wharton(1993)': { subject: 'The affective consequences of service work: Managing emotions on the job', sample: '미국 은행·병원 직원 1,236명', region: '국외', iv: '감정노동', mv: '-', dv: '직무만족·소진', result: '감정노동이 항상 부정적 효과는 아님. 자율성·자기효능감이 조절 효과' },
+    'Brotheridge & Lee(2003)': { subject: 'Development and validation of the Emotional Labour Scale', sample: '캐나다 직원 296명·130명', region: '국외', iv: '-', mv: '-', dv: '감정노동(빈도/주의/다양성/부조화/표면/내면)', result: 'ELS 6차원 척도 개발. 감정노동 측정의 표준 도구' },
+    'Bandura(1997)': { subject: 'Self-efficacy: The exercise of control (자기효능감 단행본)', sample: '이론 단행본', region: '국외', iv: '-', mv: '-', dv: '자기효능감', result: '자기효능감 이론 정립. 4가지 정보원(성취경험·대리경험·언어적 설득·생리적 상태)' },
+    'Stajkovic & Luthans(1998)': { subject: 'Self-efficacy and work-related performance: A meta-analysis', sample: '114개 연구 메타분석', region: '국외', iv: '자기효능감', mv: '-', dv: '직무성과', result: '자기효능감과 성과 사이 가중평균 상관 .38. 강한 정적 효과 메타 검증' },
+    'Mayer & Davis(1995)': { subject: 'The integrative model of organizational trust (Mayer·Davis·Schoorman 1995의 별칭)', sample: '이론 논문', region: '국외', iv: '능력·자비심·진실성', mv: '신뢰', dv: '위험감수행동', result: '신뢰 통합모형. 능력·자비·진실성 3차원' },
+    'Dirks & Ferrin(2002)': { subject: 'Trust in leadership: Meta-analytic findings and implications for research and practice', sample: '106개 연구 메타분석', region: '국외', iv: '리더에 대한 신뢰', mv: '-', dv: '직무태도·성과·OCB·이직', result: '리더 신뢰의 효과 메타. 직무만족·OCB와 강한 상관, 성과와 중간 상관' },
+    'Allen & Meyer(1991)': { subject: 'A three-component conceptualization of organizational commitment', sample: '이론 논문', region: '국외', iv: '-', mv: '-', dv: '조직몰입(정서적/지속적/규범적)', result: 'TCM 3요인 모형 정립. 가장 널리 인용되는 조직몰입 이론' },
+    'Meyer, Allen & Smith(1993)': { subject: 'Commitment to organizations and occupations: Extension and test of a three-component conceptualization', sample: '캐나다 간호사 603명', region: '국외', iv: '-', mv: '-', dv: '조직몰입·직업몰입', result: 'TCM을 직업몰입에 확장. 조직과 직업 양쪽에 3요인 적용 가능 검증' },
+    'Mowday, Porter & Steers(1982)': { subject: 'Employee-organization linkages: The psychology of commitment, absenteeism, and turnover (단행본)', sample: '이론 단행본', region: '국외', iv: '-', mv: '-', dv: '조직몰입(OCQ)', result: 'OCQ 15문항 척도 정립. 조직몰입의 결근·이직 예측력 검증' },
+    'Mowday et al.(1982)': { subject: 'Mowday, Porter & Steers(1982)의 약식 표기', sample: '이론 단행본', region: '국외', iv: '-', mv: '-', dv: '조직몰입(OCQ)', result: 'OCQ 척도. 본문에서 자주 인용되는 1982 단행본' },
+    'MacKenzie et al.(2001)': { subject: 'Transformational and transactional leadership and salesperson performance', sample: '미국 보험판매원 477명', region: '국외', iv: '변혁적·거래적 리더십', mv: '신뢰·OCB', dv: '판매성과', result: '변혁적 리더십이 신뢰·OCB 통한 성과 강한 매개. 거래적 리더십은 직접효과만' },
+    'Rhoades et al.(2001)': { subject: 'Affective commitment to the organization: The contribution of POS', sample: '미국 4개 산업 종단연구', region: '국외', iv: 'POS', mv: '-', dv: '정서적 몰입', result: 'POS가 정서적 몰입의 강한 예측변수. 종단설계로 인과 방향 검증' },
+    'Smith et al.(2009)': { subject: 'Smith and colleagues 후속 연구 (조직 맥락)', sample: '국외 다양한 표본', region: '국외', iv: '리더십·POS', mv: '-', dv: '직무태도·성과', result: '조직맥락 변수의 직무태도·성과 영향. (다중 인용)' },
+    'Avey et al.(2011)': { subject: 'Meta-analysis of the impact of psychological capital on employee attitudes, behaviors, and performance', sample: '51개 연구 메타분석', region: '국외', iv: 'PsyCap', mv: '-', dv: '직무태도·행동·성과', result: 'PsyCap의 직무만족(.54)·조직몰입(.48)·성과(.26) 강한 메타 효과' },
+    'Avey et al.(2006)': { subject: 'Psychological capital and employee responses to organizational change', sample: '미국 직장인 132명·232명', region: '국외', iv: 'PsyCap', mv: '-', dv: '변화에 대한 시너지·실용적 행동·냉소주의', result: 'PsyCap이 변화 수용 시너지·실용적 행동 정적 영향, 냉소주의 부적 영향' },
+    'Engelbrecht, Heine & Mahembe(2014)': { subject: 'The influence of ethical leadership on trust and work engagement', sample: '남아공 직장인 204명', region: '국외', iv: '윤리적 리더십', mv: '상사신뢰', dv: '직무열의', result: '윤리적 리더십 → 상사신뢰 → 직무열의 부분매개. 신뢰의 중요성 검증' },
+    'Shaffer, Harrison & Gilley(1999)': { subject: 'Dimensions, determinants, and differences in the expatriate adjustment process', sample: '해외주재원 4개국 452명', region: '국외', iv: '개인·조직·비업무 변수', mv: '-', dv: '해외주재원 적응 3차원', result: '해외주재원 적응 결정요인 통합 모델. 가족 적응이 핵심 변수' },
+    // 국내 학술지 5편 추가
+    '한수진·왕신우(2022)': { subject: '문화지능과 직무성과의 관계: 매개효과 연구', sample: '국내 글로벌 기업 직원 220명', region: '국내', iv: '문화지능', mv: '-', dv: '직무성과', result: '문화지능 4요인 모두 직무성과에 정적 영향. 메타인지 효과가 가장 강함' },
+    '강기노(2018)': { subject: '간호사의 사회적 교환관계, 긍정심리자본, 조직몰입의 관계', sample: '국내 간호사 312명', region: '국내', iv: '사회적 교환관계', mv: '긍정심리자본', dv: '조직몰입', result: '사회적 교환 → PsyCap → 조직몰입 부분매개. 간호 맥락에서 PsyCap 효과 검증' },
+    '김태성(2017)': { subject: '재가방문 요양보호사의 직무특성과 직무만족 관계 연구', sample: '재가방문 요양보호사 246명', region: '국내', iv: '직무특성', mv: '-', dv: '직무만족·이직의도', result: '직무특성 5요인 중 자율성·피드백·중요성이 직무만족 핵심 예측' },
+    '김주엽·김명수(2011)': { subject: '조직몰입의 결정요인과 직무만족의 매개효과', sample: '국내 기업 직장인 280명', region: '국내', iv: '직무특성·POS', mv: '직무만족', dv: '조직몰입', result: '직무만족이 직무특성/POS와 조직몰입 사이를 부분매개' },
+    '안정원(2016)': { subject: '직무특성, 조직몰입, 이직의도의 관계 연구', sample: '국내 중소기업 종사자 254명', region: '국내', iv: '직무특성', mv: '조직몰입', dv: '이직의도', result: '직무특성 → 조직몰입 → 이직의도 완전매개. JCM 한국 검증' },
   };
 
   // ── 선행연구 요약문 DB (변수 간 관계) ──
@@ -12877,13 +13078,39 @@ const PaperCompass = ({ onBack }) => {
           result: _reframeResultForPair(fromVar, toVar, paperDetail.result),
         });
       } else {
-        // paperDetailDB에 없어도 최소 정보로 행 생성
+        // paperDetailDB에 없어도 referenceDB의 정보로 자동 보강
         const isKorean = /[가-힣]/.test(name);
+        const refInfo = (typeof referenceDB !== 'undefined' && referenceDB[name]) || null;
+        let subjectText = '-';
+        let sampleText = '-';
+        if (refInfo) {
+          subjectText = refInfo.title || '-';
+          // type에 따라 sample 칸 자동 채움
+          if (refInfo.type === '해외원전' || refInfo.type === '단행본') {
+            sampleText = '이론·척도 (메타·리뷰)';
+          } else if (refInfo.type === '해외') {
+            sampleText = `${refInfo.source || '학술지'} 인용`;
+          } else if (refInfo.type === '학술지') {
+            sampleText = refInfo.source || '국내 학술지';
+          } else if (refInfo.type === '박사') {
+            sampleText = `${refInfo.source || '국내'} 박사학위논문`;
+          } else if (refInfo.type === '석사') {
+            sampleText = `${refInfo.source || '국내'} 석사학위논문`;
+          } else if (refInfo.type === 'SVU') {
+            sampleText = 'SVU 학위논문';
+          } else if (refInfo.type === '학위논문') {
+            sampleText = '학위논문';
+          } else if (refInfo.type === '학술대회') {
+            sampleText = `${refInfo.source || '학술대회'} 발표`;
+          } else {
+            sampleText = refInfo.source || refInfo.type || '-';
+          }
+        }
         tableRows.push({
           region: isKorean ? '국내' : '국외',
           researcher: name,
-          subject: '-',
-          sample: '-',
+          subject: subjectText,
+          sample: sampleText,
           iv: fromVar,
           mv: '-',
           dv: toVar,
@@ -12934,13 +13161,25 @@ const PaperCompass = ({ onBack }) => {
             const rKey = entry.researcher.trim();
             if (seenResearchers.has(rKey)) return; // 중복 제외
             seenResearchers.add(rKey);
+            // ★ paperDetailDB에서 정확 매칭 또는 ±1·±2년 fuzzy로 sample/subject 자동 보강
+            let pd = paperDetailDB[rKey];
+            if (!pd) {
+              const m = rKey.match(/^(.+?)\((\d{4})\)$/);
+              if (m) {
+                const author = m[1], year = parseInt(m[2]);
+                for (const dy of [-1, 1, -2, 2]) {
+                  const altKey = `${author}(${year + dy})`;
+                  if (paperDetailDB[altKey]) { pd = paperDetailDB[altKey]; break; }
+                }
+              }
+            }
             tableRows.push({
-              region: entry.region || (/[가-힣]/.test(rKey) ? '국내' : '국외'),
+              region: entry.region || (pd && pd.region) || (/[가-힣]/.test(rKey) ? '국내' : '국외'),
               researcher: rKey,
-              subject: entry.subject || '-',
-              sample: entry.sample || entry.subject || '-',
-              iv: entry.iv || fromVar,
-              mv: entry.mv || '-',
+              subject: entry.subject || (pd && pd.subject) || '-',
+              sample: entry.sample || (pd && pd.sample) || entry.subject || '-',
+              iv: entry.iv || (pd && pd.iv) || fromVar,
+              mv: entry.mv || (pd && pd.mv) || '-',
               dv: entry.dv || toVar,
               result: _reframeResultForPair(fromVar, toVar, entry.result),
               fromPDFExtract: true,
@@ -15597,7 +15836,19 @@ const PaperCompass = ({ onBack }) => {
                               }}, React.createElement("div", {className: "w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5", style: {
                                   borderColor: isSelected ? '#2E75B6' : '#CCC',
                                   backgroundColor: isSelected ? '#2E75B6' : '#FFF',
-                                }}, isSelected && React.createElement(Check, {size: 12, className: "text-white"})), React.createElement("div", {className: "flex-1 min-w-0"}, React.createElement("div", {className: "flex items-center gap-2"}, React.createElement("p", {className: "text-sm font-medium text-gray-800"}, opt.name), React.createElement("span", {className: "text-xs px-1.5 py-0.5 rounded", style: { backgroundColor: '#E8F5E9', color: '#2E7D32', fontSize: '10px' }}, "추천")), React.createElement("p", {className: "text-xs text-gray-500 mt-0.5"}, opt.scholar, " | ", opt.scale)))
+                                }}, isSelected && React.createElement(Check, {size: 12, className: "text-white"})), React.createElement("div", {className: "flex-1 min-w-0"}, React.createElement("div", {className: "flex items-center gap-2 flex-wrap"},
+                                  React.createElement("p", {className: "text-sm font-medium text-gray-800"}, opt.name),
+                                  React.createElement("span", {className: "text-xs px-1.5 py-0.5 rounded", style: { backgroundColor: '#E8F5E9', color: '#2E7D32', fontSize: '10px' }}, "추천"),
+                                  // 출처 칩: 마우스 호버 시 전체 학자 인용 툴팁으로 표시
+                                  opt.scholar && React.createElement("span", {
+                                    title: '📚 학자 인용 전체:\n' + opt.scholar,
+                                    className: "text-xs px-1.5 py-0.5 rounded cursor-help",
+                                    style: { backgroundColor: '#F3F4F6', color: '#6B7280', fontSize: '10px', border: '1px solid #E5E7EB' }
+                                  }, "ⓘ 출처 ", String(opt.scholar.split(',').filter(s => s.trim()).length), "명")
+                                ),
+                                // 척도명만 본문에 표시 (학자 인용은 ⓘ로 이동)
+                                React.createElement("p", {className: "text-xs text-gray-500 mt-0.5"}, "📏 ", opt.scale || '척도 정보 없음')
+                              ))
                           );
                         }))), theory.options.some((_, idx) => !theory.defaultSelected.includes(idx)) && (
                       React.createElement("div", {className: "mb-4"}, React.createElement("div", {className: "flex items-center gap-2 mb-2 pt-3", style: { borderTop: '1px dashed #BBDEFB' }}, React.createElement("span", {className: "text-xs font-bold", style: { color: '#555' }}, "➕ 추가 선택 가능한 하위요인"), React.createElement("span", {className: "text-xs text-gray-400"}, "(필요 시 체크하여 설문에 추가)")), React.createElement("div", {className: "space-y-2"}, theory.options.map((opt, idx) => {
@@ -15611,9 +15862,18 @@ const PaperCompass = ({ onBack }) => {
                                 }}, React.createElement("div", {className: "w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5", style: {
                                     borderColor: isSelected ? '#F9A825' : '#CCC',
                                     backgroundColor: isSelected ? '#F9A825' : '#FFF',
-                                  }}, isSelected && React.createElement(Check, {size: 12, className: "text-white"})), React.createElement("div", {className: "flex-1 min-w-0"}, React.createElement("p", {className: "text-sm font-medium text-gray-700"}, opt.name), React.createElement("p", {className: "text-xs text-gray-400 mt-0.5"}, opt.scholar, " | ", opt.scale), opt.answer && (
-                                    React.createElement("p", {className: "text-xs mt-1 italic", style: { color: '#795548' }}, opt.answer)
-                                  )))
+                                  }}, isSelected && React.createElement(Check, {size: 12, className: "text-white"})), React.createElement("div", {className: "flex-1 min-w-0"},
+                                    React.createElement("div", {className: "flex items-center gap-2 flex-wrap"},
+                                      React.createElement("p", {className: "text-sm font-medium text-gray-700"}, opt.name),
+                                      opt.scholar && React.createElement("span", {
+                                        title: '📚 학자 인용 전체:\n' + opt.scholar,
+                                        className: "text-xs px-1.5 py-0.5 rounded cursor-help",
+                                        style: { backgroundColor: '#F9FAFB', color: '#9CA3AF', fontSize: '10px', border: '1px solid #E5E7EB' }
+                                      }, "ⓘ 출처 ", String(opt.scholar.split(',').filter(s => s.trim()).length), "명")
+                                    ),
+                                    React.createElement("p", {className: "text-xs text-gray-400 mt-0.5"}, "📏 ", opt.scale || '척도 정보 없음'),
+                                    opt.answer && React.createElement("p", {className: "text-xs mt-1 italic", style: { color: '#795548' }}, opt.answer)
+                                  ))
                             );
                           })))
                     ), React.createElement("div", {className: "flex justify-end mb-3"}, React.createElement("button", {onClick: (e) => { e.stopPropagation(); toggleSubFactor(v, -1); }, className: "text-xs px-3 py-1 rounded border transition-all", style: { borderColor: '#BDBDBD', color: '#757575', backgroundColor: '#FAFAFA' }, title: "추천 하위요인으로 초기화"}, " 🔄 추천 항목으로 초기화 ")),
@@ -15771,6 +16031,7 @@ const PaperCompass = ({ onBack }) => {
     const generateGoogleFormScript = () => {
       // ── 안전한 문자열 escape: 작은따옴표/백슬래시/곡선따옴표/줄바꿈 모두 처리 ──
       // 사용자 입력(변수명, 하위요인, 제목 등)에 ' " \ \n 등이 있어도 syntax error 방지
+      // _esc: 한 줄 텍스트용 (줄바꿈 → 공백)
       const _esc = (s) => {
         return String(s == null ? '' : s)
           .replace(/\\/g, '\\\\')        // 백슬래시 먼저
@@ -15781,10 +16042,57 @@ const PaperCompass = ({ onBack }) => {
           .replace(/\t/g, ' ')           // 탭 → 공백
           .trim();
       };
+      // _escMulti: 여러 줄 텍스트용 (인사말 등) — 줄바꿈을 \n escape 시퀀스로 보존
+      const _escMulti = (s) => {
+        return String(s == null ? '' : s)
+          .replace(/\\/g, '\\\\')
+          .replace(/[‘’]/g, "'")
+          .replace(/[“”]/g, '"')
+          .replace(/'/g, "\\'")
+          .replace(/\r\n|\r/g, '\n')
+          .replace(/\n/g, '\\n')         // 줄바꿈을 \n 시퀀스로 (Apps Script 문자열에서 줄바꿈으로 평가)
+          .replace(/\t/g, ' ');
+      };
       const vars = getSurveyVariables();
-      const safeTitle = _esc(generateThesisTitle()) || '설문지';
-      const safeTarget = _esc(surveyTarget) || '(대상 미입력)';
       const totalMin = Math.max(1, Math.ceil(totalItems * 0.3));
+      // 폼 제목: customFormTitle 우선, 없으면 자동 생성
+      const finalTitle = (customFormTitle && customFormTitle.trim()) || generateThesisTitle();
+      const safeTitle = _esc(finalTitle) || '설문지';
+      // 폼 인사말: customFormIntro 우선, 없으면 선배 논문 스타일 기본 문구
+      const _now = new Date();
+      const _yearMonth = (surveyMonth && surveyMonth.trim()) || `${_now.getFullYear()}년 ${_now.getMonth() + 1}월`;
+      // 연구자 서명 블록 (선배 논문 우측 정렬 스타일을 텍스트로)
+      const _signParts = [];
+      if (researcherAffil) _signParts.push(`연구자: ${researcherAffil}`);
+      const _nameLine = [researcherProgram, researcherName].filter(Boolean).join(' ');
+      if (_nameLine) _signParts.push(`        ${_nameLine}`);
+      if (researcherEmail) _signParts.push(`        ${researcherEmail}`);
+      if (advisorName) _signParts.push(`지도교수: ${advisorName} 교수`);
+      const _signBlock = _signParts.length > 0 ? '\n\n' + _signParts.join('\n') : '';
+      const defaultIntro = `안녕하십니까?\n\n바쁘신 와중에도 본 설문지에 응답해 주셔서 진심으로 감사드립니다.\n\n본 설문지는 「${finalTitle}」에 관한 학위논문 작성을 위한 것입니다. ${surveyTarget ? `본 설문은 ${surveyTarget}을(를) 대상으로 합니다. ` : ''}귀하의 솔직하고 성의 있는 응답은 학문적 진보에 크게 기여하게 될 것입니다.\n\n응답해 주신 모든 내용은 통계법 제33조에 의거하여 익명으로 처리되며, 오직 학술 연구 목적으로만 사용되고 그 외 어떠한 목적으로도 사용되지 않음을 약속드립니다.\n\n본 설문에는 정답이나 오답이 없으며, 평소 귀하께서 느끼시는 바를 솔직하게 응답해 주시면 됩니다. 응답 시간은 약 ${totalMin}분이 소요됩니다.\n\n바쁘신 가운데 시간을 내어 주셔서 다시 한 번 진심으로 감사드립니다.\n\n${_yearMonth}${_signBlock}\n\n[설문응답요령]\n● 각 설문항목은 정답이 없습니다. 질문을 읽으신 후 즉각적인 느낌이나 생각이 표현된 곳에 응답해 주시기 바랍니다.\n● 서로 비슷하다고 느끼게 되는 질문이라 할지라도 한 문항도 빠뜨리지 마시고 응답해 주시기 바랍니다.\n● 귀하의 귀중한 시간과 노력이 헛되지 않게 올바른 연구로 보답하고자 하오니 마지막 페이지까지 응답을 부탁드립니다. 대단히 감사합니다.`;
+      // ── 인사말 결정 로직 ──
+      // (a) customFormIntro가 비어 있으면 → defaultIntro(자동) 사용
+      // (b) customFormIntro가 있고 [설문응답요령]·연구자 서명이 이미 포함 → 그대로 사용
+      // (c) customFormIntro가 본문만 있고 서명/응답요령 빠짐 → 자동으로 끝에 추가
+      let finalIntro;
+      if (!customFormIntro || !customFormIntro.trim()) {
+        finalIntro = defaultIntro;
+      } else {
+        const _userIntro = customFormIntro.trim();
+        const _hasSign = /지도교수|연구자:|소속:/.test(_userIntro);
+        const _hasGuide = /\[설문응답요령\]|설문응답요령/.test(_userIntro);
+        // 사용자 본문 + 빠진 부분만 자동 추가
+        const _autoTail = [];
+        if (!_hasSign && (researcherAffil || researcherName || advisorName)) {
+          // 서명 블록이 본문에 없으면 자동 추가
+          _autoTail.push('\n\n' + _yearMonth + (_signBlock || ''));
+        }
+        if (!_hasGuide) {
+          _autoTail.push('\n\n[설문응답요령]\n● 각 설문항목은 정답이 없습니다. 질문을 읽으신 후 즉각적인 느낌이나 생각이 표현된 곳에 응답해 주시기 바랍니다.\n● 서로 비슷하다고 느끼게 되는 질문이라 할지라도 한 문항도 빠뜨리지 마시고 응답해 주시기 바랍니다.\n● 귀하의 귀중한 시간과 노력이 헛되지 않게 올바른 연구로 보답하고자 하오니 마지막 페이지까지 응답을 부탁드립니다. 대단히 감사합니다.');
+        }
+        finalIntro = _userIntro + _autoTail.join('');
+      }
+      const safeIntro = _escMulti(finalIntro);  // 줄바꿈 보존
 
       let script = `// Google Apps Script - 자동 설문지 생성\n`;
       script += `// 사용법: Google Forms에서 [확장 프로그램] → [Apps Script] 클릭\n`;
@@ -15792,7 +16100,7 @@ const PaperCompass = ({ onBack }) => {
       script += `// 권한 승인 후 [실행 로그]에서 설문 URL 확인\n\n`;
       script += `function createSurveyForm() {\n`;
       script += `  var form = FormApp.create('${safeTitle}');\n`;
-      script += `  form.setDescription('본 설문은 학술 연구 목적으로 실시되며, 응답 내용은 익명으로 처리됩니다.\\n대상: ${safeTarget}\\n소요시간: 약 ${totalMin}분');\n\n`;
+      script += `  form.setDescription('${safeIntro}');\n\n`;
 
       vars.forEach(v => {
         const byFactor = getCustomizedSurveyItems(v);
@@ -15854,17 +16162,127 @@ const PaperCompass = ({ onBack }) => {
       React.createElement("div", {className: "w-full max-w-4xl mx-auto"},
         React.createElement("h2", {className: "text-2xl font-bold mb-2", style: { color: '#1F3864' }}, "Step 8. Google Forms 자동 생성"),
         React.createElement("p", {className: "text-gray-600 mb-4"}, "설문지를 Google Forms로 자동 생성하는 Apps Script입니다. 아래 7단계를 따라 진행하세요."),
-        // ⚠ 핵심 경고 박스 (배포 버튼 금지)
-        React.createElement("div", {className: "p-4 rounded-lg mb-4", style: { backgroundColor: '#FFEBEE', border: '2px solid #EF5350' }},
-          React.createElement("div", {className: "flex items-start gap-3"},
-            React.createElement(AlertCircle, {size: 22, style: { color: '#C62828', flexShrink: 0, marginTop: 1 }}),
+        // ⚠ 핵심 경고 박스 (배포 버튼 금지) — 톤 다운 회색 배경
+        React.createElement("div", {className: "p-3 rounded-lg mb-3", style: { backgroundColor: '#F5F5F5', border: '1px solid #E0E0E0', borderLeft: '3px solid #C62828' }},
+          React.createElement("div", {className: "flex items-start gap-2"},
+            React.createElement(AlertCircle, {size: 16, style: { color: '#C62828', flexShrink: 0, marginTop: 1 }}),
             React.createElement("div", null,
-              React.createElement("p", {className: "text-sm font-bold mb-1", style: { color: '#C62828' }}, " 가장 중요한 주의사항 — [배포(Deploy)] 버튼은 절대 누르지 마세요!"),
-              React.createElement("p", {className: "text-xs", style: { color: '#B71C1C' }},
-                "[배포]는 24시간 운영하는 웹앱·API를 만드는 기능으로, 우리 스크립트와는 무관합니다. ",
-                "▶ ", React.createElement("strong", null, "실행(Run) 버튼만"), " 누르세요. ",
-                "배포 URL(.../exec)은 doGet 함수가 없어 작동하지 않습니다."
+              React.createElement("p", {className: "text-xs font-semibold mb-0.5", style: { color: '#424242' }},
+                React.createElement("span", {style: {color: '#C62828'}}, "[배포(Deploy)] 버튼 누르지 마세요"), " — ▶ 실행(Run) 버튼만 누르세요"),
+              React.createElement("p", {className: "text-xs", style: { color: '#757575' }},
+                "[배포]는 웹앱·API용 기능이라 우리 스크립트와 무관합니다. 배포 URL(.../exec)은 작동하지 않습니다."
               )
+            )
+          )
+        ),
+        // ── 설문항 편집 빠른 액세스 (톤 다운) ──
+        React.createElement("div", {className: "rounded-lg border p-3 mb-3", style: { borderColor: '#E0E0E0', backgroundColor: '#FAFAFA', borderLeft: '3px solid #607D8B' }},
+          React.createElement("div", {className: "flex items-center justify-between flex-wrap gap-2"},
+            React.createElement("div", null,
+              React.createElement("p", {className: "text-xs font-semibold flex items-center gap-1", style: { color: '#37474F' }},
+                React.createElement("span", null, "📝"), " 설문 문항 수정·편집",
+                Object.keys(customSurveyTexts).length > 0 && React.createElement("span", {className: "ml-2 px-1.5 py-0.5 rounded text-xs", style: { backgroundColor: '#E8F5E9', color: '#2E7D32', fontSize: 10 }},
+                  "✓ ", Object.keys(customSurveyTexts).length, "개 수정됨")
+              ),
+              React.createElement("p", {className: "text-xs mt-0.5", style: { color: '#78909C' }},
+                "Step 7로 돌아가지 않고도 여기서 직접 문항을 편집할 수 있습니다."
+              )
+            ),
+            React.createElement("div", {className: "flex gap-2 flex-shrink-0"},
+              React.createElement("button", {onClick: () => setShowSurveyPreview(true),
+                style: { padding: '6px 14px', borderRadius: '6px', background: '#607D8B', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 12 }},
+                "📋 미리보기·문항 편집"),
+              Object.keys(customSurveyTexts).length > 0 && React.createElement("button", {
+                onClick: () => { if(confirm('수정한 ' + Object.keys(customSurveyTexts).length + '개 문항을 모두 원문으로 되돌리시겠습니까?')) setCustomSurveyTexts({}); },
+                style: { padding: '6px 10px', borderRadius: '6px', background: '#fff', color: '#C62828', border: '1px solid #C62828', cursor: 'pointer', fontSize: 11 }},
+                "↺ 초기화")
+            )
+          )
+        ),
+        // ── 🌟 폼 제목·인사말 편집 패널 (메인 강조 영역, 그라데이션 헤더 + 큰 사이즈) ──
+        React.createElement("div", {className: "rounded-lg border-2 mb-6 overflow-hidden",
+          style: { borderColor: '#1F3864', boxShadow: '0 4px 12px rgba(31, 56, 100, 0.12)' }},
+          React.createElement("div", {className: "p-5 cursor-pointer flex items-center justify-between",
+            style: { background: 'linear-gradient(135deg, #1F3864 0%, #2E75B6 100%)' },
+            onClick: () => setShowFormIntroEditor(!showFormIntroEditor)},
+            React.createElement("div", null,
+              React.createElement("h3", {className: "font-bold flex items-center gap-2 text-white", style: { fontSize: 18 }},
+                React.createElement("span", {style: {fontSize: 22}}, "✏️"),
+                " 폼 제목·인사말 편집",
+                React.createElement("span", {className: "px-2 py-0.5 rounded text-xs font-semibold",
+                  style: { backgroundColor: 'rgba(255,255,255,0.2)', color: '#FFE082', marginLeft: 8, fontSize: 11 }},
+                  "★ 가장 먼저 입력하세요")
+              ),
+              React.createElement("p", {className: "text-xs mt-1.5", style: {color: 'rgba(255,255,255,0.85)'}},
+                "응답자가 가장 먼저 보는 영역 — 연구 제목·인사말·지도교수·연구자 정보를 입력합니다. ",
+                React.createElement("strong", null, "선배 논문 스타일로 자동 생성")
+              )
+            ),
+            React.createElement("span", {style: { fontSize: 14, color: '#fff', fontWeight: 600 }},
+              showFormIntroEditor ? '▲ 닫기' : '▼ 펼쳐서 편집')
+          ),
+          showFormIntroEditor && React.createElement("div", {className: "p-5 bg-white space-y-4"},
+            // 폼 제목
+            React.createElement("div", null,
+              React.createElement("label", {className: "block text-sm font-semibold mb-1", style: { color: '#1F3864' }}, "📌 폼 제목"),
+              React.createElement("p", {className: "text-xs text-gray-500 mb-2"}, "비워두면 연구주제로부터 자동 생성됩니다. 예: \"" + (generateThesisTitle().slice(0, 60) || '...') + "\""),
+              React.createElement("input", {type: "text", value: customFormTitle, onChange: e => setCustomFormTitle(e.target.value), placeholder: "(자동 생성된 제목 사용)",
+                style: { width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid #D0D7E2', fontSize: '14px', fontFamily: 'inherit' }})
+            ),
+            // 연구자 정보 (선배 논문 스타일 - 6필드: 소속·과정·이름·이메일·지도교수·연월)
+            React.createElement("div", null,
+              React.createElement("label", {className: "block text-sm font-semibold mb-1", style: { color: '#1F3864' }}, "👤 연구자·지도교수 정보 (선배 논문 스타일)"),
+              React.createElement("p", {className: "text-xs text-gray-500 mb-2"}, "입력하면 인사말 끝에 \"2025년 5월 / 연구자: 서울벤처대학원대학교 / 박사과정 김진태 / kjt2367@daum.net / 지도교수: 황찬규 교수\" 형식으로 자동 삽입됩니다."),
+              React.createElement("div", {style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }},
+                React.createElement("input", {type: "text", value: researcherAffil, onChange: e => setResearcherAffil(e.target.value), placeholder: "소속 (예: 서울벤처대학원대학교)",
+                  style: { padding: '8px 10px', borderRadius: '6px', border: '1px solid #D0D7E2', fontSize: '13px', gridColumn: 'span 2' }}),
+                React.createElement("input", {type: "text", value: researcherProgram, onChange: e => setResearcherProgram(e.target.value), placeholder: "학위 과정 (예: 박사과정, 석사과정)",
+                  style: { padding: '8px 10px', borderRadius: '6px', border: '1px solid #D0D7E2', fontSize: '13px' }}),
+                React.createElement("input", {type: "text", value: researcherName, onChange: e => setResearcherName(e.target.value), placeholder: "연구자 이름",
+                  style: { padding: '8px 10px', borderRadius: '6px', border: '1px solid #D0D7E2', fontSize: '13px' }}),
+                React.createElement("input", {type: "email", value: researcherEmail, onChange: e => setResearcherEmail(e.target.value), placeholder: "연락처 (이메일)",
+                  style: { padding: '8px 10px', borderRadius: '6px', border: '1px solid #D0D7E2', fontSize: '13px' }}),
+                React.createElement("input", {type: "text", value: advisorName, onChange: e => setAdvisorName(e.target.value), placeholder: "지도교수 (예: 황찬규)",
+                  style: { padding: '8px 10px', borderRadius: '6px', border: '1px solid #D0D7E2', fontSize: '13px' }}),
+                React.createElement("input", {type: "text", value: surveyMonth, onChange: e => setSurveyMonth(e.target.value), placeholder: "설문 실시 연월 (예: 2025년 5월) — 비우면 오늘",
+                  style: { padding: '8px 10px', borderRadius: '6px', border: '1px solid #D0D7E2', fontSize: '13px', gridColumn: 'span 2' }})
+              )
+            ),
+            // 인사말 본문
+            React.createElement("div", null,
+              React.createElement("div", {className: "flex items-center justify-between mb-1"},
+                React.createElement("label", {className: "block text-sm font-semibold", style: { color: '#1F3864' }}, "📝 인사말 본문"),
+                React.createElement("button", {
+                  onClick: () => {
+                    const totalMin = Math.max(1, Math.ceil(totalItems * 0.3));
+                    const finalTitle = (customFormTitle && customFormTitle.trim()) || generateThesisTitle();
+                    const _now = new Date();
+                    const _ym = (surveyMonth && surveyMonth.trim()) || `${_now.getFullYear()}년 ${_now.getMonth() + 1}월`;
+                    const _signParts = [];
+                    if (researcherAffil) _signParts.push(`연구자: ${researcherAffil}`);
+                    const _nameLine = [researcherProgram, researcherName].filter(Boolean).join(' ');
+                    if (_nameLine) _signParts.push(`        ${_nameLine}`);
+                    if (researcherEmail) _signParts.push(`        ${researcherEmail}`);
+                    if (advisorName) _signParts.push(`지도교수: ${advisorName} 교수`);
+                    const _signBlock = _signParts.length > 0 ? '\n\n' + _signParts.join('\n') : '';
+                    const tmpl = `안녕하십니까?\n\n바쁘신 와중에도 본 설문지에 응답해 주셔서 진심으로 감사드립니다.\n\n본 설문지는 「${finalTitle}」에 관한 학위논문 작성을 위한 것입니다. ${surveyTarget ? `본 설문은 ${surveyTarget}을(를) 대상으로 합니다. ` : ''}귀하의 솔직하고 성의 있는 응답은 학문적 진보에 크게 기여하게 될 것입니다.\n\n응답해 주신 모든 내용은 통계법 제33조에 의거하여 익명으로 처리되며, 오직 학술 연구 목적으로만 사용되고 그 외 어떠한 목적으로도 사용되지 않음을 약속드립니다.\n\n본 설문에는 정답이나 오답이 없으며, 평소 귀하께서 느끼시는 바를 솔직하게 응답해 주시면 됩니다. 응답 시간은 약 ${totalMin}분이 소요됩니다.\n\n바쁘신 가운데 시간을 내어 주셔서 다시 한 번 진심으로 감사드립니다.\n\n${_ym}${_signBlock}\n\n[설문응답요령]\n● 각 설문항목은 정답이 없습니다. 질문을 읽으신 후 즉각적인 느낌이나 생각이 표현된 곳에 응답해 주시기 바랍니다.\n● 서로 비슷하다고 느끼게 되는 질문이라 할지라도 한 문항도 빠뜨리지 마시고 응답해 주시기 바랍니다.\n● 귀하의 귀중한 시간과 노력이 헛되지 않게 올바른 연구로 보답하고자 하오니 마지막 페이지까지 응답을 부탁드립니다. 대단히 감사합니다.`;
+                    setCustomFormIntro(tmpl);
+                  },
+                  style: { fontSize: 11, padding: '4px 10px', borderRadius: '4px', background: '#1F3864', color: '#fff', border: 'none', cursor: 'pointer' }
+                }, "📋 선배 논문 스타일 템플릿 불러오기"),
+              ),
+              React.createElement("p", {className: "text-xs text-gray-500 mb-2"}, "비워두면 학위논문 표준 인사말이 자동 적용됩니다(연구자 정보 포함). 줄바꿈은 그대로 폼에 반영됩니다."),
+              React.createElement("textarea", {value: customFormIntro, onChange: e => setCustomFormIntro(e.target.value),
+                placeholder: "(자동 생성된 학위논문 표준 인사말 사용 — 위 [템플릿 불러오기] 클릭 시 미리보기 가능)",
+                rows: 12,
+                style: { width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid #D0D7E2', fontSize: '13px', fontFamily: 'inherit', lineHeight: 1.6, resize: 'vertical' }})
+            ),
+            // 미리보기 + 초기화
+            React.createElement("div", {className: "flex items-center justify-between"},
+              React.createElement("button", {onClick: () => { setCustomFormTitle(''); setCustomFormIntro(''); setResearcherName(''); setResearcherAffil(''); setResearcherEmail(''); setAdvisorName(''); setResearcherProgram(''); setSurveyMonth(''); },
+                style: { fontSize: 12, padding: '6px 14px', borderRadius: '6px', background: '#fff', color: '#C0392B', border: '1px solid #C0392B', cursor: 'pointer' }}, "↺ 모두 초기화"),
+              React.createElement("p", {className: "text-xs", style: { color: '#666' }},
+                "💡 수정 후 아래 [코드 복사] 버튼을 다시 누르면 변경사항이 반영됩니다.")
             )
           )
         ),
@@ -16114,7 +16532,36 @@ const PaperCompass = ({ onBack }) => {
                     ), React.createElement("td", {className: "border border-gray-300 py-2 px-2 text-sm text-gray-700"}, row.subFactor), React.createElement("td", {className: "border border-gray-300 py-2 px-1 text-center text-xs text-gray-600"}, row.sectionNum), React.createElement("td", {className: "border border-gray-300 py-2 px-1 text-center text-xs text-gray-600"}, row.itemRange), row.isFirstOfVar && row.totalItems !== null && (
                       React.createElement("td", {rowSpan: row.varSpan, className: "border border-gray-300 py-2 px-1 text-center text-sm font-bold align-middle", style: { color: '#2E75B6' }}, row.totalItems)
                     ), row.isFirstOfVar && (
-                      React.createElement("td", {rowSpan: row.varSpan, className: "border border-gray-300 py-2 px-2 text-xs text-gray-600 align-middle whitespace-pre-line leading-relaxed"}, renderAuthorLinks(row.source) || row.source)
+                      React.createElement("td", {rowSpan: row.varSpan, className: "border border-gray-300 py-2 px-2 text-xs text-gray-600 align-middle whitespace-pre-line leading-relaxed"},
+                        (() => {
+                          const fullSource = row.source || '';
+                          if (!fullSource) return '-';
+                          // 학자 인용 단위로 split (콤마 + 한국 이름·영문 이름·연도 시작 부분 기준)
+                          const items = fullSource.split(/,(?=\s*[가-힣A-Za-z][가-힣A-Za-z·\.\s&]*\(\d{4})/).map(s => s.trim()).filter(Boolean);
+                          if (items.length <= 1) return renderAuthorLinks(fullSource) || fullSource;
+                          // 가장 최근 SVU 선배(한국 이름) 우선 노출
+                          const yearOf = it => parseInt((it.match(/\((\d{4})/) || [])[1] || '0');
+                          const koreanItems = items.filter(it => /[가-힣]/.test(it));
+                          let primary;
+                          if (koreanItems.length > 0) {
+                            primary = koreanItems.reduce((a, b) => yearOf(a) >= yearOf(b) ? a : b);
+                          } else {
+                            primary = items[0];
+                          }
+                          const rest = items.filter(it => it !== primary);
+                          return React.createElement(React.Fragment, null,
+                            React.createElement("span", {style: {fontWeight: 600, color: '#1F3864'}},
+                              renderAuthorLinks(primary) || primary
+                            ),
+                            rest.length > 0 && React.createElement("details", {style: {display: 'block', marginTop: 4}},
+                              React.createElement("summary", {style: {fontSize: 11, color: '#1565C0', cursor: 'pointer', userSelect: 'none', listStyle: 'none'}},
+                                ` ▶ 외 ${rest.length}편 펼쳐보기`),
+                              React.createElement("div", {style: {marginTop: 6, padding: '6px 8px', background: '#F8F9FA', borderRadius: 4, fontSize: 11, lineHeight: 1.6}},
+                                renderAuthorLinks(rest.join(', ')) || rest.join(', '))
+                            )
+                          );
+                        })()
+                      )
                     ))
                 )), React.createElement("tr", {style: { backgroundColor: '#F0F4FA' }}, React.createElement("td", {colSpan: 5, className: "border border-gray-300 py-3 px-3 text-center font-bold text-sm", style: { color: '#1F3864' }}, "합 계"), React.createElement("td", {className: "border border-gray-300 py-3 px-2 text-center font-bold text-lg", style: { color: '#2E75B6' }}, grandTotal), React.createElement("td", {className: "border border-gray-300 py-3 px-3"}))))), React.createElement("div", {className: "p-3 bg-gray-50 rounded-lg space-y-1"}, React.createElement("p", {className: "text-xs text-gray-500"}, "주) 5점 평정 척도 (1=전혀 그렇지 않다, 2=그렇지 않다, 3=보통이다, 4=그렇다, 5=매우 그렇다)"), React.createElement("p", {className: "text-xs text-gray-400 flex items-center gap-3 mt-1"}, React.createElement("span", null, React.createElement("span", {style: {color:'#1565C0',textDecoration:'underline',fontWeight:'600'}}, "파란색 링크"), " = 논문 원본 PDF 보기"), React.createElement("span", null, React.createElement("span", {style: {color:'#888',textDecoration:'underline',textDecorationStyle:'dotted'}}, "회색 링크"), " = 원본 미보유 (클릭 시 RISS 검색)"))))
       );
@@ -16144,7 +16591,7 @@ const PaperCompass = ({ onBack }) => {
             React.createElement("div", {key: variable, className: "p-6 bg-white rounded-lg border-2 border-gray-200"}, React.createElement("h3", {className: "font-bold text-lg mb-1", style: { color: '#1F3864' }}, variable), theory && (
                 React.createElement("p", {className: "text-xs text-gray-400 mb-3"}, "하위요인 ", byFactor.length, "개 | 총 ", byFactor.reduce((s, f) => s + f.items.length, 0), "문항")
               ), React.createElement("div", {className: "space-y-4"}, byFactor.map((fg, fi) => (
-                  React.createElement("div", {key: fi}, React.createElement("div", {className: "flex items-center gap-2 mb-2"}, React.createElement("span", {className: "text-sm font-semibold", style: { color: '#2E75B6' }}, fg.factor), fg.scholar && React.createElement("span", {className: "text-xs text-gray-400"}, "(", fg.scholar, ")"), React.createElement("span", {className: "text-xs text-gray-400 ml-auto"}, fg.items.length, "문항")), React.createElement("div", {className: "space-y-1.5 ml-2"}, fg.items.map((item, idx) => {
+                  React.createElement("div", {key: fi}, React.createElement("div", {className: "flex items-center gap-2 mb-2"}, React.createElement("span", {className: "text-sm font-semibold", style: { color: '#2E75B6' }}, fg.factor), React.createElement("span", {className: "text-xs text-gray-400 ml-auto"}, fg.items.length, "문항")), React.createElement("div", {className: "space-y-1.5 ml-2"}, fg.items.map((item, idx) => {
                         globalIdx++;
                         return (
                           React.createElement("div", {key: idx, className: "flex gap-3 p-2.5 bg-gray-50 rounded-lg"}, React.createElement("span", {className: "font-bold text-sm", style: { color: '#2E75B6', minWidth: 24 }}, globalIdx, "."), React.createElement("span", {className: "text-sm text-gray-800"}, item), React.createElement("span", {className: "text-xs text-gray-400 ml-auto whitespace-nowrap"}, "5점 Likert"))
@@ -16775,9 +17222,20 @@ const PaperCompass = ({ onBack }) => {
       const journalRefs = matched.filter(r => !foreignRefs.includes(r) && !svuRefs.includes(r) && (r.type === '학술지' || r.type === 'journal'));
       const otherUniRefs = matched.filter(r => !foreignRefs.includes(r) && !svuRefs.includes(r) && !journalRefs.includes(r) && (r.type === '석사' || r.type === '박사' || r.type === '타교'));
 
-      const renderRefList = (refs) => refs.map((ref, i) => (
-        React.createElement("div", {key: i, className: "p-3 bg-gray-50 rounded-lg border-l-3", style: { borderLeft: `3px solid ${ref.type === '해외원전' ? '#F57C00' : ref.source === 'SVU' ? '#4CAF50' : '#2E75B6'}` }}, React.createElement("p", {className: "text-sm font-semibold text-gray-800"}, ref.key), React.createElement("p", {className: "text-sm text-gray-600 mt-0.5"}, ref.title), React.createElement("p", {className: "text-xs text-gray-400 mt-0.5"}, ref.source, ref.type ? `| ${ref.type}` : ''))
-      ));
+      const renderRefList = (refs) => refs.map((ref, i) => {
+        // placeholder 텍스트는 노출하지 않고 type 라벨만 표시 (UX 개선)
+        const _isPlaceholder = /\(RISS 조회 필요\)|\(논문 제목 RISS 확인 필요\)|\(제목 미상\)|\(국내 학위논문\/학술지\)/.test(ref.title || '');
+        const _typeLabel = ref.type === '박사' ? '박사학위논문' : ref.type === '석사' ? '석사학위논문' : ref.type === '학술지' ? '국내 학술지' : ref.type === '해외원전' ? '해외 원전' : ref.type === '해외' ? '해외 논문' : ref.type === '단행본' ? '단행본' : (ref.type || '논문');
+        return React.createElement("div", {key: i, className: "p-3 bg-gray-50 rounded-lg border-l-3", style: { borderLeft: `3px solid ${ref.type === '해외원전' ? '#F57C00' : ref.source === 'SVU' ? '#4CAF50' : '#2E75B6'}` }},
+          React.createElement("p", {className: "text-sm font-semibold text-gray-800"}, ref.key),
+          // 제목 — placeholder면 type 라벨로 대체
+          _isPlaceholder
+            ? React.createElement("p", {className: "text-xs italic text-gray-400 mt-0.5"}, "📚 ", _typeLabel, " · 제목은 RISS·Google Scholar에서 확인하세요")
+            : React.createElement("p", {className: "text-sm text-gray-600 mt-0.5"}, ref.title),
+          // 출처 줄 — placeholder가 아닌 경우만 source·type 표시
+          !_isPlaceholder && React.createElement("p", {className: "text-xs text-gray-400 mt-0.5"}, ref.source, ref.type ? ` | ${ref.type}` : '')
+        );
+      });
 
       // 분류되지 않은 나머지 항목도 포함
       const categorized = new Set([...foreignRefs, ...svuRefs, ...journalRefs, ...otherUniRefs]);
@@ -16925,24 +17383,26 @@ const PaperCompass = ({ onBack }) => {
       const allVars = [...selectedIVs, ...selectedMediators, ...selectedDVs].filter(Boolean);
       const pathPairs = [];
 
-      // IV → MV
+      // ── 가설 순서(generateHypotheses)와 표 번호를 정확히 일치시킴 ──
+      // 1. IV → DV (직접효과 H1~)
+      if (selectedIVs.length > 0 && selectedDVs.length > 0) {
+        selectedIVs.forEach(iv => { selectedDVs.forEach(dv => { pathPairs.push({ from: iv, to: dv, type: 'IV→DV' }); }); });
+      }
+
+      // 2. IV → MV (다음 H)
       if (selectedIVs.length > 0 && selectedMediators && selectedMediators.length > 0) {
         selectedIVs.forEach(iv => { selectedMediators.forEach(mv => {
           pathPairs.push({ from: iv, to: mv, type: 'IV→MV' });
         }); });
       }
 
-      // MV → DV
+      // 3. MV → DV (다음 H)
       if (selectedMediators && selectedMediators.length > 0 && selectedDVs.length > 0) {
         selectedMediators.forEach(mv => {
           selectedDVs.forEach(dv => { pathPairs.push({ from: mv, to: dv, type: 'MV→DV' }); });
         });
       }
-
-      // IV → DV
-      if (selectedIVs.length > 0 && selectedDVs.length > 0) {
-        selectedIVs.forEach(iv => { selectedDVs.forEach(dv => { pathPairs.push({ from: iv, to: dv, type: 'IV→DV' }); }); });
-      }
+      // 4. 매개효과(IV→MV→DV)는 별도 영역에서 이어서 표시
 
       const tableNumMap = {};
       let tableCount = 1;
@@ -17020,7 +17480,7 @@ const PaperCompass = ({ onBack }) => {
                   const mvDvData = getPriorResearchTableData(mv, dv);
                   // 매개효과 연구: IV→DV 경로에서 MV를 매개변수로 사용한 논문
                   const ivDvData = selectedIVs.flatMap(iv => getPriorResearchTableData(iv, dv));
-                  // paperDetailDB에서 mv를 매개변수로 포함하는 논문 필터
+                  // paperDetailDB에서 mv를 매개변수로 포함하는 논문 필터 (1차: 정확 매칭)
                   const medPapers = [];
                   const seenResearchers = new Set();
                   [...ivMvData, ...mvDvData, ...ivDvData].forEach(p => {
@@ -17030,6 +17490,33 @@ const PaperCompass = ({ onBack }) => {
                       medPapers.push({...p, iv: selectedIVs.join('/'), mv: mv, dv: dv});
                     }
                   });
+                  // 2차 fallback: 정확 매칭 결과가 비어 있으면, IV→MV·MV→DV 양쪽에 등장하는 논문을
+                  // "매개경로 후보"로 자동 표시 (paperDetailDB에 mv 필드가 없는 해외 원전 등 처리)
+                  if (medPapers.length === 0) {
+                    const ivMvSet = new Set(ivMvData.map(p => p.researcher));
+                    const mvDvSet = new Set(mvDvData.map(p => p.researcher));
+                    // (a) IV→MV와 MV→DV 양쪽 모두에 등장한 논문 (강한 매개 후보)
+                    [...ivMvData, ...mvDvData].forEach(p => {
+                      if (seenResearchers.has(p.researcher)) return;
+                      if (ivMvSet.has(p.researcher) && mvDvSet.has(p.researcher)) {
+                        seenResearchers.add(p.researcher);
+                        medPapers.push({...p, iv: selectedIVs.join('/'), mv: mv, dv: dv,
+                          result: `${selectedIVs.join('/')} → ${mv} → ${dv} 매개경로 검증 (양쪽 페어 등재)`});
+                      }
+                    });
+                    // (b) 그래도 비어있으면 IV→MV 페어 + MV→DV 페어를 합쳐서 "관련 선행연구"로 표시
+                    if (medPapers.length === 0) {
+                      [...ivMvData, ...mvDvData].forEach(p => {
+                        if (seenResearchers.has(p.researcher)) return;
+                        seenResearchers.add(p.researcher);
+                        const isIvMv = ivMvSet.has(p.researcher);
+                        medPapers.push({...p, iv: selectedIVs.join('/'), mv: mv, dv: dv,
+                          result: isIvMv
+                            ? `${selectedIVs.join('/')} → ${mv} 검증 (매개경로 부분증거)`
+                            : `${mv} → ${dv} 검증 (매개경로 부분증거)`});
+                      });
+                    }
+                  }
                   // 사용자 DB에서 IV→M→DV 매개경로 논문 추가
                   try {
                     const userPapers = (typeof getDB === 'function') ? getDB() : [];
@@ -17116,6 +17603,39 @@ const PaperCompass = ({ onBack }) => {
     // ── Tab 7: 부록_설문지 (인라인 편집 지원) ──
     const renderAppendixTab = () => {
       const editCount = Object.keys(customSurveyTexts).length;
+      // ── 사용자 입력 기반 동적 인사말 생성 (customFormIntro 우선, 없으면 자동) ──
+      const _appendixTitle = (customFormTitle && customFormTitle.trim()) || title;
+      const _appendixTotalMin = Math.max(1, Math.ceil(countSurveyItems() * 0.3));
+      const _now = new Date();
+      const _ym = (surveyMonth && surveyMonth.trim()) || `${_now.getFullYear()}년 ${_now.getMonth() + 1}월`;
+      const _signParts = [];
+      if (researcherAffil) _signParts.push(`연구자: ${researcherAffil}`);
+      const _nameLine = [researcherProgram, researcherName].filter(Boolean).join(' ');
+      if (_nameLine) _signParts.push(`        ${_nameLine}`);
+      if (researcherEmail) _signParts.push(`        ${researcherEmail}`);
+      if (advisorName) _signParts.push(`지도교수: ${advisorName} 교수`);
+      const _signBlock = _signParts.length > 0
+        ? _signParts.join('\n')
+        : '서울벤처대학원대학교 석사과정\n지도교수: ___________\n연 구 자: ___________';
+      const _autoIntro = `안녕하십니까?\n\n바쁘신 와중에도 본 설문지에 응답해 주셔서 진심으로 감사드립니다.\n\n본 설문지는 「${_appendixTitle}」에 관한 학위논문 작성을 위한 것입니다. ${surveyTarget ? `본 설문은 ${surveyTarget}을(를) 대상으로 합니다. ` : ''}귀하의 솔직하고 성의 있는 응답은 학문적 진보에 크게 기여하게 될 것입니다.\n\n응답해 주신 모든 내용은 통계법 제33조에 의거하여 익명으로 처리되며, 오직 학술 연구 목적으로만 사용되고 그 외 어떠한 목적으로도 사용되지 않음을 약속드립니다.\n\n본 설문에는 정답이나 오답이 없으며, 평소 귀하께서 느끼시는 바를 솔직하게 응답해 주시면 됩니다. 응답 시간은 약 ${_appendixTotalMin}분이 소요됩니다.\n\n바쁘신 가운데 시간을 내어 주셔서 다시 한 번 진심으로 감사드립니다.\n\n${_ym}\n\n${_signBlock}\n\n[설문응답요령]\n● 각 설문항목은 정답이 없습니다. 질문을 읽으신 후 즉각적인 느낌이나 생각이 표현된 곳에 응답해 주시기 바랍니다.\n● 서로 비슷하다고 느끼게 되는 질문이라 할지라도 한 문항도 빠뜨리지 마시고 응답해 주시기 바랍니다.\n● 귀하의 귀중한 시간과 노력이 헛되지 않게 올바른 연구로 보답하고자 하오니 마지막 페이지까지 응답을 부탁드립니다. 대단히 감사합니다.`;
+      // 3-Way 로직: customFormIntro 비어있으면 자동, 있으면 그대로 + 서명/응답요령 자동 보강
+      let _finalIntroText;
+      if (!customFormIntro || !customFormIntro.trim()) {
+        _finalIntroText = _autoIntro;
+      } else {
+        const _userIntro = customFormIntro.trim();
+        const _hasSign = /지도교수|연구자:|소속:/.test(_userIntro);
+        const _hasGuide = /\[설문응답요령\]|설문응답요령/.test(_userIntro);
+        const _signSafe = _signBlock || '서울벤처대학원대학교 석사과정\n지도교수: ___________\n연 구 자: ___________';
+        const _autoTail = [];
+        if (!_hasSign && (researcherAffil || researcherName || advisorName)) {
+          _autoTail.push('\n\n' + _ym + '\n\n' + _signSafe);
+        }
+        if (!_hasGuide) {
+          _autoTail.push('\n\n[설문응답요령]\n● 각 설문항목은 정답이 없습니다. 질문을 읽으신 후 즉각적인 느낌이나 생각이 표현된 곳에 응답해 주시기 바랍니다.\n● 서로 비슷하다고 느끼게 되는 질문이라 할지라도 한 문항도 빠뜨리지 마시고 응답해 주시기 바랍니다.\n● 귀하의 귀중한 시간과 노력이 헛되지 않게 올바른 연구로 보답하고자 하오니 마지막 페이지까지 응답을 부탁드립니다. 대단히 감사합니다.');
+        }
+        _finalIntroText = _userIntro + _autoTail.join('');
+      }
       return (
       React.createElement("div", {className: "space-y-6"},
         React.createElement("div", {className: "p-4 rounded-lg flex items-center justify-between", style: { backgroundColor: '#E8F5E9', border: '1px solid #A5D6A7' }},
@@ -17129,8 +17649,8 @@ const PaperCompass = ({ onBack }) => {
           )
         ),
         React.createElement("div", {className: "p-6 bg-white rounded-lg border-2 border-gray-200"},
-        React.createElement("div", {className: "text-center mb-6 pb-4 border-b-2 border-gray-300"}, React.createElement("h3", {className: "font-bold text-xl", style: { color: '#1F3864' }}, "설 문 지"), React.createElement("p", {className: "text-sm text-gray-600 mt-2"}, title)),
-        React.createElement("div", {className: "mb-6 p-4 bg-gray-50 rounded-lg text-sm text-gray-700 leading-relaxed"}, React.createElement("p", null, "안녕하십니까?"), React.createElement("p", {className: "mt-2"}, "본 설문지는 ", React.createElement("strong", null, title.split(':')[0]), "에 관한 연구를 위해 작성되었습니다. 귀하의 응답은 연구 목적으로만 사용되며, 개인정보는 철저히 보호됩니다. 바쁘시더라도 각 문항에 솔직하게 응답해 주시면 감사하겠습니다."), React.createElement("p", {className: "mt-2 text-right"}, "서울벤처대학원대학교 석사과정", React.createElement("br", null), "지도교수: ___________", React.createElement("br", null), "연 구 자: ___________")),
+        React.createElement("div", {className: "text-center mb-6 pb-4 border-b-2 border-gray-300"}, React.createElement("h3", {className: "font-bold text-xl", style: { color: '#1F3864' }}, "설 문 지"), React.createElement("p", {className: "text-sm text-gray-600 mt-2"}, _appendixTitle)),
+        React.createElement("div", {className: "mb-6 p-4 bg-gray-50 rounded-lg text-sm text-gray-700 leading-relaxed", style: {whiteSpace: 'pre-wrap'}}, _finalIntroText),
         variables.map((variable, vi) => {
             const byFactor = getCustomizedSurveyItems(variable);
             const isNoScholarly = byFactor.length > 0 && byFactor[0].noScholarly;
@@ -17152,7 +17672,7 @@ const PaperCompass = ({ onBack }) => {
             }
             return (
               React.createElement("div", {key: variable, className: "mb-6"}, React.createElement("h4", {className: "font-bold mb-1", style: { color: '#1F3864' }}, sectionNum, ". ", variable), React.createElement("p", {className: "text-xs text-gray-500 mb-3"}, "다음은 ", variable, "에 관한 문항입니다. 귀하의 생각과 일치하는 곳에 체크해 주십시오."), byFactor.map((fg, fi) => (
-                  React.createElement("div", {key: fi, className: "mb-4"}, React.createElement("p", {className: "text-xs font-semibold mb-1", style: { color: '#2E75B6' }}, " [", fg.factor, "]", fg.scholar ? ` — ${fg.scholar}` : ''), React.createElement("table", {className: "w-full text-sm border-collapse"}, fi === 0 && (
+                  React.createElement("div", {key: fi, className: "mb-4"}, React.createElement("p", {className: "text-xs font-semibold mb-1", style: { color: '#2E75B6' }}, " [", fg.factor, "]"), React.createElement("table", {className: "w-full text-sm border-collapse"}, fi === 0 && (
                         React.createElement("thead", null, React.createElement("tr", {className: "border-b-2 border-gray-300"}, React.createElement("th", {className: "text-left py-2 px-2 w-8"}, "No"), React.createElement("th", {className: "text-left py-2 px-2"}, "문항"), React.createElement("th", {className: "text-center py-2 px-1 w-12 text-xs"}, "전혀", React.createElement("br", null), "그렇지", React.createElement("br", null), "않다"), React.createElement("th", {className: "text-center py-2 px-1 w-12 text-xs"}, "그렇지", React.createElement("br", null), "않다"), React.createElement("th", {className: "text-center py-2 px-1 w-12 text-xs"}, "보통", React.createElement("br", null), "이다"), React.createElement("th", {className: "text-center py-2 px-1 w-12 text-xs"}, "그렇다"), React.createElement("th", {className: "text-center py-2 px-1 w-12 text-xs"}, "매우", React.createElement("br", null), "그렇다")))
                       ), React.createElement("tbody", null, fg.items.map((item, idx) => {
                           globalIdx++;
@@ -17359,7 +17879,7 @@ const PaperCompass = ({ onBack }) => {
         surveyData.push([variable, `하위요인 ${byFactor.length}개`, theory ? `척도: ${theory.options[0]?.scale} (${theory.options[0]?.scholar})` : '']);
         let globalIdx = 0;
         byFactor.forEach(fg => {
-          surveyData.push(['', `[${fg.factor}]${fg.scholar ? ` — ${fg.scholar}` : ''}`]);
+          surveyData.push(['', `[${fg.factor}]`]);
           fg.items.forEach(item => {
             globalIdx++;
             surveyData.push([`  ${globalIdx}`, item, '5점 Likert']);
@@ -18146,12 +18666,72 @@ const PaperCompass = ({ onBack }) => {
             React.createElement("button", {onClick: () => { if(confirm('모든 수정을 초기화하시겠습니까?')) setCustomSurveyTexts({}); }, className: "text-xs px-2 py-1 rounded border border-gray-300 text-gray-500 hover:bg-gray-100 flex-shrink-0"}, "초기화")
           )
         )
-      ), React.createElement("div", {className: "p-6 space-y-8"}, React.createElement("div", {className: "bg-blue-50 p-4 rounded-lg"}, React.createElement("p", {className: "text-sm text-gray-700 mb-2"}, React.createElement("strong", null, "연구 제목: "), generateThesisTitle()), React.createElement("p", {className: "text-sm text-gray-700"}, React.createElement("strong", null, "설문 대상: "), surveyTarget || '미설정')), variables.map(variable => {
+      ), React.createElement("div", {className: "p-6 space-y-8"},
+        // ── 인라인 편집 가능한 헤더 박스 (제목·대상·인사말) — Step 8과 state 공유 ──
+        React.createElement("div", {className: "bg-blue-50 p-4 rounded-lg space-y-3"},
+          // 연구 제목
+          React.createElement("div", null,
+            React.createElement("label", {className: "text-xs font-bold flex items-center gap-1 mb-1", style: { color: '#1F3864' }},
+              React.createElement("span", null, "📌 연구 제목"),
+              React.createElement("span", {className: "text-xs font-normal", style: { color: '#888' }}, "(클릭하여 수정 — Step 8과 자동 동기화)")
+            ),
+            React.createElement("input", {type: "text",
+              value: customFormTitle || generateThesisTitle(),
+              onChange: e => setCustomFormTitle(e.target.value),
+              placeholder: "(자동 생성된 연구 제목 사용)",
+              style: { width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #B8D4E8', fontSize: '14px', fontFamily: 'inherit', background: '#fff' }})
+          ),
+          // 설문 대상
+          React.createElement("div", null,
+            React.createElement("label", {className: "text-xs font-bold flex items-center gap-1 mb-1", style: { color: '#1F3864' }},
+              React.createElement("span", null, "🎯 설문 대상"),
+              React.createElement("span", {className: "text-xs font-normal", style: { color: '#888' }}, "(예: 기술혁신스타트업 엔지니어)")
+            ),
+            React.createElement("input", {type: "text",
+              value: surveyTarget,
+              onChange: e => setSurveyTarget(e.target.value),
+              placeholder: "예: 30대 직장인, 중소기업 종사자, 의료종사자 등",
+              style: { width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #B8D4E8', fontSize: '14px', fontFamily: 'inherit', background: '#fff' }})
+          ),
+          // 인사말 토글 + textarea
+          React.createElement("div", null,
+            React.createElement("div", {className: "flex items-center justify-between mb-1"},
+              React.createElement("label", {className: "text-xs font-bold flex items-center gap-1", style: { color: '#1F3864' }},
+                React.createElement("span", null, "📝 폼 인사말 (구글폼 상단에 표시)"),
+                React.createElement("span", {className: "text-xs font-normal", style: { color: '#888' }}, "(빈 값이면 학위논문 표준 인사말 자동 사용)")
+              ),
+              React.createElement("button", {
+                onClick: () => {
+                  const totalMin = Math.max(1, Math.ceil(countSurveyItems() * 0.3));
+                  const finalTitle = (customFormTitle && customFormTitle.trim()) || generateThesisTitle();
+                  const _now = new Date();
+                  const _ym = (surveyMonth && surveyMonth.trim()) || `${_now.getFullYear()}년 ${_now.getMonth() + 1}월`;
+                  const _signParts = [];
+                  if (researcherAffil) _signParts.push(`연구자: ${researcherAffil}`);
+                  const _nameLine = [researcherProgram, researcherName].filter(Boolean).join(' ');
+                  if (_nameLine) _signParts.push(`        ${_nameLine}`);
+                  if (researcherEmail) _signParts.push(`        ${researcherEmail}`);
+                  if (advisorName) _signParts.push(`지도교수: ${advisorName} 교수`);
+                  const _signBlock = _signParts.length > 0 ? '\n\n' + _signParts.join('\n') : '';
+                  const tmpl = `안녕하십니까?\n\n바쁘신 와중에도 본 설문지에 응답해 주셔서 진심으로 감사드립니다.\n\n본 설문지는 「${finalTitle}」에 관한 학위논문 작성을 위한 것입니다. ${surveyTarget ? `본 설문은 ${surveyTarget}을(를) 대상으로 합니다. ` : ''}귀하의 솔직하고 성의 있는 응답은 학문적 진보에 크게 기여하게 될 것입니다.\n\n응답해 주신 모든 내용은 통계법 제33조에 의거하여 익명으로 처리되며, 오직 학술 연구 목적으로만 사용되고 그 외 어떠한 목적으로도 사용되지 않음을 약속드립니다.\n\n본 설문에는 정답이나 오답이 없으며, 평소 귀하께서 느끼시는 바를 솔직하게 응답해 주시면 됩니다. 응답 시간은 약 ${totalMin}분이 소요됩니다.\n\n바쁘신 가운데 시간을 내어 주셔서 다시 한 번 진심으로 감사드립니다.\n\n${_ym}${_signBlock}\n\n[설문응답요령]\n● 각 설문항목은 정답이 없습니다. 질문을 읽으신 후 즉각적인 느낌이나 생각이 표현된 곳에 응답해 주시기 바랍니다.\n● 서로 비슷하다고 느끼게 되는 질문이라 할지라도 한 문항도 빠뜨리지 마시고 응답해 주시기 바랍니다.\n● 귀하의 귀중한 시간과 노력이 헛되지 않게 올바른 연구로 보답하고자 하오니 마지막 페이지까지 응답을 부탁드립니다. 대단히 감사합니다.`;
+                  setCustomFormIntro(tmpl);
+                },
+                style: { fontSize: 11, padding: '3px 9px', borderRadius: '4px', background: '#1F3864', color: '#fff', border: 'none', cursor: 'pointer' }
+              }, "📋 학위논문 표준 템플릿 불러오기"),
+            ),
+            React.createElement("textarea", {
+              value: customFormIntro,
+              onChange: e => setCustomFormIntro(e.target.value),
+              placeholder: "(비워두면 학위논문 표준 인사말이 자동 적용됩니다 — 위 [템플릿 불러오기] 클릭 시 미리 채워짐)",
+              rows: 6,
+              style: { width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #B8D4E8', fontSize: '12px', fontFamily: 'inherit', lineHeight: 1.6, background: '#fff', resize: 'vertical' }})
+          )
+        ), variables.map(variable => {
               const byFactor = getCustomizedSurveyItems(variable);
               let globalIdx = 0;
               return (
                 React.createElement("div", {key: variable, className: "border-t-2 border-gray-200 pt-6"}, React.createElement("h3", {className: "text-lg font-bold mb-1", style: { color: '#1F3864' }}, variable), React.createElement("p", {className: "text-xs text-gray-500 mb-4"}, "하위요인 ", byFactor.length, "개 | 총 ", byFactor.reduce((s, f) => s + f.items.length, 0), "문항"), byFactor.map((fg, fi) => (
-                    React.createElement("div", {key: fi, className: "mb-4"}, React.createElement("p", {className: "text-xs font-semibold mb-2", style: { color: '#2E75B6' }}, fg.factor, fg.scholar ? ` (${fg.scholar})` : ''), React.createElement("div", {className: "space-y-3 ml-1"}, fg.items.map((item, idx) => {
+                    React.createElement("div", {key: fi, className: "mb-4"}, React.createElement("p", {className: "text-xs font-semibold mb-2", style: { color: '#2E75B6' }}, fg.factor), React.createElement("div", {className: "space-y-3 ml-1"}, fg.items.map((item, idx) => {
                           globalIdx++;
                           const itemKey = `${variable}__${fg.factor}__${idx}`;
                           const isEditing = editingItemKey === itemKey;
