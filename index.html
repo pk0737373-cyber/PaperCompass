@@ -15422,13 +15422,13 @@ const PaperCompass = ({ onBack }) => {
               React.createElement(RowCard, {key: dv.name, name: dv.name, selected: selectedDVs.includes(dv.name), onClick: () => { if (selectedDVs.includes(dv.name)) { setSelectedDVs(selectedDVs.filter(d => d !== dv.name)); } else { setSelectedDVs([...selectedDVs, dv.name]); } }, count: cnt, maxCount: maxCount, hot: dv.hot, desc: _descLookup(variableDesc, dv.name) || dv.desc, badges: dataSource === 'svu' ? [
                   ...(dv.count > 0 ? [{ label: `${dv.count}편`, color: '#2E75B6' }] : []),
                   ...(dv.mediatedDV ? [{ label: `🔗 매개경로${dv.viaMediator ? `(${dv.viaMediator} 경유)` : ''}`, color: '#0288D1', type: 'tag', bgColor: '#E1F5FE' }] : []),
-                  ...(dv.aiRecommended && !dv.mediatedDV ? [{ label: 'AI추천', color: '#9333EA', type: 'tag' }] : []),
+                  ...(dv.aiRecommended && !dv.mediatedDV ? [{ label: '확장 추천', color: '#9333EA', type: 'tag' }] : []),
                   ...(dv.userDB ? [{ label: '📂 사용자DB', color: '#6B3FA0' }] : []),
                 ] : [
                   ...(dv.svuCount > 0 ? [{ label: `SVU ${dv.svuCount}`, color: '#2E75B6' }] : []),
                   ...(dv.extCount > 0 ? [{ label: `외부 ${dv.extCount}`, color: '#43A047' }] : []),
                   ...(dv.mediatedDV ? [{ label: `🔗 매개경로${dv.viaMediator ? `(${dv.viaMediator} 경유)` : ''}`, color: '#0288D1', type: 'tag', bgColor: '#E1F5FE' }] : []),
-                  ...(dv.aiRecommended && !dv.mediatedDV ? [{ label: 'AI추천', color: '#9333EA', type: 'tag' }] : []),
+                  ...(dv.aiRecommended && !dv.mediatedDV ? [{ label: '확장 추천', color: '#9333EA', type: 'tag' }] : []),
                   ...(dv.userDB ? [{ label: '📂 사용자DB', color: '#6B3FA0' }] : []),
                 ], extraRight: React.createElement(React.Fragment, null, ivToDvResult.exists ? (
                   React.createElement("span", {className: "px-1.5 py-0.5 rounded text-xs font-bold", style: {
@@ -15504,13 +15504,13 @@ const PaperCompass = ({ onBack }) => {
       return (
         React.createElement("div", {key: med.name}, React.createElement(RowCard, {name: med.name, selected: selectedMediators.includes(med.name), onClick: () => toggleMediator(med.name), count: cnt, maxCount: maxCount, hot: med.hot, desc: _descLookup(variableDesc, med.name), badges: dataSource === 'svu' ? [
               ...(med.count > 0 ? [{ label: `${med.count}편`, color: '#2E75B6' }] : []),
-              ...(med.aiRecommended && !med.newCombo ? [{ label: 'AI추천', color: '#9333EA', type: 'tag' }] : []),
+              ...(med.aiRecommended && !med.newCombo ? [{ label: '확장 추천', color: '#9333EA', type: 'tag' }] : []),
               ...(med.newCombo ? [{ label: '새조합', color: '#0288D1', type: 'tag' }] : []),
               ...(med.userDB ? [{ label: '📂 사용자DB', color: '#6B3FA0' }] : []),
             ] : [
               ...(med.svuCount > 0 ? [{ label: `SVU ${med.svuCount}`, color: '#2E75B6' }] : []),
               ...(med.extCount > 0 ? [{ label: `외부 ${med.extCount}`, color: '#43A047' }] : []),
-              ...(med.aiRecommended && !med.newCombo ? [{ label: 'AI추천', color: '#9333EA', type: 'tag' }] : []),
+              ...(med.aiRecommended && !med.newCombo ? [{ label: '확장 추천', color: '#9333EA', type: 'tag' }] : []),
               ...(med.newCombo ? [{ label: '새조합', color: '#0288D1', type: 'tag' }] : []),
               ...(med.userDB ? [{ label: '📂 사용자DB', color: '#6B3FA0' }] : []),
             ], extraRight:
@@ -15881,7 +15881,7 @@ const PaperCompass = ({ onBack }) => {
                     React.createElement("div", {className: "mb-4 pt-3", style: { borderTop: '2px solid #1565C0' }},
                       React.createElement("div", {className: "flex items-center gap-2 mb-1"},
                         React.createElement("span", {className: "text-xs font-bold", style: { color: '#1565C0' }}, "📝 설문 문항 선택"),
-                        React.createElement("span", {className: "text-xs text-gray-400"}, "(AI가 각 요인당 5개를 추천합니다. 추가/삭제 가능)")
+                        React.createElement("span", {className: "text-xs text-gray-400"}, "(각 요인당 기본 5개가 자동 선택됩니다. 추가/삭제 가능)")
                       ),
                       // ── 산업 매칭 출처 표시 ──
                       (() => {
@@ -15947,7 +15947,7 @@ const PaperCompass = ({ onBack }) => {
                               // Quick action buttons
                               React.createElement("div", {className: "flex gap-2 mb-2"},
                                 React.createElement("button", {onClick: (e) => { e.stopPropagation(); resetItemsToDefault(v, factorData.factor, totalCount); },
-                                  className: "text-xs px-2 py-1 rounded border", style: { borderColor: '#2E75B6', color: '#2E75B6', background: '#fff' }}, "AI 추천 5개로"),
+                                  className: "text-xs px-2 py-1 rounded border", style: { borderColor: '#2E75B6', color: '#2E75B6', background: '#fff' }}, "기본 5개로 재설정"),
                                 React.createElement("button", {onClick: (e) => { e.stopPropagation(); selectAllItems(v, factorData.factor, totalCount); },
                                   className: "text-xs px-2 py-1 rounded border", style: { borderColor: '#aaa', color: '#555', background: '#fff' }}, "전체 선택")
                               ),
@@ -15968,7 +15968,7 @@ const PaperCompass = ({ onBack }) => {
                                     ),
                                     React.createElement("span", {className: "text-xs leading-relaxed", style: { color: isSelected ? '#333' : '#888' }}, item),
                                     isAiRecommended && React.createElement("span", {className: "ml-auto flex-shrink-0 text-xs px-1.5 py-0.5 rounded",
-                                      style: { backgroundColor: '#E8F5E9', color: '#2E7D32', fontSize: '9px', whiteSpace: 'nowrap' }}, "AI추천")
+                                      style: { backgroundColor: '#E8F5E9', color: '#2E7D32', fontSize: '9px', whiteSpace: 'nowrap' }}, "기본 선택")
                                   );
                                 })
                               )
@@ -16536,28 +16536,45 @@ const PaperCompass = ({ onBack }) => {
                         (() => {
                           const fullSource = row.source || '';
                           if (!fullSource) return '-';
-                          // 학자 인용 단위로 split (콤마 + 한국 이름·영문 이름·연도 시작 부분 기준)
+                          // 학자 인용 단위로 split
                           const items = fullSource.split(/,(?=\s*[가-힣A-Za-z][가-힣A-Za-z·\.\s&]*\(\d{4})/).map(s => s.trim()).filter(Boolean);
                           if (items.length <= 1) return renderAuthorLinks(fullSource) || fullSource;
-                          // 가장 최근 SVU 선배(한국 이름) 우선 노출
+                          // ── SVU 선배 식별: svuPdfMap 키와 정확 또는 ±1년 매칭 ──
+                          const isSvuSenior = (item) => {
+                            if (typeof svuPdfMap === 'undefined') return false;
+                            if (svuPdfMap[item]) return true;
+                            const m = item.match(/^([^()]+?)\((\d{4})/);
+                            if (!m) return false;
+                            const author = m[1].trim();
+                            const year = parseInt(m[2]);
+                            for (const key of Object.keys(svuPdfMap)) {
+                              const km = key.match(/^([^()]+?)\((\d{4})/);
+                              if (km && km[1].trim() === author && Math.abs(parseInt(km[2]) - year) <= 1) return true;
+                            }
+                            return false;
+                          };
+                          const svuSeniors = items.filter(isSvuSenior);
+                          const others = items.filter(it => !isSvuSenior(it));
+                          // SVU 선배 중 가장 최근 1편만 노출 + 나머지 펼치기
                           const yearOf = it => parseInt((it.match(/\((\d{4})/) || [])[1] || '0');
-                          const koreanItems = items.filter(it => /[가-힣]/.test(it));
-                          let primary;
-                          if (koreanItems.length > 0) {
-                            primary = koreanItems.reduce((a, b) => yearOf(a) >= yearOf(b) ? a : b);
-                          } else {
-                            primary = items[0];
+                          let primarySvu = null;
+                          let restSvu = [];
+                          if (svuSeniors.length > 0) {
+                            primarySvu = svuSeniors.reduce((a, b) => yearOf(a) >= yearOf(b) ? a : b);
+                            restSvu = svuSeniors.filter(it => it !== primarySvu);
                           }
-                          const rest = items.filter(it => it !== primary);
+                          // 노출: 해외·타학교 모두 + SVU 최근 1편 (강조)
+                          const visibleParts = [];
+                          if (others.length > 0) visibleParts.push(others.join(', '));
+                          if (primarySvu) visibleParts.push(primarySvu);
+                          const visibleText = visibleParts.join(', ');
                           return React.createElement(React.Fragment, null,
-                            React.createElement("span", {style: {fontWeight: 600, color: '#1F3864'}},
-                              renderAuthorLinks(primary) || primary
-                            ),
-                            rest.length > 0 && React.createElement("details", {style: {display: 'block', marginTop: 4}},
-                              React.createElement("summary", {style: {fontSize: 11, color: '#1565C0', cursor: 'pointer', userSelect: 'none', listStyle: 'none'}},
-                                ` ▶ 외 ${rest.length}편 펼쳐보기`),
-                              React.createElement("div", {style: {marginTop: 6, padding: '6px 8px', background: '#F8F9FA', borderRadius: 4, fontSize: 11, lineHeight: 1.6}},
-                                renderAuthorLinks(rest.join(', ')) || rest.join(', '))
+                            renderAuthorLinks(visibleText) || visibleText,
+                            restSvu.length > 0 && React.createElement("details", {style: {display: 'block', marginTop: 4}},
+                              React.createElement("summary", {style: {fontSize: 11, color: '#2E7D32', cursor: 'pointer', userSelect: 'none', listStyle: 'none', fontWeight: 600}},
+                                ` ▶ SVU 선배 ${restSvu.length}편 더 보기`),
+                              React.createElement("div", {style: {marginTop: 6, padding: '6px 8px', background: '#F1F8E9', borderRadius: 4, fontSize: 11, lineHeight: 1.6, border: '1px dashed #A5D6A7'}},
+                                renderAuthorLinks(restSvu.join(', ')) || restSvu.join(', '))
                             )
                           );
                         })()
@@ -17481,13 +17498,14 @@ const PaperCompass = ({ onBack }) => {
                   // 매개효과 연구: IV→DV 경로에서 MV를 매개변수로 사용한 논문
                   const ivDvData = selectedIVs.flatMap(iv => getPriorResearchTableData(iv, dv));
                   // paperDetailDB에서 mv를 매개변수로 포함하는 논문 필터 (1차: 정확 매칭)
+                  // ★ 각 논문의 실제 IV·MV·DV를 그대로 보존 (selectedIVs로 강제 덮어쓰지 않음)
                   const medPapers = [];
                   const seenResearchers = new Set();
                   [...ivMvData, ...mvDvData, ...ivDvData].forEach(p => {
                     if (seenResearchers.has(p.researcher)) return;
                     if (p.mv && p.mv !== '-' && (p.mv.includes(mv) || mv.includes(p.mv))) {
                       seenResearchers.add(p.researcher);
-                      medPapers.push({...p, iv: selectedIVs.join('/'), mv: mv, dv: dv});
+                      medPapers.push({...p});  // 논문 원본 그대로
                     }
                   });
                   // 2차 fallback: 정확 매칭 결과가 비어 있으면, IV→MV·MV→DV 양쪽에 등장하는 논문을
@@ -17500,8 +17518,7 @@ const PaperCompass = ({ onBack }) => {
                       if (seenResearchers.has(p.researcher)) return;
                       if (ivMvSet.has(p.researcher) && mvDvSet.has(p.researcher)) {
                         seenResearchers.add(p.researcher);
-                        medPapers.push({...p, iv: selectedIVs.join('/'), mv: mv, dv: dv,
-                          result: `${selectedIVs.join('/')} → ${mv} → ${dv} 매개경로 검증 (양쪽 페어 등재)`});
+                        medPapers.push({...p, result: (p.result || '') + ` [${mv} 매개경로 부분증거]`});
                       }
                     });
                     // (b) 그래도 비어있으면 IV→MV 페어 + MV→DV 페어를 합쳐서 "관련 선행연구"로 표시
@@ -17510,14 +17527,11 @@ const PaperCompass = ({ onBack }) => {
                         if (seenResearchers.has(p.researcher)) return;
                         seenResearchers.add(p.researcher);
                         const isIvMv = ivMvSet.has(p.researcher);
-                        medPapers.push({...p, iv: selectedIVs.join('/'), mv: mv, dv: dv,
-                          result: isIvMv
-                            ? `${selectedIVs.join('/')} → ${mv} 검증 (매개경로 부분증거)`
-                            : `${mv} → ${dv} 검증 (매개경로 부분증거)`});
+                        medPapers.push({...p, result: (p.result || '') + (isIvMv ? ` [→ ${mv} 부분증거]` : ` [${mv} → DV 부분증거]`)});
                       });
                     }
                   }
-                  // 사용자 DB에서 IV→M→DV 매개경로 논문 추가
+                  // 사용자 DB에서 IV→M→DV 매개경로 논문 추가 — 사용자 DB 논문은 본인이 입력한 IV 그대로
                   try {
                     const userPapers = (typeof getDB === 'function') ? getDB() : [];
                     userPapers.forEach(p => {
@@ -17529,7 +17543,11 @@ const PaperCompass = ({ onBack }) => {
                         const ak = `${p.authors||'?'}(${p.year||'?'})`;
                         if (!seenResearchers.has(ak)) {
                           seenResearchers.add(ak);
-                          medPapers.push({region: '국내', researcher: ak, subject: p.sampleDesc || p.title || '-', sample: p.sampleSize ? `${p.sampleSize}명` : '-', iv: selectedIVs.join('/'), mv, dv, result: '매개효과 있음 (사용자DB)', fromUserDB: true});
+                          // 사용자 DB 논문의 실제 IV/MV/DV 그대로 추출
+                          const userIvs = vars.filter(v => v.role === '독립').map(v => v.name).join(', ') || '-';
+                          const userMvs = vars.filter(v => v.role === '매개').map(v => v.name).join(', ') || mv;
+                          const userDvs = vars.filter(v => v.role === '종속').map(v => v.name).join(', ') || dv;
+                          medPapers.push({region: '국내', researcher: ak, subject: p.sampleDesc || p.title || '-', sample: p.sampleSize ? `${p.sampleSize}명` : '-', iv: userIvs, mv: userMvs, dv: userDvs, result: '매개효과 있음 (사용자DB)', fromUserDB: true});
                         }
                       }
                     });
@@ -18636,7 +18654,32 @@ const PaperCompass = ({ onBack }) => {
     };
 
     return (
-      React.createElement("div", {className: "w-full max-w-4xl mx-auto"}, React.createElement("div", {className: "flex items-center justify-between mb-2"}, React.createElement("h2", {className: "text-2xl font-bold", style: { color: '#1F3864' }}, "Step 9. 결과물"), React.createElement("div", {className: "flex gap-2"}, React.createElement("button", {onClick: exportToExcel, className: "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition hover:opacity-90", style: { backgroundColor: '#217346' }}, React.createElement(Download, {size: 18}), " Excel "), React.createElement("button", {onClick: exportToWord, className: "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition hover:opacity-90", style: { backgroundColor: '#2B579A' }}, React.createElement(Download, {size: 18}), " Word "))), React.createElement("p", {className: "text-gray-600 mb-6"}, "논문 작성에 필요한 14가지 산출물을 확인하세요."), React.createElement("div", {className: "flex flex-wrap gap-1 mb-6 p-1 bg-gray-100 rounded-lg"}, outputTabs.map(tab => (
+      React.createElement("div", {className: "w-full max-w-4xl mx-auto"}, React.createElement("div", {className: "flex items-center justify-between mb-2"}, React.createElement("h2", {className: "text-2xl font-bold", style: { color: '#1F3864' }}, "Step 9. 결과물"), React.createElement("div", {className: "flex gap-2"}, React.createElement("button", {onClick: exportToExcel, className: "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition hover:opacity-90", style: { backgroundColor: '#217346' }}, React.createElement(Download, {size: 18}), " Excel "), React.createElement("button", {onClick: exportToWord, className: "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition hover:opacity-90", style: { backgroundColor: '#2B579A' }}, React.createElement(Download, {size: 18}), " Word "))), React.createElement("p", {className: "text-gray-600 mb-3"}, "논문 작성에 필요한 14가지 산출물을 확인하세요."),
+        // ── ⚠ 학술적 책임 안내 (결과물을 인용·제출하기 전 반드시 확인) ──
+        React.createElement("div", {className: "mb-5 p-4 rounded-lg",
+          style: { backgroundColor: '#FFF8E1', border: '1px solid #FFD54F', borderLeft: '4px solid #F57C00' }},
+          React.createElement("div", {className: "flex items-start gap-3"},
+            React.createElement(AlertCircle, {size: 20, style: { color: '#F57C00', flexShrink: 0, marginTop: 1 }}),
+            React.createElement("div", null,
+              React.createElement("p", {className: "text-sm font-bold mb-1.5", style: { color: '#E65100' }},
+                "학술적 책임은 연구자 본인에게 있습니다"),
+              React.createElement("p", {className: "text-xs leading-relaxed", style: { color: '#5D4037' }},
+                "본 앱이 제공하는 ",
+                React.createElement("strong", null, "선행연구·척도·매개경로·문항"),
+                " 등 모든 정보는 데이터베이스 기반의 ",
+                React.createElement("strong", null, "참고용 자료"),
+                "입니다. 외부 AI나 자동 추정에 의한 데이터는 없으며, 등재된 자료라도 ",
+                React.createElement("strong", {style: {color: '#C62828'}}, "RISS·Google Scholar·DBpia 등에서 원문을 직접 확인"),
+                "한 후, 본인 연구의 맥락에 맞는지 검토하여 인용해 주세요."
+              ),
+              React.createElement("p", {className: "text-xs leading-relaxed mt-2", style: { color: '#5D4037' }},
+                React.createElement("strong", null, "「확장 추천」"), " 또는 ", React.createElement("strong", null, "「기본 선택」"),
+                " 라벨이 붙은 항목은 우리 DB에 직접 검증된 사례가 없는 도메인 휴리스틱 추천이므로 ",
+                React.createElement("strong", null, "지도교수님과 반드시 상의"), "하시기 바랍니다."
+              )
+            )
+          )
+        ), React.createElement("div", {className: "flex flex-wrap gap-1 mb-6 p-1 bg-gray-100 rounded-lg"}, outputTabs.map(tab => (
             React.createElement("button", {key: tab.key, onClick: () => setActiveOutputTab(tab.key), className: "px-3 py-2 rounded-lg text-sm font-semibold transition", style: {
                 backgroundColor: activeOutputTab === tab.key ? (tab.highlight ? '#1F3864' : '#2E75B6') : (tab.highlight ? '#E8EEF5' : 'transparent'),
                 color: activeOutputTab === tab.key ? 'white' : (tab.highlight ? '#1F3864' : '#666'),
@@ -19382,7 +19425,7 @@ const StatsAnalyzer = ({ onBack }) => {
             h('p',{style:{color:'#888',fontSize:'14px',marginBottom:'24px'}},'지원: .xlsx, .xls  |  1행: 항목명, 2행~: 응답 데이터'),
             h('label',{style:{display:'inline-block',background:'linear-gradient(135deg,#1F3864,#2E75B6)',color:'#fff',padding:'14px 36px',borderRadius:'10px',cursor:'pointer',fontSize:'15px',fontWeight:'bold',boxShadow:'0 4px 14px rgba(31,56,100,0.3)'}},
               '파일 선택',h('input',{type:'file',accept:'.xlsx,.xls',onChange:handleFileInput,style:{display:'none'}})),
-            h('p',{style:{color:'#bbb',fontSize:'12px',marginTop:'18px'}},'AI가 변수 그룹을 자동으로 감지합니다')
+            h('p',{style:{color:'#bbb',fontSize:'12px',marginTop:'18px'}},'키워드 매칭으로 변수 그룹을 자동 감지합니다 (검증 필요)')
           )
         :
           h('div',null,
@@ -19410,7 +19453,7 @@ const StatsAnalyzer = ({ onBack }) => {
               ),
               // Show parsed result
               parsedVars && h('div',{style:{marginTop:'12px',padding:'12px',background:'#f0f4ff',borderRadius:'8px',border:'1px solid #d0daf0'}},
-                h('p',{style:{fontSize:'12px',fontWeight:'bold',color:'#1F3864',marginBottom:'8px'}},'AI가 제목에서 파악한 변수:'),
+                h('p',{style:{fontSize:'12px',fontWeight:'bold',color:'#1F3864',marginBottom:'8px'}},'제목에서 자동 추출한 변수:'),
                 h('div',{style:{display:'flex',gap:'8px',flexWrap:'wrap'}},
                   ...parsedVars.iv.map((v,i)=>h('span',{key:'iv'+i,style:{background:roleBgs.iv,border:`1px solid ${roleColors.iv}`,borderRadius:'6px',padding:'3px 10px',fontSize:'11px',fontWeight:'bold',color:roleColors.iv}},v+' (IV)')),
                   ...parsedVars.med.map((v,i)=>h('span',{key:'med'+i,style:{background:roleBgs.med,border:`1px solid ${roleColors.med}`,borderRadius:'6px',padding:'3px 10px',fontSize:'11px',fontWeight:'bold',color:roleColors.med}},v+' (Med)')),
@@ -21351,7 +21394,14 @@ const HomeScreen = ({ onSelect }) => {
         '논문나침반'
       ),
       h('p',{style:{fontSize:'16px',color:'#666',marginBottom:'4px'}},'PaperCompass — 서울벤처대학원대학교 스마트시티·융합기술경영전공'),
-      h('p',{style:{fontSize:'13px',color:'#aaa',marginTop:'4px'}},'어떤 작업을 도와드릴까요?')
+      h('p',{style:{fontSize:'13px',color:'#aaa',marginTop:'4px'}},'어떤 작업을 도와드릴까요?'),
+      // ── 사용자 책임 안내 (메인 홈에 한 번만) ──
+      h('div',{style:{maxWidth:'860px',margin:'18px auto 0',padding:'12px 16px',borderRadius:'10px',background:'#FFF8E1',border:'1px solid #FFD54F',borderLeft:'3px solid #F57C00',textAlign:'left'}},
+        h('p',{style:{fontSize:'12px',fontWeight:'bold',color:'#E65100',margin:'0 0 4px 0'}},'⚠ 학술적 책임은 연구자 본인에게 있습니다'),
+        h('p',{style:{fontSize:'11px',color:'#5D4037',margin:0,lineHeight:1.6}},
+          '본 앱은 ',h('strong',null,'데이터베이스 기반 참고 도구'),'입니다. 외부 AI나 자동 추정으로 생성된 정보는 없습니다. 제공되는 모든 선행연구·척도·매개경로·문항은 ',h('strong',null,'RISS·Google Scholar·DBpia 등에서 원문을 직접 확인'),'하신 후, 본인 연구 맥락에 맞게 검토하여 인용해 주세요. 「확장 추천」·「기본 선택」 라벨은 휴리스틱이므로 ',h('strong',null,'지도교수님과 반드시 상의'),'하시기 바랍니다.'
+        )
+      )
     ),
     h('div',{style:{maxWidth:'1080px',margin:'0 auto',padding:'0 20px 60px',display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'24px'}},
       ...cards.map(card=>h('div',{
