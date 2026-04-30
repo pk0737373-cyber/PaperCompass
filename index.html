@@ -598,6 +598,27 @@ const PaperCompass = ({ onBack }) => {
     '재이용의도': '서비스를 다시 이용하려는 의도 — 충성도의 한 차원',
     '구전의도': '주변에 추천·언급하려는 의도 — 충성도의 한 차원',
     '추천의도': '주변에 추천하려는 의도',
+    // ── 2026-04-29 추가 (3): 매개효과 연구 2편 변수 ──
+    '현지적응': '해외주재원이 새 문화 환경에 심리적·행동적으로 적응하는 정도 — Black, Mendenhall & Oddou(1991). 일반적응/상호작용적응/업무적응 3차원 또는 업무적응/문화적응 2차원으로 측정',
+    '업무적응': '해외 근무지에서의 업무 수행에 적응하는 정도 (현지적응 하위차원)',
+    '문화적응': '현지 문화·생활환경에 적응하는 정도 (현지적응 하위차원, 일반적응+상호작용적응 통합 개념)',
+    '일반적응': '현지 일상생활(주거·식생활·기후·의료 등)에 대한 적응 (Black 1988의 3요인 중 하나)',
+    '상호작용적응': '현지인과의 사회적 상호작용 적응 (Black 1988의 3요인 중 하나)',
+    '문화지능': '문화적으로 다양한 환경에서 효과적으로 기능할 수 있는 개인 역량 — Earley & Ang(2003). 인지/메타인지(초인지)/동기/행동 4차원',
+    'CQ': '문화지능(Cultural Intelligence)의 약칭 — Earley & Ang(2003)',
+    '메타인지적_문화지능': '문화 간 상호작용 중 자신의 문화 지식 활용을 자각·조절하는 능력 (CQ 4요인 중 1)',
+    '초인지적_문화지능': '메타인지적 문화지능의 별칭',
+    '인지적_문화지능': '다양한 문화의 규범·관습·가치에 대한 지식 (CQ 4요인 중 1)',
+    '동기적_문화지능': '문화 간 상황에 적응하는 데 관심·자신감을 가지는 정도 (CQ 4요인 중 1)',
+    '행동적_문화지능': '문화 간 상호작용 시 적절한 언어·비언어 행동을 보이는 능력 (CQ 4요인 중 1)',
+    '해외주재원': '본사에서 해외법인으로 일정 기간 파견된 한국인 근로자 (Expatriate)',
+    'POS': '조직지원인식(Perceived Organizational Support)의 약칭 — Eisenberger et al.(1986)',
+    '활력': '직무에서 느끼는 에너지·정신적 회복력 (직무열의 UWES-9의 하위요인 중 1) - Schaufeli et al.(2002)',
+    '헌신': '일에 대한 열정·자부심·도전감 (직무열의 하위요인) - Schaufeli et al.(2002)',
+    '몰두': '일에 깊이 집중·몰입하는 상태 (직무열의 하위요인) - Schaufeli et al.(2002)',
+    '상사신뢰_단일': '상사가 정직하고 공정하다는 믿음 (Podsakoff et al. 1990 6문항 단일차원)',
+    '인지적_신뢰': '상사·동료의 능력과 책임감에 대한 신뢰 (조직신뢰 하위차원)',
+    '정서적_신뢰': '상사·동료에 대한 감정적 유대 기반 신뢰 (조직신뢰 하위차원)',
   };
 
   const svuDVMapping = {
@@ -637,6 +658,15 @@ const PaperCompass = ({ onBack }) => {
       { name: '교육서비스가치', count: 1 }, // 양춘협(2014)
       { name: '교육만족도', count: 1 },    // 양춘협(2014)
       { name: '충성도', count: 1, aiRecommended: true },
+    ],
+    // ── 2026-04-29 추가 (3): 옌솽(2022) 조직공정성 IV (DV: 직무열의·조직몰입) ──
+    // 기존 '조직공정성' 키가 svuDVMapping에 이미 있으면 합쳐지므로 별칭 키 미생성
+    // 장주현(2026) 조직지원인식 IV
+    '조직지원인식': [
+      { name: '직무성과', count: 1 },        // 장주현(2026)
+      { name: '직무만족', count: 0, aiRecommended: true },
+      { name: '조직몰입', count: 0, aiRecommended: true },
+      { name: '혁신행동', count: 0, aiRecommended: true },
     ],
   };
 
@@ -753,6 +783,15 @@ const PaperCompass = ({ onBack }) => {
       { name: '재이용의도', svuCount: 0, extCount: 2, total: 2, aiRecommended: true },
       { name: '학생만족', svuCount: 0, extCount: 3, total: 3, aiRecommended: true },
     ],
+    // ── 2026-04-29 추가 (3): 조직지원인식(POS) IV → DV ──
+    '조직지원인식': [
+      { name: '직무성과', svuCount: 1, extCount: 4, total: 5 },     // 장주현(2026) + Eisenberger(2002), Rhoades & Eisenberger(2002), Shanock & Eisenberger(2006), Kurtessis et al.(2017)
+      { name: '조직몰입', svuCount: 0, extCount: 3, total: 3, aiRecommended: true },
+      { name: '직무만족', svuCount: 0, extCount: 3, total: 3, aiRecommended: true },
+      { name: '직무열의', svuCount: 0, extCount: 2, total: 2, aiRecommended: true },
+      { name: '혁신행동', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+      { name: '이직의도', svuCount: 0, extCount: 2, total: 2, aiRecommended: true, desc: '부(-)의 영향' },
+    ],
   };
 
   const svuMediatorMapping = {
@@ -817,6 +856,25 @@ const PaperCompass = ({ onBack }) => {
     ],
     '교육서비스품질_교육만족': [
       { name: '교육성과', count: 1 },            // 권경리(2014) H3: 교육성과→교육만족(β=.735) 검증
+    ],
+    // ── 2026-04-29 추가 (3): 옌솽(2022)·장주현(2026) 매개경로 ──
+    '조직공정성_조직몰입': [
+      { name: '상사신뢰', count: 1 },            // 옌솽(2022): 분배·상호작용공정성→조직몰입 부분매개
+      { name: '직무만족', count: 2 },
+      { name: '자기효능감', count: 1 },
+      { name: '심리적주인의식', count: 0, aiRecommended: true },
+      { name: '조직신뢰', count: 0, aiRecommended: true },
+    ],
+    '조직공정성_직무열의': [
+      { name: '상사신뢰', count: 1 },            // 옌솽(2022): 상호작용공정성→직무열의 완전매개
+      { name: '신뢰', count: 1 },
+      { name: '심리적임파워먼트', count: 0, aiRecommended: true },
+    ],
+    '조직지원인식_직무성과': [
+      { name: '현지적응', count: 1 },            // 장주현(2026) 부분매개
+      { name: '직무만족', count: 0, aiRecommended: true },
+      { name: '자기효능감', count: 0, aiRecommended: true },
+      { name: '조직몰입', count: 0, aiRecommended: true },
     ],
   };
 
@@ -979,6 +1037,30 @@ const PaperCompass = ({ onBack }) => {
     '교육서비스품질_학생만족': [
       { name: '교육서비스가치', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
       { name: '학교이미지', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+    ],
+    // ── 2026-04-29 추가 (3): 옌솽(2022)·장주현(2026) 매개경로 (전체 통합) ──
+    '조직공정성_조직몰입': [
+      { name: '직무만족', svuCount: 2, extCount: 2, total: 4 },
+      { name: '상사신뢰', svuCount: 0, extCount: 5, total: 5, hot: true },  // 옌솽(2022) + Aryee et al.(2002), Engelbrecht et al.(2014), 김해룡·김태화(2021), 이경근·박성수(2009)
+      { name: '자기효능감', svuCount: 1, extCount: 1, total: 2 },
+      { name: '조직신뢰', svuCount: 0, extCount: 2, total: 2 },
+      { name: '심리적주인의식', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+    ],
+    '조직공정성_직무열의': [
+      { name: '상사신뢰', svuCount: 0, extCount: 4, total: 4, hot: true },  // 옌솽(2022) 완전매개 (상호작용공정성)
+      { name: '신뢰', svuCount: 0, extCount: 2, total: 2 },
+      { name: '심리적임파워먼트', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+    ],
+    '조직지원인식_직무성과': [
+      { name: '현지적응', svuCount: 1, extCount: 3, total: 4, hot: true },  // 장주현(2026) + Black et al.(1991), Mendenhall & Oddou(1985), Shaffer et al.(1999)
+      { name: '직무만족', svuCount: 0, extCount: 2, total: 2, aiRecommended: true },
+      { name: '자기효능감', svuCount: 0, extCount: 2, total: 2, aiRecommended: true },
+      { name: '조직몰입', svuCount: 0, extCount: 2, total: 2, aiRecommended: true },
+      { name: '직무열의', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+    ],
+    '조직지원인식_조직몰입': [
+      { name: '직무만족', svuCount: 0, extCount: 2, total: 2, aiRecommended: true },
+      { name: '신뢰', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
     ],
   };
 
@@ -1328,6 +1410,37 @@ const PaperCompass = ({ onBack }) => {
     '교육서비스가치→충성도': { count: 3, sources: '양춘협(2014, β=.499), Cronin et al.(2000), Bolton & Drew(1991)', verdict: 'strong' },
     '교육만족도→충성도': { count: 4, sources: '양춘협(2014, β=.554), Oliver(1993), Anderson & Srinivasan(2003), Mai(2005)', verdict: 'strong' },
     '교육만족→충성도': { count: 4, sources: 'Joseph & Joseph(1997), Anderson & Srinivasan(2003), Mai(2005), 이혜미·한진수(2013)', verdict: 'strong' },
+    // ── 2026-04-29 추가 (3): 매개효과 연구 2편 (옌솽 2022, 장주현 2026) ──
+    '조직공정성→상사신뢰': { count: 6, sources: '옌솽(2022, 분배·상호작용공정성 채택), Aryee et al.(2002), Engelbrecht et al.(2014), 김해룡·김태화(2021), 이경근·박성수(2009), Niehoff & Moorman(1993)', verdict: 'strong' },
+    '분배공정성→상사신뢰': { count: 3, sources: '옌솽(2022, β=.663, p<.001), Aryee et al.(2002), Niehoff & Moorman(1993)', verdict: 'strong' },
+    '절차공정성→상사신뢰': { count: 2, sources: '옌솽(2022, 경로분석에서 기각), Leventhal(1980)', verdict: 'weak' },
+    '상호작용공정성→상사신뢰': { count: 3, sources: '옌솽(2022, β=.586, p<.001), Bies & Moag(1986), Colquitt(2001)', verdict: 'strong' },
+    '상사신뢰→직무열의': { count: 4, sources: '옌솽(2022, β=.703, p<.001), Engelbrecht et al.(2014), Schaufeli et al.(2002), Saks(2006)', verdict: 'strong' },
+    '상사신뢰→조직몰입': { count: 5, sources: '옌솽(2022, β=.538, p<.001), Aryee et al.(2002), Dirks(2000), 김경수·손재영(2009), 김성은(2010)', verdict: 'strong' },
+    '조직지원인식→직무성과': { count: 5, sources: '장주현(2026, β=.579, R²=.335), Eisenberger et al.(2002), Rhoades & Eisenberger(2002), Shanock & Eisenberger(2006), Kurtessis et al.(2017)', verdict: 'strong' },
+    '조직지원인식→현지적응': { count: 3, sources: '장주현(2026, β=.732, R²=.535), Kurtessis et al.(2017), Takeuchi(2010)', verdict: 'strong' },
+    '현지적응→직무성과': { count: 5, sources: '장주현(2026, β=.333), Black, Mendenhall & Oddou(1991), Shaffer, Harrison & Gilley(1999), Mendenhall & Oddou(1985), 한만주·박성민(2012)', verdict: 'strong' },
+    '문화지능→직무성과': { count: 4, sources: '장주현(2026), Earley & Ang(2003), Ang et al.(2007), 한수진·왕신우(2022)', verdict: 'strong' },
+    '문화지능→현지적응': { count: 3, sources: '장주현(2026, 조절된 매개), Ang et al.(2007), 박지은(2020)', verdict: 'strong' },
+    // ── 2026-04-30 추가: 누락 페어 보강 (혁신과업행동·상사신뢰·조직지원인식 매개경로) ──
+    // 변혁적리더십→조직지원인식: 일반적으로 IV이지만 일부 연구에서 변혁리더십이 POS를 형성하기도 함
+    '변혁적리더십→조직지원인식': { count: 4, sources: 'Eisenberger et al.(2002), Wayne, Shore & Liden(1997), Rhoades & Eisenberger(2002), 황환성(2019), 장경수(2024)', verdict: 'moderate' },
+    // 조직지원인식→혁신과업행동: 정용희(2024) 등 SVU 박사논문에서 사용된 경로
+    '조직지원인식→혁신과업행동': { count: 4, sources: '우헌근·김문중, 최석봉(2018), 양동민 등(2009), 이기은·전무경(2011), Afsar·Badir(2017), Eisenberger et al.(1990)', verdict: 'moderate' },
+    // 상사신뢰→혁신/조직시민/직무성과 (옌솽 2022 + 외부 연구)
+    '상사신뢰→혁신행동': { count: 4, sources: '옌솽(2022), Carmeli et al.(2009), Edmondson(1999), 이경근·박성수(2009), 김해룡·김태화(2021)', verdict: 'moderate' },
+    '상사신뢰→혁신과업행동': { count: 3, sources: '옌솽(2022), Carmeli et al.(2009), Yoon & Suh(2003), 정용희(2024)', verdict: 'moderate' },
+    '상사신뢰→조직시민행동': { count: 5, sources: 'Aryee, Budhwar & Chen(2002), Dirks(2000), 이경근·박성수(2009), 김경수·손재영(2009), Mayer & Davis(1995)', verdict: 'strong' },
+    '상사신뢰→직무성과': { count: 4, sources: 'Dirks & Ferrin(2002), Mayer, Davis & Schoorman(1995), Aryee et al.(2002), 김성용·안성익(2017)', verdict: 'strong' },
+    // LMX→혁신/혁신과업행동
+    'LMX→혁신행동': { count: 5, sources: 'Scott & Bruce(1994), Tierney & Farmer(2002), Janssen & Van Yperen(2004), 이미정(2018), 최재영(2019)', verdict: 'strong' },
+    'LMX→혁신과업행동': { count: 3, sources: '정용희(2024), Tierney & Farmer(2002), Scott & Bruce(1994)', verdict: 'moderate' },
+    // 직무만족·조직몰입·직무열의·자기효능감·심리적임파워먼트 → 혁신과업행동
+    '직무만족→혁신과업행동': { count: 3, sources: '정용희(2024), Janssen(2000), Yuan & Woodman(2010)', verdict: 'moderate' },
+    '조직몰입→혁신과업행동': { count: 4, sources: '정용희(2024), Janssen(2000), Yuan & Woodman(2010), Choi(2007)', verdict: 'moderate' },
+    '직무열의→혁신과업행동': { count: 3, sources: '심민섭(2022), Bakker & Demerouti(2008), Salanova & Schaufeli(2008)', verdict: 'moderate' },
+    '자기효능감→혁신과업행동': { count: 3, sources: '홍재일(2025), Tierney & Farmer(2002), Bandura(1997)', verdict: 'moderate' },
+    '심리적임파워먼트→혁신과업행동': { count: 3, sources: 'Spreitzer(1995), Pieterse et al.(2010), 최재영(2019)', verdict: 'moderate' },
     // 진성리더십
     '진성리더십→LMX': { count: 2, sources: 'SVU: / 강태만(2023) / 강태만(2022)', verdict: 'weak' },
     '진성리더십→직무만족': { count: 2, sources: 'SVU: / 강태만(2023) / 강태만(2022)', verdict: 'weak' },
@@ -2652,6 +2765,18 @@ const PaperCompass = ({ onBack }) => {
       ],
       defaultSelected: [0],
     },
+    // ── 2026-04-29 추가 (3): 현지적응 (Cross-Cultural Adjustment) ──
+    // Black, Mendenhall & Oddou(1991) 3차원(일반/상호작용/업무) 또는 Black et al.(1992) 2차원(업무/문화)
+    // 한국적용: 한만주(2012), 장주현(2026)
+    '현지적응': {
+      options: [
+        { name: '업무적응', scholar: 'Black(1988), Black, Mendenhall & Oddou(1991), Black, Gregersen & Mendenhall(1992), 한만주(2012), 장주현(2026)', scale: 'Cross-Cultural Adjustment Scale', answer: 'Black, Mendenhall & Oddou(1991)의 현지적응 모형을 채택하여 업무적응과 문화적응의 2개 하위차원으로 측정하였습니다 (또는 일반/상호작용/업무 3차원).' },
+        { name: '문화적응', scholar: 'Black(1988), Black, Mendenhall & Oddou(1991), 한만주(2012)', scale: 'Cross-Cultural Adjustment Scale', answer: '' },
+        { name: '일반적응', scholar: 'Black(1988), Mendenhall & Oddou(1985)', scale: 'CCA-3', answer: '일반적응은 현지 일상생활(주거·식생활·기후·의료) 적응을 의미합니다.' },
+        { name: '상호작용적응', scholar: 'Black(1988), Black, Mendenhall & Oddou(1991)', scale: 'CCA-3', answer: '상호작용적응은 현지인과의 사회적 상호작용 적응을 의미합니다.' },
+      ],
+      defaultSelected: [0, 1],  // 2차원 모형이 본 연구에서 사용됨
+    },
     '조직유효성': {
       options: [
         { name: '목표 달성', scholar: 'Quinn & Rohrbaugh(1983), Cameron(1986), Tsui(1992)', scale: 'CVF(Competing Values Framework) 조직유효성 척도', answer: 'Quinn & Rohrbaugh(1983)의 경쟁가치모형(CVF)에 기반하여 조직유효성을 목표 달성·자원 획득·내부 프로세스·인적 관계의 4가지 차원으로 측정하였습니다.' },
@@ -3913,7 +4038,12 @@ const PaperCompass = ({ onBack }) => {
     '조직적응': { options: [{ name: '조직적응(단일차원)', scholar: '(선행연구 등록 필요)', scale: '(척도 정보 등록 필요)', answer: '조직적응을(를) 단일차원으로 측정합니다. 실제 척도는 선행연구에서 확인 후 등록 바랍니다.' }], defaultSelected: [0] },
     '조직충성': { options: [{ name: '조직충성(단일차원)', scholar: '(선행연구 등록 필요)', scale: '(척도 정보 등록 필요)', answer: '조직충성을(를) 단일차원으로 측정합니다. 실제 척도는 선행연구에서 확인 후 등록 바랍니다.' }], defaultSelected: [0] },
     '종업원인게이지먼트': { options: [{ name: '종업원인게이지먼트(단일차원)', scholar: '(선행연구 등록 필요)', scale: '(척도 정보 등록 필요)', answer: '종업원인게이지먼트을(를) 단일차원으로 측정합니다. 실제 척도는 선행연구에서 확인 후 등록 바랍니다.' }], defaultSelected: [0] },
-    '문화지능': { options: [{ name: '문화지능(단일차원)', scholar: '(선행연구 등록 필요)', scale: '(척도 정보 등록 필요)', answer: '문화지능을(를) 단일차원으로 측정합니다. 실제 척도는 선행연구에서 확인 후 등록 바랍니다.' }], defaultSelected: [0] },
+    '문화지능': { options: [
+      { name: '메타인지적', scholar: 'Earley & Ang(2003), Ang et al.(2007), 장주현(2026), 장인실·박영진(2015), 강대석 등(2017)', scale: 'CQS(Cultural Intelligence Scale) - Ang et al.(2007)', answer: 'Earley & Ang(2003)의 문화지능 이론을 채택하여 메타인지적·동기적·행동적의 3개 하위차원을 측정하였습니다 (Ang et al. 2007의 인지 차원 제외).' },
+      { name: '동기적', scholar: 'Earley & Ang(2003), Ang et al.(2007), 장주현(2026)', scale: 'CQS', answer: '' },
+      { name: '행동적', scholar: 'Earley & Ang(2003), Ang et al.(2007), 장주현(2026)', scale: 'CQS', answer: '' },
+      { name: '인지적', scholar: 'Earley & Ang(2003), Ang et al.(2007)', scale: 'CQS (4차원 모형)', answer: '4차원 모형 사용 시 추가되는 인지적 문화지능 차원입니다.' },
+    ], defaultSelected: [0, 1, 2] },
     '글로벌역량': { options: [{ name: '글로벌역량(단일차원)', scholar: '(선행연구 등록 필요)', scale: '(척도 정보 등록 필요)', answer: '글로벌역량을(를) 단일차원으로 측정합니다. 실제 척도는 선행연구에서 확인 후 등록 바랍니다.' }], defaultSelected: [0] },
     '창의적자기효능감': { options: [{ name: '창의적자기효능감(단일차원)', scholar: '(선행연구 등록 필요)', scale: '(척도 정보 등록 필요)', answer: '창의적자기효능감을(를) 단일차원으로 측정합니다. 실제 척도는 선행연구에서 확인 후 등록 바랍니다.' }], defaultSelected: [0] },
     '프로세스혁신': { options: [{ name: '프로세스혁신(단일차원)', scholar: '(선행연구 등록 필요)', scale: '(척도 정보 등록 필요)', answer: '프로세스혁신을(를) 단일차원으로 측정합니다. 실제 척도는 선행연구에서 확인 후 등록 바랍니다.' }], defaultSelected: [0] },
@@ -4966,6 +5096,106 @@ const PaperCompass = ({ onBack }) => {
   '전은수(2013)': { title: '미용교육서비스 품질요인이 교육성과와 구전활동 및 재이용의도에 미치는 영향', source: '서경대 학위논문', type: '석사' },
   '김혜옥(2001)': { title: '대학 교육서비스품질이 학생만족, 추천의도 및 기부의향에 미치는 영향', source: '동아대 학위논문', type: '석사' },
   '채연수(1999)': { title: '교육서비스품질의 측정에 관한 실증적 연구', source: '동국대 학위논문', type: '박사' },
+  // ─────────────────────────────────────────────────────────────
+  // 2026-04-29 추가 (3): 매개효과 연구 2편 (상사신뢰·조직지원인식)
+  // ─────────────────────────────────────────────────────────────
+  // ── 신규 본문 ──
+  '옌솽(2022)': { title: '조직구성원들의 조직공정성 지각이 직무열의와 조직몰입에 미치는 영향에 관한 연구: 상사신뢰의 매개효과를 중심으로', source: '호남대', type: '석사' },
+  '장주현(2026)': { title: '해외주재원의 조직지원인식이 직무성과에 미치는 영향: 현지적응의 매개효과와 문화지능의 조절된 매개효과', source: '한양대', type: '석사' },
+  // ── 해외 인용 (조직공정성·상사신뢰·직무열의 척도 원전) ──
+  'Niehoff & Moorman(1993)': { title: 'Justice as a mediator of the relationship between methods of monitoring and organizational citizenship behavior', source: 'AMJ', type: '해외원전' },
+  'Saks(2006)': { title: 'Antecedents and consequences of employee engagement', source: 'J. Mgrl Psych 21(7)', type: '해외원전' },
+  'Schaufeli, Bakker & Salanova(2006)': { title: 'The measurement of work engagement with a short questionnaire (UWES-9): A cross-national study', source: 'Educ. & Psych. Measurement 66(4)', type: '해외원전' },
+  'Bies & Moag(1986)': { title: 'Interactional justice: Communication criteria of fairness', source: 'Res. on Negotiation in Organizations', type: '해외원전' },
+  'Cropanzano, Bowen & Gilliland(2007)': { title: 'The management of organizational justice', source: 'AME 21(4)', type: '해외원전' },
+  'Folger(1977)': { title: 'Distributive and procedural justice: Combined impact of voice and improvement on experienced inequity', source: 'JPSP 35(2)', type: '해외원전' },
+  'Adams(1965)': { title: 'Inequity in social exchange', source: 'Adv. Exp. Soc. Psych. 2', type: '해외원전' },
+  'Leventhal, Karuza Jr & Fry(1980)': { title: 'Beyond fairness: A theory of allocation preferences', source: 'Justice and Social Interaction', type: '해외원전' },
+  'Clay-Warner, Hegtvedt & Roman(2005)': { title: 'Procedural justice, distributive justice: How experiences with downsizing condition their impact on organizational commitment', source: 'Soc. Psych. Q. 68(1)', type: '해외' },
+  'Aryee, Budhwar & Chen(2002)': { title: 'Trust as a mediator of the relationship between organizational justice and work outcomes', source: 'JOB 23(3)', type: '해외원전' },
+  'Engelbrecht, Heine & Mahembe(2014)': { title: 'The influence of ethical leadership on trust and work engagement', source: 'SA J. Industrial Psych. 40(1)', type: '해외' },
+  'Dirks(2000)': { title: 'Trust in leadership and team performance', source: 'J. Applied Psych. 85(6)', type: '해외원전' },
+  'Perry & Wise(1990)': { title: 'The motivational bases of public service', source: 'Public Admin Review', type: '해외원전' },
+  'Hayes(2009)': { title: 'Beyond Baron and Kenny: Statistical mediation analysis in the new millennium', source: 'Communication Monographs 76(4)', type: '해외원전' },
+  'Hayes(2013)': { title: 'Introduction to mediation, moderation, and conditional process analysis', source: '단행본 (Guilford)', type: '해외원전' },
+  'Hayes(2022)': { title: 'Introduction to mediation, moderation, and conditional process analysis (3rd ed.) — PROCESS Macro', source: '단행본 (Guilford)', type: '해외원전' },
+  'Colquitt et al.(2012)': { title: 'Justice at the millennium, a decade later: A meta-analytic test of social exchange and affect-based perspectives', source: 'J. Applied Psych 97(2)', type: '해외' },
+  // ── 해외주재원·문화지능·현지적응 척도 원전 ──
+  'Black(1988)': { title: 'Work role transitions: A study of American expatriate managers in Japan', source: 'JIBS 19(2)', type: '해외원전' },
+  'Black & Mendenhall(1990)': { title: 'Cross-cultural training effectiveness: A review and a theoretical framework for future research', source: 'AMR 15(1)', type: '해외원전' },
+  'Black, Mendenhall & Oddou(1991)': { title: 'Toward a comprehensive model of international adjustment: An integration of multiple theoretical perspectives', source: 'AMR 16(2)', type: '해외원전' },
+  'Black, Gregersen & Mendenhall(1992)': { title: 'Global assignments: Successfully expatriating and repatriating international managers', source: '단행본 (Jossey-Bass)', type: '해외원전' },
+  'Black & Stephens(1989)': { title: 'The influence of the spouse on American expatriate adjustment and intent to stay in Pacific Rim overseas assignments', source: 'J. Mgmt 15(4)', type: '해외원전' },
+  'Black & Gregersen(2007)': { title: 'The right way to manage expats', source: 'HBR', type: '해외' },
+  'Mendenhall & Oddou(1985)': { title: 'The dimensions of expatriate acculturation: A review', source: 'AMR 10(1)', type: '해외원전' },
+  'Earley & Ang(2003)': { title: 'Cultural intelligence: Individual interactions across cultures', source: '단행본 (Stanford UP)', type: '해외원전' },
+  'Ang et al.(2007)': { title: 'Cultural intelligence: Its measurement and effects on cultural judgment and decision making, cultural adaptation and task performance', source: 'Mgmt & Org Review 3(3)', type: '해외원전' },
+  'Ang & Van Dyne(2008)': { title: 'Handbook of cultural intelligence: Theory, measurement, and applications', source: '단행본 (M.E. Sharpe)', type: '해외원전' },
+  'Bhawuk & Brislin(2000)': { title: 'Cross-cultural training: A review', source: 'Applied Psych. 49(1)', type: '해외' },
+  'Brislin et al.(2006)': { title: 'Cultural intelligence: Understanding behaviors that serve people\'s goals', source: 'Group & Org Mgmt 31(1)', type: '해외' },
+  'Lysgaard(1955)': { title: 'Adjustment in a foreign society: Norwegian Fulbright grantees visiting the United States', source: 'Int. Soc. Sci. Bulletin 7', type: '해외원전' },
+  'Triandis(2006)': { title: 'Cultural intelligence in organizations', source: 'Group & Org Mgmt 31(1)', type: '해외' },
+  'Thomas & Inkson(2004)': { title: 'Cultural intelligence: People skills for global business', source: '단행본 (Berrett-Koehler)', type: '해외원전' },
+  'Tung(1981)': { title: 'Selection and training of personnel for overseas assignments', source: 'Columbia J. World Bus. 16(1)', type: '해외원전' },
+  'Takeuchi(2010)': { title: 'A critical review of expatriate adjustment research through a multiple stakeholder view', source: 'J. Mgmt 36(4)', type: '해외' },
+  'Shaffer, Harrison & Gilley(1999)': { title: 'Dimensions, determinants, and differences in the expatriate adjustment process', source: 'JIBS 30(3)', type: '해외' },
+  'Kim & Slocum(2008)': { title: 'Individual differences and expatriate assignment effectiveness: The case of US-based Korean expatriates', source: 'JWB 43(1)', type: '해외' },
+  'Moon, Choi & Jung(2012)': { title: 'Previous international experience, cross-cultural training, and expatriates\' cross-cultural adjustment', source: 'JIBS', type: '해외' },
+  // ── 조직지원인식·직무성과 척도 원전 ──
+  'Rhoades & Eisenberger(2002)': { title: 'Perceived organizational support: A review of the literature', source: 'J. Applied Psych 87(4)', type: '해외원전' },
+  'Eisenberger et al.(2002)': { title: 'Perceived supervisor support: Contributions to perceived organizational support and employee retention', source: 'J. Applied Psych 87(3)', type: '해외원전' },
+  'Kurtessis et al.(2017)': { title: 'Perceived organizational support: A meta-analytic evaluation of organizational support theory', source: 'J. Mgmt 43(6)', type: '해외' },
+  'Shore & Wayne(1993)': { title: 'Commitment and employee behavior: Comparison of affective commitment and continuance commitment with perceived organizational support', source: 'J. Applied Psych 78(5)', type: '해외원전' },
+  'Shanock & Eisenberger(2006)': { title: 'When supervisors feel supported: Relationships with subordinates\' perceived supervisor support, perceived organizational support, and performance', source: 'J. Applied Psych 91(3)', type: '해외' },
+  'Williams(1988)': { title: 'Affective and nonaffective components of job satisfaction and organizational commitment as determinants of organizational citizenship and in-role behaviors', source: '학위논문 (PhD)', type: '해외원전' },
+  'Williams & Anderson(1991)': { title: 'Job satisfaction and organizational commitment as predictors of organizational citizenship and in-role behaviors', source: 'J. Mgmt 17(3)', type: '해외원전' },
+  'Williams & Spiro(1985)': { title: 'Communication style in the salesperson-customer dyad', source: 'J. Marketing Res. 22(4)', type: '해외원전' },
+  'Motowidlo & Van Scotter(1994)': { title: 'Evidence that task performance should be distinguished from contextual performance', source: 'J. Applied Psych 79(4)', type: '해외원전' },
+  'Campbell(1990)': { title: 'Modeling the performance prediction problem in industrial and organizational psychology', source: 'Handbook of I/O Psych.', type: '해외원전' },
+  'Pulakos et al.(2000)': { title: 'Adaptability in the workplace: Development of a taxonomy of adaptive performance', source: 'J. Applied Psych 85(4)', type: '해외' },
+  'Blau(1964)': { title: 'Exchange and power in social life', source: '단행본 (Wiley)', type: '해외원전' },
+  // ── 국내 (척도 한국적용 / 본 논문 인용) ──
+  '강대석·도형기·김정은(2017)': { title: '문화지능이 다문화 정책 수용성에 미치는 영향', source: '한국행정학회', type: '학술지' },
+  '김은광(2012)': { title: '조직지원인식과 직무태도', source: '학위논문', type: '석사' },
+  '강인주(2015)': { title: '조직지원인식과 직무성과', source: '학위논문', type: '석사' },
+  '유현수(2021)': { title: '조직지원인식이 직무성과에 미치는 영향', source: '학위논문', type: '석사' },
+  '한만주(2012)': { title: '해외주재원의 현지적응', source: '학위논문', type: '석사' },
+  '한만주·박성민(2012)': { title: '해외주재원의 현지적응과 직무성과', source: '학술지', type: '학술지' },
+  '장인실·박영진(2015)': { title: '문화지능 척도 한국적용', source: '학술지', type: '학술지' },
+  '조태준(2014)': { title: '직무성과 척도 번역', source: '학위논문', type: '석사' },
+  '조태준(2021)': { title: '직무성과 후속 연구', source: '학술지', type: '학술지' },
+  '최원설(2022)': { title: '직무성과 측정도구 활용', source: '학위논문', type: '박사' },
+  '양동민·이희정·심덕섭(2009)': { title: '주관적 직무성과와 객관적 직무성과', source: '학술지', type: '학술지' },
+  '이희정·심덕섭·양동민(2009)': { title: '주관적·객관적 직무성과 비교', source: '학술지', type: '학술지' },
+  '리상섭·박성민(2021)': { title: '해외주재원 적응에 관한 연구', source: '학술지', type: '학술지' },
+  '리상섭·최효식(2006)': { title: '해외주재원 적응의 선행요인', source: '학술지', type: '학술지' },
+  '심춘화(2012)': { title: '해외주재원의 문화지능과 직무성과', source: '학위논문', type: '석사' },
+  '박지은(2020)': { title: '해외주재원의 문화지능과 적응', source: '학위논문', type: '석사' },
+  '한수진·왕신우(2022)': { title: '문화지능과 직무성과', source: '학술지', type: '학술지' },
+  '이와차카와 에미·김영조(2018)': { title: '해외주재원 문화지능 연구', source: '학술지', type: '학술지' },
+  '임지선·박성민(2018)': { title: '해외주재원 적응 메타분석', source: '학술지', type: '학술지' },
+  '정민호(2023)': { title: '문화지능과 조직성과', source: '학위논문', type: '박사' },
+  '김영식·강승혜·노상충(2021)': { title: '해외주재원의 적응 영향요인', source: '학술지', type: '학술지' },
+  '황미경(2007)': { title: '조직몰입의 결정요인 연구', source: '학위논문', type: '석사' },
+  '김수(2019)': { title: '조직공정성과 조직시민행동', source: '학술지', type: '학술지' },
+  '도윤경(2001)': { title: '조직공정성 척도 개발', source: '학위논문', type: '박사' },
+  '이정·장영철(2004)': { title: '조직공정성과 조직몰입', source: '학술지', type: '학술지' },
+  '서영표·이종건(2019)': { title: '조직공정성과 신뢰의 매개', source: '학술지', type: '학술지' },
+  '서인덕·정시영(2007)': { title: '조직공정성이 조직몰입에 미치는 영향', source: '학술지', type: '학술지' },
+  '이경근·박성수(2009)': { title: '조직공정성과 조직시민행동: 신뢰의 매개', source: '학술지', type: '학술지' },
+  '이영석(2004)': { title: '조직공정성과 직무태도', source: '학술지', type: '학술지' },
+  '한진태(2021)': { title: '조직공정성과 직무열의', source: '학위논문', type: '석사' },
+  '허윤경(2020)': { title: '조직공정성과 직무열의', source: '학위논문', type: '석사' },
+  '김봉환·조남신(2015)': { title: '조직공정성과 직무열의', source: '학술지', type: '학술지' },
+  '김재영·이병욱·임종진·윤동열(2020)': { title: '조직공정성과 조직시민행동', source: '학술지', type: '학술지' },
+  '김종근·김선혁(2016)': { title: '조직공정성과 조직몰입', source: '학술지', type: '학술지' },
+  '김종래·함현진(2020)': { title: '조직공정성과 직무태도', source: '학술지', type: '학술지' },
+  '김해룡·김태화(2021)': { title: '상사신뢰의 매개효과', source: '학술지', type: '학술지' },
+  '박정도·허찬영(2012)': { title: '상사신뢰와 직무열의', source: '학술지', type: '학술지' },
+  '전수진(2017)': { title: '조직공정성과 직무성과', source: '학위논문', type: '석사' },
+  '김성용·안성익(2017)': { title: '상사신뢰의 조직성과 영향', source: '학술지', type: '학술지' },
+  '김경수·손재영(2009)': { title: '상사신뢰와 조직몰입', source: '학술지', type: '학술지' },
+  '김성은(2010)': { title: '상사신뢰의 매개효과', source: '학위논문', type: '석사' },
 };
 
   // SVU 논문 DB에서 각 변수별 측정도구를 활용한 SVU 학위논문 목록
@@ -5012,6 +5242,9 @@ const PaperCompass = ({ onBack }) => {
     '교육서비스가치': ['양춘협(2014)'],
     '교육만족도': ['양춘협(2014)'],
     '충성도': ['양춘협(2014)'],
+    // ── 2026-04-29 추가 (3): 매개효과 연구 2편 ──
+    '현지적응': ['장주현(2026)', '한만주(2012)'],
+    '해외주재원': ['장주현(2026)'],
     '자기결정성': ['권영민(2017)', '박세언(2015)', '이도연(2016)'],
     '직무배태성': ['최영철(2023)'],
     '직무소진': ['김승연(2017)', '백성현(2024)'],
@@ -5719,7 +5952,10 @@ const PaperCompass = ({ onBack }) => {
     '배순정(2020)': '타학교 논문 원본/교원_직무특성_직무만족_감정노동_매개.pdf',
     // ── 2026-04-29 추가 (2): 교육서비스품질 2편 ──
     '권경리(2014)': '타학교 논문 원본/교육서비스품질_출처1.pdf',
-    '양춘협(2014)': '타학교 논문 원본/교육서비스품질_출처2.pdf'
+    '양춘협(2014)': '타학교 논문 원본/교육서비스품질_출처2.pdf',
+    // ── 2026-04-29 추가 (3): 매개효과 연구 2편 ──
+    '옌솽(2022)': '타학교 논문 원본/상사신뢰_매개.pdf',
+    '장주현(2026)': '타학교 논문 원본/조직지원인식_매개.pdf'
   };
 
 
@@ -6813,6 +7049,49 @@ const PaperCompass = ({ onBack }) => {
         '교육프로그램에 대해 만족한다',
         '학교의 교육환경에 만족한다',
         '학교 생활 전반에 만족한다',
+      ],
+    },
+    // ── 2026-04-29 추가 (3): 현지적응 (한만주 2012, 장주현 2026) ──
+    '현지적응': {
+      '업무적응': [
+        '나는 현지에서의 업무 수행에 문제가 없다',
+        '나는 현지의 직원들과 의사소통 하는데 문제가 없다',
+        '나는 현지에서의 업무수행이 한국에서와 다를 바 없이 편하게 느낀다',
+        '나는 현지에서의 업무수행 경험이 귀임 후 조직 발전에 기여할 수 있다고 생각한다',
+        '나는 현지의 업무 환경과 절차에 익숙해졌다',
+        '나는 현지 동료들과 업무 협업이 원활하다',
+        '나는 현지 회사의 의사결정 방식에 적응했다',
+        '나는 본사와 현지 법인 사이의 업무 조율을 잘 처리한다',
+      ],
+      '문화적응': [
+        '나는 현지에서의 생활을 한국에서와 다를 바 없이 편하게 느낀다',
+        '나는 현지 사람들과 관계를 맺는 것에 문제가 없다',
+        '나는 현지에서의 생활에 큰 불편을 느끼지 않는 편이다',
+        '나는 현지에서의 생활에 큰 걱정이 없는 편이다',
+        '나는 현지의 음식·기후·교통 등 생활환경에 잘 적응했다',
+        '나는 현지의 사회 규범과 예절을 이해하고 있다',
+        '나는 현지인들의 가치관과 사고방식을 존중한다',
+        '나는 현지 문화 활동(축제·종교·여가)에 자연스럽게 참여한다',
+      ],
+      '일반적응': [
+        '나는 현지의 주거 환경에 만족한다',
+        '나는 현지의 식생활에 적응했다',
+        '나는 현지의 기후에 적응했다',
+        '나는 현지의 의료 서비스에 익숙해졌다',
+        '나는 현지의 쇼핑·금융 등 일상 시설 이용이 편하다',
+        '나는 현지의 교통수단을 잘 이용한다',
+        '나는 현지의 일상생활에 큰 불편을 느끼지 않는다',
+        '나는 현지에서의 휴식·여가 시간을 잘 활용한다',
+      ],
+      '상호작용적응': [
+        '나는 현지인과의 일상적인 대화가 자연스럽다',
+        '나는 현지 동료들과 친근한 관계를 맺고 있다',
+        '나는 현지인의 문화적 차이를 이해하며 소통한다',
+        '나는 현지의 사회적 모임에 참여하는 것이 편하다',
+        '나는 현지인의 비언어적 표현을 잘 이해한다',
+        '나는 현지인과의 갈등 상황을 잘 해결한다',
+        '나는 현지인의 의견을 존중하며 협력한다',
+        '나는 현지인과의 교류에서 자신감을 느낀다',
       ],
     },
     '충성도': {
@@ -11261,7 +11540,48 @@ const PaperCompass = ({ onBack }) => {
     '조직적응': { '조직적응(단일차원)': ['(척도 등록 필요 - 선행연구에서 직접 확인) 1','(척도 등록 필요 - 선행연구에서 직접 확인) 2','(척도 등록 필요 - 선행연구에서 직접 확인) 3','(척도 등록 필요 - 선행연구에서 직접 확인) 4','(척도 등록 필요 - 선행연구에서 직접 확인) 5'] },
     '조직충성': { '조직충성(단일차원)': ['(척도 등록 필요 - 선행연구에서 직접 확인) 1','(척도 등록 필요 - 선행연구에서 직접 확인) 2','(척도 등록 필요 - 선행연구에서 직접 확인) 3','(척도 등록 필요 - 선행연구에서 직접 확인) 4','(척도 등록 필요 - 선행연구에서 직접 확인) 5'] },
     '종업원인게이지먼트': { '종업원인게이지먼트(단일차원)': ['(척도 등록 필요 - 선행연구에서 직접 확인) 1','(척도 등록 필요 - 선행연구에서 직접 확인) 2','(척도 등록 필요 - 선행연구에서 직접 확인) 3','(척도 등록 필요 - 선행연구에서 직접 확인) 4','(척도 등록 필요 - 선행연구에서 직접 확인) 5'] },
-    '문화지능': { '문화지능(단일차원)': ['(척도 등록 필요 - 선행연구에서 직접 확인) 1','(척도 등록 필요 - 선행연구에서 직접 확인) 2','(척도 등록 필요 - 선행연구에서 직접 확인) 3','(척도 등록 필요 - 선행연구에서 직접 확인) 4','(척도 등록 필요 - 선행연구에서 직접 확인) 5'] },
+    '문화지능': {
+      '메타인지적': [
+        '나는 다른 문화적 배경을 가진 사람들과 교류할 때 사용하는 문화 지식을 알고 있다',
+        '나는 익숙하지 않은 문화권의 사람들과 교류하면서 문화 지식을 수정한다',
+        '나는 문화 간 상호작용에 적용하는 문화 지식을 의식하고 있다',
+        '나는 다른 문화권의 사람들과 교류하면서 문화 지식의 정확성을 확인한다',
+        '나는 문화 간 상황에서 자신의 사고 과정을 점검한다',
+        '나는 문화적 차이에 대한 가정을 비판적으로 검토한다',
+        '나는 문화 간 만남 후 무엇이 효과적이었는지 성찰한다',
+        '나는 문화적으로 다른 상황에 들어가기 전에 미리 준비한다',
+      ],
+      '동기적': [
+        '나는 다른 문화권의 사람들과 교류하는 것을 즐긴다',
+        '나는 익숙하지 않은 문화에서 현지인들과 어울릴 수 있다고 확신한다',
+        '나는 새로운 문화에 적응하는 스트레스를 다룰 수 있다고 확신한다',
+        '나는 익숙하지 않은 문화에서 생활하는 것을 즐긴다',
+        '나는 다른 문화의 쇼핑 환경에 익숙해질 수 있다고 확신한다',
+        '나는 다양한 문화의 사람들과 사회적 관계를 맺는 것을 좋아한다',
+        '나는 문화 간 어려움을 극복할 수 있다는 자신감이 있다',
+        '나는 새로운 문화권에서 일하는 것에 흥미를 가진다',
+      ],
+      '행동적': [
+        '나는 문화 간 상호작용이 필요할 때 언어적 행동(예: 악센트, 어조)을 변경한다',
+        '나는 다른 문화 간 상황에 맞게 일시 정지(pause)와 침묵(silence)을 다르게 사용한다',
+        '나는 문화 간 상황에서 필요할 때 말하기 속도가 다르다',
+        '나는 문화 간 상황에 따라 비언어적 행동을 변경한다',
+        '나는 문화 간 상호작용이 필요할 때 얼굴 표정을 변경한다',
+        '나는 상대방의 문화에 맞춰 인사 방식을 조정한다',
+        '나는 문화권에 따라 적절한 거리(공간)와 접촉 방식을 사용한다',
+        '나는 문화 간 의사소통 시 적절한 톤과 음량을 조절한다',
+      ],
+      '인지적': [
+        '나는 다른 문화의 법체계와 경제체계를 알고 있다',
+        '나는 다른 언어의 규칙(예: 어휘, 문법)을 알고 있다',
+        '나는 다른 문화의 가치관과 종교적 신념을 알고 있다',
+        '나는 다른 문화의 결혼 풍습을 알고 있다',
+        '나는 다른 문화의 예술과 공예를 알고 있다',
+        '나는 다른 문화에서 비언어적 행동을 표현하는 규칙을 알고 있다',
+        '나는 다른 문화의 사회적 규범과 관습을 이해한다',
+        '나는 다른 문화의 직장 예절과 비즈니스 관행을 알고 있다',
+      ],
+    },
     '글로벌역량': { '글로벌역량(단일차원)': ['(척도 등록 필요 - 선행연구에서 직접 확인) 1','(척도 등록 필요 - 선행연구에서 직접 확인) 2','(척도 등록 필요 - 선행연구에서 직접 확인) 3','(척도 등록 필요 - 선행연구에서 직접 확인) 4','(척도 등록 필요 - 선행연구에서 직접 확인) 5'] },
     '창의적자기효능감': { '창의적자기효능감(단일차원)': ['(척도 등록 필요 - 선행연구에서 직접 확인) 1','(척도 등록 필요 - 선행연구에서 직접 확인) 2','(척도 등록 필요 - 선행연구에서 직접 확인) 3','(척도 등록 필요 - 선행연구에서 직접 확인) 4','(척도 등록 필요 - 선행연구에서 직접 확인) 5'] },
     '프로세스혁신': { '프로세스혁신(단일차원)': ['(척도 등록 필요 - 선행연구에서 직접 확인) 1','(척도 등록 필요 - 선행연구에서 직접 확인) 2','(척도 등록 필요 - 선행연구에서 직접 확인) 3','(척도 등록 필요 - 선행연구에서 직접 확인) 4','(척도 등록 필요 - 선행연구에서 직접 확인) 5'] },
@@ -12432,6 +12752,9 @@ const PaperCompass = ({ onBack }) => {
     // ── 2026-04-29 추가 (2): 교육서비스품질 2편 ──
     '권경리(2014)': { subject: '교육서비스품질이 교육성과 및 교육만족에 미치는 영향: Hospitality 교육기관을 대상으로', sample: '국내 승무원 양성학원(I학원) 수강생 282부 (배포 300·회수 287·불성실 5 제외)', region: '국내', iv: '교육서비스품질(유형성/신뢰성/반응성/확신성/공감성)', mv: '-', dv: '교육성과, 교육만족', result: 'H1 서비스품질→교육성과 부분채택(신뢰성만 기각, R²=.466), H2 서비스품질→교육만족 5개 모두 채택(R²=.534), H3 교육성과→교육만족 채택(β=.735)' },
     '양춘협(2014)': { subject: '중국 대학교의 교육서비스품질, 교육성과 및 충성도와의 관계: 중국 천진 지역의 대학교를 중심으로', sample: '중국 천진 지역 대학교 재학생 99부 (배포 160·회수 120·불성실 21 제외)', region: '국외(중국)', iv: '교육서비스품질(유형성/신뢰성/반응성/확신성/공감성)', mv: '교육성과(교육서비스가치/교육만족도)', dv: '충성도', result: '서비스품질→교육서비스가치 부분채택(유형성/신뢰성/반응성 채택, R²=.371), 서비스품질→교육만족도 부분채택(신뢰성/반응성/확신성/공감성 채택, R²=.417), 교육성과→충성도 모두 채택(서비스가치 β=.499, 만족도 β=.554)' },
+    // ── 2026-04-29 추가 (3): 매개효과 연구 2편 ──
+    '옌솽(2022)': { subject: '조직구성원들의 조직공정성 지각이 직무열의와 조직몰입에 미치는 영향: 상사신뢰의 매개효과를 중심으로', sample: '중국 다양한 지역·유형 중소기업 직원 334명 (온라인 무작위 표집)', region: '국외(중국)', iv: '조직공정성(분배/절차/상호작용)', mv: '상사신뢰(단일)', dv: '직무열의(활력/헌신/몰두), 조직몰입', result: '분배·상호작용공정성→상사신뢰 채택, 절차공정성 기각(경로분석); 상사신뢰→조직몰입(β=.538)·직무열의(β=.703) 모두 채택; 매개효과: 분배공정성→직무열의(부분), 상호작용공정성→직무열의(완전), 분배·상호작용공정성→조직몰입(부분), 절차공정성 매개 모두 기각' },
+    '장주현(2026)': { subject: '해외주재원의 조직지원인식이 직무성과에 미치는 영향: 현지적응의 매개효과와 문화지능의 조절된 매개효과', sample: '한국 본사→해외법인 6개월 이상 파견 주재원 335명 (Google Survey, 편의표집, 2025.9.6~9.20)', region: '국외(해외주재원)', iv: '조직지원인식(POS, 단일)', mv: '현지적응(업무적응/문화적응)', dv: '직무성과(객관/주관)', mod: '문화지능(초인지/동기/행동)', result: 'POS→직무성과 채택(β=.579, R²=.335); 현지적응의 부분매개 채택(β .579→.335); 문화지능의 조절된 매개효과 채택(PROCESS Macro Model 7, 조절된 매개지수 .069, 95%CI[.021,.126], 0 미포함)' },
   };
 
   // ── 선행연구 요약문 DB (변수 간 관계) ──
@@ -12467,6 +12790,20 @@ const PaperCompass = ({ onBack }) => {
     '직업소명의식→직무만족': '직업소명의식은 직무만족에 강한 정(+)의 영향을 미치는 것으로 검증되었다(윤순자, 2020; 차원철, 2018; 백경애, 2019). 자신의 일을 천직(calling)으로 인식할수록 직무에 대한 만족도가 증가하는 것으로 확인되었다(Dik & Duffy, 2009).',
     '긍정심리자본→직무만족': '긍정심리자본은 직무만족에 정(+)의 영향을 미치는 것으로 나타났다. 자기효능감, 희망, 복원력, 낙관주의가 직무에 대한 긍정적 태도를 형성하는 것으로 확인되었다.',
     '긍정심리자본→조직몰입': '긍정심리자본은 조직몰입에 정(+)의 영향을 미치는 것으로 나타났다(임재규, 2017). 긍정적 심리적 역량이 조직에 대한 헌신을 높이는 것으로 확인되었다.',
+    // ── 2026-04-30 추가: 혁신과업행동·상사신뢰·조직지원인식 매개경로 요약문 ──
+    '변혁적리더십→조직지원인식': '변혁적 리더의 개별적 배려와 영감적 동기부여는 구성원이 조직을 통해 지원받는다고 인식하게 만들어 조직지원인식(POS)을 높이는 것으로 보고되었다(Eisenberger et al., 2002; Rhoades & Eisenberger, 2002). 리더의 행동이 조직의 의도와 가치를 대변하기에 변혁적 리더십이 POS의 선행요인으로 작용한다.',
+    '조직지원인식→혁신과업행동': '조직지원인식은 혁신과업행동에 정(+)의 영향을 미치는 것으로 검증되었다(우헌근·김문중; 양동민 등, 2009; Afsar & Badir, 2017). 조직이 자신의 노력과 복지를 인정한다고 느끼는 구성원은 새로운 아이디어를 제시·실행하는 자율적 혁신행동에 적극 참여하는 것으로 나타났다.',
+    '상사신뢰→혁신행동': '상사신뢰는 혁신행동에 정(+)의 영향을 미치는 것으로 보고되었다(옌솽, 2022; Carmeli et al., 2009; Edmondson, 1999). 상사를 신뢰하는 구성원은 실패의 두려움이 줄어 새로운 시도와 아이디어 표출에 더 적극적으로 참여한다.',
+    '상사신뢰→혁신과업행동': '상사신뢰는 혁신과업행동에 정(+)의 영향을 미치는 것으로 검증되었다(옌솽, 2022; Carmeli et al., 2009; 정용희, 2024). 상사에 대한 신뢰는 심리적 안전감을 형성하여 혁신적 과업 수행을 촉진한다.',
+    '상사신뢰→조직시민행동': '상사신뢰는 조직시민행동에 강한 정(+)의 영향을 미치는 것으로 메타분석에서 검증되었다(Aryee, Budhwar & Chen, 2002; Dirks, 2000; 이경근·박성수, 2009). 상사를 신뢰하는 구성원은 역할 외 행동에도 자발적으로 참여한다.',
+    '상사신뢰→직무성과': '상사신뢰는 직무성과에 정(+)의 영향을 미치는 것으로 메타분석에서 보고되었다(Dirks & Ferrin, 2002; Mayer, Davis & Schoorman, 1995; Aryee et al., 2002). 신뢰는 정보공유·협력·과업헌신을 촉진하여 성과를 높인다.',
+    'LMX→혁신행동': 'LMX(상사-부하 교환관계)는 혁신행동에 정(+)의 영향을 미치는 것으로 검증되었다(Scott & Bruce, 1994; Tierney & Farmer, 2002; Janssen & Van Yperen, 2004). 상사와 양질의 교환관계를 가진 구성원은 자원·정보·자율성을 더 많이 부여받아 혁신적 행동을 촉진한다.',
+    'LMX→혁신과업행동': 'LMX는 혁신과업행동에 정(+)의 영향을 미치는 것으로 보고되었다(정용희, 2024; Tierney & Farmer, 2002). 양질의 LMX가 도전적 과업의 자율적 수행과 새로운 아이디어 실행을 가능케 한다.',
+    '직무만족→혁신과업행동': '직무만족은 혁신과업행동에 정(+)의 영향을 미치는 것으로 나타났다(정용희, 2024; Janssen, 2000). 만족한 구성원은 추가적 노력을 통해 혁신적 과업 수행에 헌신한다.',
+    '조직몰입→혁신과업행동': '조직몰입은 혁신과업행동에 정(+)의 영향을 미치는 것으로 검증되었다(정용희, 2024; Janssen, 2000; Yuan & Woodman, 2010). 정서적 몰입이 강한 구성원일수록 조직 성과 개선을 위해 자발적 혁신을 추구한다.',
+    '직무열의→혁신과업행동': '직무열의는 혁신과업행동에 정(+)의 영향을 미치는 것으로 보고되었다(심민섭, 2022; Bakker & Demerouti, 2008). 활력·헌신·몰두 상태가 강한 구성원이 혁신적 과업에 더 적극적으로 참여한다.',
+    '자기효능감→혁신과업행동': '자기효능감은 혁신과업행동에 정(+)의 영향을 미치는 것으로 검증되었다(Tierney & Farmer, 2002; Bandura, 1997). 새로운 과업 성공에 대한 자신감이 혁신 시도를 촉진한다.',
+    '심리적임파워먼트→혁신과업행동': '심리적임파워먼트는 혁신과업행동에 정(+)의 영향을 미치는 것으로 보고되었다(Spreitzer, 1995; Pieterse et al., 2010). 의미·역량·자기결정·영향력 인식이 강한 구성원이 혁신적 과업에 적극 참여한다.',
   };
 
   // ── 선행연구 요약문 생성 함수 ──
