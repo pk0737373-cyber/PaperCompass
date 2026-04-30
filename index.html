@@ -2322,8 +2322,33 @@ const PaperCompass = ({ onBack }) => {
 
   const _expandVar = (v) => {
     if (_varAliases[v]) return _varAliases[v];
-    // 슬래시 포함 시 분리
-    if (v.includes('/')) return v.split('/').map(s => s.trim());
+    // 괄호 안 슬래시는 보존 (예: "조직유효성(조직몰입/직무만족)") — 괄호 밖 슬래시만 분리
+    // 정규식: 괄호 깊이 추적은 어려우므로, 괄호로 시작하지 않는 슬래시 단위로 split
+    if (v.includes('/')) {
+      // 괄호 안의 슬래시를 임시 토큰으로 치환 → 분리 → 복원
+      let depth = 0;
+      let buf = '';
+      const parts = [];
+      for (const ch of v) {
+        if (ch === '(') depth++;
+        else if (ch === ')') depth--;
+        if (ch === '/' && depth === 0) {
+          if (buf.trim()) parts.push(buf.trim());
+          buf = '';
+        } else buf += ch;
+      }
+      if (buf.trim()) parts.push(buf.trim());
+      // 괄호 안 슬래시가 있는 합성 변수는 원본 + 내부 변수도 함께 시도
+      // 예: "조직유효성(조직몰입/직무만족)" → ["조직유효성(조직몰입/직무만족)", "조직몰입", "직무만족"]
+      const expanded = [...parts];
+      parts.forEach(p => {
+        const m = p.match(/\(([^)]+)\)/);
+        if (m && m[1].includes('/')) {
+          m[1].split('/').forEach(inner => { const t = inner.trim(); if (t && !expanded.includes(t)) expanded.push(t); });
+        }
+      });
+      return expanded;
+    }
     return [v];
   };
 
@@ -12491,7 +12516,12 @@ const PaperCompass = ({ onBack }) => {
     '이상만(2025)': { subject: '중소전기공사기업 상사의 변혁적·거래적 리더십과 조직유효성 관계에서 셀프리더십의 매개효과', sample: '중소전기공사기업 구성원 (사무직/현장직)', region: '국내', iv: '변혁적리더십, 거래적리더십', mv: '셀프리더십', dv: '직무만족, 조직몰입', result: '변혁적리더십이(가) 직무만족에 유의한 정(+)의 영향, 셀프리더십의 매개효과 확인' },
     '김진태(2025)': { subject: '기계경비 기업 구성원의 직무특성, 보상인식과 성격특성이 조직 유효성에 미치는 영향', sample: '기계경비 기업 구성원', region: '국내', iv: '직무특성', mv: '-', dv: '직무만족, 조직몰입, 이직의도', result: '직무특성이(가) 직무만족에 유의한 정(+)의 영향' },
     '홍재일(2025)': { subject: '공공·민간직업능력개발훈련기관교사의 셀프리더십과 직무성과 관계에서 교사효능감과 혁신행동의 매개', sample: '직업능력개발훈련기관 교사', region: '국내', iv: '셀프리더십', mv: '자기효능감, 혁신행동', dv: '직무성과', result: '셀프리더십이(가) 직무성과에 유의한 정(+)의 영향, 자기효능감의 매개효과 확인' },
-    '유병선(2025)': { subject: '소방분야 종사자의 직무특성과 조직몰입 관계에서 심리적주인의식과 직무만족의 매개효과', sample: '소방분야 종사자', region: '국내', iv: '직무특성', mv: '심리적주인의식, 직무만족', dv: '조직몰입', result: '직무특성→심리적주인의식→조직몰입, 직무특성→직무만족→조직몰입 매개효과 확인' },
+    '유병선(2025)': { subject: '소방분야 종사자의 직무특성과 조직몰입 관계에서 심리적주인의식과 직무만족의 매개효과', sample: '소방분야 종사자 380부 중 365부 유효', region: '국내', iv: '직무특성', mv: '심리적주인의식, 직무만족', dv: '조직몰입', result: '직무특성→심리적주인의식→조직몰입, 직무특성→직무만족→조직몰입 매개효과 확인' },
+    // ── 표 II-4 누락 보강: 연구대상(인원수) 정보 추가 ──
+    '김미현(2024)': { subject: '간호사의 조직공정성, 직무만족, 간호근무환경이 직무배태성에 미치는 영향', sample: '병원 간호사 300명', region: '국내', iv: '조직공정성, 직무만족, 간호근무환경', mv: '-', dv: '직무배태성', result: '조직공정성/직무만족/간호근무환경이 직무배태성에 유의한 정(+)의 영향' },
+    '임재희(2016)': { subject: '호텔리어의 심리적 임파워먼트가 고객지향성에 미치는 영향에 관한 연구', sample: '5성급 호텔리어 250명', region: '국내', iv: '심리적임파워먼트', mv: '직무만족, 조직몰입', dv: '고객지향성', result: '심리적임파워먼트→고객지향성 (+), 직무만족·조직몰입의 매개효과 확인' },
+    '김창섭(2020)': { subject: '상사의 성격5요인이 부하직원의 직무만족에 미치는 영향: 상사-부하 교환관계(LMX)의 매개·조절효과', sample: '대형건설기업 종사자 301명', region: '국내', iv: '성격5요인', mv: 'LMX(상사-부하 교환관계)', dv: '직무만족', mod: 'LMX', result: '성격5요인 → LMX → 직무만족 (+), LMX의 매개효과 및 조절효과 확인' },
+    '최영철(2022)': { subject: '중소건설기업의 직무배태성, 직무만족, 조직몰입, LMX, 이직의도 관계 연구', sample: '중소건설기업 종사자 320부 중 316부 유효', region: '국내', iv: '직무배태성', mv: '직무만족, 조직몰입', dv: '이직의도', result: '직무배태성 → 직무만족/조직몰입 → 이직의도 (-), 매개효과 확인' },
     '남상민(2025)': { subject: '베이커리카페의 고객경험가치와 고객충성도 관계에서 고객만족 및 브랜드신뢰의 매개효과와 성격유형의 조절효과', sample: '비프랜차이즈 베이커리카페 고객 415명', region: '국내', iv: '고객경험가치', mv: '고객만족, 브랜드신뢰', dv: '고객충성도', mod: '성격유형', result: '고객경험가치→고객충성도 유의, 고객만족·브랜드신뢰의 매개효과 확인, 성격유형(외향성)의 조절효과 확인' },
     '김종길(2025)': { subject: '중소 소방기업의 보상공정성과 조직유효성 관계에서 보상만족 매개효과', sample: '중소 소방기업 구성원', region: '국내', iv: '보상공정성', mv: '-', dv: '직무만족, 조직몰입, 이직의도', result: '보상공정성이(가) 직무만족에 유의한 정(+)의 영향' },
     '박종석(2025)': { subject: '한국폴리텍대학 산업설비 교수의 변혁적 리더십이 학습성과에 미치는 영향', sample: '한국폴리텍대학 산업설비 교수', region: '국내', iv: '변혁적리더십', mv: '-', dv: '자기효능감', result: '변혁적리더십이(가) 자기효능감에 유의한 정(+)의 영향' },
@@ -13137,7 +13167,9 @@ const PaperCompass = ({ onBack }) => {
         const hasFrom = varNames.some(n => n === fromVar || fromVar.includes(n) || n.includes(fromVar));
         const hasTo = varNames.some(n => n === toVar || toVar.includes(n) || n.includes(toVar));
         if (hasFrom && hasTo) {
-          const authorKey = `${p.authors || '?'}(${p.year || '?'})`;
+          // 저자 또는 연도 정보 누락 시 표에서 제외 (?(?)) 같은 무의미한 행 방지)
+          if (!p.authors || !p.year) return;
+          const authorKey = `${p.authors}(${p.year})`;
           if (!seenResearchers.has(authorKey)) {
             seenResearchers.add(authorKey);
             const ivVars = vars.filter(v => v.role === '독립').map(v => v.name).join(', ') || '-';
@@ -17830,7 +17862,9 @@ const PaperCompass = ({ onBack }) => {
           ) : (
             pathPairs.map((pair, idx) => {
               const pairKey = `${pair.from}→${pair.to}`;
-              const tableData = getPriorResearchTableData(pair.from, pair.to);
+              const tableData = getPriorResearchTableData(pair.from, pair.to)
+                // 무의미한 행 필터링: ?(?) 같이 저자/연도 없는 항목 제거
+                .filter(p => p.researcher && !/^\?\(\?\)$/.test(p.researcher) && /\(\d{4}\)/.test(p.researcher));
               const tableNum = tableNumMap[pairKey];
 
               // 국외/국내로 그룹화
@@ -17870,6 +17904,25 @@ const PaperCompass = ({ onBack }) => {
                           const regionCount = allGroupedPapers.filter(p => p.region === paper.region).length;
                           const isFirstOfRegion = ri === regionStartIdx;
 
+                          // sample이 없거나 "-"인 경우, subject나 referenceDB type 정보로 의미있는 문구 자동 채움
+                          let sampleDisplay = paper.sample;
+                          if (!sampleDisplay || sampleDisplay === '-' || sampleDisplay.trim() === '') {
+                            const refInfo2 = (typeof referenceDB !== 'undefined' && referenceDB[paper.researcher]) || null;
+                            if (refInfo2) {
+                              if (refInfo2.type === '해외원전' || refInfo2.type === '단행본') sampleDisplay = '이론·척도 (메타·리뷰)';
+                              else if (refInfo2.type === '해외') sampleDisplay = (refInfo2.source || '학술지') + ' 인용';
+                              else if (refInfo2.type === '학술지') sampleDisplay = refInfo2.source || '국내 학술지';
+                              else if (refInfo2.type === '박사') sampleDisplay = (refInfo2.source || '국내') + ' 박사학위논문';
+                              else if (refInfo2.type === '석사') sampleDisplay = (refInfo2.source || '국내') + ' 석사학위논문';
+                              else if (refInfo2.type === 'SVU') sampleDisplay = 'SVU 학위논문';
+                              else if (refInfo2.type === '학위논문') sampleDisplay = '학위논문';
+                              else sampleDisplay = refInfo2.source || refInfo2.type || '학술자료';
+                            } else {
+                              // 한글 저자면 국내, 영문이면 해외
+                              const isKoreanAuthor = /[가-힣]/.test(paper.researcher || '');
+                              sampleDisplay = isKoreanAuthor ? '국내 학위논문/학술지' : '해외 학술지';
+                            }
+                          }
                           return (
                             React.createElement("tr", {key: ri, style: { backgroundColor: ri % 2 === 0 ? '#f9f9f9' : 'white', borderBottom: '1px solid #e0e0e0' }}, isFirstOfRegion && (
                                 React.createElement("td", {style: {
@@ -17879,7 +17932,7 @@ const PaperCompass = ({ onBack }) => {
                                     border: '1px solid #e0e0e0',
                                     verticalAlign: 'top'
                                   }, rowSpan: regionCount}, paper.region === '국외' ? '국외' : '국내')
-                              ), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, renderAuthorLinks(paper.researcher) || paper.researcher), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, paper.sample || paper.subject), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, paper.iv), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, paper.mv), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, paper.dv), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, paper.result))
+                              ), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, renderAuthorLinks(paper.researcher) || paper.researcher), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, sampleDisplay), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, paper.iv), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, paper.mv), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, paper.dv), React.createElement("td", {style: { padding: '5px 4px', border: '1px solid #e0e0e0', fontSize: '0.8rem', wordBreak: 'keep-all' }}, paper.result))
                           );
                         })))
                   ), React.createElement("p", {style: { marginTop: '12px', fontSize: '0.8rem', color: '#666', textAlign: 'center' }}, " 출처: 선행연구에 근거해 연구자가 재구성 "))
