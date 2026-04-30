@@ -579,6 +579,25 @@ const PaperCompass = ({ onBack }) => {
     '긍정심리자본_희망': '목표 달성 의지(agency)와 경로(pathway) 사고 (Luthans 2007)',
     '긍정심리자본_낙관주의': '긍정적 결과에 대한 일반화된 기대 (Luthans 2007, Carver & Scheier 1998)',
     '긍정심리자본_자기효능감': '특정 과업에서의 자기효능감 (Bandura 1997, Stajkovic & Luthans 1998)',
+    // ── 2026-04-29 추가 (2): 교육서비스품질 SERVQUAL 5요인 + 교육 결과변수 ──
+    '교육서비스품질': '교육기관이 제공하는 서비스 전반의 품질 — Parasuraman, Zeithaml & Berry(1988) SERVQUAL 모형의 5요인(유형성/신뢰성/반응성/확신성/공감성)으로 측정',
+    'SERVQUAL': '서비스품질 측정 도구 — PZB(1988)가 개발한 22문항 5요인 척도',
+    '서비스품질': '제공되는 서비스의 우수성에 대한 고객의 전반적 평가 (PZB 1988)',
+    '유형성': '물리적 시설·장비·외관·교재 등 가시적 요소의 품질 (SERVQUAL 1요인)',
+    '신뢰성': '약속된 서비스를 정확하고 일관되게 수행하는 능력 (SERVQUAL 2요인)',
+    '반응성': '고객의 요구에 즉각적으로 응답하고 도와주려는 자세 (SERVQUAL 3요인)',
+    '확신성': '직원의 지식·예의 및 신뢰·확신 전달 능력 (SERVQUAL 4요인)',
+    '공감성': '고객에 대한 개별적 관심과 배려 (SERVQUAL 5요인)',
+    '교육성과': '교육·훈련을 통해 학습자가 얻은 지식·기술·태도의 향상 정도 — 김채호(2008), 권경리(2014)',
+    '교육만족': '교육 내용·시설·강사·분위기·강의기법 등에 대한 종합적 만족도 — 도은숙(2004), 권경리(2014)',
+    '교육서비스가치': '학습자가 교육비 대비 인지하는 교육의 가치 — Suh & Bae(2002), Kim & Ryu(2010), 양춘협(2014)',
+    '교육만족도': '학교/교육기관의 전반적 교육에 대한 만족도 — Oliver(1993), 양춘협(2014)',
+    '학생만족': '학생이 교육 경험에 대해 느끼는 만족 (대학 환경에서 사용)',
+    '학생충성도': '학생이 학교를 추천·재선택하는 행동 의도',
+    '충성도': '고객·학생이 특정 기관/브랜드에 대해 갖는 지속적 이용·추천 의도 — Dodds, Monroe & Grewal(1991), Morgan & Hunt(1994)',
+    '재이용의도': '서비스를 다시 이용하려는 의도 — 충성도의 한 차원',
+    '구전의도': '주변에 추천·언급하려는 의도 — 충성도의 한 차원',
+    '추천의도': '주변에 추천하려는 의도',
   };
 
   const svuDVMapping = {
@@ -610,6 +629,14 @@ const PaperCompass = ({ onBack }) => {
       { name: '혁신행동', count: 2 },     // 심민선(2022), 심민섭(2022)
       { name: '직무열의', count: 1 },     // 심민선(2022)
       { name: '이직의도', count: 1 },     // 김진태(2025)
+    ],
+    // ── 2026-04-29 추가 (2): 교육서비스품질 IV ──
+    '교육서비스품질': [
+      { name: '교육만족', count: 1 },     // 권경리(2014)
+      { name: '교육성과', count: 1 },     // 권경리(2014)
+      { name: '교육서비스가치', count: 1 }, // 양춘협(2014)
+      { name: '교육만족도', count: 1 },    // 양춘협(2014)
+      { name: '충성도', count: 1, aiRecommended: true },
     ],
   };
 
@@ -716,6 +743,16 @@ const PaperCompass = ({ onBack }) => {
       { name: '직무성과', svuCount: 0, extCount: 2, total: 2 },    // 외부: Fried & Ferris(1987), 한태영 등
       { name: '심리적주인의식', svuCount: 1, extCount: 1, total: 2, aiRecommended: true },  // 유병선(2025)에서 매개로 사용
     ],
+    // ── 2026-04-29 추가 (2): 교육서비스품질(SERVQUAL) IV 매핑 ──
+    '교육서비스품질': [
+      { name: '교육만족', svuCount: 1, extCount: 8, total: 9 },         // 권경리(2014) + 도은숙·신재익·박주성·이학식·차수련 등 8편
+      { name: '교육성과', svuCount: 2, extCount: 7, total: 9 },         // 권경리·양춘협 + 김채호·전은수·노정숙·이가희 등
+      { name: '교육서비스가치', svuCount: 1, extCount: 2, total: 3 },   // 양춘협 + Suh & Bae(2002), Kim & Ryu(2010)
+      { name: '교육만족도', svuCount: 1, extCount: 4, total: 5 },       // 양춘협 + Oliver(1993), 강민규·박상규(2011), 이경철(2004)
+      { name: '충성도', svuCount: 1, extCount: 5, total: 6, hot: true },// 양춘협 + Dodds·Morgan & Hunt·Gainey & Klaas·Mai·LeBlanc & Nguyen
+      { name: '재이용의도', svuCount: 0, extCount: 2, total: 2, aiRecommended: true },
+      { name: '학생만족', svuCount: 0, extCount: 3, total: 3, aiRecommended: true },
+    ],
   };
 
   const svuMediatorMapping = {
@@ -770,6 +807,16 @@ const PaperCompass = ({ onBack }) => {
       { name: '직업소명의식', count: 0, aiRecommended: true },
       { name: '긍정심리자본', count: 0, aiRecommended: true },
       { name: '조직후원인식', count: 0, aiRecommended: true },    // 유병선(2025) 조절변수였지만 매개로도 가능
+    ],
+    // ── 2026-04-29 추가 (2): 교육서비스품질 매개경로 (양춘협 2014) ──
+    '교육서비스품질_충성도': [
+      { name: '교육서비스가치', count: 1 },      // 양춘협(2014) 매개효과 확인
+      { name: '교육만족도', count: 1 },          // 양춘협(2014) 매개효과 확인 (가장 강력 β=.554)
+      { name: '교육만족', count: 0, aiRecommended: true },
+      { name: '교육성과', count: 0, aiRecommended: true },
+    ],
+    '교육서비스품질_교육만족': [
+      { name: '교육성과', count: 1 },            // 권경리(2014) H3: 교육성과→교육만족(β=.735) 검증
     ],
   };
 
@@ -912,6 +959,26 @@ const PaperCompass = ({ onBack }) => {
     '직무특성_혁신행동': [
       { name: '직무열의', svuCount: 1, extCount: 1, total: 2 },              // 심민선(2022)
       { name: '직무만족', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+    ],
+    // ── 2026-04-29 추가 (2): 교육서비스품질 매개경로 ──
+    '교육서비스품질_충성도': [
+      { name: '교육만족도', svuCount: 1, extCount: 4, total: 5, hot: true },  // 양춘협(2014) + Oliver(1993), Anderson & Srinivasan(2003), Mai(2005), 박준철(2003)
+      { name: '교육서비스가치', svuCount: 1, extCount: 2, total: 3 },         // 양춘협(2014) + Suh & Bae(2002), Cronin et al.(2000)
+      { name: '교육만족', svuCount: 0, extCount: 3, total: 3, aiRecommended: true },
+      { name: '교육성과', svuCount: 0, extCount: 2, total: 2, aiRecommended: true },
+      { name: '신뢰', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+    ],
+    '교육서비스품질_교육만족': [
+      { name: '교육성과', svuCount: 1, extCount: 2, total: 3 },               // 권경리(2014) + 노정숙(2013), 이가희(2013)
+      { name: '교육서비스가치', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+    ],
+    '교육서비스품질_교육성과': [
+      { name: '교육만족', svuCount: 0, extCount: 2, total: 2, aiRecommended: true },
+    ],
+    // 학생만족·재이용의도 경로
+    '교육서비스품질_학생만족': [
+      { name: '교육서비스가치', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
+      { name: '학교이미지', svuCount: 0, extCount: 1, total: 1, aiRecommended: true },
     ],
   };
 
@@ -1250,6 +1317,17 @@ const PaperCompass = ({ onBack }) => {
     '직무특성→직업소명의식': { count: 4, sources: 'SVU: 윤순자(2020) / 외부: 차원철(2018), 백경애(2019), 정은주(2007), Dik & Duffy(2009), Hall & Chandler(2005)', verdict: 'moderate' },
     '직무특성→소명의식': { count: 4, sources: 'SVU: 윤순자(2020) / 외부: 차원철(2018), 백경애(2019), 정은주(2007), Dik & Duffy(2009)', verdict: 'moderate' },
     '직무특성→긍정심리자본': { count: 3, sources: 'SVU: 윤순자(2020) / 외부: 김주엽·이혜진(2014), 김태성(2017), Luthans, Youssef & Avolio(2007), 강기노(2018)', verdict: 'moderate' },
+    // ── 2026-04-29 추가 (2): 교육서비스품질 경로 ──
+    '교육서비스품질→교육성과': { count: 7, sources: '권경리(2014, R²=.466), 양춘협(2014), 김채호(2008), 전은수(2013), 노정숙(2013), 이가희(2013), Parasuraman, Zeithaml & Berry(1988)', verdict: 'strong' },
+    '교육서비스품질→교육만족': { count: 9, sources: '권경리(2014, R²=.534, 5요인 모두 채택), 도은숙(2004), 박주성·김종호·신용섭(2003), 신재익·정기한(2007), 김지현·이상복(2011), 이학식(1997), 차수련·채연수(1999), Joseph & Joseph(1997), Oliver(1993)', verdict: 'strong' },
+    '교육서비스품질→교육서비스가치': { count: 3, sources: '양춘협(2014, R²=.371), Suh & Bae(2002), Kim & Ryu(2010)', verdict: 'moderate' },
+    '교육서비스품질→교육만족도': { count: 5, sources: '양춘협(2014, R²=.417), Oliver(1993), 강민규·박상규(2011), 이경철(2004), Anderson & Srinivasan(2003)', verdict: 'strong' },
+    '교육서비스품질→충성도': { count: 6, sources: '양춘협(2014), Dodds, Monroe & Grewal(1991), Morgan & Hunt(1994), Gainey & Klaas(2003), Mai(2005), LeBlanc & Nguyen(1999), Kuo & Ye(2009)', verdict: 'strong' },
+    '교육성과→교육만족': { count: 3, sources: '권경리(2014, β=.735, p<.001), 노정숙(2013), 이가희(2013)', verdict: 'strong' },
+    '교육성과→충성도': { count: 4, sources: '양춘협(2014, β=.499/β=.554), Cronin et al.(2000), Zeithaml, Berry & Parasuraman(1996), Kuo & Ye(2009)', verdict: 'strong' },
+    '교육서비스가치→충성도': { count: 3, sources: '양춘협(2014, β=.499), Cronin et al.(2000), Bolton & Drew(1991)', verdict: 'strong' },
+    '교육만족도→충성도': { count: 4, sources: '양춘협(2014, β=.554), Oliver(1993), Anderson & Srinivasan(2003), Mai(2005)', verdict: 'strong' },
+    '교육만족→충성도': { count: 4, sources: 'Joseph & Joseph(1997), Anderson & Srinivasan(2003), Mai(2005), 이혜미·한진수(2013)', verdict: 'strong' },
     // 진성리더십
     '진성리더십→LMX': { count: 2, sources: 'SVU: / 강태만(2023) / 강태만(2022)', verdict: 'weak' },
     '진성리더십→직무만족': { count: 2, sources: 'SVU: / 강태만(2023) / 강태만(2022)', verdict: 'weak' },
@@ -2530,6 +2608,47 @@ const PaperCompass = ({ onBack }) => {
     '소명의식': {
       options: [
         { name: '소명의식(단일차원)', scholar: 'Dik & Duffy(2009), Hall & Chandler(2005), 차원철(2018), 백경애(2019), 김지선(2015), 정은주(2007), 송진호(2016), 박현식(2010), 윤순자(2020)', scale: 'CVQ(Calling and Vocation Questionnaire) 단일차원', answer: 'Dik & Duffy(2009)의 소명의식 개념을 단일 차원으로 측정하였으며, 직업을 천직(calling)으로 인식하는 정도를 평가하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    // ── 2026-04-29 추가 (2): 교육서비스품질 SERVQUAL 5요인 + 교육 결과변수 ──
+    '교육서비스품질': {
+      options: [
+        { name: '유형성', scholar: 'Parasuraman, Zeithaml & Berry(1988), 도은숙(2004), 권경리(2014), 양춘협(2014), Kim & Ryu(2010)', scale: 'SERVQUAL', answer: 'Parasuraman, Zeithaml & Berry(1988)의 SERVQUAL 모형을 채택하여 교육서비스품질을 유형성·신뢰성·반응성·확신성·공감성의 5개 하위차원으로 측정하였습니다.' },
+        { name: '신뢰성', scholar: 'Parasuraman, Zeithaml & Berry(1988), 도은숙(2004), 권경리(2014), Kang & Park(2011)', scale: 'SERVQUAL', answer: '' },
+        { name: '반응성', scholar: 'Parasuraman, Zeithaml & Berry(1988), 도은숙(2004), 권경리(2014), Jacques et al.(2003)', scale: 'SERVQUAL', answer: '' },
+        { name: '확신성', scholar: 'Parasuraman, Zeithaml & Berry(1988), 도은숙(2004), 권경리(2014), Chang, Chae & Kim(2010)', scale: 'SERVQUAL', answer: '' },
+        { name: '공감성', scholar: 'Parasuraman, Zeithaml & Berry(1988), Gronroos(1984), 권경리(2014), 양춘협(2014)', scale: 'SERVQUAL', answer: '' },
+      ],
+      defaultSelected: [0, 1, 2, 3, 4],
+    },
+    '교육성과': {
+      options: [
+        { name: '교육성과(단일차원)', scholar: '김채호(2008), 전은수(2013), 권경리(2014), 노정숙(2013), 이가희(2013)', scale: '교육성과 척도', answer: '김채호(2008), 전은수(2013)의 교육성과 척도를 단일차원으로 측정하여 교육이 실력 향상·경력 개발·진로 선택에 미친 영향을 평가하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '교육만족': {
+      options: [
+        { name: '교육만족(단일차원)', scholar: '도은숙(2004), 권경리(2014), Oliver(1993), 노정숙(2013)', scale: '교육만족 척도', answer: '도은숙(2004)의 교육만족 척도를 단일차원으로 측정하여 교육 내용·시설·분위기·강의기법 전반에 대한 만족도를 평가하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '교육서비스가치': {
+      options: [
+        { name: '교육서비스가치(단일차원)', scholar: 'Suh & Bae(2002), Kim & Ryu(2010), 양춘협(2014)', scale: '서비스가치 척도', answer: 'Suh & Bae(2002), Kim & Ryu(2010)의 교육서비스가치 척도를 단일차원으로 측정하여 학습자가 인지하는 교육의 비용 대비 가치를 평가하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '교육만족도': {
+      options: [
+        { name: '교육만족도(단일차원)', scholar: 'Oliver(1993), Warnaby et al.(1998), 양춘협(2014)', scale: '교육만족도 척도', answer: 'Oliver(1993)의 만족도 개념을 기반으로 학교/교육기관의 전반적 교육에 대한 만족도를 단일차원으로 측정하였습니다.' },
+      ],
+      defaultSelected: [0],
+    },
+    '충성도': {
+      options: [
+        { name: '충성도(단일차원)', scholar: 'Dodds, Monroe & Grewal(1991), Gainey & Klaas(2003), Morgan & Hunt(1994), 양춘협(2014), 박준철(2003), 조광행(1999)', scale: '충성도 척도', answer: 'Dodds, Monroe & Grewal(1991), Morgan & Hunt(1994)의 충성도 척도를 단일차원으로 측정하여 추천·재이용·긍정적 구전 의도를 평가하였습니다.' },
       ],
       defaultSelected: [0],
     },
@@ -4777,6 +4896,76 @@ const PaperCompass = ({ onBack }) => {
   '조한용·김광지·박기용(2011)': { title: '조직지원인식과 조직몰입', source: '학술지', type: '학술지' },
   '최용희(2020)': { title: '소방공무원의 직무만족 연구', source: '학위논문', type: '석사' },
   '홍영호(2015)': { title: '소방공무원의 조직몰입 연구', source: '학위논문', type: '석사' },
+  // ─────────────────────────────────────────────────────────────
+  // 2026-04-29 추가 (2): 교육서비스품질 연구 2편 + 인용 선행연구
+  // ─────────────────────────────────────────────────────────────
+  '권경리(2014)': { title: '교육서비스품질이 교육성과 및 교육만족에 미치는 영향: Hospitality 교육기관을 대상으로', source: '한국교통대', type: '석사' },
+  '양춘협(2014)': { title: '중국 대학교의 교육서비스품질, 교육성과 및 충성도와의 관계에 관한 연구: 중국 천진 지역의 대학교를 중심으로', source: '원광대', type: '석사' },
+  // ── 해외 원전: SERVQUAL/서비스품질 ──
+  'Parasuraman, Zeithaml & Berry(1985)': { title: 'A conceptual model of service quality and its implications for future research', source: 'J. Marketing 49(4)', type: '해외원전' },
+  'Parasuraman, Zeithaml & Berry(1988)': { title: 'SERVQUAL: A multiple-item scale for measuring customer perception of service quality', source: 'J. Marketing 64', type: '해외원전' },
+  'Cronin & Taylor(1992)': { title: 'Measuring service quality: A reexamination and extension', source: 'J. Marketing 56', type: '해외원전' },
+  'Gronroos(1984)': { title: 'A service quality model and its marketing implication', source: 'European J. Marketing 14(4)', type: '해외원전' },
+  'Zeithaml, Berry & Parasuraman(1996)': { title: 'The behavioral consequences of service quality', source: 'J. Marketing 60(2)', type: '해외원전' },
+  'Bolton & Drew(1991)': { title: 'A multistage model of customers\' assessments of service quality and value', source: 'J. Customer Res. 17(3)', type: '해외원전' },
+  'Oliver(1993)': { title: 'A conceptual model of service quality and service satisfaction', source: 'J. Consumer Res. 20(3)', type: '해외원전' },
+  'Oliver(1980)': { title: 'A cognitive model of the antecedents and consequences of satisfaction decisions', source: 'J. Marketing Res.', type: '해외원전' },
+  'Garvin(1984)': { title: 'Quality on the line', source: 'Harvard Business Review', type: '해외원전' },
+  'Howard & Sheth(1969)': { title: 'The theory of buyer behavior', source: '단행본 (Wiley)', type: '해외원전' },
+  'Joseph & Joseph(1997)': { title: 'Service quality in education: A student perspective', source: 'Quality Assurance in Education 5(1)', type: '해외' },
+  'LeBlanc & Nguyen(1999)': { title: 'Listening to the customer\'s voice: Examining perceived service value among business college students', source: 'Int. J. Educ. Mgmt 13(4)', type: '해외' },
+  'Ghobadian, Speller & Jones(1994)': { title: 'Service quality: Concepts and models', source: 'Int. J. Quality & Reliability Mgmt 11(9)', type: '해외' },
+  'Kuo & Ye(2009)': { title: 'The casual relationship between service quality, corporate image and adults learning satisfaction and loyalty', source: 'Total Quality Mgmt 20(7)', type: '해외' },
+  'Tinto(1987)': { title: 'Leaving college: Rethinking the causes and cures of student attrition', source: '단행본 (Univ. of Chicago)', type: '해외원전' },
+  'Astin(1993)': { title: 'What matters in college? Four critical years revisited', source: '단행본 (Jossey-Bass)', type: '해외원전' },
+  'Pate(1990)': { title: 'Modeling consumer satisfaction among consumers of undergraduate higher education', source: '학위논문 (UNC)', type: '해외' },
+  'Kirkpatrick(1984)': { title: 'Effective supervisory training and development', source: '단행본', type: '해외원전' },
+  'Venkatraman(2007)': { title: 'A framework for implementing TQM in higher education', source: 'J. Business Res. 60(9)', type: '해외' },
+  'Abdullah(2005)': { title: 'HEdPERF versus SERVPERF: The quest for ideal measuring instrument of service quality in higher education sector', source: 'Quality Assurance in Education 13(4)', type: '해외' },
+  'Anderson & Narus(1990)': { title: 'A model of distributor firm and manufacturer firm working partnerships', source: 'J. Marketing 54(1)', type: '해외원전' },
+  'Anderson & Srinivasan(2003)': { title: 'E-satisfaction and e-loyalty: A contingency framework', source: 'Psych. & Marketing 20(2)', type: '해외' },
+  'Brown(2006)': { title: 'A study of academic service quality and student satisfaction', source: '학위논문 (PhD)', type: '해외' },
+  'Cronin, Brady & Hult(2000)': { title: 'Assessing the effects of quality, value, and customer satisfaction on consumer behavioral intentions in service environments', source: 'J. Retailing 76(2)', type: '해외원전' },
+  'Dodds, Monroe & Grewal(1991)': { title: 'Effects of price, brand, and store information on buyers\' product evaluations', source: 'J. Marketing Res. 28(3)', type: '해외원전' },
+  'Elliot & Healy(2001)': { title: 'Key factors influencing student satisfaction related to recruitment and retention', source: 'J. Marketing for Higher Education 10(4)', type: '해외' },
+  'Gainey & Klaas(2003)': { title: 'The outsourcing of training and development: Factors impacting client satisfaction', source: 'J. Mgmt 29(2)', type: '해외' },
+  'Mai(2005)': { title: 'A comparative study between UK and US: The student satisfaction in higher education', source: 'J. Marketing Mgmt 21(7)', type: '해외' },
+  'Mayer, Davis & Schoorman(1995)': { title: 'An integrative model of organizational trust', source: 'AMR 20(2)', type: '해외원전' },
+  'Morgan & Hunt(1994)': { title: 'The commitment-trust theory of relationship marketing', source: 'J. Marketing 58(3)', type: '해외원전' },
+  'Warnaby, Alexander & Medway(1998)': { title: 'Town centre management in the UK: A review, synthesis and research agenda', source: 'Int. Rev. Retail, Distribution & Consumer Res. 8(1)', type: '해외' },
+  'Suh & Bae(2002)': { title: 'A study on the effect of perceived value on customer satisfaction in service industry', source: 'Korean academic journal', type: '해외' },
+  'Kim & Ryu(2010)': { title: 'A study of educational service quality, customer satisfaction and loyalty', source: 'Korean Assoc. for Policy Sci. 14(2)', type: '해외' },
+  'Kang & Park(2011)': { title: 'A study on the relationship between educational service quality, student satisfaction, trust, commitment and student loyalty', source: 'Academy of Customer Satisfaction Mgmt J. 13(1)', type: '해외' },
+  'Chang, Chae & Kim(2010)': { title: 'A study of educational service quality factors', source: 'Korean Acad. Assoc. Bus. Admin. 23(2)', type: '해외' },
+  'Jacques, Thoma, Foster, McCann & Tunno(2003)': { title: 'Service quality measurement in higher education', source: 'Rev. Radical Political Econ. 35(4)', type: '해외' },
+  'Cha & Chung(2008)': { title: 'A study on hotel service quality and customer satisfaction', source: 'Korean J. Tourism Res. 23(2)', type: '해외' },
+  'Kuh(1981)': { title: 'Indices of quality in undergraduate education', source: 'Higher Education Res. Report No.4', type: '해외' },
+  'Betz, Klingensmith & Menne(1970)': { title: 'The measurement and analysis of college student satisfaction', source: 'Measurement & Evaluation in Guidance 13(6)', type: '해외' },
+  // ── 국내 인용 선행연구 ──
+  '김지현·이상복(2011)': { title: '교육서비스품질이 고객만족 및 재구매에 미치는 영향', source: '품질경영학회지 39(1)', type: '학술지' },
+  '박주성·김종호·신용섭(2003)': { title: '대학교육서비스 품질요인이 학생만족, 재입학의도 및 구전효과에 미치는 영향', source: 'Asia Marketing Journal 4(4)', type: '학술지' },
+  '신재익·정기한(2007)': { title: '교육기관의 서비스품질, 학생만족, 구전 간의 관계', source: '학습자중심교과교육연구 7(1)', type: '학술지' },
+  '이학식(1997)': { title: '지각된 서비스품질의 결정과정: 판단대상으로서의 서비스 만족과 서비스품질의 비교', source: '경영학연구 26(1)', type: '학술지' },
+  '차수련·채연수(1999)': { title: '교육 서비스품질의 측정에 관한 연구', source: '경상논총 20', type: '학술지' },
+  '강민규·박상규(2011)': { title: '대학교육기관의 교육서비스품질이 학생만족, 신뢰, 몰입과 학생충성도에 미치는 영향', source: '고객만족경영연구 13(1)', type: '학술지' },
+  '이경철(2004)': { title: '대학교육서비스품질이 학생만족, 대학이미지 및 긍정적 행동의지에 미치는 인과모형 연구', source: '교육행정학연구 22(4)', type: '학술지' },
+  '이정원·임지영(2008)': { title: '대학교육 서비스품질, 학교브랜드 및 취업과 학생의 만족도, 충성도', source: '한국관광학회 학술대회', type: '학술대회' },
+  '이혜미·한진수(2013)': { title: '교육서비스품질과 만족도 및 충성도 관계', source: '관광연구저널 27(3)', type: '학술지' },
+  '박준철(2003)': { title: '인터넷 쇼핑몰 이용자의 고객만족이 신뢰, 몰입, 고객충성행위에 미치는 영향', source: '경영정보학연구 13(3)', type: '학술지' },
+  '조광행(1999)': { title: '호텔업에서의 고객충성도 결정요인에 관한 연구', source: '호텔관광연구 22(3)', type: '학술지' },
+  '이용기(1988)': { title: '서비스품질 측정 연구', source: '경영학연구 27(3)', type: '학술지' },
+  '권대봉(2001)': { title: '평생교육학의 다섯마당', source: '단행본 (학지사)', type: '단행본' },
+  '강철룡(1999)': { title: '실직자 재취직 직업교육훈련 과정의 질적 수준과 교육만족도에 관한 연구', source: '동국대 학위논문', type: '석사' },
+  '김선영(2011)': { title: '미용학원의 교육서비스 품질에 따른 만족도 및 소비행동에 미치는 영향', source: '호남대 학위논문', type: '석사' },
+  '김양희(2002)': { title: '대학교육 서비스품질 요인이 학생만족 및 후속행동에 미치는 영향', source: '조선대 학위논문', type: '석사' },
+  '김월엽(2002)': { title: '교육서비스 만족의 영향요인에 관한 연구', source: '경상대 학위논문', type: '석사' },
+  '김채호(2008)': { title: '아카데미 뷰티스쿨의 교육 서비스 품질과 교육성과 및 학생 만족도에 대한 연구', source: '성신여대 학위논문', type: '석사' },
+  '노정숙(2013)': { title: '교육서비스 품질이 교육만족과 충성도 및 교육성과에 미치는 영향', source: '경상대 학위논문', type: '석사' },
+  '도은숙(2004)': { title: '서비스 교육품질이 교육만족과 고객지향성에 미치는 영향', source: '대구대 학위논문', type: '석사' },
+  '이가희(2013)': { title: '조리교육기관의 교육 서비스 품질이 교육성과에 미치는 영향', source: '경희대 학위논문', type: '석사' },
+  '전은수(2013)': { title: '미용교육서비스 품질요인이 교육성과와 구전활동 및 재이용의도에 미치는 영향', source: '서경대 학위논문', type: '석사' },
+  '김혜옥(2001)': { title: '대학 교육서비스품질이 학생만족, 추천의도 및 기부의향에 미치는 영향', source: '동아대 학위논문', type: '석사' },
+  '채연수(1999)': { title: '교육서비스품질의 측정에 관한 실증적 연구', source: '동국대 학위논문', type: '박사' },
 };
 
   // SVU 논문 DB에서 각 변수별 측정도구를 활용한 SVU 학위논문 목록
@@ -4816,6 +5005,13 @@ const PaperCompass = ({ onBack }) => {
     '심리적주인의식': ['김화자(2023)', '유병선(2025)', '유병선(2026)'],
     '직업소명의식': ['윤순자(2020)'],
     '소명의식': ['윤순자(2020)', '차원철(2018)', '백경애(2019)', '김지선(2015)', '홍성미(2017)', '정은주(2007)', '송진호(2016)', '박현식(2010)'],
+    // ── 2026-04-29 추가 (2): 교육서비스품질 ──
+    '교육서비스품질': ['권경리(2014)', '양춘협(2014)'],
+    '교육성과': ['권경리(2014)', '양춘협(2014)', '김채호(2008)', '전은수(2013)'],
+    '교육만족': ['권경리(2014)', '도은숙(2004)'],
+    '교육서비스가치': ['양춘협(2014)'],
+    '교육만족도': ['양춘협(2014)'],
+    '충성도': ['양춘협(2014)'],
     '자기결정성': ['권영민(2017)', '박세언(2015)', '이도연(2016)'],
     '직무배태성': ['최영철(2023)'],
     '직무소진': ['김승연(2017)', '백성현(2024)'],
@@ -5520,7 +5716,10 @@ const PaperCompass = ({ onBack }) => {
     '황환성(2020)': 'SVU 논문 원본/중소 소방엔지니어링 기업의 조직공정성이 조직몰입에 미치는 영향 황환성 2019.pdf',
     // ── 2026-04-29 신규 추가: 직무특성 매개효과 연구 2편 (유병선(2025)은 SVU 폴더에 기존 매핑) ──
     '윤순자(2020)': '타학교 논문 원본/장기요양기관_직무특성_직무만족_직업소명의식_긍정심리자본_매개.pdf',
-    '배순정(2020)': '타학교 논문 원본/교원_직무특성_직무만족_감정노동_매개.pdf'
+    '배순정(2020)': '타학교 논문 원본/교원_직무특성_직무만족_감정노동_매개.pdf',
+    // ── 2026-04-29 추가 (2): 교육서비스품질 2편 ──
+    '권경리(2014)': '타학교 논문 원본/교육서비스품질_출처1.pdf',
+    '양춘협(2014)': '타학교 논문 원본/교육서비스품질_출처2.pdf'
   };
 
 
@@ -6512,6 +6711,120 @@ const PaperCompass = ({ onBack }) => {
         '내 일은 나에게 깊은 의미를 준다',
         '나는 내 일을 통해 사회에 도움이 된다고 믿는다',
         '내 직업은 나의 가치관과 일치한다',
+      ],
+    },
+    // ── 2026-04-29 추가 (2): 교육서비스품질 SERVQUAL 5요인 (각 8문항) ──
+    // 한국적용: 권경리(2014), 양춘협(2014), 도은숙(2004), 김채호(2008)
+    '교육서비스품질': {
+      '유형성': [
+        '교육기관은 최신의 교육장비를 갖추고 있다',
+        '교육장의 시설이 잘 갖추어져 있다',
+        '교육장의 분위기가 학습에 적합하다',
+        '교육을 위한 준비(교재, 안내 등)가 잘 되어 있다',
+        '강사들의 단정한 용모와 복장이 신뢰감을 준다',
+        '학습 자료가 강의내용에 맞게 적절하고 풍부하게 제공된다',
+        '강의 자료는 보기 좋고 매력적으로 구성되어 있다',
+        '교육 시설과 장비는 현대적이고 깨끗하다',
+      ],
+      '신뢰성': [
+        '강사들은 약속한 시간을 잘 준수한다',
+        '강사들은 교육생들의 문제에 관심과 성의를 보인다',
+        '교육생들의 요구사항이 정확하게 처리된다',
+        '강의 일정에 따라 강의가 정확히 진행된다',
+        '교육생들의 출석 및 교육평가가 정확히 관리된다',
+        '강의 내용이나 학습 자료는 오류가 없고 정확하다',
+        '강의진행 관련 문제 발생 시 교수가 적극적으로 해결한다',
+        '강의의 개념이나 원리가 명확하게 전달된다',
+      ],
+      '반응성': [
+        '교육일정이 상세하게 통지된다',
+        '교육생들의 요구가 신속하게 처리된다',
+        '강사가 자발적으로 도움을 제공한다',
+        '교육생들의 요구에 강사가 즉각 응답한다',
+        '질문에 대한 답변이 신속하게 이루어진다',
+        '교수는 학생들의 의견과 불만을 신속히 처리한다',
+        '강의·학습과정에서 발생하는 요구사항 처리가 적절하다',
+        '학습과정 관리가 신속하고 적절하다',
+      ],
+      '확신성': [
+        '강사의 행동이 교육생에게 확신을 준다',
+        '교육생을 대하는 강사의 언행이 편안하다',
+        '강사가 친절하고 예의 바르다',
+        '강사는 교육에 관한 충분한 지식을 갖고 있다',
+        '강의실 강의는 안정적으로 진행된다',
+        '제출한 과제와 시험에 대해 공정하고 정확한 평가가 이루어진다',
+        '강의실 강의는 전반적으로 믿을 만하다',
+        '강사는 전문성을 바탕으로 신뢰감을 준다',
+      ],
+      '공감성': [
+        '강사가 교육생에 대한 개별적인 관심을 가진다',
+        '교육생의 이익을 위한 강사의 노력이 보인다',
+        '강사는 교육생이 무엇을 필요로 하는지 잘 이해한다',
+        '강사는 교육생의 편리를 위해 다양한 강의시간을 제시한다',
+        '학생의 수준에 따른 다양한 강의·학습자료가 제공된다',
+        '교수와 학생 간의 의견교환이 잘 이루어진다',
+        '강사는 학생 개개인의 학습 어려움에 공감한다',
+        '교육기관은 학생의 입장에서 서비스를 제공한다',
+      ],
+    },
+    '교육성과': {
+      '교육성과(단일차원)': [
+        '수강 중인 학원의 교육이 자신의 경력개발에 도움을 준다',
+        '수강 중인 학원의 교육으로 인해 나의 실력이 향상되었다',
+        '교육내용과 자료가 현장 활용도가 높아 직업선택에 실질적 도움을 준다',
+        '수강 중인 학원의 교육이 수강 목적의 달성에 도움을 주었다',
+        '학원의 전체적인 교육 프로그램은 수강생들의 요구를 이해하고 부응한다',
+        '교육을 통해 새로운 지식과 기술을 습득하였다',
+        '교육 후 나의 업무 수행 능력이 향상되었다',
+        '교육 내용을 실무에 적용할 수 있게 되었다',
+      ],
+    },
+    '교육만족': {
+      '교육만족(단일차원)': [
+        '나는 교육 내용에 만족한다',
+        '나는 교육 분위기에 만족한다',
+        '나는 강사의 강의기법에 만족한다',
+        '나는 교육에 전반적으로 만족한다',
+        '나는 교육 시설에 만족한다',
+        '나는 교육 시간 운영에 만족한다',
+        '나는 강사진의 전문성에 만족한다',
+        '나는 다른 사람에게 이 교육을 추천하고 싶다',
+      ],
+    },
+    '교육서비스가치': {
+      '교육서비스가치(단일차원)': [
+        '우리학교의 교육서비스는 내가 부담한 교육비에 비해 훌륭한 가치가 있다',
+        '우리학교가 제공하는 서비스에 대해 내가 부담한 교육비가 전혀 아깝지 않다',
+        '우리학교에서 배운 지식은 향후 나의 발전에 도움이 될 것이다',
+        '우리학교에서 배우는 교육내용은 교육적 가치가 있다',
+        '우리학교에서 받는 교육비는 적절한 가치가 있다',
+        '교육서비스의 질이 비용에 비해 우수하다',
+        '받은 교육은 미래의 진로에 가치 있는 투자이다',
+        '교육 경험은 비용 대비 만족스러운 가치를 제공한다',
+      ],
+    },
+    '교육만족도': {
+      '교육만족도(단일차원)': [
+        '나는 우리학교 교육에 대해 전반적으로 만족한다',
+        '우리 학교가 제공하는 전반적인 교육에 만족한다',
+        '나는 우리 학교를 선택한 것에 만족한다',
+        '나는 우리 학교에 다니는 것을 자랑스럽게 생각한다',
+        '전문지식 향상에 대해 만족한다',
+        '교육프로그램에 대해 만족한다',
+        '학교의 교육환경에 만족한다',
+        '학교 생활 전반에 만족한다',
+      ],
+    },
+    '충성도': {
+      '충성도(단일차원)': [
+        '주위 사람들이 우리 학교의 교육서비스 경험을 묻는다면 기꺼이 말해주고 싶다',
+        '주위 사람들에게 우리 학교에 입학하도록 권유하고 싶다',
+        '우리 학교에 대해 주위 사람들에게 좋게 말하겠다',
+        '주위 사람들에게 우리 학교를 추천하겠다',
+        '주위 사람들에게 우리 학교의 교육프로그램을 긍정적으로 말하겠다',
+        '기회가 된다면 이 학교/기관에서 다시 교육받고 싶다',
+        '나는 이 교육기관에 강한 애착을 갖고 있다',
+        '나는 이 학교의 학생이라는 것을 자랑스럽게 여긴다',
       ],
     },
     '감정고갈': {
@@ -12116,6 +12429,9 @@ const PaperCompass = ({ onBack }) => {
     // ── 2026-04-29 추가: 직무특성 매개효과 연구 2편 (유병선(2025)은 기존 등재) ──
     '윤순자(2020)': { subject: '장기요양기관 종사자들의 직무특성이 직무만족에 미치는 영향: 직업소명의식과 긍정심리자본의 매개효과', sample: '경기 동두천·양주 노인 장기요양기관 종사자 134부 (배부 150·회수 140·불성실 6 제외)', region: '국내', iv: '직무특성(중요성/다양성/자율성/대인관계)', mv: '직업소명의식, 긍정심리자본', dv: '직무만족(내적/외적)', result: '직무특성→직무만족 부분채택; 직업소명의식의 부분매개 확인(다양성→내적, 중요성·자율성·대인관계→외적); 긍정심리자본1(자기효능감+희망)의 부분매개 일부 확인(다양성→내적); 긍정심리자본2(복원력) 매개효과 미확인' },
     '배순정(2020)': { subject: '교원의 직무특성이 직무만족에 미치는 영향: 감정노동 매개효과 검증', sample: '경기도 초등학교 교원 606부 (배포 685·회수 667·불성실 61 제외, 회수율 97.4%)', region: '국내', iv: '직무특성(기능다양성/직무정체성/직무중요성/자율성/피드백)', mv: '감정노동(빈도/주의정도/감정부조화/표면행위/내면행위)', dv: '직무만족(혁신성/교육의식/발전성/자율성)', result: '직무특성→직무만족 5개 모두 채택(피드백 β=.25 가장 강함); 직무특성→감정노동은 기능다양성·직무중요성만 채택; 감정노동→직무만족은 주의정도(-)·내면행위(+)만 채택; 감정노동(내면행위)의 부분매개 확인' },
+    // ── 2026-04-29 추가 (2): 교육서비스품질 2편 ──
+    '권경리(2014)': { subject: '교육서비스품질이 교육성과 및 교육만족에 미치는 영향: Hospitality 교육기관을 대상으로', sample: '국내 승무원 양성학원(I학원) 수강생 282부 (배포 300·회수 287·불성실 5 제외)', region: '국내', iv: '교육서비스품질(유형성/신뢰성/반응성/확신성/공감성)', mv: '-', dv: '교육성과, 교육만족', result: 'H1 서비스품질→교육성과 부분채택(신뢰성만 기각, R²=.466), H2 서비스품질→교육만족 5개 모두 채택(R²=.534), H3 교육성과→교육만족 채택(β=.735)' },
+    '양춘협(2014)': { subject: '중국 대학교의 교육서비스품질, 교육성과 및 충성도와의 관계: 중국 천진 지역의 대학교를 중심으로', sample: '중국 천진 지역 대학교 재학생 99부 (배포 160·회수 120·불성실 21 제외)', region: '국외(중국)', iv: '교육서비스품질(유형성/신뢰성/반응성/확신성/공감성)', mv: '교육성과(교육서비스가치/교육만족도)', dv: '충성도', result: '서비스품질→교육서비스가치 부분채택(유형성/신뢰성/반응성 채택, R²=.371), 서비스품질→교육만족도 부분채택(신뢰성/반응성/확신성/공감성 채택, R²=.417), 교육성과→충성도 모두 채택(서비스가치 β=.499, 만족도 β=.554)' },
   };
 
   // ── 선행연구 요약문 DB (변수 간 관계) ──
@@ -13412,39 +13728,82 @@ const PaperCompass = ({ onBack }) => {
 
   const generateHypotheses = () => {
     const h = [];
-    // 1. IV → DV 직접효과 (각 IV별로 생성)
+    // 변수의 선택된 하위요인 이름 배열 반환 (subFactorTheory + selectedSubFactors 활용)
+    const _getSubNames = (varName) => {
+      const theory = subFactorTheory[varName];
+      if (!theory) return [];
+      const indices = selectedSubFactors[varName] || theory.defaultSelected;
+      return indices.map(i => theory.options[i]?.name).filter(Boolean);
+    };
+    // 단일차원(또는 1개만 선택된) 하위요인은 가설 분해 생략 (선배 논문 관행)
+    const _hasMultipleSubs = (varName) => _getSubNames(varName).length > 1;
+    // ── 부모 가설 번호는 h.length(하위가설 포함)와 별도로 카운트 ──
+    // 다이어그램의 H1, H2, H3 라벨과 정확히 일치하도록 변수 단위로 증가
+    let pn = 0;
+
+    // 1. IV → DV 직접효과 (parent + sub-hypotheses)
     selectedIVs.forEach(iv => {
-      selectedDVs.forEach((dv, di) => {
-        h.push(`H${h.length + 1}: ${iv}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미친다.`);
-      });
-    });
-    // 2. IV → 각 매개변수 (각 IV별로 생성)
-    selectedIVs.forEach(iv => {
-      selectedMediators.forEach((med) => {
-        h.push(`H${h.length + 1}: ${iv}은(는) ${med}에 유의한 ${_getDirection(med)}의 영향을 미친다.`);
-      });
-    });
-    // 3. 각 매개변수 → 각 DV
-    selectedMediators.forEach((med) => {
       selectedDVs.forEach(dv => {
-        h.push(`H${h.length + 1}: ${med}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미친다.`);
+        pn += 1;
+        h.push(`H${pn}: ${iv}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미친다.`);
+        if (_hasMultipleSubs(iv)) {
+          _getSubNames(iv).forEach((sub, si) => {
+            h.push(`H${pn}-${si + 1}: ${iv}의 ${sub}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미친다.`);
+          });
+        }
       });
     });
-    // 4. 매개효과 가설 (각 IV별, 매개변수별 개별 생성)
+    // 2. IV → 매개변수 (parent + sub)
+    selectedIVs.forEach(iv => {
+      selectedMediators.forEach(med => {
+        pn += 1;
+        h.push(`H${pn}: ${iv}은(는) ${med}에 유의한 ${_getDirection(med)}의 영향을 미친다.`);
+        if (_hasMultipleSubs(iv)) {
+          _getSubNames(iv).forEach((sub, si) => {
+            h.push(`H${pn}-${si + 1}: ${iv}의 ${sub}은(는) ${med}에 유의한 ${_getDirection(med)}의 영향을 미친다.`);
+          });
+        }
+      });
+    });
+    // 3. 매개 → DV (매개의 하위요인이 여러 개면 분해)
+    selectedMediators.forEach(med => {
+      selectedDVs.forEach(dv => {
+        pn += 1;
+        h.push(`H${pn}: ${med}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미친다.`);
+        if (_hasMultipleSubs(med)) {
+          _getSubNames(med).forEach((sub, si) => {
+            h.push(`H${pn}-${si + 1}: ${med}의 ${sub}은(는) ${dv}에 유의한 ${_getDirection(dv)}의 영향을 미친다.`);
+          });
+        }
+      });
+    });
+    // 4. 매개효과 (parent + IV 하위요인 분해)
     if (selectedMediators.length > 0) {
       selectedIVs.forEach(iv => {
         selectedDVs.forEach(dv => {
           selectedMediators.forEach(med => {
-            h.push(`H${h.length + 1}: ${iv}이(가) ${dv}에 미치는 영향은 ${med}를 통해 매개된다.`);
+            pn += 1;
+            h.push(`H${pn}: ${iv}이(가) ${dv}에 미치는 영향은 ${med}를 통해 매개된다.`);
+            if (_hasMultipleSubs(iv)) {
+              _getSubNames(iv).forEach((sub, si) => {
+                h.push(`H${pn}-${si + 1}: ${iv}의 ${sub}이(가) ${dv}에 미치는 영향은 ${med}를 통해 매개된다.`);
+              });
+            }
           });
         });
       });
     }
-    // 5. 조절효과 가설 (각 IV별로 생성)
-    selectedModerators.forEach((mod) => {
+    // 5. 조절효과 (parent + IV 하위요인 분해)
+    selectedModerators.forEach(mod => {
       selectedIVs.forEach(iv => {
         selectedDVs.forEach(dv => {
-          h.push(`H${h.length + 1}: ${mod}은(는) ${iv}이(가) ${dv}에 미치는 영향을 조절한다.`);
+          pn += 1;
+          h.push(`H${pn}: ${mod}은(는) ${iv}이(가) ${dv}에 미치는 영향을 조절한다.`);
+          if (_hasMultipleSubs(iv)) {
+            _getSubNames(iv).forEach((sub, si) => {
+              h.push(`H${pn}-${si + 1}: ${mod}은(는) ${iv}의 ${sub}이(가) ${dv}에 미치는 영향을 조절한다.`);
+            });
+          }
         });
       });
     });
@@ -15170,9 +15529,20 @@ const PaperCompass = ({ onBack }) => {
 
     // ── Tab 1: 연구모형 ──
     const renderModelTab = () => (
-      React.createElement("div", {className: "space-y-6"}, React.createElement("div", {className: "p-6 bg-white rounded-lg border-2 border-gray-200"}, React.createElement(ResearchModelSVG, null)), React.createElement("div", {className: "p-6 bg-white rounded-lg border-2 border-gray-200"}, React.createElement("h3", {className: "font-bold text-lg mb-4", style: { color: '#1F3864' }}, "연구가설"), React.createElement("div", {className: "space-y-3"}, hypotheses.map((h, i) => (
-              React.createElement("div", {key: i, className: "flex gap-3 p-3 bg-gray-50 rounded-lg"}, React.createElement("span", {className: "font-bold text-sm", style: { color: '#2E75B6', minWidth: 30 }}, h.split(':')[0], ":"), React.createElement("span", {className: "text-sm text-gray-800"}, h.split(':').slice(1).join(':').trim()))
-            )))))
+      React.createElement("div", {className: "space-y-6"}, React.createElement("div", {className: "p-6 bg-white rounded-lg border-2 border-gray-200"}, React.createElement(ResearchModelSVG, null)), React.createElement("div", {className: "p-6 bg-white rounded-lg border-2 border-gray-200"}, React.createElement("h3", {className: "font-bold text-lg mb-4", style: { color: '#1F3864' }}, "연구가설"), React.createElement("div", {className: "space-y-2"}, hypotheses.map((h, i) => {
+              const _label = h.split(':')[0];
+              const _isSub = _label.includes('-');  // H1-1, H1-2 ... 형태면 하위가설
+              return React.createElement("div", {key: i, className: "flex gap-3 rounded-lg",
+                style: {
+                  padding: _isSub ? '8px 12px' : '12px',
+                  marginLeft: _isSub ? '24px' : 0,
+                  background: _isSub ? '#F5F8FC' : '#F0F4FA',
+                  borderLeft: _isSub ? '3px solid #B8D4E8' : '4px solid #2E75B6',
+                }},
+                React.createElement("span", {className: "font-bold", style: { color: _isSub ? '#5B7B9A' : '#2E75B6', minWidth: _isSub ? 38 : 30, fontSize: _isSub ? '12px' : '14px' }}, _label, ":"),
+                React.createElement("span", {style: { color: _isSub ? '#444' : '#222', fontSize: _isSub ? '12px' : '14px' }}, h.split(':').slice(1).join(':').trim())
+              );
+            }))))
     );
 
     // ── Tab: 설문지 구성표 (표 III-5 스타일) ──
