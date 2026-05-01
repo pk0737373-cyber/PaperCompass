@@ -16514,7 +16514,25 @@ const PaperCompass = ({ onBack }) => {
                   style: { backgroundColor: i === 3 ? '#F57C00' : (i === 4 ? '#1976D2' : '#2E75B6') }}, i + 1),
                 React.createElement("div", {className: "flex-1"},
                   React.createElement("p", {className: "text-sm font-semibold", style: { color: '#1F3864' }}, step.title),
-                  React.createElement("p", {className: "text-xs text-gray-700 mt-1", style: { lineHeight: 1.5 }}, step.detail),
+                  // ── URL 자동 링크화 ── (https://... 또는 http://... 패턴을 클릭 가능한 새 탭 링크로 변환)
+                  React.createElement("p", {className: "text-xs text-gray-700 mt-1", style: { lineHeight: 1.5 }},
+                    ...(() => {
+                      const parts = String(step.detail || '').split(/(https?:\/\/[^\s)]+)/g);
+                      return parts.map((seg, idx) => {
+                        if (/^https?:\/\//.test(seg)) {
+                          return React.createElement("a", {
+                            key: idx,
+                            href: seg,
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                            style: { color: '#1565C0', textDecoration: 'underline', fontWeight: 600, cursor: 'pointer' },
+                            title: '새 탭에서 ' + seg + ' 열기'
+                          }, seg);
+                        }
+                        return seg;
+                      });
+                    })()
+                  ),
                   step.tip && React.createElement("p", {className: "text-xs mt-1.5 px-2 py-1 rounded inline-block",
                     style: { backgroundColor: '#FFFDE7', color: '#827717', border: '1px solid #FFF59D' }},
                     "💡 ", step.tip)
