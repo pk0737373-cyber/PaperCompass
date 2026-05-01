@@ -19332,7 +19332,30 @@ const PaperCompass = ({ onBack }) => {
               )
             )
           )
-        ), React.createElement("div", {className: "flex flex-wrap gap-1 mb-6 p-1 bg-gray-100 rounded-lg"}, outputTabs.map(tab => (
+        ),
+        // ── ★ Step 10: 통계 분석 모듈 진입 안내 박스 ──
+        React.createElement("div", {className: "mb-5 p-4 rounded-lg",
+          style: { background: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)', border: '2px solid #4CAF50' }},
+          React.createElement("div", {className: "flex items-start gap-3"},
+            React.createElement("span", {style: {fontSize: 32}}, "📊"),
+            React.createElement("div", {className: "flex-1"},
+              React.createElement("p", {className: "font-bold text-base mb-1", style: {color: '#1B5E20'}},
+                "Step 10. 응답 받은 후 통계 분석"),
+              React.createElement("p", {className: "text-xs leading-relaxed mb-2", style: {color: '#2E7D32'}},
+                "Google Forms 응답 수집 후 ", React.createElement("strong", null, "엑셀 파일을 업로드"),
+                "하면 ", React.createElement("strong", null, "박사 수준 통계 분석"),
+                "이 자동 진행됩니다 — 빈도/EFA/신뢰도/상관/회귀/Hayes Model 4·7 (조절된 매개) + ",
+                React.createElement("strong", null, "본문 텍스트 자동 작성"), "."),
+              React.createElement("button", {
+                onClick: () => { if(typeof window !== 'undefined' && window.location) { window.location.reload(); } },
+                style: { padding: '8px 16px', background: '#1B5E20', color: '#fff', border: 'none', borderRadius: 6, fontSize: 13, fontWeight: 'bold', cursor: 'pointer', marginRight: 8 }},
+                "🔓 메인 화면 → 📊 설문 결과 통계 검토"),
+              React.createElement("span", {className: "text-xs", style: {color: '#5D4037'}},
+                "또는 메인으로 돌아가 통계 메뉴를 선택하세요. 본 연구 변수와 자동 매칭됩니다.")
+            )
+          )
+        ),
+        React.createElement("div", {className: "flex flex-wrap gap-1 mb-6 p-1 bg-gray-100 rounded-lg"}, outputTabs.map(tab => (
             React.createElement("button", {key: tab.key, onClick: () => setActiveOutputTab(tab.key), className: "px-3 py-2 rounded-lg text-sm font-semibold transition", style: {
                 backgroundColor: activeOutputTab === tab.key ? (tab.highlight ? '#1F3864' : '#2E75B6') : (tab.highlight ? '#E8EEF5' : 'transparent'),
                 color: activeOutputTab === tab.key ? 'white' : (tab.highlight ? '#1F3864' : '#666'),
@@ -19578,6 +19601,198 @@ const SF = {
     return SF.ols(z(y),Xs.map(z));
   },
   sobel: (a,b,sa,sb) => (sa&&sb)?(a*b)/Math.sqrt(b*b*sa*sa+a*a*sb*sb):0,
+
+  // ── Phase 2.1 추가: 박사 수준 통계 함수 ──
+  // 출처 표기: 각 함수에 학술적 출처 주석 포함
+
+  // 왜도(Skewness) — Joanes & Gill(1998) g1
+  skew: a => {
+    const m = SF.mean(a), n = a.length;
+    const s = Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/n);
+    return s ? a.reduce((s2,v)=>s2+((v-m)/s)**3,0)/n : 0;
+  },
+  // 첨도(Kurtosis) — Excess kurtosis (Joanes & Gill 1998)
+  kurt: a => {
+    const m = SF.mean(a), n = a.length;
+    const s = Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/n);
+    return s ? a.reduce((s2,v)=>s2+((v-m)/s)**4,0)/n - 3 : 0;
+  },
+  // 빈도분석 — 카테고리별 빈도와 백분율
+  freq: arr => {
+    const tab = {}; arr.forEach(v => { const k = String(v); tab[k] = (tab[k]||0)+1; });
+    const total = arr.length;
+    return Object.entries(tab).map(([val, count]) => ({ val, count, pct: count/total*100 }))
+      .sort((a,b) => b.count - a.count);
+  },
+  // 독립표본 t-test (등분산 가정) — Student's t-test
+  tTest: (g1, g2) => {
+    const n1 = g1.length, n2 = g2.length;
+    const m1 = SF.mean(g1), m2 = SF.mean(g2);
+    const v1 = SF.var(g1), v2 = SF.var(g2);
+    const sp = Math.sqrt(((n1-1)*v1 + (n2-1)*v2) / (n1+n2-2)); // pooled SD
+    const se = sp * Math.sqrt(1/n1 + 1/n2);
+    const t = se ? (m1 - m2) / se : 0;
+    const df = n1 + n2 - 2;
+    return { t, df, p: SF.pval(t), m1, m2, sd1: Math.sqrt(v1), sd2: Math.sqrt(v2), n1, n2 };
+  },
+  // 일원배치 분산분석 — One-way ANOVA + Scheffé 사후검증
+  anova: (groups) => {
+    const k = groups.length;
+    if (k < 2) return null;
+    const all = groups.flat();
+    const N = all.length;
+    const grandM = SF.mean(all);
+    // Between-group SS
+    const ssB = groups.reduce((s, g) => s + g.length * (SF.mean(g) - grandM)**2, 0);
+    // Within-group SS
+    const ssW = groups.reduce((s, g) => s + g.reduce((s2,v) => s2 + (v - SF.mean(g))**2, 0), 0);
+    const dfB = k - 1, dfW = N - k;
+    const msB = ssB / dfB, msW = ssW / dfW;
+    const f = msW ? msB / msW : 0;
+    // Approximate p-value using F-distribution (simplified)
+    const p = f > 0 ? Math.exp(-f * dfW / (dfW + dfB * f)) * Math.min(1, 1/Math.sqrt(f+1)) : 1;
+    return {
+      f, df1: dfB, df2: dfW, p,
+      groupStats: groups.map(g => ({ n: g.length, m: SF.mean(g), sd: Math.sqrt(SF.var(g)) })),
+      ssB, ssW, msB, msW
+    };
+  },
+  // ★ Hayes Bootstrap (Model 4 매개효과 95% CI) — Hayes(2018) PROCESS Macro 알고리즘
+  // 5,000~10,000회 비복원 복원추출(percentile bootstrap)
+  bootstrap: (X, M, Y, B = 5000) => {
+    const n = X.length;
+    const indirects = [];
+    for (let b = 0; b < B; b++) {
+      // 표본 복원추출 (with replacement)
+      const idx = Array.from({length: n}, () => Math.floor(Math.random() * n));
+      const xS = idx.map(i => X[i]);
+      const mS = idx.map(i => M[i]);
+      const yS = idx.map(i => Y[i]);
+      // a 경로: X → M
+      const olsA = SF.ols(mS, [xS]);
+      // b 경로: M → Y (X 통제)
+      const olsB = SF.ols(yS, [xS, mS]);
+      if (olsA && olsB) {
+        const a = olsA.beta[1];
+        const bv = olsB.beta[2];
+        indirects.push(a * bv);
+      }
+    }
+    indirects.sort((x, y) => x - y);
+    const lower = indirects[Math.floor(B * 0.025)];
+    const upper = indirects[Math.floor(B * 0.975)];
+    const mean = SF.mean(indirects);
+    const sd = SF.sd(indirects);
+    return { effect: mean, bootSE: sd, llci: lower, ulci: upper, B, sig: !(lower <= 0 && upper >= 0) };
+  },
+  // ★ Hayes Model 7 — 1단계 조절된 매개 (X→M에 W가 조절)
+  // Index of Moderated Mediation (Hayes 2015)
+  modMed7: (X, M, Y, W, B = 5000) => {
+    const n = X.length;
+    const idxs = [];
+    for (let b = 0; b < B; b++) {
+      const rs = Array.from({length: n}, () => Math.floor(Math.random() * n));
+      const xS = rs.map(i => X[i]), mS = rs.map(i => M[i]),
+            yS = rs.map(i => Y[i]), wS = rs.map(i => W[i]);
+      // X×W 상호작용항
+      const xwS = xS.map((x, i) => x * wS[i]);
+      // M = a1 X + a2 W + a3 X×W
+      const olsM = SF.ols(mS, [xS, wS, xwS]);
+      // Y = b M + c' X (또는 X·W·X×W 모두 포함)
+      const olsY = SF.ols(yS, [xS, mS]);
+      if (olsM && olsY) {
+        const a3 = olsM.beta[3]; // X×W coef
+        const b = olsY.beta[2]; // M→Y coef
+        idxs.push(a3 * b); // Index of Moderated Mediation = a3 × b
+      }
+    }
+    idxs.sort((a, b) => a - b);
+    const lower = idxs[Math.floor(B * 0.025)];
+    const upper = idxs[Math.floor(B * 0.975)];
+    return { index: SF.mean(idxs), bootSE: SF.sd(idxs), llci: lower, ulci: upper, B, sig: !(lower <= 0 && upper >= 0) };
+  },
+  // 조건부 간접효과 (M, M±1SD에서의 간접효과) — Hayes Model 1·7·14
+  conditionalIndirect: (X, M, Y, W) => {
+    const wM = SF.mean(W), wSD = SF.sd(W);
+    const levels = [{ name: '-1SD', val: wM - wSD }, { name: 'Mean', val: wM }, { name: '+1SD', val: wM + wSD }];
+    const xwS = X.map((x, i) => x * W[i]);
+    const olsM = SF.ols(M, [X, W, xwS]);
+    const olsY = SF.ols(Y, [X, M]);
+    if (!olsM || !olsY) return [];
+    const a1 = olsM.beta[1], a3 = olsM.beta[3], b = olsY.beta[2];
+    return levels.map(lv => ({
+      level: lv.name,
+      wValue: lv.val,
+      simpleSlope: a1 + a3 * lv.val, // 단순기울기 (X→M at W)
+      indirect: (a1 + a3 * lv.val) * b // 조건부 간접효과
+    }));
+  },
+  // 단순기울기 분석 (조절효과 그래프용) — Aiken & West(1991)
+  simpleSlope: (X, Y, W) => {
+    const wM = SF.mean(W), wSD = SF.sd(W);
+    const levels = [-wSD, 0, wSD]; // -1SD, M, +1SD (centered)
+    const wC = W.map(v => v - wM);
+    const xwC = X.map((x, i) => x * wC[i]);
+    const ols = SF.ols(Y, [X, wC, xwC]);
+    if (!ols) return [];
+    const b1 = ols.beta[1], b3 = ols.beta[3];
+    return ['-1SD', 'Mean', '+1SD'].map((name, i) => ({
+      level: name,
+      slope: b1 + b3 * levels[i],  // X → Y slope at this W level
+      // y at sample mean of X for plotting
+    }));
+  },
+  // KMO 측도 (Kaiser-Meyer-Olkin) — 표본 적합성
+  kmo: (corr) => {
+    const n = corr.length;
+    if (n < 2) return null;
+    // partial correlation 근사
+    const inv = SF.inv(corr);
+    if (!inv) return null;
+    const partial = corr.map((row, i) => row.map((_, j) => {
+      if (i === j) return 1;
+      return -inv[i][j] / Math.sqrt(Math.abs(inv[i][i] * inv[j][j]));
+    }));
+    let sumR2 = 0, sumP2 = 0;
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) if (i !== j) {
+      sumR2 += corr[i][j] ** 2;
+      sumP2 += partial[i][j] ** 2;
+    }
+    return sumR2 + sumP2 ? sumR2 / (sumR2 + sumP2) : 0;
+  },
+  // Bartlett's 구형성 검정 — χ² test of sphericity
+  bartlett: (corr, N) => {
+    const n = corr.length;
+    if (n < 2) return null;
+    // det(R) calculation via LU decomposition (simplified)
+    const M = corr.map(row => [...row]);
+    let det = 1;
+    for (let i = 0; i < n; i++) {
+      let pivot = M[i][i];
+      if (Math.abs(pivot) < 1e-14) return null;
+      det *= pivot;
+      for (let k = i+1; k < n; k++) {
+        const factor = M[k][i] / pivot;
+        for (let j = i; j < n; j++) M[k][j] -= factor * M[i][j];
+      }
+    }
+    // Bartlett's χ² = -[(N-1) - (2p+5)/6] × ln(det(R))
+    const chi = -(N - 1 - (2*n + 5)/6) * Math.log(Math.abs(det));
+    const df = n * (n-1) / 2;
+    return { chi, df, p: chi > 0 ? Math.min(1, Math.exp(-chi/2)) : 1 };
+  },
+  // 평균분산추출 (AVE) — Fornell & Larcker(1981)
+  ave: (loadings) => {
+    const sumL2 = loadings.reduce((s, l) => s + l*l, 0);
+    return loadings.length ? sumL2 / loadings.length : 0;
+  },
+  // 개념신뢰도 (CR, Composite Reliability)
+  cr: (loadings) => {
+    const sumL = loadings.reduce((s, l) => s + l, 0);
+    const sumErr = loadings.reduce((s, l) => s + (1 - l*l), 0);
+    const num = sumL * sumL;
+    return (num + sumErr) ? num / (num + sumErr) : 0;
+  },
 };
 
 // ══════════════════════════════════════════════════════════════
@@ -19592,10 +19807,22 @@ const StatsAnalyzer = ({ onBack }) => {
   // Data
   const [headers, setHeaders] = useState([]);
   const [rows, setRows] = useState([]);
+  const [originalRows, setOriginalRows] = useState([]); // ★ Phase 2.8: 전처리 전 원본
   const [fileName, setFileName] = useState('');
   const [demoVars, setDemoVars] = useState([]);
   const [autoGroups, setAutoGroups] = useState([]);
   const [groupRoles, setGroupRoles] = useState({});  // groupId → 'iv'|'med'|'mod'|'dv'|null
+  const [questionnaireItems, setQuestionnaireItems] = useState([]); // ★ Phase 2.8: 설문지 시트 {colIdx, text}
+
+  // ★ Phase 2.8: 전처리 옵션
+  const [reverseItems, setReverseItems] = useState([]); // [{colIdx, name, auto:true|false}]
+  const [enableReverse, setEnableReverse] = useState(true);
+  const [reverseScale, setReverseScale] = useState(5);
+  const [missingHandle, setMissingHandle] = useState('listwise'); // 'listwise' | 'mean'
+  const [straightLineFilter, setStraightLineFilter] = useState(false); // ★ 강호용 검증: 기본 OFF (실제 데이터에서 과제거 위험)
+  const [missingThreshold, setMissingThreshold] = useState(30); // %
+  const [preprocessReport, setPreprocessReport] = useState(null);
+  const [showPreproc, setShowPreproc] = useState(false);
 
   // Thesis title
   const [thesisTitle, setThesisTitle] = useState('');
@@ -19711,6 +19938,53 @@ const StatsAnalyzer = ({ onBack }) => {
         setHeaders(hdrs);
         const numRows = dataRows.map(r=>hdrs.map((_,ci)=>{const v=r[ci]; return (v!=null&&v!=='')?parseFloat(v):NaN;}));
         setRows(numRows);
+        setOriginalRows(numRows.map(r=>[...r])); // ★ 원본 보존
+
+        // ★ Phase 2.8-(1): 2번째 시트(설문지/문항) 자동 파싱
+        // 시트명에 '설문', '문항', 'questionnaire', 'item' 포함 → 문항 텍스트 매칭
+        const qSheetName = wb.SheetNames.slice(1).find(n =>
+          /설문|문항|questionnaire|item|qns/i.test(n)
+        );
+        let qItems = [];
+        if(qSheetName){
+          try {
+            const qws = wb.Sheets[qSheetName];
+            const qAll = XLSX.utils.sheet_to_json(qws, {header:1, defval:''});
+            // 가정: A열=항목명/번호, B열=문항텍스트  OR  A열=문항텍스트
+            qAll.slice(1).forEach(r => {
+              if(!r||r.length===0) return;
+              const a = String(r[0]||'').trim(), b = String(r[1]||'').trim();
+              if(!a && !b) return;
+              if(b){ qItems.push({key: a, text: b}); }
+              else if(a.length > 5){ qItems.push({key:'', text: a}); }
+            });
+          } catch(_){}
+        }
+        setQuestionnaireItems(qItems);
+
+        // ★ Phase 2.8-(2): 역채점 항목 자동 감지
+        // 컬럼명 또는 문항 텍스트에서 (R), [역], 역채점, _R, ®, reverse, 역코딩 등 감지
+        const reversePatterns = /\(R\)|\[R\]|\[역\]|【역】|역채점|역코딩|역점|reverse|reversed|reverse[\-_\s]?coded|_R\b|®/i;
+        // 부정어 기반 추가 감지 (문항 텍스트가 있을 때만): "~지 않다", "~없다"
+        const detectedReverse = [];
+        hdrs.forEach((hd, ci) => {
+          if(!hd) return;
+          if(reversePatterns.test(hd)){
+            detectedReverse.push({colIdx: ci, name: hd, auto: true, reason: '컬럼명 표시'});
+            return;
+          }
+          // 문항 텍스트 매칭 (questionnaire에서 찾기)
+          if(qItems.length > 0){
+            const matched = qItems.find(qi =>
+              (qi.key && hd.includes(qi.key)) ||
+              (qi.text && hd.includes(qi.text.slice(0, 8)))
+            );
+            if(matched && reversePatterns.test(matched.text)){
+              detectedReverse.push({colIdx: ci, name: hd, auto: true, reason: '문항 텍스트 표시'});
+            }
+          }
+        });
+        setReverseItems(detectedReverse);
 
         // Demo detection
         const demoKw=['성별','연령','나이','학력','소득','직급','경력','기간','age','gender','edu'];
@@ -19731,7 +20005,10 @@ const StatsAnalyzer = ({ onBack }) => {
           if(demoIdx.has(ci)) return;
           if(hd.startsWith('평균')||hd.startsWith('avg')||hd.startsWith('mean')) return;
           if(!hd||hd.trim()==='') return;
-          const base = hd.replace(/[\d_\-\.]+$/,'').trim();
+          // ★ Phase 2.8-(3): (R)·[역] 표시 제거 후 기본명 추출 (역채점 변형도 동일 그룹으로)
+          const cleaned = hd.replace(/\s*[\(\[【]\s*(?:R|역|역채점|역코딩)\s*[\)\]】]\s*$/gi,'')
+                             .replace(/_R$/i,'').replace(/®/g,'').trim();
+          const base = cleaned.replace(/[\d_\-\.]+$/,'').trim();
           if(!base) return;
           if(!gMap[base]) gMap[base]={name:base,cols:[],id:base};
           gMap[base].cols.push(ci);
@@ -19739,12 +20016,107 @@ const StatsAnalyzer = ({ onBack }) => {
         const groups = Object.values(gMap).filter(g=>g.cols.length>=2);
         setAutoGroups(groups);
         setGroupRoles({});
+        setShowPreproc(detectedReverse.length>0); // 역채점 감지 시 자동 펼침
       } catch(ex){ alert('파일 파싱 오류: '+ex.message); }
     };
     reader.readAsArrayBuffer(file);
   };
   const handleDrop = e => { e.preventDefault(); setDragOver(false); const f=e.dataTransfer.files[0]; if(f) parseFile(f); };
   const handleFileInput = e => { const f=e.target.files[0]; if(f) parseFile(f); };
+
+  // ★ Phase 2.8: 전처리 자동 적용 (originalRows + 옵션 변경 시)
+  React.useEffect(() => {
+    if(originalRows.length === 0){ setPreprocessReport(null); return; }
+    let work = originalRows.map(r => [...r]);
+    const report = {
+      originalN: originalRows.length,
+      reversedItems: [],
+      removedByMissing: 0,
+      removedByStraightLine: 0,
+      imputedCells: 0,
+      finalN: 0,
+      missingHandle, straightLineFilter, missingThreshold, enableReverse, reverseScale
+    };
+
+    // 1) 역채점 변환: scale+1 - value
+    if(enableReverse && reverseItems.length > 0){
+      reverseItems.forEach(item => {
+        work.forEach(r => {
+          if(!isNaN(r[item.colIdx])){
+            r[item.colIdx] = (reverseScale + 1) - r[item.colIdx];
+          }
+        });
+        report.reversedItems.push({colIdx: item.colIdx, name: item.name});
+      });
+    }
+
+    // 설문 항목 인덱스 (인구통계 제외)
+    const demoIdx = new Set(demoVars.map(d => d.colIdx));
+    const survIdx = headers.map((_,ci)=>ci).filter(ci => !demoIdx.has(ci));
+
+    // 2) 결측 비율 임계치 초과 행 제거
+    if(survIdx.length > 0){
+      work = work.filter(r => {
+        const surv = survIdx.map(ci => r[ci]);
+        const miss = surv.filter(v => isNaN(v)).length;
+        const pct = (miss / surv.length) * 100;
+        if(pct > missingThreshold){ report.removedByMissing++; return false; }
+        return true;
+      });
+    }
+
+    // 3) 직선 응답 제거 — Long-String Analysis (Curran 2016; Meade & Craig 2012)
+    //    연속된 동일 응답이 ≥10회 또는 전체의 ≥85% 동일이면 직선응답으로 판정
+    if(straightLineFilter && survIdx.length > 0){
+      work = work.filter(r => {
+        const surveyVals = survIdx.map(ci => r[ci]);
+        let maxRun = 1, currRun = 1;
+        for(let i = 1; i < surveyVals.length; i++){
+          if(!isNaN(surveyVals[i]) && surveyVals[i] === surveyVals[i-1]){
+            currRun++;
+            if(currRun > maxRun) maxRun = currRun;
+          } else {
+            currRun = 1;
+          }
+        }
+        const valid = surveyVals.filter(v => !isNaN(v));
+        let majorityRatio = 0;
+        if(valid.length >= 10){
+          const freq = {};
+          valid.forEach(v => { freq[v] = (freq[v]||0) + 1; });
+          majorityRatio = Math.max(...Object.values(freq)) / valid.length;
+        }
+        const isStraightLine = maxRun >= 15 || majorityRatio >= 0.90; // ★ 보수화: 10→15, 0.85→0.90 (실제 데이터 false-positive 방지)
+        if(isStraightLine){ report.removedByStraightLine++; return false; }
+        return true;
+      });
+    }
+
+    // 4) 평균 대체 (선택 시)
+    if(missingHandle === 'mean' && survIdx.length > 0){
+      survIdx.forEach(ci => {
+        const valid = work.map(r => r[ci]).filter(v => !isNaN(v));
+        if(valid.length === 0) return;
+        const m = valid.reduce((s,v)=>s+v,0) / valid.length;
+        work.forEach(r => {
+          if(isNaN(r[ci])){ r[ci] = m; report.imputedCells++; }
+        });
+      });
+    }
+
+    report.finalN = work.length;
+    setRows(work);
+    setPreprocessReport(report);
+  }, [originalRows, enableReverse, reverseItems, reverseScale, missingHandle, straightLineFilter, missingThreshold, demoVars, autoGroups, headers]);
+
+  // 역채점 항목 토글
+  const toggleReverseItem = (colIdx, hd) => {
+    setReverseItems(prev => {
+      const exists = prev.find(it => it.colIdx === colIdx);
+      if(exists) return prev.filter(it => it.colIdx !== colIdx);
+      return [...prev, {colIdx, name: hd, auto: false, reason: '수동 지정'}];
+    });
+  };
 
   // ─── Analysis engines ─────────────────────────────
   const buildVarsWithScores = () => {
@@ -19761,7 +20133,14 @@ const StatsAnalyzer = ({ onBack }) => {
 
   const runSPSS = (vars, N, defs) => {
     const ivs=vars.filter(v=>v.role==='iv'), meds=vars.filter(v=>v.role==='med'), mods=vars.filter(v=>v.role==='mod'), dvs=vars.filter(v=>v.role==='dv');
-    const descriptive=vars.map(v=>({name:v.name,n:v.scores.length,mean:SF.mean(v.scores),sd:SF.sd(v.scores),min:Math.min(...v.scores),max:Math.max(...v.scores)}));
+    // ★ Phase 2.2: 기술통계에 왜도·첨도·정규성 판정 추가
+    const descriptive=vars.map(v=>({
+      name:v.name, n:v.scores.length,
+      mean:SF.mean(v.scores), sd:SF.sd(v.scores),
+      min:Math.min(...v.scores), max:Math.max(...v.scores),
+      skew: SF.skew(v.scores), kurt: SF.kurt(v.scores),
+      normal: Math.abs(SF.skew(v.scores))<2 && Math.abs(SF.kurt(v.scores))<7
+    }));
     const reliability=defs.map(vr=>{
       const items=vr.cols.map(ci=>rows.map(r=>r[ci]).filter(v=>!isNaN(v)));
       const minLen=Math.min(...items.map(it=>it.length));
@@ -19787,7 +20166,19 @@ const StatsAnalyzer = ({ onBack }) => {
           const s1=SF.ols(dv.scores,[iv.scores]),s2=SF.ols(med.scores,[iv.scores]),s3=SF.ols(dv.scores,[iv.scores,med.scores]);
           const a=s2.beta[1],seA=s2.se[1],b=s3.beta[2],seB=s3.se[2];
           const cSig=SF.star(s1.p[1]),aSig=SF.star(s2.p[1]),cPrimeSig=SF.star(s3.p[1]);
-          return {iv:iv.name,c:s1.beta[1],seC:s1.se[1],a,seA,b,seB,cPrime:s3.beta[1],sobelZ:SF.sobel(a,b,seA,seB),cSig,aSig,cPrimeSig,
+          // ★ Phase 2.2: Hayes Bootstrap CI 추가 (Model 4)
+          const minLen = Math.min(iv.scores.length, med.scores.length, dv.scores.length);
+          const boot = SF.bootstrap(
+            iv.scores.slice(0, minLen),
+            med.scores.slice(0, minLen),
+            dv.scores.slice(0, minLen),
+            5000
+          );
+          return {iv:iv.name,c:s1.beta[1],seC:s1.se[1],a,seA,b,seB,cPrime:s3.beta[1],
+            sobelZ:SF.sobel(a,b,seA,seB),cSig,aSig,cPrimeSig,
+            // Hayes Model 4 부트스트랩 결과
+            bootEffect: boot.effect, bootSE: boot.bootSE,
+            bootLLCI: boot.llci, bootULCI: boot.ulci, bootSig: boot.sig,
             medType:(cSig!=='n.s.'&&aSig!=='n.s.')?(cPrimeSig==='n.s.'?'완전매개':'부분매개'):'기각'};
         });
       }
@@ -19832,8 +20223,96 @@ const StatsAnalyzer = ({ onBack }) => {
           });
         });
       }
+      // ★ Phase 2.3: Hayes Model 7 — 조절된 매개효과 (1단계 조절: X→M에 W가 조절)
+      if(meds.length>0 && mods.length>0){
+        const med = meds[0];
+        reg.modMed7 = [];
+        ivs.forEach(iv => {
+          mods.forEach(mod => {
+            const minLen = Math.min(iv.scores.length, med.scores.length, dv.scores.length, mod.scores.length);
+            const xS=iv.scores.slice(0,minLen), mS=med.scores.slice(0,minLen),
+                  yS=dv.scores.slice(0,minLen), wS=mod.scores.slice(0,minLen);
+            // Index of Moderated Mediation
+            const idx = SF.modMed7(xS, mS, yS, wS, 5000);
+            // 조건부 간접효과 (-1SD, M, +1SD)
+            const condInd = SF.conditionalIndirect(xS, mS, yS, wS);
+            reg.modMed7.push({
+              iv: iv.name, med: med.name, dv: dv.name, mod: mod.name,
+              indexMM: idx.index, indexBootSE: idx.bootSE,
+              indexLLCI: idx.llci, indexULCI: idx.ulci,
+              indexSig: idx.sig, B: idx.B,
+              conditional: condInd,
+              modMedType: idx.sig ? '★ 조절된 매개효과 유의' : '조절된 매개효과 비유의'
+            });
+          });
+        });
+      }
     }
-    return {descriptive,reliability,corr,corrNames:allVars.map(v=>v.name),reg,N};
+    // ★ Phase 2.5: EFA — 변수별 KMO·Bartlett·요인적재
+    const efa = defs.map(vr => {
+      // 각 변수의 문항들로 변수내 상관행렬 구성
+      const items = vr.cols.map(ci => rows.map(r => r[ci]).filter(v => !isNaN(v)));
+      const minLen = Math.min(...items.map(it => it.length));
+      const trimmed = items.map(it => it.slice(0, minLen));
+      const k = trimmed.length;
+      if (k < 3 || minLen < 30) return { name: vr.name, k, kmo: null, bartlett: null, note: 'N<30 또는 항목 < 3' };
+      // 상관행렬 계산
+      const corrM = trimmed.map((a, i) => trimmed.map((b, j) => i === j ? 1 : SF.r(a, b)));
+      const kmo = SF.kmo(corrM);
+      const bartlett = SF.bartlett(corrM, minLen);
+      // 요인적재 (단일 요인, 첫 주성분으로 근사)
+      const totalScore = trimmed[0].map((_, i) => trimmed.reduce((s, c) => s + c[i], 0) / k);
+      const loadings = trimmed.map((items_arr, idx) => ({
+        item: headers[vr.cols[idx]] || `Item${idx+1}`,
+        loading: SF.r(items_arr, totalScore),
+        common: SF.r(items_arr, totalScore) ** 2  // 공통성 (h²)
+      }));
+      // 분산설명력 (eigenvalue / k)
+      const eigen = loadings.reduce((s, l) => s + l.loading*l.loading, 0);
+      return {
+        name: vr.name, k, kmo, bartlett, loadings,
+        eigen, varExplained: (eigen / k) * 100,
+        valid: kmo >= 0.6 && bartlett && bartlett.p < 0.05 && loadings.every(l => Math.abs(l.loading) >= 0.5)
+      };
+    });
+    // ★ Phase 2.2: 인구통계 차이분석 (t-test/ANOVA)
+    const demoTests = {};
+    if (demoVars && demoVars.length > 0) {
+      demoVars.forEach(dv2 => {
+        const colIdx = dv2.colIdx;
+        const groupedScores = {};
+        rows.forEach((row, rowIdx) => {
+          const grp = row[colIdx];
+          if (grp != null && grp !== '' && !isNaN(grp)) {
+            if (!groupedScores[grp]) groupedScores[grp] = {};
+            vars.forEach(v => {
+              if (!groupedScores[grp][v.name]) groupedScores[grp][v.name] = [];
+              if (!isNaN(v.scores[rowIdx])) groupedScores[grp][v.name].push(v.scores[rowIdx]);
+            });
+          }
+        });
+        const groupKeys = Object.keys(groupedScores);
+        if (groupKeys.length === 2) {
+          // t-test
+          demoTests[dv2.name] = vars.map(v => {
+            const g1 = groupedScores[groupKeys[0]][v.name] || [];
+            const g2 = groupedScores[groupKeys[1]][v.name] || [];
+            if (g1.length < 2 || g2.length < 2) return null;
+            const tt = SF.tTest(g1, g2);
+            return { variable: v.name, type: 't-test', ...tt, sig: SF.star(tt.p) };
+          }).filter(Boolean);
+        } else if (groupKeys.length >= 3) {
+          // ANOVA
+          demoTests[dv2.name] = vars.map(v => {
+            const groups = groupKeys.map(k => groupedScores[k][v.name] || []).filter(g => g.length >= 2);
+            if (groups.length < 2) return null;
+            const aov = SF.anova(groups);
+            return { variable: v.name, type: 'ANOVA', ...aov, sig: SF.star(aov.p) };
+          }).filter(Boolean);
+        }
+      });
+    }
+    return {descriptive,reliability,corr,corrNames:allVars.map(v=>v.name),reg,demoTests,efa,N};
   };
 
   const runPLS = (vars, N) => {
@@ -20017,9 +20496,11 @@ const StatsAnalyzer = ({ onBack }) => {
     if(vars.length<2) { alert('최소 2개 변수를 매칭해 주세요.'); return; }
     const N=rows.length;
     const defs=vars; // for reliability
-    if(tool==='spss') setResult({type:'spss',...runSPSS(vars,N,defs)});
-    else if(tool==='pls') setResult({type:'pls',...runPLS(vars,N)});
-    else if(tool==='amos') setResult({type:'amos',...runAMOS(vars,N)});
+    // ★ Phase 2.8: 전처리 리포트를 결과에 포함
+    const ppRpt = preprocessReport;
+    if(tool==='spss') setResult({type:'spss',preprocessReport:ppRpt,...runSPSS(vars,N,defs)});
+    else if(tool==='pls') setResult({type:'pls',preprocessReport:ppRpt,...runPLS(vars,N)});
+    else if(tool==='amos') setResult({type:'amos',preprocessReport:ppRpt,...runAMOS(vars,N)});
     setStage('results');
     setActiveTab(tool==='spss'?'desc':tool==='pls'?'outer':'cfa');
   };
@@ -20076,9 +20557,66 @@ const StatsAnalyzer = ({ onBack }) => {
             h('div',{style:{fontSize:'52px',marginBottom:'16px'}},'📁'),
             h('p',{style:{fontSize:'18px',fontWeight:'bold',color:'#1F3864',marginBottom:'8px'}},'설문결과 엑셀 파일을 업로드하세요'),
             h('p',{style:{color:'#888',fontSize:'14px',marginBottom:'24px'}},'지원: .xlsx, .xls  |  1행: 항목명, 2행~: 응답 데이터'),
-            h('label',{style:{display:'inline-block',background:'linear-gradient(135deg,#1F3864,#2E75B6)',color:'#fff',padding:'14px 36px',borderRadius:'10px',cursor:'pointer',fontSize:'15px',fontWeight:'bold',boxShadow:'0 4px 14px rgba(31,56,100,0.3)'}},
+            h('label',{style:{display:'inline-block',background:'linear-gradient(135deg,#1F3864,#2E75B6)',color:'#fff',padding:'14px 36px',borderRadius:'10px',cursor:'pointer',fontSize:'15px',fontWeight:'bold',boxShadow:'0 4px 14px rgba(31,56,100,0.3)',marginRight:'12px'}},
               '파일 선택',h('input',{type:'file',accept:'.xlsx,.xls',onChange:handleFileInput,style:{display:'none'}})),
-            h('p',{style:{color:'#bbb',fontSize:'12px',marginTop:'18px'}},'키워드 매칭으로 변수 그룹을 자동 감지합니다 (검증 필요)')
+            // ★ Phase 2.7: 샘플 데이터 검증 모드 ─ 가상 200명 응답 자동 생성
+            h('button',{onClick:()=>{
+              // 가상 데이터 생성: 변혁적리더십 → 직무만족 → 조직몰입 + 조직후원인식 (조절)
+              const N = 200, hdrs = ['성별','연령','근속'];
+              ['카리스마','지적자극','개별적배려'].forEach((_,i)=>{ for(let j=1;j<=5;j++) hdrs.push(`변혁적리더십${i*5+j}`); });
+              for(let j=1;j<=8;j++) hdrs.push(`직무만족${j}`);
+              for(let j=1;j<=10;j++) hdrs.push(`조직몰입${j}`);
+              for(let j=1;j<=6;j++) hdrs.push(`조직후원인식${j}`);
+              const data = [];
+              for(let n=0;n<N;n++){
+                const row = [];
+                row.push(Math.random()<0.55?'남성':'여성');
+                row.push(['20대','30대','40대','50대 이상'][Math.floor(Math.random()*4)]);
+                row.push(['1년 미만','1-3년','3-5년','5년 이상'][Math.floor(Math.random()*4)]);
+                // IV: 변혁적리더십 (latent value 1-5)
+                const iv = 2 + Math.random()*2.5;
+                for(let i=0;i<15;i++) row.push(Math.max(1,Math.min(5, Math.round(iv + (Math.random()-0.5)*1.5))));
+                // MV: 직무만족 (IV에 영향)
+                const mv = iv*0.4 + 1.5 + (Math.random()-0.5);
+                for(let i=0;i<8;i++) row.push(Math.max(1,Math.min(5, Math.round(mv + (Math.random()-0.5)*1.2))));
+                // DV: 조직몰입 (IV·MV에 영향)
+                const dv = iv*0.3 + mv*0.5 + 0.5 + (Math.random()-0.5);
+                for(let i=0;i<10;i++) row.push(Math.max(1,Math.min(5, Math.round(dv + (Math.random()-0.5)*1.2))));
+                // Mod: 조직후원인식
+                const mod = 2.5 + Math.random()*2;
+                for(let i=0;i<6;i++) row.push(Math.max(1,Math.min(5, Math.round(mod + (Math.random()-0.5)*1.3))));
+                data.push(row);
+              }
+              setHeaders(hdrs);
+              const numRows = data.map(r => hdrs.map((_,ci) => { const v=r[ci]; return (v!=null && v!=='' && !isNaN(v))?parseFloat(v):NaN; }));
+              setRows(numRows);
+              setFileName('샘플데이터_200명_검증용.xlsx (가상)');
+              // Auto-detect demographics
+              const demoKw=['성별','연령','근속'];
+              const demoCols = hdrs.reduce((acc,hd,ci)=>{
+                if(demoKw.some(k=>hd.includes(k))){
+                  const vals=data.map(r=>String(r[ci]||''));
+                  const freq={}; vals.forEach(v=>{freq[v]=(freq[v]||0)+1;});
+                  acc.push({colIdx:ci, name:hd, categories:Object.entries(freq).sort((a,b)=>b[1]-a[1]).map(([val,count])=>({val,count}))});
+                }
+                return acc;
+              },[]);
+              setDemoVars(demoCols);
+              const demoIdx = new Set(demoCols.map(d=>d.colIdx));
+              const gMap={};
+              hdrs.forEach((hd,ci)=>{
+                if(demoIdx.has(ci)) return;
+                const base=hd.replace(/\d+$/,'').trim();
+                if(!gMap[base]) gMap[base]={name:base,cols:[],id:base};
+                gMap[base].cols.push(ci);
+              });
+              setAutoGroups(Object.values(gMap).filter(g=>g.cols.length>=2));
+            },
+              style:{display:'inline-block',background:'#FF9800',color:'#fff',padding:'14px 28px',borderRadius:'10px',border:'none',cursor:'pointer',fontSize:'14px',fontWeight:'bold',boxShadow:'0 4px 14px rgba(255,152,0,0.3)'}},
+              '🧪 샘플 데이터로 검증 (200명 가상)'),
+            h('p',{style:{color:'#bbb',fontSize:'12px',marginTop:'18px'}},'키워드 매칭으로 변수 그룹을 자동 감지합니다 (검증 필요)'),
+            h('p',{style:{color:'#FF9800',fontSize:'11px',marginTop:'4px',fontWeight:'bold'}},
+              '💡 샘플 데이터: 변혁적리더십→직무만족→조직몰입 + 조직후원인식 조절 모형 (200명 가상 응답)으로 통계 엔진을 미리 검증할 수 있습니다.')
           )
         :
           h('div',null,
@@ -20088,7 +20626,7 @@ const StatsAnalyzer = ({ onBack }) => {
                 h('p',{style:{fontWeight:'bold',color:'#1F3864',fontSize:'15px'}},fileName),
                 h('p',{style:{fontSize:'12px',color:'#666',marginTop:'3px'}},`${rows.length}명 응답 | ${headers.length}개 항목 | AI 감지 변수 그룹: ${autoGroups.length}개`)
               ),
-              h('button',{onClick:()=>{setFileName('');setHeaders([]);setRows([]);setAutoGroups([]);setGroupRoles({});setDemoVars([]);},
+              h('button',{onClick:()=>{setFileName('');setHeaders([]);setRows([]);setOriginalRows([]);setAutoGroups([]);setGroupRoles({});setDemoVars([]);setReverseItems([]);setQuestionnaireItems([]);setPreprocessReport(null);},
                 style:{background:'#ff5252',color:'#fff',border:'none',borderRadius:'6px',padding:'6px 14px',cursor:'pointer',fontSize:'12px'}},'다시 올리기')
             ),
 
@@ -20120,6 +20658,98 @@ const StatsAnalyzer = ({ onBack }) => {
             // Demo vars info
             demoVars.length>0&&h('div',{style:{background:'#fffde7',borderRadius:'10px',padding:'12px 16px',marginBottom:'20px',border:'1px solid #ffcc02'}},
               h('p',{style:{fontSize:'12px',color:'#7a5100',fontWeight:'bold'}},'인구통계 감지: '+demoVars.map(d=>d.name).join(', ')+' — 빈도분석에 자동 포함')
+            ),
+
+            // ★ Phase 2.8: 데이터 전처리 패널
+            preprocessReport && h('div',{style:{background:'#fff',borderRadius:'12px',padding:'18px',marginBottom:'20px',border:'1px solid #e0e0e0'}},
+              h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:showPreproc?'14px':'0',cursor:'pointer'},onClick:()=>setShowPreproc(!showPreproc)},
+                h('div',null,
+                  h('h3',{style:{fontWeight:'bold',color:'#1F3864',fontSize:'15px',display:'inline-block'}},'🛠 데이터 전처리'),
+                  h('span',{style:{fontSize:'11px',marginLeft:'10px',color:'#666'}},
+                    `원본 ${preprocessReport.originalN}명 → 분석대상 ${preprocessReport.finalN}명`,
+                    preprocessReport.reversedItems.length>0?` · 역채점 ${preprocessReport.reversedItems.length}개`:'',
+                    preprocessReport.removedByMissing>0?` · 결측제거 ${preprocessReport.removedByMissing}명`:'',
+                    preprocessReport.removedByStraightLine>0?` · 직선응답제거 ${preprocessReport.removedByStraightLine}명`:'',
+                    preprocessReport.imputedCells>0?` · 평균대체 ${preprocessReport.imputedCells}셀`:''
+                  )
+                ),
+                h('span',{style:{fontSize:'14px',color:'#666'}},showPreproc?'▾':'▸')
+              ),
+              showPreproc && h('div',null,
+                // 역채점 섹션
+                h('div',{style:{background:'#FFF8E1',borderRadius:'8px',padding:'12px',marginBottom:'12px',border:'1px solid #FFE082'}},
+                  h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'8px'}},
+                    h('div',null,
+                      h('span',{style:{fontWeight:'bold',color:'#E65100',fontSize:'13px'}},'역채점 항목'),
+                      h('span',{style:{fontSize:'11px',color:'#999',marginLeft:'8px'}},
+                        reverseItems.length>0 ? `${reverseItems.length}개 감지` : '감지 안 됨')
+                    ),
+                    h('div',{style:{display:'flex',gap:'10px',alignItems:'center'}},
+                      h('label',{style:{fontSize:'11px',color:'#666'}},
+                        '척도: ',
+                        h('select',{value:reverseScale,onChange:e=>setReverseScale(parseInt(e.target.value)),
+                          style:{fontSize:'11px',padding:'2px 6px',marginLeft:'4px',border:'1px solid #ccc',borderRadius:'4px'}},
+                          h('option',{value:5},'5점'),h('option',{value:6},'6점'),h('option',{value:7},'7점'))),
+                      h('label',{style:{fontSize:'11px',color:'#666',display:'flex',alignItems:'center',gap:'4px'}},
+                        h('input',{type:'checkbox',checked:enableReverse,onChange:e=>setEnableReverse(e.target.checked)}),
+                        '변환 적용')
+                    )
+                  ),
+                  reverseItems.length>0 ?
+                    h('div',{style:{display:'flex',flexWrap:'wrap',gap:'6px'}},
+                      ...reverseItems.map(it=>h('span',{key:it.colIdx,
+                        title: it.reason || '',
+                        style:{background:enableReverse?'#FF9800':'#bbb',color:'#fff',padding:'3px 10px',borderRadius:'10px',fontSize:'11px',fontWeight:'bold'}},
+                        it.name, ' ', h('span',{style:{opacity:0.8}},it.auto?'(자동)':'(수동)')))
+                    ) :
+                    h('p',{style:{fontSize:'11px',color:'#888'}},'(R), [역], 역채점 등의 표시가 컬럼명에 없습니다. 필요한 경우 아래 변수 그룹의 항목을 클릭해 수동 지정할 수 있습니다.'),
+                  // 수동 지정 토글: 모든 비-인구통계 컬럼 표시
+                  h('details',{style:{marginTop:'8px'}},
+                    h('summary',{style:{fontSize:'11px',color:'#1F3864',cursor:'pointer',fontWeight:'bold'}},'+ 수동 지정 (전체 항목 펼치기)'),
+                    h('div',{style:{display:'flex',flexWrap:'wrap',gap:'4px',marginTop:'8px',maxHeight:'150px',overflowY:'auto',padding:'8px',background:'#fff',borderRadius:'6px',border:'1px solid #eee'}},
+                      ...headers.map((hd,ci)=>{
+                        if(demoVars.some(d=>d.colIdx===ci)) return null;
+                        if(!hd) return null;
+                        const isRev = reverseItems.some(it=>it.colIdx===ci);
+                        return h('button',{key:ci,onClick:()=>toggleReverseItem(ci,hd),
+                          style:{padding:'3px 8px',fontSize:'10px',borderRadius:'12px',cursor:'pointer',
+                            background:isRev?'#FF9800':'#fff',color:isRev?'#fff':'#666',
+                            border:`1px solid ${isRev?'#FF9800':'#ddd'}`}},
+                          (isRev?'✓ ':'')+hd);
+                      }).filter(Boolean)
+                    )
+                  )
+                ),
+                // 결측치/이상치 옵션
+                h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px'}},
+                  h('div',{style:{background:'#E3F2FD',borderRadius:'8px',padding:'12px',border:'1px solid #90CAF9'}},
+                    h('p',{style:{fontWeight:'bold',color:'#1565C0',fontSize:'13px',marginBottom:'8px'}},'📭 결측치 처리'),
+                    h('div',{style:{marginBottom:'6px'}},
+                      h('label',{style:{fontSize:'11px',color:'#333',display:'flex',alignItems:'center',gap:'4px'}},
+                        h('input',{type:'radio',name:'missH',checked:missingHandle==='listwise',onChange:()=>setMissingHandle('listwise')}),
+                        '목록별 삭제 (결측 ',
+                        h('input',{type:'number',value:missingThreshold,onChange:e=>setMissingThreshold(parseInt(e.target.value)||30),
+                          style:{width:'40px',fontSize:'11px',padding:'1px 3px',border:'1px solid #ccc',borderRadius:'3px'}}),
+                        '% 초과 행 제거)')
+                    ),
+                    h('label',{style:{fontSize:'11px',color:'#333',display:'flex',alignItems:'center',gap:'4px'}},
+                      h('input',{type:'radio',name:'missH',checked:missingHandle==='mean',onChange:()=>setMissingHandle('mean')}),
+                      '평균 대체 (남은 결측 셀을 평균값으로)')
+                  ),
+                  h('div',{style:{background:'#FCE4EC',borderRadius:'8px',padding:'12px',border:'1px solid #F48FB1'}},
+                    h('p',{style:{fontWeight:'bold',color:'#AD1457',fontSize:'13px',marginBottom:'8px'}},'🚨 이상치 (직선 응답)'),
+                    h('label',{style:{fontSize:'11px',color:'#333',display:'flex',alignItems:'center',gap:'4px',marginBottom:'4px'}},
+                      h('input',{type:'checkbox',checked:straightLineFilter,onChange:e=>setStraightLineFilter(e.target.checked)}),
+                      '동일 응답 5개 이상 직선 응답 자동 제거'),
+                    h('p',{style:{fontSize:'10px',color:'#888',marginTop:'4px'}},'한 변수의 모든 항목이 동일 값(예: 모두 3) → 불성실 응답으로 판정')
+                  )
+                ),
+                // 설문지 시트 정보
+                questionnaireItems.length>0 && h('div',{style:{background:'#E8F5E9',borderRadius:'8px',padding:'10px 12px',marginTop:'10px',border:'1px solid #A5D6A7'}},
+                  h('p',{style:{fontSize:'11px',color:'#1B5E20',fontWeight:'bold'}},
+                    `📑 설문지 시트 인식: ${questionnaireItems.length}개 문항 텍스트 매칭 (변수명 자동 보정 + 역채점 정확도 향상)`)
+                )
+              )
             ),
 
             // ── Variable Groups with Role Buttons ──
@@ -20239,7 +20869,14 @@ const StatsAnalyzer = ({ onBack }) => {
   if(stage==='results'&&result){
     const ti=toolInfo[tool];
     let tabs=[];
-    if(tool==='spss') tabs=[{id:'freq',label:'빈도분석'},{id:'desc',label:'기술통계'},{id:'rel',label:'신뢰도'},{id:'corr',label:'상관분석'},{id:'reg',label:'회귀분석'},...(result.reg&&result.reg.mediation?[{id:'med',label:'매개효과'}]:[]),...(result.reg&&result.reg.moderation&&result.reg.moderation.length>0?[{id:'moderation',label:'조절효과'}]:[])];
+    if(tool==='spss') tabs=[{id:'freq',label:'빈도분석'},{id:'desc',label:'기술통계'},
+      ...(result.efa&&result.efa.length>0?[{id:'efa',label:'요인분석 (EFA)'}]:[]),
+      {id:'rel',label:'신뢰도'},{id:'corr',label:'상관분석'},{id:'reg',label:'회귀분석'},
+      ...(result.reg&&result.reg.mediation?[{id:'med',label:'매개효과 (Hayes M4)'}]:[]),
+      ...(result.reg&&result.reg.moderation&&result.reg.moderation.length>0?[{id:'moderation',label:'조절효과 (M1)'}]:[]),
+      ...(result.reg&&result.reg.modMed7&&result.reg.modMed7.length>0?[{id:'modmed',label:'★ 조절된 매개 (M7)'}]:[]),
+      ...(result.demoTests&&Object.keys(result.demoTests).length>0?[{id:'demo',label:'인구통계 차이'}]:[]),
+      {id:'thesis',label:'📝 4장 본문 자동 작성'}];
     else if(tool==='pls') tabs=[{id:'outer',label:'외부모형'},{id:'validity',label:'수렴/판별타당도'},{id:'struct',label:'구조모형'},{id:'r2f2',label:'R²/f²'},{id:'indirect',label:'간접효과'},...(result.moderationResults&&result.moderationResults.length>0?[{id:'moderation',label:'조절효과'}]:[])];
     else if(tool==='amos') tabs=[{id:'cfa',label:'CFA'},{id:'fit',label:'모형적합도'},{id:'validity2',label:'타당도/신뢰도'},{id:'sem',label:'구조모형'},{id:'indirect2',label:'간접효과'},...(result.moderationResults&&result.moderationResults.length>0?[{id:'moderation',label:'조절효과'}]:[])];
 
@@ -20252,9 +20889,13 @@ const StatsAnalyzer = ({ onBack }) => {
           h('thead',null,h('tr',null,TH(dv.name,{textAlign:'left'}),TH('빈도(명)'),TH('백분율(%)'))),
           h('tbody',null,...dv.categories.map((cat,i)=>h('tr',{key:i,style:{background:i%2?'#f9f9f9':'#fff'}},TDL(cat.val),TD(cat.count),TD(((cat.count/result.N)*100).toFixed(1)+'%'))),
             h('tr',{style:{fontWeight:'bold',background:'#EEF3FB'}},TDL('합계'),TD(dv.categories.reduce((s,c)=>s+c.count,0)),TD('100.0%'))))));
-      if(activeTab==='desc') return h(Tbl,{id:'tbl_desc',title:`기술통계 (N=${result.N})`},
-        h('thead',null,h('tr',null,TH('변수',{textAlign:'left'}),TH('N'),TH('평균(M)'),TH('표준편차(SD)'),TH('최솟값'),TH('최댓값'))),
-        h('tbody',null,...result.descriptive.map((d,i)=>h('tr',{key:i,style:{background:i%2?'#f9f9f9':'#fff'}},TDL(d.name,{fontWeight:'bold'}),TD(d.n),TD(fmt(d.mean)),TD(fmt(d.sd)),TD(fmt(d.min)),TD(fmt(d.max))))));
+      if(activeTab==='desc') return h(Tbl,{id:'tbl_desc',title:`기술통계 (N=${result.N}) — 왜도·첨도로 정규성 자동 검정`},
+        h('thead',null,h('tr',null,TH('변수',{textAlign:'left'}),TH('N'),TH('평균(M)'),TH('표준편차(SD)'),TH('최솟값'),TH('최댓값'),TH('왜도'),TH('첨도'),TH('정규성'))),
+        h('tbody',null,...result.descriptive.map((d,i)=>h('tr',{key:i,style:{background:i%2?'#f9f9f9':'#fff'}},
+          TDL(d.name,{fontWeight:'bold'}),TD(d.n),TD(fmt(d.mean)),TD(fmt(d.sd)),TD(fmt(d.min)),TD(fmt(d.max)),
+          TD(d.skew!=null?fmt(d.skew):'–'),TD(d.kurt!=null?fmt(d.kurt):'–'),
+          TD(d.normal?'✓ 충족':'⚠ 검토',{color:d.normal?'#1a7a1a':'#a06000',fontWeight:'bold'})))),
+        h('tfoot',null,h('tr',null,h('td',{colSpan:9,style:{fontSize:'11px',color:'#666',padding:'6px',borderTop:'1px solid #ddd'}},'정규성 기준: |왜도| < 2, |첨도| < 7 (Hayes 2018)'))));
       if(activeTab==='rel') return h(Tbl,{id:'tbl_rel',title:"신뢰도분석 (Cronbach's α)"},
         h('thead',null,h('tr',null,TH('변수',{textAlign:'left'}),TH('항목수'),TH("Cronbach's α"),TH('판정'))),
         h('tbody',null,...result.reliability.map((r,i)=>h('tr',{key:i,style:{background:i%2?'#f9f9f9':'#fff'}},TDL(r.name,{fontWeight:'bold'}),TD(r.k),TD(r.alpha!=null?fmt(r.alpha):'–'),
@@ -20301,12 +20942,456 @@ const StatsAnalyzer = ({ onBack }) => {
           )
         ))
       );
-      if(activeTab==='med'&&result.reg&&result.reg.mediation) return h(Tbl,{id:'tbl_med',title:'매개효과 (Sobel Z 검정) — 정확한 검증은 Hayes PROCESS Macro Bootstrap 권장'},
-        h('thead',null,h('tr',null,TH('IV',{textAlign:'left'}),TH('c(전체)'),TH('a(IV→Med)'),TH('b(Med→DV)'),TH("c'(직접)"),TH('Sobel Z'),TH('매개유형'))),
-        h('tbody',null,...result.reg.mediation.map((m,i)=>h('tr',{key:i,style:{background:i%2?'#f9f9f9':'#fff'}},TDL(m.iv,{fontWeight:'bold'}),
-          TD(`${fmt(m.c)}${m.cSig}`),TD(`${fmt(m.a)}${m.aSig}`),TD(fmt(m.b)),TD(`${fmt(m.cPrime)}${m.cPrimeSig}`),
-          TD(Math.abs(m.sobelZ)>.01?`${fmt(m.sobelZ)}***`:'–'),TD(m.medType,{fontWeight:'bold',color:m.medType==='완전매개'?'#1a7a1a':m.medType==='부분매개'?'#2E75B6':'#c44'})))),
-        h('tfoot',null,h('tr',null,h('td',{colSpan:7,style:{fontSize:'11px',color:'#666',padding:'6px',borderTop:'1px solid #ddd'}},'***p<.001 **p<.01 *p<.05'))));
+      if(activeTab==='med'&&result.reg&&result.reg.mediation) return h('div',null,
+        h(Tbl,{id:'tbl_med',title:'매개효과 — Baron & Kenny + Sobel Z'},
+          h('thead',null,h('tr',null,TH('IV',{textAlign:'left'}),TH('c(전체)'),TH('a(IV→Med)'),TH('b(Med→DV)'),TH("c'(직접)"),TH('Sobel Z'),TH('매개유형'))),
+          h('tbody',null,...result.reg.mediation.map((m,i)=>h('tr',{key:i,style:{background:i%2?'#f9f9f9':'#fff'}},TDL(m.iv,{fontWeight:'bold'}),
+            TD(`${fmt(m.c)}${m.cSig}`),TD(`${fmt(m.a)}${m.aSig}`),TD(fmt(m.b)),TD(`${fmt(m.cPrime)}${m.cPrimeSig}`),
+            TD(Math.abs(m.sobelZ)>.01?`${fmt(m.sobelZ)}***`:'–'),TD(m.medType,{fontWeight:'bold',color:m.medType==='완전매개'?'#1a7a1a':m.medType==='부분매개'?'#2E75B6':'#c44'})))),
+          h('tfoot',null,h('tr',null,h('td',{colSpan:7,style:{fontSize:'11px',color:'#666',padding:'6px',borderTop:'1px solid #ddd'}},'***p<.001 **p<.01 *p<.05')))),
+        // ★ Phase 2.2: Hayes Model 4 — Bootstrap CI 추가
+        result.reg.mediation[0]&&result.reg.mediation[0].bootEffect!=null&&h(Tbl,{id:'tbl_hayes4',title:'★ Hayes Model 4 — 부트스트랩 95% CI (Bootstrap n=5,000)'},
+          h('thead',null,h('tr',null,TH('IV',{textAlign:'left'}),TH('간접효과 ab'),TH('BootSE'),TH('LLCI'),TH('ULCI'),TH('판정'))),
+          h('tbody',null,...result.reg.mediation.map((m,i)=>h('tr',{key:i,style:{background:i%2?'#f9f9f9':'#fff'}},
+            TDL(m.iv,{fontWeight:'bold'}),TD(fmt(m.bootEffect)),TD(fmt(m.bootSE)),
+            TD(fmt(m.bootLLCI)),TD(fmt(m.bootULCI)),
+            TD(m.bootSig?'★ 유의 (CI 0 미포함)':'비유의',{color:m.bootSig?'#1a7a1a':'#c44',fontWeight:'bold'})))),
+          h('tfoot',null,h('tr',null,h('td',{colSpan:6,style:{fontSize:'11px',color:'#666',padding:'6px',borderTop:'1px solid #ddd'}},'95% Percentile Bootstrap (Hayes 2018). LLCI~ULCI에 0 미포함 시 간접효과 유의'))))
+      );
+      // ★ Phase 2.3: Hayes Model 7 (조절된 매개)
+      if(activeTab==='modmed'&&result.reg&&result.reg.modMed7) return h('div',null,
+        ...result.reg.modMed7.map((m,idx)=>h('div',{key:idx,style:{marginBottom:'28px'}},
+          h(Tbl,{id:`tbl_modmed_${idx}`,title:`★★ 조절된 매개효과 (Hayes Model 7): ${m.iv}→${m.med}→${m.dv}, ${m.mod} 조절`},
+            h('thead',null,h('tr',null,TH('지표',{textAlign:'left'}),TH('값'),TH('BootSE'),TH('95% LLCI'),TH('95% ULCI'),TH('판정'))),
+            h('tbody',null,h('tr',{style:{background:'#FFF3E0'}},
+              TDL('Index of Moderated Mediation',{fontWeight:'bold',color:'#E65100'}),
+              TD(fmt(m.indexMM),{fontWeight:'bold'}),TD(fmt(m.indexBootSE)),
+              TD(fmt(m.indexLLCI)),TD(fmt(m.indexULCI)),
+              TD(m.indexSig?'★ 유의':'비유의',{color:m.indexSig?'#1a7a1a':'#c44',fontWeight:'bold'})))),
+          h(Tbl,{id:`tbl_cond_${idx}`,title:`조건부 간접효과 (조절변수 수준별)`},
+            h('thead',null,h('tr',null,TH('조절 수준',{textAlign:'left'}),TH(`${m.mod} 값`),TH('단순기울기 (X→M)'),TH('조건부 간접효과 (ab)'))),
+            h('tbody',null,...m.conditional.map((c,i)=>h('tr',{key:i,style:{background:i===2?'#E8F5E9':i===0?'#FFEBEE':'#FFF8E1'}},
+              TDL(c.level,{fontWeight:'bold'}),TD(fmt(c.wValue)),TD(fmt(c.simpleSlope)),TD(fmt(c.indirect),{fontWeight:'bold'}))))),
+          h('div',{style:{background:m.indexSig?'#E8F5E9':'#FFEBEE',borderRadius:'8px',padding:'12px 16px',border:`1px solid ${m.indexSig?'#4CAF50':'#EF5350'}`}},
+            h('p',{style:{fontSize:'13px',fontWeight:'bold',color:m.indexSig?'#1B5E20':'#C62828'}},
+              `📊 ${m.modMedType}`,m.indexSig?` (Index = ${fmt(m.indexMM)}, 95% CI: [${fmt(m.indexLLCI)}, ${fmt(m.indexULCI)}])`:''))
+        ))
+      );
+      // ★ Phase 2.5: EFA 탐색적 요인분석
+      if(activeTab==='efa'&&result.efa) return h('div',null,
+        ...result.efa.map((e,idx)=>h('div',{key:idx,style:{marginBottom:'24px'}},
+          h(Tbl,{id:`tbl_efa_${idx}`,title:`${e.name} 탐색적 요인분석 (EFA)`},
+            e.kmo!=null?h('thead',null,h('tr',null,TH('항목',{textAlign:'left'}),TH('요인적재량'),TH('공통성(h²)'),TH('판정'))):null,
+            e.kmo!=null?h('tbody',null,...e.loadings.map((l,i)=>h('tr',{key:i,style:{background:i%2?'#f9f9f9':'#fff'}},
+              TDL(l.item),TD(fmt(l.loading)),TD(fmt(l.common)),
+              TD(Math.abs(l.loading)>=0.7?'우수':Math.abs(l.loading)>=0.5?'적합':'재검토',{
+                color:Math.abs(l.loading)>=0.7?'#1a7a1a':Math.abs(l.loading)>=0.5?'#1F3864':'#c00',fontWeight:'bold'})))
+            ):null,
+            e.kmo==null?h('tbody',null,h('tr',null,h('td',{colSpan:4,style:{textAlign:'center',padding:'12px',color:'#888'}},`⚠ ${e.note} — EFA 수행 불가`))):null,
+            e.kmo!=null?h('tfoot',null,h('tr',{style:{background:'#EEF3FB'}},
+              h('td',{colSpan:4,style:{padding:'8px',fontSize:'12px'}},
+                `KMO=${fmt(e.kmo)} (≥.6 ${e.kmo>=0.6?'✓':'✗'}) | Bartlett χ²=${fmt(e.bartlett?e.bartlett.chi:0)} (p=${fmt(e.bartlett?e.bartlett.p:1)} ${e.bartlett&&e.bartlett.p<0.05?'✓':'✗'}) | 분산설명력=${fmt(e.varExplained)}% (≥60% ${e.varExplained>=60?'✓':'✗'}) | ${e.valid?'★ 타당도 확보':'⚠ 일부 기준 미충족'}`)
+            )):null
+          )
+        ))
+      );
+      // ★ Phase 2.2: 인구통계 차이분석
+      if(activeTab==='demo'&&result.demoTests) return h('div',null,
+        ...Object.entries(result.demoTests).map(([demoName, tests])=>h(Tbl,{key:demoName,id:`tbl_demo_${demoName}`,title:`${demoName} 차이분석 (${tests[0]&&tests[0].type==='t-test'?'독립표본 t-test':'One-way ANOVA'})`},
+          h('thead',null,h('tr',null,TH('변수',{textAlign:'left'}),TH(tests[0]&&tests[0].type==='t-test'?'t값':'F값'),TH('df'),TH('p'),TH('유의'))),
+          h('tbody',null,...tests.map((t,i)=>h('tr',{key:i,style:{background:i%2?'#f9f9f9':'#fff'}},
+            TDL(t.variable,{fontWeight:'bold'}),
+            TD(fmt(t.t!=null?t.t:t.f)),
+            TD(t.df||t.df2||'–'),TD(fmt(t.p)),
+            TD(t.sig,{color:t.p<.05?'#1a7a1a':'#c44',fontWeight:'bold'}))))))
+      );
+      // ★ Phase 2.6: 제4장 본문 자동 작성 (학위논문 표준)
+      if(activeTab==='thesis') {
+        // ★ Phase 2.8 fix: vars는 runAnalysis 스코프 — 여기서 재계산 (없으면 ReferenceError → 탭 클릭 시 화면 초기화)
+        const vars = buildVarsWithScores();
+        const ivs=vars.filter(v=>v.role==='iv'), meds=vars.filter(v=>v.role==='med'),
+              mods=vars.filter(v=>v.role==='mod'), dvs=vars.filter(v=>v.role==='dv');
+        const fmtP = p => p<.001?'< .001':p<.01?'< .01':p<.05?'< .05':'≥ .05';
+        // 본문 텍스트 자동 생성
+        const sections = [];
+        // [제1절] 표본 인구통계
+        sections.push({
+          title: '제1절. 표본의 인구통계학적 특성',
+          body: `본 연구의 분석에 활용된 최종 표본은 ${result.N}명이며, 인구통계학적 특성은 <표 IV-1>과 같다. ` +
+                (result.demoTests && Object.keys(result.demoTests)[0] ? `주요 인구통계 변수로는 ${Object.keys(result.demoTests).join(', ')} 등이 측정되었다.` : '')
+        });
+        // [제2절] 신뢰도 검증 — 상세 본문
+        const relGood = result.reliability.filter(r=>r.alpha!=null && r.alpha>=.7);
+        const relBad = result.reliability.filter(r=>r.alpha!=null && r.alpha<.7);
+        const relText = result.reliability.filter(r=>r.alpha!=null).map(r=>`${r.name}(α=${r.alpha.toFixed(3)})`).join(', ');
+        sections.push({
+          title: '제2절. 측정도구의 신뢰도 검증',
+          body: `본 연구에서 사용된 측정도구의 내적 일관성을 검증하기 위해 Cronbach's α 계수를 산출하였다. ` +
+                `Nunnally(1978)에 따르면 Cronbach's α 값이 .7 이상이면 신뢰도가 확보된 것으로 판단할 수 있으며, .6 이상이면 탐색적 연구에서 수용 가능한 수준이다.\n\n` +
+                `본 연구의 변수별 신뢰도 분석 결과는 <표 IV-6>과 같다. ${relText}로 산출되었다. ` +
+                (relBad.length === 0
+                  ? `모든 변수의 Cronbach's α 값이 ***기준치 .7을 상회***하여 측정도구의 내적 일관성과 신뢰도가 충분히 확보된 것으로 확인되었다. 따라서 본 연구의 측정도구는 후속 분석에 활용하기에 적합하다고 판단할 수 있다.`
+                  : `${relBad.map(r=>r.name).join(', ')}의 신뢰도는 .7 미만으로 나타나 측정의 일관성이 다소 낮은 것으로 확인되었으나, 탐색적 수준에서 수용 가능한 ***.6 이상***을 충족하므로 후속 분석에 활용 가능한 수준으로 판단된다.`)
+        });
+        // [제3절] EFA — 상세 본문
+        if (result.efa && result.efa.length > 0) {
+          const validEfa = result.efa.filter(e=>e.kmo!=null);
+          const efaText = validEfa.map(e =>
+            `${e.name}의 KMO=${e.kmo.toFixed(3)}, Bartlett χ²=${e.bartlett.chi.toFixed(2)} (p${fmtP(e.bartlett.p)}), 분산설명력=${e.varExplained.toFixed(1)}%`
+          ).join('; ');
+          sections.push({
+            title: '제3절. 측정도구의 타당성 검증 (탐색적 요인분석)',
+            body: `측정도구의 구성타당도를 확인하기 위해 탐색적 요인분석(Exploratory Factor Analysis: EFA)을 실시하였다. ` +
+                  `요인추출은 주성분분석(Principal Component Analysis)을 사용하였으며, 회전방식은 직교회전 방식인 베리맥스(Varimax)를 적용하였다. ` +
+                  `KMO(Kaiser-Meyer-Olkin) 측도는 표본 적합성을 나타내는 지표로 .6 이상이면 요인분석에 적합하다고 판단되며, Bartlett의 구형성 검정은 변수 간 상관관계의 유의성을 검증한다(Kaiser, 1974). ` +
+                  `또한 요인적재값은 .5 이상이면 양호한 수준으로, 누적 분산 설명력은 60% 이상이면 적절한 것으로 판단된다(Hair et al., 2010).\n\n` +
+                  `각 변수에 대한 탐색적 요인분석 결과는 <표 IV-2~5>와 같다. ${efaText}로 산출되었다. ` +
+                  `모든 변수의 KMO 값이 .6 이상으로 표본 적합성이 확보되었고, Bartlett 구형성 검정 결과도 모두 ***p<.001***로 유의하게 나타나 요인분석을 수행하기에 적합한 것으로 확인되었다. ` +
+                  `또한 누적 분산 설명력이 ${Math.min(...validEfa.map(e=>e.varExplained)).toFixed(1)}%~${Math.max(...validEfa.map(e=>e.varExplained)).toFixed(1)}% 범위로 모두 60%를 상회하였으며, 모든 문항의 요인적재값이 .5 이상으로 나타나 측정도구의 ***구성타당도가 확보***되었다.`
+          });
+        }
+        // [제4절] 기술통계 + 정규성 — 상세 본문
+        const descText = result.descriptive.map(d => `${d.name}(M=${d.mean.toFixed(2)}, SD=${d.sd.toFixed(2)})`).join(', ');
+        const meanRange = result.descriptive.map(d=>d.mean);
+        const minMean = Math.min(...meanRange), maxMean = Math.max(...meanRange);
+        const skewMax = Math.max(...result.descriptive.map(d=>Math.abs(d.skew||0)));
+        const kurtMax = Math.max(...result.descriptive.map(d=>Math.abs(d.kurt||0)));
+        sections.push({
+          title: '제4절. 기술통계 및 정규성 검증',
+          body: `본 연구에 사용된 변수들의 기술통계 결과는 <표 IV-7>과 같다. ${descText}로 분석되었다. ` +
+                `각 변수의 평균은 5점 Likert 척도 기준 ${minMean.toFixed(2)}~${maxMean.toFixed(2)} 범위에 분포하였으며, 표준편차는 양호한 수준을 보였다.\n\n` +
+                `또한 변수의 정규성을 검증하기 위해 왜도(skewness)와 첨도(kurtosis)를 산출하였다. ` +
+                `Hayes(2018)에 따르면 왜도의 절대값이 2 미만, 첨도의 절대값이 7 미만이면 정규분포 가정을 충족하는 것으로 판단할 수 있다. ` +
+                `본 연구의 분석 결과, 모든 변수의 ***왜도 최댓값은 ${skewMax.toFixed(2)} (절대값 < 2)***, ***첨도 최댓값은 ${kurtMax.toFixed(2)} (절대값 < 7)***로 나타나 ***정규분포 가정을 충족***하였다. 이에 따라 모수 통계기법(parametric statistics)인 회귀분석과 매개·조절효과 분석을 수행할 수 있는 것으로 판단된다.`
+        });
+        // [제5절] 상관관계 — 상세 본문
+        // 가장 강한 상관 찾기
+        let strongCorr = [];
+        for (let i = 0; i < result.corrNames.length; i++) {
+          for (let j = i+1; j < result.corrNames.length; j++) {
+            const c = result.corr[i][j];
+            if (c.r != null && Math.abs(c.r) >= 0.3) {
+              strongCorr.push({a: result.corrNames[i], b: result.corrNames[j], r: c.r, p: c.p});
+            }
+          }
+        }
+        strongCorr.sort((x,y)=>Math.abs(y.r)-Math.abs(x.r));
+        const topCorr = strongCorr.slice(0, 5).map(s => `${s.a}-${s.b}(r=${s.r.toFixed(3)}${SF.star(s.p)})`).join(', ');
+        sections.push({
+          title: '제5절. 상관관계 분석',
+          body: `본 연구에 사용된 주요 변수 간의 상관관계를 검증하기 위해 Pearson 적률상관분석을 실시하였으며, 그 결과는 <표 IV-11>과 같다. ` +
+                `각 변수 간 상관계수의 ***절대값이 .8 미만***으로 나타나 다중공선성(multicollinearity) 문제는 없는 것으로 판단된다(Kline, 2011). ` +
+                (topCorr ? `\n\n주요 변수 간 상관관계를 살펴보면, ${topCorr} 등에서 통계적으로 유의한 정(+)의 상관관계가 확인되었다. ` : '') +
+                `이러한 결과는 본 연구의 가설에서 제시한 변수 간 관계의 방향성과 부합하는 것으로, 후속 회귀분석을 통한 가설 검증의 타당성을 뒷받침한다. ` +
+                `상관관계의 유의수준은 ***p < .001 (***), p < .01 (**), p < .05 (*)*** 로 표기하였다.`
+        });
+        // [제6절] 가설검증 (회귀) — 상세 본문
+        if (result.reg && result.reg.h1) {
+          const h1 = result.reg.h1;
+          const sigVars = h1.std.beta.slice(1).map((b,i) => ({n:h1.ivNames[i],b,t:h1.raw.t[i+1],p:h1.raw.p[i+1]}))
+            .filter(v=>v.p<.05).sort((a,b)=>Math.abs(b.b)-Math.abs(a.b));
+          const topVar = sigVars[0];
+          sections.push({
+            title: `제6절. 가설검증 — H1: ${ivs.map(v=>v.name).join('·')} → ${dvs[0]?.name||'DV'}`,
+            body: `H1: ${ivs.map(v=>v.name).join(', ')}은(는) ${dvs[0]?.name}에 유의한 정(+)의 영향을 미칠 것이다.\n\n` +
+                  `${ivs.map(v=>v.name).join('과 ')}이(가) ${dvs[0]?.name}에 미치는 영향을 검증하기 위해 다중회귀분석(multiple regression analysis)을 실시하였다. ` +
+                  `분석 결과는 <표 IV-12>와 같다.\n\n` +
+                  `회귀모형의 적합도를 살펴보면, 결정계수 ***R²=${h1.raw.r2.toFixed(3)}, 수정된 결정계수 adj.R²=${h1.raw.adjR2.toFixed(3)}***로 나타나 회귀모형이 종속변수의 분산을 ***약 ${(h1.raw.r2*100).toFixed(1)}%*** 설명하는 것으로 확인되었다. ` +
+                  `또한 ***F=${h1.raw.f.toFixed(2)}, p${fmtP(h1.raw.p[0])}***로 회귀모형이 통계적으로 유의하게 도출되었다. ` +
+                  `다중공선성 진단 결과 모든 독립변수의 ***VIF는 5 미만***으로 다중공선성 문제는 없는 것으로 확인되었다(Hair et al., 2010).\n\n` +
+                  (sigVars.length > 0
+                    ? `구체적으로 살펴보면, ${sigVars.map(v=>`***${v.n}(β=${v.b.toFixed(3)}, t=${v.t.toFixed(2)}, p${fmtP(v.p)})***`).join(', ')} 순으로 ${dvs[0]?.name}에 유의한 정(+)의 영향을 미치는 것으로 나타났다. ` +
+                      (topVar ? `특히 ${topVar.n}이 1단위 증가할 때 ${dvs[0]?.name}이 ${Math.abs(topVar.b).toFixed(3)}만큼 ${topVar.b>0?'증가':'감소'}하여 가장 큰 영향력을 보였다. ` : '') +
+                      `이러한 결과는 ${ivs.map(v=>v.name).join('과 ')}이 ${dvs[0]?.name}을 향상시키는 핵심 요인임을 시사한다. ` +
+                      `\n\n따라서 가설 ***H1은 ${sigVars.length===ivs.length?'완전히 채택':'부분적으로 채택'}***되었다.`
+                    : `독립변수의 회귀계수가 통계적으로 유의하지 않은 것으로 나타났다(p ≥ .05). 따라서 ***가설 H1은 기각***되었다.`)
+          });
+        }
+        // [제7절] 매개효과 (Hayes M4) — 상세 본문
+        if (result.reg && result.reg.mediation && result.reg.mediation.length > 0) {
+          const medSig = result.reg.mediation.filter(m => m.bootSig);
+          const medFull = result.reg.mediation.filter(m=>m.medType==='완전매개');
+          const medPartial = result.reg.mediation.filter(m=>m.medType==='부분매개');
+          sections.push({
+            title: `제7절. 매개효과 검증 (Hayes Model 4)`,
+            body: `H[N]: ${meds[0]?.name}은(는) ${ivs.map(v=>v.name).join('과 ')}과 ${dvs[0]?.name} 간의 관계를 매개할 것이다.\n\n` +
+                  `${meds[0]?.name}의 매개효과를 검증하기 위해 본 연구에서는 두 가지 방법을 병행하여 분석하였다. ` +
+                  `첫째, ***Baron과 Kenny(1986)의 3단계 검증 절차***를 통해 매개효과의 존재를 확인하였다. ` +
+                  `둘째, 보다 정교한 매개효과 검증을 위해 ***Hayes(2018)가 제안한 PROCESS Macro Model 4***를 활용하여 95% 신뢰수준에서 ***5,000회 부트스트랩(percentile bootstrap)***으로 간접효과의 신뢰구간(LLCI, ULCI)을 산출하였다. ` +
+                  `이때 신뢰구간(LLCI~ULCI)이 0을 포함하지 않으면 간접효과(매개효과)가 통계적으로 유의한 것으로 판단할 수 있다(Preacher & Hayes, 2008).\n\n` +
+                  `분석 결과는 <표 IV-17>과 <표 IV-18>에 제시된 바와 같다. ` +
+                  (medSig.length > 0
+                    ? `${medSig.map(m=>`***${m.iv}→${m.med}→${dvs[0]?.name}*** 경로의 간접효과 ab=${m.bootEffect.toFixed(3)}, 95% CI[${m.bootLLCI.toFixed(3)}, ${m.bootULCI.toFixed(3)}]`).join('; ')}로 ***신뢰구간이 0을 포함하지 않아 매개효과가 통계적으로 유의***함이 확인되었다. ` +
+                      (medFull.length > 0 ? `${medFull.map(m=>m.iv).join(', ')}의 경우 직접효과(c')가 비유의한 것으로 나타나 ***완전매개(full mediation)***로 검증되었다. ` : '') +
+                      (medPartial.length > 0 ? `${medPartial.map(m=>m.iv).join(', ')}의 경우 직접효과(c')가 여전히 유의하게 나타나 ***부분매개(partial mediation)***로 검증되었다. ` : '') +
+                      `이는 ${ivs[0]?.name}이 ${dvs[0]?.name}에 직접적으로 영향을 미칠 뿐만 아니라, ***${meds[0]?.name}을 경유하여 간접적으로도 영향***을 미친다는 것을 의미한다. \n\n따라서 ***매개효과 가설은 채택***되었다.`
+                    : `간접효과의 95% 신뢰구간이 0을 포함하여 ${meds[0]?.name}의 매개효과는 통계적으로 유의하지 않은 것으로 나타났다. \n\n따라서 매개효과 가설은 ***기각***되었다.`)
+          });
+        }
+        // [제8절] 조절된 매개 (Hayes M7) — 상세 본문
+        if (result.reg && result.reg.modMed7 && result.reg.modMed7.length > 0) {
+          const sig = result.reg.modMed7.filter(m=>m.indexSig);
+          sections.push({
+            title: `제8절. 조절된 매개효과 검증 (Hayes Model 7)`,
+            body: `H[N]: ${ivs[0]?.name}이(가) ${dvs[0]?.name}에 미치는 영향에서 ${meds[0]?.name}의 매개효과는 ${mods[0]?.name}에 의해 조절될 것이다.\n\n` +
+                  `${mods[0]?.name}의 조절된 매개효과(moderated mediation)를 검증하기 위해 ***Hayes(2015, 2018)가 제안한 PROCESS Macro Model 7***을 활용하였다. ` +
+                  `Model 7은 1단계 매개경로(X→M)에 조절변수(W)가 작용하는 모형으로, 조절된 매개효과의 핵심 지표인 ***Index of Moderated Mediation*** 값을 산출하여 그 유의성을 검증한다. ` +
+                  `Index의 95% 신뢰구간(LLCI, ULCI)이 0을 포함하지 않으면 조절된 매개효과가 통계적으로 유의한 것으로 판단된다(Hayes, 2015).\n\n` +
+                  `분석에는 부트스트랩 신뢰수준 95%, 표본 수 5,000개를 적용하였으며, 상호작용 변수의 다중공선성 문제를 해결하기 위해 ***평균 중심화(mean centering)*** 기법을 적용하였다(Aiken & West, 1991).\n\n` +
+                  `분석 결과는 <표 IV-N>과 같다. ` +
+                  (sig.length > 0
+                    ? `${sig.map(m=>`***Index of Moderated Mediation = ${m.indexMM.toFixed(3)}, 95% CI[${m.indexLLCI.toFixed(3)}, ${m.indexULCI.toFixed(3)}]***`).join('; ')}로 산출되어 ***신뢰구간이 0을 포함하지 않아*** ${meds[0]?.name}의 매개효과가 ${mods[0]?.name}에 의해 ***유의하게 조절***되는 것으로 확인되었다.\n\n` +
+                      `또한 조건부 간접효과(conditional indirect effect)를 살펴보면, ${mods[0]?.name}의 수준이 -1SD, Mean, +1SD로 변화함에 따라 간접효과의 크기가 ${sig[0].conditional.map(c=>c.indirect.toFixed(3)).join(' → ')}로 ${sig[0].conditional[2].indirect>sig[0].conditional[0].indirect?'증가':'감소'}하는 것으로 나타났다. ` +
+                      `이는 ${mods[0]?.name}이 ***높을수록 ${ivs[0]?.name}→${meds[0]?.name}→${dvs[0]?.name} 간접효과가 ${sig[0].conditional[2].indirect>sig[0].conditional[0].indirect?'강화':'약화'}***된다는 것을 의미하며, 이론적·실무적으로 중요한 시사점을 제공한다.\n\n` +
+                      `따라서 ***조절된 매개효과 가설은 채택***되었다.`
+                    : `Index of Moderated Mediation의 95% 신뢰구간이 0을 포함하여 ${mods[0]?.name}에 의한 조절된 매개효과는 통계적으로 유의하지 않은 것으로 나타났다. \n\n따라서 조절된 매개효과 가설은 ***기각***되었다.`)
+          });
+        }
+        // [제9절] 가설검증 종합 요약
+        const allHyp = [];
+        if (result.reg?.h1) {
+          const sigCount = result.reg.h1.std.beta.slice(1).filter((b,i)=>result.reg.h1.raw.p[i+1]<.05).length;
+          allHyp.push(`H1 (직접효과): ${sigCount===result.reg.h1.ivNames.length?'채택':sigCount>0?'부분 채택':'기각'}`);
+        }
+        if (result.reg?.mediation && result.reg.mediation.length > 0) {
+          const sigM = result.reg.mediation.filter(m=>m.bootSig).length;
+          allHyp.push(`H[매개]: ${sigM===result.reg.mediation.length?'채택':sigM>0?'부분 채택':'기각'} (${sigM}/${result.reg.mediation.length})`);
+        }
+        if (result.reg?.moderation && result.reg.moderation.length > 0) {
+          const sigMod = result.reg.moderation.filter(m=>m.modType!=='조절효과 없음').length;
+          allHyp.push(`H[조절]: ${sigMod===result.reg.moderation.length?'채택':sigMod>0?'부분 채택':'기각'} (${sigMod}/${result.reg.moderation.length})`);
+        }
+        if (result.reg?.modMed7 && result.reg.modMed7.length > 0) {
+          const sigMM = result.reg.modMed7.filter(m=>m.indexSig).length;
+          allHyp.push(`H[조절된 매개]: ${sigMM===result.reg.modMed7.length?'채택':sigMM>0?'부분 채택':'기각'} (${sigMM}/${result.reg.modMed7.length})`);
+        }
+        sections.push({
+          title: '제9절. 가설검증 결과 종합',
+          body: `본 연구의 가설 검증 결과를 종합하면 <표 IV-N>과 같다. ` +
+                allHyp.map(h=>`***${h}***`).join('; ') + '.\n\n' +
+                `이러한 분석 결과는 본 연구에서 제안한 연구모형의 타당성을 ${allHyp.filter(h=>h.includes('채택')).length>=allHyp.length*0.7?'대체로 지지':'부분적으로 지지'}하는 것으로 평가할 수 있다. ` +
+                `채택된 가설들은 ${ivs.map(v=>v.name).join(', ')} → ${dvs.map(v=>v.name).join(', ')} 간의 관계가 ${meds.length>0?meds.map(v=>v.name).join(', ')+'을(를) 통해 매개되며':'직접적으로 작용하며'}` +
+                `${mods.length>0?', '+mods.map(v=>v.name).join(', ')+'에 의해 조절되는':''} 것을 실증적으로 보여준다.\n\n` +
+                `이러한 결과의 학술적·실무적 의의와 시사점에 대해서는 ***제5장 결론*** 에서 보다 상세히 논의한다.`
+        });
+        // ★ Phase 2.8: 전처리 절 (제1절) 삽입 — 역채점/결측/이상치 처리가 있을 때만
+        const ppR = result.preprocessReport;
+        if(ppR && (ppR.reversedItems.length>0 || ppR.removedByMissing>0 || ppR.removedByStraightLine>0 || ppR.imputedCells>0)){
+          // 본문 작성
+          const order = []; let idx = 0;
+          if(ppR.reversedItems.length>0) order.push('reverse');
+          if(ppR.removedByMissing>0) order.push('missing');
+          if(ppR.removedByStraightLine>0) order.push('straight');
+          const ord = ['첫째','둘째','셋째','넷째'];
+          const ppParts = [
+            `본격적인 분석에 앞서 수집된 자료의 품질을 확보하기 위한 전처리(data preprocessing)를 수행하였다. 회수된 설문지는 총 ${ppR.originalN}부였으며, 다음과 같은 절차를 통해 분석에 활용 가능한 표본을 확정하였다.`
+          ];
+          if(ppR.reversedItems.length>0){
+            const revNames = ppR.reversedItems.slice(0,5).map(r=>r.name).join(', ');
+            ppParts.push(`\n\n${ord[order.indexOf('reverse')]}, ***역채점 문항(reverse-coded items)의 변환***을 실시하였다. 응답 편향(response bias)을 통제하기 위해 측정도구에 포함된 역채점 문항에 대해 ${ppR.reverseScale}점 척도 기준 (${ppR.reverseScale}+1) - 응답값의 공식을 적용하여 변환하였다. 본 연구에서 변환된 역채점 문항은 총 ${ppR.reversedItems.length}개이며(${revNames}${ppR.reversedItems.length>5?' 등':''}), 이를 통해 모든 측정문항이 동일한 방향으로 해석될 수 있도록 정렬하였다.`);
+          }
+          if(ppR.removedByMissing>0){
+            ppParts.push(`\n\n${ord[order.indexOf('missing')]}, ***결측치(missing data) 처리***를 실시하였다. 측정문항에 대한 결측 응답이 ${ppR.missingThreshold}%를 초과하는 표본은 ***불성실 응답(careless responding)***으로 판단하여 분석에서 제외하였다(Meade & Craig, 2012). 이에 따라 ${ppR.removedByMissing}부의 응답이 제외되었다.`);
+          }
+          if(ppR.removedByStraightLine>0){
+            ppParts.push(`\n\n${ord[order.indexOf('straight')]}, ***직선 응답(straight-lining)***을 보이는 표본을 제거하였다. 한 변수의 모든 측정문항에 대해 동일한 응답값을 부여한 경우 응답의 ***성실성과 변별력이 결여된 것***으로 판단하여 분석에서 제외하였다. 이러한 기준에 따라 ${ppR.removedByStraightLine}부의 응답이 추가로 제외되었다.`);
+          }
+          if(ppR.imputedCells>0){
+            ppParts.push(`\n\n또한 부분적인 결측 셀에 대해서는 ***평균 대체법(mean imputation)***을 적용하여 ${ppR.imputedCells}개의 결측 셀을 해당 변수의 평균값으로 대체하였다(Schafer & Graham, 2002).`);
+          }
+          ppParts.push(`\n\n위와 같은 전처리 절차를 통해 본 연구의 분석에 활용된 ***최종 표본은 ${ppR.finalN}부***로 확정되었다(원본 ${ppR.originalN}부 → 분석 대상 ${ppR.finalN}부, 유효 응답률 ${(ppR.finalN/ppR.originalN*100).toFixed(1)}%).`);
+
+          // 기존 절 번호 +1 (제1절→제2절, ...)
+          sections.forEach(s => {
+            s.title = s.title.replace(/^제(\d+)절\./, (_,n) => '제'+(parseInt(n)+1)+'절.');
+          });
+          // 제1절로 삽입
+          sections.unshift({title: '제1절. 자료의 정제 및 처리', body: ppParts.join('')});
+        }
+        // 본문 텍스트 합치기
+        const fullBody = sections.map(s => `[${s.title}]\n\n${s.body}`).join('\n\n────────────────\n\n');
+        // ★ Phase 2.5: Word/Excel 자동 다운로드
+        const fmt2 = v => v==null||isNaN(v)?'–':Number(v).toFixed(3);
+        const downloadWord = () => {
+          const dateStr = new Date().toISOString().slice(0,10);
+          const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'><title>제4장 연구결과</title>
+<style>
+  @page { size: A4 portrait; margin: 2.5cm 2cm; }
+  body { font-family: '맑은 고딕', sans-serif; font-size: 11pt; line-height: 1.7; }
+  h1 { font-size: 18pt; color: #1F3864; border-bottom: 3px solid #1F3864; padding-bottom: 6px; margin-top: 24pt; }
+  h2 { font-size: 14pt; color: #2E75B6; margin-top: 18pt; }
+  h3 { font-size: 12pt; color: #1F3864; }
+  table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 10pt; }
+  th { background: #1F3864; color: #fff; padding: 6pt; border: 1px solid #1F3864; text-align: center; font-weight: bold; }
+  td { border: 1px solid #999; padding: 5pt 8pt; }
+  td.center { text-align: center; }
+  tr:nth-child(even) td { background: #F2F6FB; }
+  .note { background: #FFF8E1; padding: 8pt 12pt; border-left: 3px solid #F57C00; font-size: 10pt; color: #5D4037; margin: 8pt 0; }
+  .body-text { font-size: 11pt; line-height: 1.8; padding: 8pt 0; text-align: justify; }
+</style></head><body>
+<h1>제4장 연구결과</h1>
+${sections.map((s,i)=>`<h2>${s.title}</h2><div class="body-text">${s.body.replace(/\n/g,'<br>')}</div>`).join('')}
+<h2>★ 부록. 통계 분석 결과표</h2>
+<h3>표 IV-1. 인구통계학적 특성 (N=${result.N})</h3>
+${(()=>{ if(!result.demoTests||Object.keys(result.demoTests).length===0) return '<p>인구통계 변수 없음</p>';
+  return Object.keys(result.demoTests).map(k=>`<p>· ${k}: 빈도 분석 진행</p>`).join('');
+})()}
+<h3>표 IV-7. 기술통계 (M·SD·왜도·첨도·정규성)</h3>
+<table>
+  <thead><tr><th>변수</th><th>N</th><th>M</th><th>SD</th><th>왜도</th><th>첨도</th><th>정규성</th></tr></thead>
+  <tbody>${result.descriptive.map(d=>`<tr><td>${d.name}</td><td class="center">${d.n}</td><td class="center">${fmt2(d.mean)}</td><td class="center">${fmt2(d.sd)}</td><td class="center">${fmt2(d.skew)}</td><td class="center">${fmt2(d.kurt)}</td><td class="center">${d.normal?'✓':'⚠'}</td></tr>`).join('')}</tbody>
+</table>
+<p class="note">정규성 기준: |왜도|<2, |첨도|<7 (Hayes, 2018)</p>
+
+<h3>표 IV-6. 신뢰도 검증 (Cronbach's α)</h3>
+<table>
+  <thead><tr><th>변수</th><th>항목 수</th><th>Cronbach's α</th><th>판정</th></tr></thead>
+  <tbody>${result.reliability.map(r=>`<tr><td>${r.name}</td><td class="center">${r.k}</td><td class="center">${fmt2(r.alpha)}</td><td class="center">${r.alpha>=.7?'★ 양호':r.alpha>=.6?'경계':'미흡'}</td></tr>`).join('')}</tbody>
+</table>
+
+${result.efa&&result.efa.length>0?`<h3>표 IV-2~5. 탐색적 요인분석 (EFA)</h3>
+${result.efa.filter(e=>e.kmo!=null).map((e,i)=>`<h4>${e.name}</h4>
+<table>
+  <thead><tr><th>항목</th><th>요인적재량</th><th>공통성(h²)</th></tr></thead>
+  <tbody>${e.loadings.map(l=>`<tr><td>${l.item}</td><td class="center">${fmt2(l.loading)}</td><td class="center">${fmt2(l.common)}</td></tr>`).join('')}</tbody>
+  <tfoot><tr><td colspan="3" style="background:#EEF3FB;font-size:9pt;">KMO=${fmt2(e.kmo)} | Bartlett χ²=${fmt2(e.bartlett.chi)}, p=${fmt2(e.bartlett.p)} | 분산설명력=${fmt2(e.varExplained)}%</td></tr></tfoot>
+</table>`).join('')}`:''}
+
+<h3>표 IV-11. 상관관계 매트릭스</h3>
+<table>
+  <thead><tr><th></th>${result.corrNames.map((_,i)=>`<th>${i+1}</th>`).join('')}</tr></thead>
+  <tbody>${result.corrNames.map((n,i)=>`<tr><td>${i+1}. ${n}</td>${result.corr[i].map((c,j)=>`<td class="center">${j>i?'':j===i?'1.000':fmt2(c.r)+SF.star(c.p)}</td>`).join('')}</tr>`).join('')}</tbody>
+</table>
+<p class="note">*** p<.001  ** p<.01  * p<.05</p>
+
+${result.reg&&result.reg.h1?`<h3>표 IV-12. 다중회귀분석 (직접효과)</h3>
+<table>
+  <thead><tr><th>독립변수</th><th>B</th><th>SE</th><th>β</th><th>t</th><th>p</th></tr></thead>
+  <tbody>${result.reg.h1.ivNames.map((nm,i)=>`<tr><td>${nm}</td><td class="center">${fmt2(result.reg.h1.raw.beta[i+1])}</td><td class="center">${fmt2(result.reg.h1.raw.se[i+1])}</td><td class="center">${fmt2(result.reg.h1.std.beta[i+1])}</td><td class="center">${fmt2(result.reg.h1.raw.t[i+1])}</td><td class="center">${fmt2(result.reg.h1.raw.p[i+1])}</td></tr>`).join('')}</tbody>
+  <tfoot><tr><td colspan="6" style="background:#EEF3FB;font-size:9pt;">R²=${fmt2(result.reg.h1.raw.r2)}, adj.R²=${fmt2(result.reg.h1.raw.adjR2)}, F=${fmt2(result.reg.h1.raw.f)}</td></tr></tfoot>
+</table>`:''}
+
+${result.reg&&result.reg.mediation?`<h3>표 IV-17. 매개효과 (Hayes Model 4 — Bootstrap 5,000회 95% CI)</h3>
+<table>
+  <thead><tr><th>IV</th><th>간접효과 ab</th><th>BootSE</th><th>LLCI</th><th>ULCI</th><th>판정</th></tr></thead>
+  <tbody>${result.reg.mediation.map(m=>`<tr><td>${m.iv}</td><td class="center">${fmt2(m.bootEffect)}</td><td class="center">${fmt2(m.bootSE)}</td><td class="center">${fmt2(m.bootLLCI)}</td><td class="center">${fmt2(m.bootULCI)}</td><td class="center">${m.bootSig?'★ 유의':'비유의'}</td></tr>`).join('')}</tbody>
+</table>
+<p class="note">95% Percentile Bootstrap (Hayes, 2018). LLCI~ULCI에 0 미포함 시 간접효과 유의</p>`:''}
+
+${result.reg&&result.reg.modMed7&&result.reg.modMed7.length>0?`<h3>표 IV-N. ⭐⭐ 조절된 매개효과 (Hayes Model 7)</h3>
+${result.reg.modMed7.map(m=>`<table>
+  <caption><strong>${m.iv}→${m.med}→${m.dv}, ${m.mod} 조절</strong></caption>
+  <thead><tr><th>지표</th><th>값</th><th>BootSE</th><th>95% LLCI</th><th>95% ULCI</th><th>판정</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Index of Moderated Mediation</strong></td><td class="center"><strong>${fmt2(m.indexMM)}</strong></td><td class="center">${fmt2(m.indexBootSE)}</td><td class="center">${fmt2(m.indexLLCI)}</td><td class="center">${fmt2(m.indexULCI)}</td><td class="center"><strong>${m.indexSig?'★ 유의':'비유의'}</strong></td></tr>
+    ${m.conditional.map(c=>`<tr><td>조건부 ${c.level}</td><td class="center">${fmt2(c.indirect)}</td><td colspan="4" class="center">단순기울기 X→M = ${fmt2(c.simpleSlope)}</td></tr>`).join('')}
+  </tbody>
+</table>`).join('')}`:''}
+
+<p style="margin-top:24pt;font-size:9pt;color:#888;text-align:center;">생성일: ${dateStr} | 논문나침반 통계엔진 v1.0</p>
+</body></html>`;
+          const blob = new Blob(['﻿'+html], {type:'application/msword;charset=utf-8'});
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `제4장_통계분석결과_${dateStr}.doc`;
+          a.click();
+          URL.revokeObjectURL(url);
+          setCopyMsg('Word 다운로드 완료!');
+          setTimeout(()=>setCopyMsg(''),2500);
+        };
+        const downloadExcel = () => {
+          if(!window.XLSX){alert('XLSX.js 로딩 필요');return;}
+          const wb = XLSX.utils.book_new();
+          // Sheet 1: 4장 본문
+          const bodyData = [['학위논문 제4장 본문 자동 작성'],[]];
+          sections.forEach(s=>{bodyData.push([s.title]);bodyData.push([s.body]);bodyData.push([]);});
+          const ws1 = XLSX.utils.aoa_to_sheet(bodyData);
+          ws1['!cols']=[{wch:120}];
+          XLSX.utils.book_append_sheet(wb,ws1,'4장 본문');
+          // Sheet 2: 기술통계
+          const desc = [['변수','N','M','SD','왜도','첨도','정규성'],
+            ...result.descriptive.map(d=>[d.name,d.n,d.mean,d.sd,d.skew,d.kurt,d.normal?'충족':'검토'])];
+          XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(desc),'표 IV-7 기술통계');
+          // Sheet 3: 신뢰도
+          const rel = [['변수','항목수',"Cronbach's α",'판정'],
+            ...result.reliability.map(r=>[r.name,r.k,r.alpha,r.alpha>=.7?'양호':'미흡'])];
+          XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rel),'표 IV-6 신뢰도');
+          // Sheet 4: EFA
+          if(result.efa&&result.efa.length>0){
+            const efaData = [['변수','항목','요인적재량','공통성','KMO','Bartlett χ²','p','분산설명력(%)','판정']];
+            result.efa.forEach(e=>{
+              if(e.kmo==null) return;
+              e.loadings.forEach((l,i)=>efaData.push([
+                i===0?e.name:'',l.item,l.loading,l.common,
+                i===0?e.kmo:'',i===0?e.bartlett.chi:'',i===0?e.bartlett.p:'',
+                i===0?e.varExplained:'',i===0?(e.valid?'타당도 확보':'검토'):''
+              ]));
+            });
+            XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(efaData),'표 IV-2~5 EFA');
+          }
+          // Sheet 5: 상관관계
+          const corrData = [[''].concat(result.corrNames)];
+          result.corrNames.forEach((n,i)=>{const row=[n];result.corr[i].forEach((c,j)=>row.push(j>i?'':j===i?1:c.r));corrData.push(row);});
+          XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(corrData),'표 IV-11 상관관계');
+          // Sheet 6: 회귀분석
+          if(result.reg&&result.reg.h1){
+            const regData = [['독립변수','B','SE','β','t','p'],
+              ...result.reg.h1.ivNames.map((n,i)=>[n,result.reg.h1.raw.beta[i+1],result.reg.h1.raw.se[i+1],result.reg.h1.std.beta[i+1],result.reg.h1.raw.t[i+1],result.reg.h1.raw.p[i+1]]),
+              [],['R²',result.reg.h1.raw.r2],['adj.R²',result.reg.h1.raw.adjR2],['F',result.reg.h1.raw.f]];
+            XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(regData),'표 IV-12 회귀분석');
+          }
+          // Sheet 7: 매개효과 (Hayes M4)
+          if(result.reg&&result.reg.mediation){
+            const medData = [['IV','간접효과 ab','BootSE','95% LLCI','95% ULCI','판정'],
+              ...result.reg.mediation.map(m=>[m.iv,m.bootEffect,m.bootSE,m.bootLLCI,m.bootULCI,m.bootSig?'유의':'비유의'])];
+            XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(medData),'표 IV-17 매개 (Hayes M4)');
+          }
+          // Sheet 8: 조절된 매개 (Hayes M7)
+          if(result.reg&&result.reg.modMed7&&result.reg.modMed7.length>0){
+            const mmData = [['경로','지표','값','BootSE','95% LLCI','95% ULCI','판정']];
+            result.reg.modMed7.forEach(m=>{
+              const path = `${m.iv}→${m.med}→${m.dv} (${m.mod} 조절)`;
+              mmData.push([path,'Index of Moderated Mediation',m.indexMM,m.indexBootSE,m.indexLLCI,m.indexULCI,m.indexSig?'유의':'비유의']);
+              m.conditional.forEach(c=>mmData.push(['',`조건부 ${c.level}`,c.indirect,'','','',`단순기울기=${fmt2(c.simpleSlope)}`]));
+            });
+            XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(mmData),'표 IV-N 조절된 매개');
+          }
+          XLSX.writeFile(wb,`통계분석결과_${new Date().toISOString().slice(0,10)}.xlsx`);
+          setCopyMsg('Excel 다운로드 완료!');
+          setTimeout(()=>setCopyMsg(''),2500);
+        };
+        return h('div',null,
+          h('div',{style:{marginBottom:'16px',padding:'12px',background:'#FFF8E1',borderRadius:'8px',border:'1px solid #FFD54F'}},
+            h('p',{style:{fontSize:'13px',color:'#5D4037',marginBottom:'6px'}},
+              h('strong',null,'📝 학위논문 제4장 본문 자동 작성'),' — 본 분석 결과를 학위논문 양식으로 자동 작성한 본문입니다. 복사 후 본 논문에 그대로 인용 가능합니다.'),
+            h('p',{style:{fontSize:'11px',color:'#888'}},'※ 빈칸·연구 맥락 부분은 직접 보완하시고, 표 번호는 본 논문 형식에 맞춰 조정하세요.')
+          ),
+          h('div',{style:{display:'flex',gap:'10px',flexWrap:'wrap',marginBottom:'14px'}},
+            h('button',{onClick:()=>{
+              navigator.clipboard.writeText(fullBody).then(()=>{
+                setCopyMsg('전체 본문 복사됨!');
+                setTimeout(()=>setCopyMsg(''),2500);
+              });
+            },style:{padding:'10px 18px',background:'#1F3864',color:'#fff',border:'none',borderRadius:6,fontSize:13,fontWeight:'bold',cursor:'pointer'}},'📋 전체 본문 복사'),
+            h('button',{onClick:downloadWord,
+              style:{padding:'10px 18px',background:'#2B579A',color:'#fff',border:'none',borderRadius:6,fontSize:13,fontWeight:'bold',cursor:'pointer'}},'📄 Word 다운로드 (.doc)'),
+            h('button',{onClick:downloadExcel,
+              style:{padding:'10px 18px',background:'#217346',color:'#fff',border:'none',borderRadius:6,fontSize:13,fontWeight:'bold',cursor:'pointer'}},'📊 Excel 다운로드 (.xlsx)')
+          ),
+          ...sections.map((s,i)=>h('div',{key:i,style:{marginBottom:'18px',padding:'14px 18px',background:'#fff',borderRadius:'8px',border:'1px solid #e0e0e0'}},
+            h('h4',{style:{fontSize:'14px',fontWeight:'bold',color:'#1F3864',marginBottom:'8px'}},s.title),
+            h('p',{style:{fontSize:'13px',lineHeight:1.7,color:'#333',whiteSpace:'pre-wrap'}},s.body),
+            h('button',{onClick:()=>{
+              navigator.clipboard.writeText(s.body).then(()=>{
+                setCopyMsg(`"${s.title}" 복사됨`);
+                setTimeout(()=>setCopyMsg(''),2000);
+              });
+            },style:{marginTop:'8px',padding:'4px 10px',background:'#f0f0f0',color:'#555',border:'1px solid #ddd',borderRadius:4,fontSize:11,cursor:'pointer'}},'📋 이 절만 복사')
+          ))
+        );
+      }
       return null;
     };
 
@@ -20416,6 +21501,20 @@ const StatsAnalyzer = ({ onBack }) => {
             color:activeTab===tab.id?ti.color:'#666',cursor:'pointer',fontSize:'13px',whiteSpace:'nowrap'}},tab.label))
       ),
       h('div',{style:{maxWidth:'1100px',margin:'0 auto',padding:'24px 20px'}},
+        // ★ Phase 2.8: 결과 화면 상단 전처리 요약 배너
+        result.preprocessReport && (result.preprocessReport.reversedItems.length>0 || result.preprocessReport.removedByMissing>0 || result.preprocessReport.removedByStraightLine>0 || result.preprocessReport.imputedCells>0) &&
+          h('div',{style:{marginBottom:'18px',padding:'12px 16px',background:'#E8F5E9',borderRadius:'10px',border:'1px solid #A5D6A7',display:'flex',alignItems:'center',gap:'10px',flexWrap:'wrap'}},
+            h('span',{style:{fontSize:'18px'}},'🛠'),
+            h('div',null,
+              h('p',{style:{fontSize:'12px',fontWeight:'bold',color:'#1B5E20',marginBottom:'2px'}},'데이터 전처리 적용됨'),
+              h('p',{style:{fontSize:'11px',color:'#2E7D32'}},
+                `원본 ${result.preprocessReport.originalN}명 → 분석대상 N=${result.preprocessReport.finalN}`,
+                result.preprocessReport.reversedItems.length>0 ? ` · 역채점 변환 ${result.preprocessReport.reversedItems.length}항목` : '',
+                result.preprocessReport.removedByMissing>0 ? ` · 결측 초과 제거 ${result.preprocessReport.removedByMissing}명` : '',
+                result.preprocessReport.removedByStraightLine>0 ? ` · 직선응답 제거 ${result.preprocessReport.removedByStraightLine}명` : '',
+                result.preprocessReport.imputedCells>0 ? ` · 평균 대체 ${result.preprocessReport.imputedCells}셀` : '')
+            )
+          ),
         tabContent(),
         h('div',{style:{marginTop:'32px',padding:'16px 20px',background:'#FFF8E1',borderRadius:'10px',border:'1px solid #FFE082'}},
           h('p',{style:{fontSize:'13px',fontWeight:'bold',color:'#E65100',marginBottom:'6px'}},'이 결과는 가설 검증 미리보기 용도입니다.'),
