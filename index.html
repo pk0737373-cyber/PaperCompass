@@ -16276,15 +16276,32 @@ const PaperCompass = ({ onBack }) => {
         script += `\n`;
       });
 
-      // Demographics
-      script += `  // 인구통계학적 정보\n`;
+      // ── Demographics: 사용자가 Step 7에서 수정한 customDemographics 동적 반영 ──
+      script += `  // 인구통계학적 정보 (사용자 정의)\n`;
       script += `  form.addSectionHeaderItem().setTitle('인구통계학적 정보');\n`;
-      script += `  form.addMultipleChoiceItem().setTitle('성별').setChoiceValues(['남성', '여성']).setRequired(true);\n`;
-      script += `  form.addMultipleChoiceItem().setTitle('연령').setChoiceValues(['20대', '30대', '40대', '50대 이상']).setRequired(true);\n`;
-      script += `  form.addMultipleChoiceItem().setTitle('근속년수').setChoiceValues(['1년 미만', '1~3년', '3~5년', '5년 이상']).setRequired(true);\n`;
-      script += `  form.addMultipleChoiceItem().setTitle('직급').setChoiceValues(['사원', '주임', '대리', '과장 이상']).setRequired(true);\n`;
-      script += `  form.addMultipleChoiceItem().setTitle('교육수준').setChoiceValues(['고졸', '대졸', '석사', '박사']).setRequired(true);\n`;
-      script += `  form.addTextItem().setTitle('부서').setRequired(false);\n\n`;
+      customDemographics.forEach(rawItem => {
+        // "항목명: 옵션1 / 옵션2 / 옵션3" 또는 "항목명: _______________" 형식 파싱
+        const item = String(rawItem || '').trim();
+        if (!item) return;
+        const colonIdx = item.indexOf(':');
+        const title = colonIdx >= 0 ? item.slice(0, colonIdx).trim() : item;
+        const optionsText = colonIdx >= 0 ? item.slice(colonIdx + 1).trim() : '';
+        const safeTitle = _esc(title);
+        // 옵션이 비어있거나 _______ 같은 빈칸 placeholder면 텍스트 입력으로
+        if (!optionsText || /^_{3,}$/.test(optionsText.replace(/\s/g, '')) || optionsText.includes('_______')) {
+          script += `  form.addTextItem().setTitle('${safeTitle}').setRequired(false);\n`;
+        } else {
+          // 슬래시·콤마로 옵션 분리
+          const options = optionsText.split(/\s*[\/,]\s*/).map(o => o.trim()).filter(Boolean);
+          if (options.length === 0) {
+            script += `  form.addTextItem().setTitle('${safeTitle}').setRequired(false);\n`;
+          } else {
+            const optionStr = options.map(o => `'${_esc(o)}'`).join(', ');
+            script += `  form.addMultipleChoiceItem().setTitle('${safeTitle}').setChoiceValues([${optionStr}]).setRequired(true);\n`;
+          }
+        }
+      });
+      script += `\n`;
       script += `  Logger.log('설문 URL: ' + form.getPublishedUrl());\n`;
       script += `  Logger.log('편집 URL: ' + form.getEditUrl());\n`;
       script += `}\n`;
@@ -17130,9 +17147,26 @@ const PaperCompass = ({ onBack }) => {
                       })))
                 ))))
           );
-        }), React.createElement("div", {className: "p-6 bg-white rounded-lg border-2 border-gray-200"}, React.createElement("h3", {className: "font-bold text-lg mb-3", style: { color: '#1F3864' }}, "인구통계학적 정보"), React.createElement("div", {className: "space-y-2"}, surveyItems['인구통계학적'].map((item, idx) => (
-              React.createElement("div", {key: idx, className: "p-3 bg-gray-50 rounded-lg text-sm text-gray-800"}, item)
-            )))))
+        }), React.createElement("div", {className: "p-6 bg-white rounded-lg border-2 border-gray-200"}, React.createElement("h3", {className: "font-bold text-lg mb-3", style: { color: '#1F3864' }}, "인구통계학적 정보"),
+          React.createElement("div", {className: "space-y-2"}, surveyItems['인구통계학적'].map((rawItem, idx) => {
+            const it = String(rawItem || '').trim();
+            const cIdx = it.indexOf(':');
+            const tt = cIdx >= 0 ? it.slice(0, cIdx).trim() : it;
+            const oTxt = cIdx >= 0 ? it.slice(cIdx + 1).trim() : '';
+            const isTxt = !oTxt || /^_{3,}/.test(oTxt.replace(/\s/g, '')) || oTxt.includes('_______');
+            const opts = isTxt ? [] : oTxt.split(/\s*[\/,]\s*/).map(o => o.trim()).filter(Boolean);
+            return React.createElement("div", {key: idx, className: "p-3 bg-gray-50 rounded-lg text-sm text-gray-800"},
+              React.createElement("div", {className: "flex gap-2 items-start"},
+                React.createElement("span", {className: "font-bold", style: { color: '#2E75B6', minWidth: 24 }}, idx + 1, "."),
+                React.createElement("div", {className: "flex-1"},
+                  React.createElement("p", {className: "font-semibold mb-1", style: { color: '#1F3864' }}, tt),
+                  isTxt
+                    ? React.createElement("span", {className: "text-xs text-gray-500"}, "(직접 작성)")
+                    : React.createElement("span", {className: "text-xs text-gray-600"}, opts.map(o => `○ ${o}`).join('   '))
+                )
+              )
+            );
+          }))))
     );
 
     // ── Tab 3: 요인별연결망 ──
@@ -18282,9 +18316,32 @@ const PaperCompass = ({ onBack }) => {
                 )))
             );
           }),
-        React.createElement("div", {className: "mb-4"}, React.createElement("h4", {className: "font-bold mb-3", style: { color: '#1F3864' }}, variables.length === 2 ? 'Ⅲ' : variables.length === 3 ? 'Ⅳ' : variables.length === 4 ? 'Ⅴ' : `${variables.length + 1}`, ". 인구통계학적 사항 "), React.createElement("div", {className: "space-y-2"}, surveyItems['인구통계학적'].map((item, idx) => (
-                React.createElement("div", {key: idx, className: "p-2 bg-gray-50 rounded text-sm"}, item)
-              )))),
+        React.createElement("div", {className: "mb-4"}, React.createElement("h4", {className: "font-bold mb-3", style: { color: '#1F3864' }}, variables.length === 2 ? 'Ⅲ' : variables.length === 3 ? 'Ⅳ' : variables.length === 4 ? 'Ⅴ' : `${variables.length + 1}`, ". 인구통계학적 사항 "),
+          React.createElement("div", {className: "space-y-2"}, surveyItems['인구통계학적'].map((rawItem, idx) => {
+            // "항목명: 옵션1 / 옵션2 / ..." 파싱
+            const item = String(rawItem || '').trim();
+            const colonIdx = item.indexOf(':');
+            const title = colonIdx >= 0 ? item.slice(0, colonIdx).trim() : item;
+            const optionsText = colonIdx >= 0 ? item.slice(colonIdx + 1).trim() : '';
+            const isTextInput = !optionsText || /^_{3,}/.test(optionsText.replace(/\s/g, '')) || optionsText.includes('_______');
+            const options = isTextInput ? [] : optionsText.split(/\s*[\/,]\s*/).map(o => o.trim()).filter(Boolean);
+            return React.createElement("div", {key: idx, className: "p-3 bg-gray-50 rounded text-sm border border-gray-200"},
+              React.createElement("div", {className: "flex gap-2 items-start"},
+                React.createElement("span", {className: "font-semibold", style: { color: '#1F3864', minWidth: 24 }}, idx + 1, "."),
+                React.createElement("div", {className: "flex-1"},
+                  React.createElement("p", {className: "font-semibold mb-2", style: { color: '#1F3864' }}, title),
+                  isTextInput
+                    ? React.createElement("div", {className: "inline-block px-3 py-1.5 border-b-2 border-gray-400", style: { minWidth: 200, color: '#999' }}, "(직접 작성)")
+                    : React.createElement("div", {className: "flex flex-wrap gap-3"}, options.map((opt, oi) =>
+                        React.createElement("label", {key: oi, className: "flex items-center gap-1.5 text-sm text-gray-700"},
+                          React.createElement("span", {className: "inline-block w-4 h-4 border-2 border-gray-400 rounded-full"}),
+                          React.createElement("span", null, opt)
+                        )
+                      ))
+                )
+              )
+            );
+          }))),
         // ── 🔗 Google Forms URL 섹션 (Step 8에서 입력된 경우만 표시) ──
         (formViewUrl || formEditUrl || contactFormViewUrl || contactFormEditUrl) && React.createElement("div", {className: "mt-6 p-4 rounded-lg", style: {backgroundColor: '#F1F8F7', border: '1px solid #B2DFDB'}},
           React.createElement("h4", {className: "font-bold mb-3", style: {color: '#004D40'}}, "🔗 ", "온라인 설문 링크 (Google Forms)"),
