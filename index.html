@@ -13064,7 +13064,15 @@ const PaperCompass = ({ onBack }) => {
   // 선배 논문 표 패턴(예: "경험가치→고객충성도(+)")처럼, 원본 result 텍스트에서
   // 방향성(+/-/비유의)만 추출하여 "fromVar → toVar (방향)" 한 줄로 통일합니다.
   const _reframeResultForPair = (fromVar, toVar, srcText) => {
-    const orig = String(srcText || '');
+    const orig = String(srcText || '').trim();
+    // 원본 결과가 있으면 그대로 보존 (선배 논문의 핵심 결론을 손실시키지 않음)
+    // 원본이 매개·조절효과 검증, 부분지지, 혼합효과 등 학술적으로 중요한 정보를 담고 있을 수 있음
+    if (orig && orig.length > 5) {
+      // 너무 긴 결과는 (선택적) 축약 — 핵심 부분만 살리기
+      // 기본은 원본 그대로 사용
+      return orig;
+    }
+    // 원본이 비어있으면 fromVar→toVar 부호만 추정한 fallback (최소한의 정보)
     if (/유의하지\s*않|기각|비유의|미유의|not\s*significant/i.test(orig)) {
       return `${fromVar} → ${toVar} (비유의)`;
     }
