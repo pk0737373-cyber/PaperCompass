@@ -148,6 +148,23 @@ const PaperCompass = ({ onBack }) => {
 
   const TOTAL_STEPS = 9;
 
+  // ★ Phase 2.10: 1~3장 정보를 localStorage에 자동 저장 (통계분석 모듈에서 통합 다운로드 시 사용)
+  React.useEffect(() => {
+    try {
+      const data = {
+        savedAt: new Date().toISOString(),
+        ivs: selectedIVs, dvs: selectedDVs, meds: selectedMediators, mods: selectedModerators,
+        surveyTarget,
+        customDemographics,
+        researcherName, researcherAffil, advisorName, researcherProgram, researcherEmail,
+        thesisType, surveyScale, surveyMonth, sampleSize,
+        formViewUrl, contactFormViewUrl,
+        customFormTitle, customFormIntro
+      };
+      localStorage.setItem('paperCompass_thesisData', JSON.stringify(data));
+    } catch(e) { /* localStorage 사용 불가 시 무시 */ }
+  }, [selectedIVs, selectedDVs, selectedMediators, selectedModerators, surveyTarget, customDemographics, researcherName, researcherAffil, advisorName, researcherProgram, researcherEmail, thesisType, surveyScale, surveyMonth, sampleSize, formViewUrl, contactFormViewUrl, customFormTitle, customFormIntro]);
+
   const stepLabels = {
     1: '독립변수 선택',
     2: '종속변수 선택',
@@ -1169,7 +1186,7 @@ const PaperCompass = ({ onBack }) => {
     'LMX→이직의도': { count: 4, sources: 'SVU: 박성헌(2025) / 최영철(2023), 조원희(2023), Harris et al.(2005)', verdict: 'moderate' },
     'LMX→조직몰입': { count: 9, sources: 'SVU: 박성헌(2025) / 도철구(2018), 김태학(2023), 전공중(2021), 이형백·최동락(2015), 박인규(2023) / 타교: Gerstner&Day(1997) / Graen&Uhl-Bien(1995), Bien(1995)', verdict: 'strong' },
     'LMX→조직시민행동': { count: 4, sources: 'SVU: 박성헌(2025) / 이형백·최동락(2015) / 타교: Wayne et al.(1997) / Ilies et al.(2007)', verdict: 'moderate' },
-    'LMX→직무만족': { count: 10, sources: 'SVU: 박성헌(2025) / 황남연(2023), 강태만(2023), 김창섭(2021), 김남환(2019), 강태만(2022), 우성주(2021), 박인규(2023) / 타교: Gerstner&Day(1997) / Graen&Uhl-Bien(1995)', verdict: 'strong' },
+    'LMX→직무만족': { count: 10, sources: 'SVU: 박성헌(2025) / 황남연(2023), 강태만(2023), 김창섭(2021), 김남환(2019), 강태만(2022), 박인규(2023) / 타교: Gerstner&Day(1997) / Graen&Uhl-Bien(1995)', verdict: 'strong' },
     'LMX→직무성과': { count: 1, sources: '타교: Gerstner&Day(1997)', verdict: 'strong' },
     // 감정노동
     '감정노동→조직유효성': { count: 1, sources: 'SVU: 김영미(2019)', verdict: 'emerging' },
@@ -1298,7 +1315,7 @@ const PaperCompass = ({ onBack }) => {
     '보상공정성→이직의도': { count: 1, sources: 'SVU: 김종길(2025)', verdict: 'emerging' },
     // 신뢰
     '신뢰→조직몰입': { count: 4, sources: '박주현·윤병섭(2018), 박인규(2023), Mayer et al.(1995), Tan&Tan(2000)', verdict: 'strong' },
-    '신뢰→직무만족': { count: 5, sources: 'SVU: 차무홍(2023), 우성주(2021) / 박인규(2023) / 김화자(2023) / 타교: Aryee et al.(2002)', verdict: 'moderate' },
+    '신뢰→직무만족': { count: 5, sources: 'SVU: 차무홍(2023), 우성주(2020) / 박인규(2023) / 김화자(2023) / 타교: Aryee et al.(2002)', verdict: 'moderate' },
     // 심리자본
     '심리자본→조직몰입': { count: 4, sources: '타교: Luthans et al.(2007) / McMurray et al.(2010), Youssef&Luthans(2007), Luthans&Youssef(2004)', verdict: 'emerging' },
     // 심리적안전감
@@ -1900,7 +1917,6 @@ const PaperCompass = ({ onBack }) => {
     '신뢰→이용의도': { count: 1, sources: 'SVU: 배범진(2022)', verdict: 'emerging' },
     // ── 자동 추가: audit 기반 누락 경로 ──
     '변혁적리더십→조직신뢰': { count: 1, sources: '전광종(2021)', verdict: 'emerging' },
-    'LMX→신뢰': { count: 1, sources: '우성주(2021)', verdict: 'emerging' },
     '성격특성→LMX': { count: 1, sources: '김장설(2021)', verdict: 'emerging' },
     '신뢰→조직성과': { count: 1, sources: '형규박(2021)', verdict: 'emerging' },
     '조직학습역량→조직유효성': { count: 1, sources: '장승환(2017)', verdict: 'emerging' },
@@ -2557,7 +2573,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '직무만족': {
       options: [
-        { name: '내재적 만족', scholar: 'Weiss & Cropanzano(1996), Herzberg(1959), 김병한(2017), 김남환(2019), 김화자(2023), Locke(1969), Rothe(1951), Stone(1992), Williams & Anderson(1991), 권성민(2013), 김대근(2015), 김병환(2017), 김창섭(2020), 이만규(2005), 이상호(2006), 이정민(2012), 장미정(2011), 최영철(2023), Cropanzano & Weiss(1996), Eisenberger, Huchison & Sowa(1986), Meyer & Allen(1991), Meyer et al.(2002), Schermerhorn(1996), Shore & Tetric(1991), Smith(1975), Wu and Norman(2006), 김영식(2012), 김은석(2016), 김인재·조성진(2012), 김철영(2018), 김현생(2018), 남상민(2015), 남승하·정종원(2017), 남연희·손국진(2005), 명호(2023), 문옥선(2013), 박노근(2017), 박득(2011), 박시진·홍원기(2018), 박영대(2019), 박영배·조수진(1999), 박영주(2008), 변재우(2016), 손지영(2014), 신유근(1995), 오성탁(2015), 우성주(2021), 윤기열(2003), 이병규·윤이중(2009), 이석훈(2010), 이인재·김성우(2012), 이헌구(2016), 장경화(2007), 장선연(2020), 장성철(2016), 장철주(2015), 전돈익(2019), 정경미(2012), 최병권(2017), 최용래(2021), 최호규·심우극(2013), 홍동기(2019), 김동진(2020)', scale: 'MSQ(Minnesota Satisfaction Questionnaire)', answer: 'Smith et al.(1969)의 JDI 또는 Weiss et al.(1967)의 MSQ를 활용하여 직무만족을 측정하였으며, 내재적 만족(일 자체)과 외재적 만족(보상, 환경)으로 구분하였습니다.' },
+        { name: '내재적 만족', scholar: 'Weiss & Cropanzano(1996), Herzberg(1959), 김병한(2017), 김남환(2019), 김화자(2023), Locke(1969), Rothe(1951), Stone(1992), Williams & Anderson(1991), 권성민(2013), 김대근(2015), 김병환(2017), 김창섭(2020), 이만규(2005), 이상호(2006), 이정민(2012), 장미정(2011), 최영철(2023), Cropanzano & Weiss(1996), Eisenberger, Huchison & Sowa(1986), Meyer & Allen(1991), Meyer et al.(2002), Schermerhorn(1996), Shore & Tetric(1991), Smith(1975), Wu and Norman(2006), 김영식(2012), 김은석(2016), 김인재·조성진(2012), 김철영(2018), 김현생(2018), 남상민(2015), 남승하·정종원(2017), 남연희·손국진(2005), 명호(2023), 문옥선(2013), 박노근(2017), 박득(2011), 박시진·홍원기(2018), 박영대(2019), 박영배·조수진(1999), 박영주(2008), 변재우(2016), 손지영(2014), 신유근(1995), 오성탁(2015), 우성주(2020), 윤기열(2003), 이병규·윤이중(2009), 이석훈(2010), 이인재·김성우(2012), 이헌구(2016), 장경화(2007), 장선연(2020), 장성철(2016), 장철주(2015), 전돈익(2019), 정경미(2012), 최병권(2017), 최용래(2021), 최호규·심우극(2013), 홍동기(2019), 김동진(2020)', scale: 'MSQ(Minnesota Satisfaction Questionnaire)', answer: 'Smith et al.(1969)의 JDI 또는 Weiss et al.(1967)의 MSQ를 활용하여 직무만족을 측정하였으며, 내재적 만족(일 자체)과 외재적 만족(보상, 환경)으로 구분하였습니다.' },
         { name: '외재적 만족', scholar: 'Weiss & Cropanzano(1996), Herzberg(1959), 김병한(2017), 김남환(2019), 김화자(2023)', scale: 'MSQ', answer: '' },
         { name: '관계 만족', scholar: 'Weiss et al.(1967), 김병한(2017), 김남환(2019), 김화자(2023)', scale: 'MSQ', answer: 'Weiss et al.(1967)의 MSQ에서 동료 및 상사 관계 차원을 활용하여 측정하였습니다.' },
       ],
@@ -2591,7 +2607,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '신뢰': {
       options: [
-        { name: '능력', scholar: 'Mayer, Davis & Schoorman(1995), Schoorman, Mayer & Davis(2007), 김명철(2017), 김민강(2008), 우성주(2021), 최병석(2018)', scale: 'Mayer et al.(1995) Trust Scale (ABI 모형)', answer: 'Mayer et al.(1995)의 신뢰 ABI 모형(Ability/Benevolence/Integrity)에 기반하여 신뢰 대상의 능력(Ability), 선의(Benevolence), 진실성(Integrity)으로 측정하였습니다.' },
+        { name: '능력', scholar: 'Mayer, Davis & Schoorman(1995), Schoorman, Mayer & Davis(2007), 김명철(2017), 김민강(2008), 우성주(2020), 최병석(2018)', scale: 'Mayer et al.(1995) Trust Scale (ABI 모형)', answer: 'Mayer et al.(1995)의 신뢰 ABI 모형(Ability/Benevolence/Integrity)에 기반하여 신뢰 대상의 능력(Ability), 선의(Benevolence), 진실성(Integrity)으로 측정하였습니다.' },
         { name: '선의', scholar: 'Mayer, Davis & Schoorman(1995)', scale: 'Mayer et al.(1995)', answer: '' },
         { name: '진실성', scholar: 'Mayer, Davis & Schoorman(1995)', scale: 'Mayer et al.(1995)', answer: '' },
       ],
@@ -2721,7 +2737,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '진정성리더십': {
       options: [
-        { name: '자아인식', scholar: 'Walumbwa et al.(2008), Neider & Schriesheim(2011), 구동우(2013), 김가진(2011), 남차현(2012), 박상길(2016), 우성주(2021), 윤인한(2015), 이미현(2014), 장성철(2016), 조경주(2016), 최병권(2017)', scale: 'ALQ(Authentic Leadership Questionnaire)', answer: 'Walumbwa et al.(2008)의 진정성리더십 이론에서 제시한 4개 하위요인(자아인식, 관계적 투명성, 내면화된 도덕관점, 균형잡힌 정보처리)을 채택하였으며, ALQ 척도로 측정하였습니다.' },
+        { name: '자아인식', scholar: 'Walumbwa et al.(2008), Neider & Schriesheim(2011), 구동우(2013), 김가진(2011), 남차현(2012), 박상길(2016), 우성주(2020), 윤인한(2015), 이미현(2014), 장성철(2016), 조경주(2016), 최병권(2017)', scale: 'ALQ(Authentic Leadership Questionnaire)', answer: 'Walumbwa et al.(2008)의 진정성리더십 이론에서 제시한 4개 하위요인(자아인식, 관계적 투명성, 내면화된 도덕관점, 균형잡힌 정보처리)을 채택하였으며, ALQ 척도로 측정하였습니다.' },
         { name: '관계적 투명성', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
         { name: '내면화된 도덕관점', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
         { name: '균형잡힌 정보처리', scholar: 'Walumbwa et al.(2008)', scale: 'ALQ', answer: '' },
@@ -2747,7 +2763,7 @@ const PaperCompass = ({ onBack }) => {
     },
     '조직신뢰': {
       options: [
-        { name: '인지적 신뢰', scholar: 'Cook & Wall(1980), 김유나(2015), 황용수(2010), Schooman(2007), 김민강(2008), 김호정(1999), 우성주(2021), 최재욱(2013), Tan & Tan(2000), 현병무(2016), 박선규(2022)', scale: 'Cook & Wall(1980) Organizational Trust Scale', answer: 'Cook & Wall(1980)의 조직신뢰 척도를 사용하였으며, 인지적 신뢰(능력 기반)와 정서적 신뢰(감정적 유대 기반)로 구분하여 측정하였습니다.' },
+        { name: '인지적 신뢰', scholar: 'Cook & Wall(1980), 김유나(2015), 황용수(2010), Schooman(2007), 김민강(2008), 김호정(1999), 우성주(2020), 최재욱(2013), Tan & Tan(2000), 현병무(2016), 박선규(2022)', scale: 'Cook & Wall(1980) Organizational Trust Scale', answer: 'Cook & Wall(1980)의 조직신뢰 척도를 사용하였으며, 인지적 신뢰(능력 기반)와 정서적 신뢰(감정적 유대 기반)로 구분하여 측정하였습니다.' },
         { name: '정서적 신뢰', scholar: 'Cook & Wall(1980), 김유나(2015), 황용수(2010)', scale: 'Cook & Wall(1980)', answer: '' },
       ],
       defaultSelected: [0, 1],
@@ -3765,7 +3781,7 @@ const PaperCompass = ({ onBack }) => {
     '공정성인식': { options: [{ name: '공정성인식(단일차원)', scholar: 'Colquitt(2001)', scale: '조직공정성 척도', answer: 'Colquitt(2001)의 조직공정성 척도에 기반하여 분배, 절차, 상호작용 공정성에 대한 전반적 인식을 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '교사임파워먼트': { options: [{ name: '의사결정참여', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES(School Participant Empowerment Scale) 변형', answer: 'Short & Rinehart(1992)의 학교참여자 임파워먼트 척도(SES)를 박희경(2014)이 수정하여 직업능력개발훈련기관에 적용하였으며, 의사결정참여, 자율성, 자기효능감, 전문성의 4개 하위차원으로 측정하였습니다.' }, { name: '자율성', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형', answer: '' }, { name: '자기효능감', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형', answer: '' }, { name: '전문성', scholar: 'Short & Rinehart(1992), 박희경(2014)', scale: 'SES 변형', answer: '' }], defaultSelected: [0, 1, 2, 3] },
     '지속근무의도': { options: [{ name: '지속근무의도(단일차원)', scholar: 'Price & Mueller(1981), Meyer(2002), 유홍준(2002), 홍연숙(2010)', scale: '이직의도 역코딩', answer: 'Price & Mueller(1981)의 이직의도 모델을 역으로 적용하여 현 직장에서 계속 근무하고자 하는 의도를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
-    '상사신뢰': { options: [{ name: '상사신뢰(단일차원)', scholar: 'Mayer et al.(1995), Lewis, Weigert(1985), 김호정(1999), 우성주(2020), 우성주(2021)', scale: '조직신뢰 척도(상사 맥락)', answer: 'Mayer, Davis & Schoorman(1995)의 신뢰 모델에 기반하여 상사의 능력, 선의, 진실성에 대한 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
+    '상사신뢰': { options: [{ name: '상사신뢰(단일차원)', scholar: 'Mayer et al.(1995), Lewis, Weigert(1985), 김호정(1999), 우성주(2020)', scale: '조직신뢰 척도(상사 맥락)', answer: 'Mayer, Davis & Schoorman(1995)의 신뢰 모델에 기반하여 상사의 능력, 선의, 진실성에 대한 신뢰를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
     '직무착근도': { options: [{ name: '연결', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: 'Mitchell et al.(2001)의 직무착근도 이론에 기반하여 연결(links), 적합성(fit), 희생(sacrifice)의 3개 하위차원으로 측정하였습니다.' }, { name: '적합성', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: '' }, { name: '희생', scholar: 'Mitchell et al.(2001)', scale: 'Job Embeddedness Scale', answer: '' }], defaultSelected: [0, 1, 2] },
     '사회적책임': { options: [{ name: '경제적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: 'Carroll(1991)의 CSR 피라미드에 기반하여 경제적, 법적, 윤리적, 자선적 책임의 4개 하위차원으로 측정하였습니다.' }, { name: '법적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: '' }, { name: '윤리적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: '' }, { name: '자선적 책임', scholar: 'Carroll(1991)', scale: 'CSR 피라미드 척도', answer: '' }], defaultSelected: [0, 1, 2, 3] },
     '직무태도': { options: [{ name: '직무태도(단일차원)', scholar: 'Judge et al.(2001), 김유나(2015), 황용수(2010)', scale: '직무태도 척도', answer: 'Judge et al.(2001)의 연구에 기반하여 직무에 대한 전반적 태도(만족, 몰입, 애착)를 단일차원으로 측정하였습니다.' }], defaultSelected: [0] },
@@ -4461,7 +4477,6 @@ const PaperCompass = ({ onBack }) => {
     '심민선(2022)': { title: '대형 건설기업 종사자의 직무특성이 직무열의와 조직몰입을 통하여 혁신행동에 미치는 영향', source: 'SVU', type: '박사' },
     '안병찬(2023)': { title: '소프트웨어개발기업의 근무환경이 지속근무의도에 미치는 영향: 조직몰입의 매개효과와 직무만족의 조절효과', source: 'SVU', type: '석사' },
     '안영노(2025)': { title: 'CEO브랜드이미지가 기업의 고객충성도에 미치는 영향과 CEO평판 및 기업평판의 매개효과', source: 'SVU', type: '박사' },
-    '우성주(2021)': { title: '중소제조업 CEO의 진정성리더십이 신뢰를 통해 직무만족에 미치는 영향', source: 'SVU', type: '박사' },
     '최상구(2020)': { title: '직업능력개발훈련기관 교사의 분산적지도성이 직무만족과 교사임파워먼트에 따른 조직시민행동에 미치는 영향', source: 'SVU', type: '박사' },
     '최재영(2020)': { title: '중소건설기업 종사자의 성격5요인이 심리적 임파워먼트와 셀프리더십에 따른 조직시민행동에 미치는 영향', source: 'SVU', type: '박사' },
     '김장설(2021)': { title: '상사의 성격5요인이 부하직원의 직무만족에 미치는 영향: 상사-부하 교환관계(LMX)의 매개·조절효과', source: 'SVU', type: '박사' },
@@ -5865,7 +5880,6 @@ const PaperCompass = ({ onBack }) => {
     '오희영(2025)': 'SVU 논문 원본/한류스타의 활동과 대중의 행위의도간 관계에서 스타동일시욕구 및 충성도의 매개 오희영 2025.pdf',
     '오희영(2026)': 'SVU 논문 원본/한류스타의 활동과 대중의 행위의도간 관계에서 스타동일시욕구 및 충성도의 매개 오희영 2025.pdf',
     '우성주(2020)': 'SVU 논문 원본/중소제조업 CEO의 진정성리더십이 신뢰를 통해 직무만족에 미치는 영향 우성주 2020.pdf',
-    '우성주(2021)': 'SVU 논문 원본/중소제조업 CEO의 진정성리더십이 신뢰를 통해 직무만족에 미치는 영향 우성주 2020.pdf',
     '원상훈, 전용성, 조미희(2022)': '타학교 논문 원본/와인소매업체 조직문화와 구매관리자의 역량이 친환경 구매와 환경성과에 미치는 영향 윤리적 태.pdf',
     '유병규, 이영균(2019)': '인용수 논문 원본/13.공무원의 자기효능감이 조직몰입에 미치는 영향 직무열의의 매개효과.pdf',
     '유병선(2025)': 'SVU 논문 원본/소방분야 종사자의 직무특성과 조직몰입 관계에서 심리적 주인의식과 직무만족의 매개효과 유병선 2025.pdf',
@@ -9899,7 +9913,7 @@ const PaperCompass = ({ onBack }) => {
     // ── 강태만(2022) 진성리더십 11문항 ──
     '진성리더십': {
       '관계적 투명성': [
-        // 출처: Walumbwa et al.(2008), 우성주(2021), 김도희(2020)
+        // 출처: Walumbwa et al.(2008), 우성주(2020), 김도희(2020)
         '나의 부서상사는 자신의 말하고자 하는 바를 정확하게 이야기한다',
         '나의 부서상사는 자신이 실수할 때는 그 실수를 솔직하게 인정한다',
         '나의 부서상사는 직원이 솔직한 의견을 표현할 수 있도록 하는 편이다',
@@ -12358,7 +12372,6 @@ const PaperCompass = ({ onBack }) => {
     '김남한(2019)': { subject: '셀프리더십이 학습지향성을 매개로 직무만족에 미치는 영향', sample: '260명', region: '국내', iv: '셀프리더십', mv: '학습지향성', dv: '직무만족', result: '셀프리더십 → 학습지향성 → 직무만족 (+), 학습지향성의 매개효과 확인' },
     '한대익(2021)': { subject: '변혁적리더십과 조직유효성 관계 연구', sample: '300명', region: '국내', iv: '변혁적리더십', mv: '', dv: '조직유효성', result: '변혁적리더십 → 조직유효성 (+), 조직학습역량의 매개효과 확인' },
     '임재규(2017)': { subject: '조직공정성이 직무만족에 미치는 영향', sample: '230명', region: '국내', iv: '조직공정성', mv: '', dv: '직무만족', result: '조직공정성 → 직무만족 (+)' },
-    '우성주(2021)': { subject: 'LMX와 신뢰가 직무만족에 미치는 영향', sample: '270명', region: '국내', iv: 'LMX', mv: '신뢰', dv: '직무만족', result: 'LMX → 신뢰 → 직무만족 (+), 신뢰의 매개효과 확인' },
     '최상구(2020)': { subject: '분산적지도성과 조직시민행동 관계', sample: '200명', region: '국내', iv: '분산적지도성', mv: '', dv: '직무만족', result: '분산적지도성 → 직무만족 (+)' },
     '김장설(2021)': { subject: '상사의 성격5요인이 부하직원의 직무만족에 미치는 영향: LMX의 매개·조절효과', sample: '350명', region: '국내', iv: '성격특성', mv: 'LMX', dv: '직무만족', mod: 'LMX', result: '성격5요인 → LMX → 직무만족 (+), LMX의 매개효과 확인, LMX의 조절효과 확인' },
     '이대근(2018)': { subject: '성격특성과 직무만족 관계 실증연구', sample: '210명', region: '국내', iv: '성격특성', mv: '', dv: '직무만족', result: '성격특성 → 직무만족 (+)' },
@@ -13029,9 +13042,9 @@ const PaperCompass = ({ onBack }) => {
     '심리적임파워먼트→조직몰입': '심리적 임파워먼트는 조직몰입에 정(+)의 영향을 미치는 것으로 검증되었다(황지연, 2007; 허경영, 2016; 김소연, 2013). 업무의 의미성, 역량, 자기결정성, 영향력의 4가지 차원이 조직에 대한 정서적 몰입을 높이는 것으로 나타났다.',
     '직무열의→직무성과': '직무열의는 직무성과에 정(+)의 영향을 미치는 것으로 나타났다. 활력과 헌신이 높은 구성원일수록 과업성과와 맥락성과가 높은 것으로 확인되었다.',
     '직무열의→혁신행동': '직무열의는 혁신행동에 정(+)의 영향을 미치는 것으로 나타났다. 업무에 대한 몰두와 활력이 새로운 아이디어 창출과 실행을 촉진하는 것으로 확인되었다.',
-    'LMX→직무만족': 'LMX는 직무만족에 정(+)의 영향을 미치는 것으로 검증되었다(차무홍, 2023; 우성주, 2021). 상사와의 양질의 교환관계가 직무에 대한 만족을 높이는 것으로 나타났다.',
+    'LMX→직무만족': 'LMX는 직무만족에 정(+)의 영향을 미치는 것으로 검증되었다(차무홍, 2023). 상사와의 양질의 교환관계가 직무에 대한 만족을 높이는 것으로 나타났다.',
     'LMX→조직몰입': 'LMX는 조직몰입에 정(+)의 영향을 미치는 것으로 검증되었다(전공중 외, 2020). 상사와의 신뢰 기반 관계가 조직에 대한 몰입을 강화하는 것으로 나타났다.',
-    '신뢰→직무만족': '신뢰는 직무만족에 정(+)의 영향을 미치는 것으로 검증되었다(차무홍, 2023; 우성주, 2021). 상사에 대한 인지적·정서적 신뢰가 직무만족을 높이는 것으로 나타났다.',
+    '신뢰→직무만족': '신뢰는 직무만족에 정(+)의 영향을 미치는 것으로 검증되었다(차무홍, 2023; 우성주, 2020). 상사에 대한 인지적·정서적 신뢰가 직무만족을 높이는 것으로 나타났다.',
     '조직문화→조직몰입': '조직문화는 조직몰입에 유의한 영향을 미치는 것으로 나타났다(황남연, 2021). 특히 관계지향 문화와 혁신지향 문화가 구성원의 조직몰입을 높이는 것으로 확인되었다.',
     '근무환경→조직몰입': '근무환경은 조직몰입에 정(+)의 영향을 미치는 것으로 나타났다(안병찬, 2023). 물리적·심리적으로 양호한 근무환경이 구성원의 조직에 대한 몰입을 높이는 것으로 확인되었다.',
     '직무특성→조직몰입': '직무특성은 조직몰입에 정(+)의 영향을 미치는 것으로 나타났다(심민선, 2022; 유병선, 2025; 김진태, 2025). 기술다양성, 자율성, 피드백 등 풍부한 직무특성이 조직몰입을 높이는 것으로 확인되었다.',
@@ -19307,7 +19320,35 @@ const PaperCompass = ({ onBack }) => {
     };
 
     return (
-      React.createElement("div", {className: "w-full max-w-4xl mx-auto"}, React.createElement("div", {className: "flex items-center justify-between mb-2"}, React.createElement("h2", {className: "text-2xl font-bold", style: { color: '#1F3864' }}, "Step 9. 결과물"), React.createElement("div", {className: "flex gap-2"}, React.createElement("button", {onClick: exportToExcel, className: "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition hover:opacity-90", style: { backgroundColor: '#217346' }}, React.createElement(Download, {size: 18}), " Excel "), React.createElement("button", {onClick: exportToWord, className: "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition hover:opacity-90", style: { backgroundColor: '#2B579A' }}, React.createElement(Download, {size: 18}), " Word "))), React.createElement("p", {className: "text-gray-600 mb-3"}, "논문 작성에 필요한 14가지 산출물을 확인하세요."),
+      React.createElement("div", {className: "w-full max-w-4xl mx-auto"}, React.createElement("div", {className: "flex items-center justify-between mb-2"}, React.createElement("h2", {className: "text-2xl font-bold", style: { color: '#1F3864' }}, "Step 9. 결과물"), React.createElement("div", {className: "flex gap-2 flex-wrap"}, React.createElement("button", {onClick: exportToExcel, className: "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition hover:opacity-90", style: { backgroundColor: '#217346' }}, React.createElement(Download, {size: 18}), " Excel "), React.createElement("button", {onClick: exportToWord, className: "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition hover:opacity-90", style: { backgroundColor: '#2B579A' }}, React.createElement(Download, {size: 18}), " Word "), React.createElement("button", {onClick: () => {
+  // ★ Phase 2.11: 1~3장 데이터 JSON 다운로드 (통계분석 모듈에서 불러오기용)
+  const jsonData = {
+    _meta: {
+      format: "PaperCompass_1차초안데이터",
+      version: "1.0",
+      createdAt: new Date().toISOString(),
+      note: "이 파일을 [📊 설문 결과 통계 검토] → 4·5장 본문 자동 작성 탭에서 [📁 논문나침반 데이터 불러오기] 버튼으로 업로드하면, 1~5장 통합 1차 초안 .docx가 생성됩니다."
+    },
+    thesisInfo: {
+      title: customFormTitle || (selectedIVs[0] && selectedDVs[0] ? `${selectedIVs.join(',')}이(가) ${selectedDVs.join(',')}에 미치는 영향` : ''),
+      type: thesisType,
+      researcher: { name: researcherName, affil: researcherAffil, program: researcherProgram, email: researcherEmail },
+      advisor: advisorName,
+      surveyMonth: surveyMonth
+    },
+    variables: { ivs: selectedIVs, dvs: selectedDVs, meds: selectedMediators, mods: selectedModerators },
+    survey: { target: surveyTarget, demographics: customDemographics, scale: surveyScale, sampleSize: sampleSize },
+    deployment: { formViewUrl: formViewUrl, contactFormViewUrl: contactFormViewUrl }
+  };
+  const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const dateStr = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = `논문나침반_1차초안데이터_${selectedIVs[0]||'논문'}_${dateStr}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}, className: "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition hover:opacity-90", style: { backgroundColor: '#7B1FA2' }, title: "통계분석 모듈에서 [📁 데이터 불러오기]로 사용"}, React.createElement(Download, {size: 18}), " 1~3장 데이터(.json) "))), React.createElement("p", {className: "text-gray-600 mb-3"}, "논문 작성에 필요한 14가지 산출물을 확인하세요."),
         // ── ⚠ 학술적 책임 안내 (결과물을 인용·제출하기 전 반드시 확인) ──
         React.createElement("div", {className: "mb-5 p-4 rounded-lg",
           style: { backgroundColor: '#FFF8E1', border: '1px solid #FFD54F', borderLeft: '4px solid #F57C00' }},
@@ -19823,6 +19864,10 @@ const StatsAnalyzer = ({ onBack }) => {
   const [missingThreshold, setMissingThreshold] = useState(30); // %
   const [preprocessReport, setPreprocessReport] = useState(null);
   const [showPreproc, setShowPreproc] = useState(false);
+
+  // ★ Phase 2.9: 5장 결론 자동 작성용 입력
+  const [industryContext, setIndustryContext] = useState('');  // 예: '기술혁신스타트업', '축산물가공산업'
+  const [practicalKeywords, setPracticalKeywords] = useState('');  // 실무 시사점 키워드
 
   // Thesis title
   const [thesisTitle, setThesisTitle] = useState('');
@@ -20498,9 +20543,23 @@ const StatsAnalyzer = ({ onBack }) => {
     const defs=vars; // for reliability
     // ★ Phase 2.8: 전처리 리포트를 결과에 포함
     const ppRpt = preprocessReport;
-    if(tool==='spss') setResult({type:'spss',preprocessReport:ppRpt,...runSPSS(vars,N,defs)});
-    else if(tool==='pls') setResult({type:'pls',preprocessReport:ppRpt,...runPLS(vars,N)});
-    else if(tool==='amos') setResult({type:'amos',preprocessReport:ppRpt,...runAMOS(vars,N)});
+    let resultObj = null;
+    if(tool==='spss') resultObj = {type:'spss',preprocessReport:ppRpt,...runSPSS(vars,N,defs)};
+    else if(tool==='pls') resultObj = {type:'pls',preprocessReport:ppRpt,...runPLS(vars,N)};
+    else if(tool==='amos') resultObj = {type:'amos',preprocessReport:ppRpt,...runAMOS(vars,N)};
+    setResult(resultObj);
+    // ★ Phase 2.9: 통계 결과 → localStorage 저장 (논문나침반 메인의 통합 Word에서 사용)
+    try {
+      const payload = {
+        savedAt: new Date().toISOString(),
+        fileName, thesisTitle,
+        N: resultObj && resultObj.N,
+        result: resultObj,
+        modelVars: modelVars,
+        demoVars: demoVars,
+      };
+      localStorage.setItem('paperCompass.statsResult', JSON.stringify(payload));
+    } catch(e){ console.warn('통계 결과 저장 실패:', e && e.message); }
     setStage('results');
     setActiveTab(tool==='spss'?'desc':tool==='pls'?'outer':'cfa');
   };
@@ -20557,66 +20616,9 @@ const StatsAnalyzer = ({ onBack }) => {
             h('div',{style:{fontSize:'52px',marginBottom:'16px'}},'📁'),
             h('p',{style:{fontSize:'18px',fontWeight:'bold',color:'#1F3864',marginBottom:'8px'}},'설문결과 엑셀 파일을 업로드하세요'),
             h('p',{style:{color:'#888',fontSize:'14px',marginBottom:'24px'}},'지원: .xlsx, .xls  |  1행: 항목명, 2행~: 응답 데이터'),
-            h('label',{style:{display:'inline-block',background:'linear-gradient(135deg,#1F3864,#2E75B6)',color:'#fff',padding:'14px 36px',borderRadius:'10px',cursor:'pointer',fontSize:'15px',fontWeight:'bold',boxShadow:'0 4px 14px rgba(31,56,100,0.3)',marginRight:'12px'}},
+            h('label',{style:{display:'inline-block',background:'linear-gradient(135deg,#1F3864,#2E75B6)',color:'#fff',padding:'14px 36px',borderRadius:'10px',cursor:'pointer',fontSize:'15px',fontWeight:'bold',boxShadow:'0 4px 14px rgba(31,56,100,0.3)'}},
               '파일 선택',h('input',{type:'file',accept:'.xlsx,.xls',onChange:handleFileInput,style:{display:'none'}})),
-            // ★ Phase 2.7: 샘플 데이터 검증 모드 ─ 가상 200명 응답 자동 생성
-            h('button',{onClick:()=>{
-              // 가상 데이터 생성: 변혁적리더십 → 직무만족 → 조직몰입 + 조직후원인식 (조절)
-              const N = 200, hdrs = ['성별','연령','근속'];
-              ['카리스마','지적자극','개별적배려'].forEach((_,i)=>{ for(let j=1;j<=5;j++) hdrs.push(`변혁적리더십${i*5+j}`); });
-              for(let j=1;j<=8;j++) hdrs.push(`직무만족${j}`);
-              for(let j=1;j<=10;j++) hdrs.push(`조직몰입${j}`);
-              for(let j=1;j<=6;j++) hdrs.push(`조직후원인식${j}`);
-              const data = [];
-              for(let n=0;n<N;n++){
-                const row = [];
-                row.push(Math.random()<0.55?'남성':'여성');
-                row.push(['20대','30대','40대','50대 이상'][Math.floor(Math.random()*4)]);
-                row.push(['1년 미만','1-3년','3-5년','5년 이상'][Math.floor(Math.random()*4)]);
-                // IV: 변혁적리더십 (latent value 1-5)
-                const iv = 2 + Math.random()*2.5;
-                for(let i=0;i<15;i++) row.push(Math.max(1,Math.min(5, Math.round(iv + (Math.random()-0.5)*1.5))));
-                // MV: 직무만족 (IV에 영향)
-                const mv = iv*0.4 + 1.5 + (Math.random()-0.5);
-                for(let i=0;i<8;i++) row.push(Math.max(1,Math.min(5, Math.round(mv + (Math.random()-0.5)*1.2))));
-                // DV: 조직몰입 (IV·MV에 영향)
-                const dv = iv*0.3 + mv*0.5 + 0.5 + (Math.random()-0.5);
-                for(let i=0;i<10;i++) row.push(Math.max(1,Math.min(5, Math.round(dv + (Math.random()-0.5)*1.2))));
-                // Mod: 조직후원인식
-                const mod = 2.5 + Math.random()*2;
-                for(let i=0;i<6;i++) row.push(Math.max(1,Math.min(5, Math.round(mod + (Math.random()-0.5)*1.3))));
-                data.push(row);
-              }
-              setHeaders(hdrs);
-              const numRows = data.map(r => hdrs.map((_,ci) => { const v=r[ci]; return (v!=null && v!=='' && !isNaN(v))?parseFloat(v):NaN; }));
-              setRows(numRows);
-              setFileName('샘플데이터_200명_검증용.xlsx (가상)');
-              // Auto-detect demographics
-              const demoKw=['성별','연령','근속'];
-              const demoCols = hdrs.reduce((acc,hd,ci)=>{
-                if(demoKw.some(k=>hd.includes(k))){
-                  const vals=data.map(r=>String(r[ci]||''));
-                  const freq={}; vals.forEach(v=>{freq[v]=(freq[v]||0)+1;});
-                  acc.push({colIdx:ci, name:hd, categories:Object.entries(freq).sort((a,b)=>b[1]-a[1]).map(([val,count])=>({val,count}))});
-                }
-                return acc;
-              },[]);
-              setDemoVars(demoCols);
-              const demoIdx = new Set(demoCols.map(d=>d.colIdx));
-              const gMap={};
-              hdrs.forEach((hd,ci)=>{
-                if(demoIdx.has(ci)) return;
-                const base=hd.replace(/\d+$/,'').trim();
-                if(!gMap[base]) gMap[base]={name:base,cols:[],id:base};
-                gMap[base].cols.push(ci);
-              });
-              setAutoGroups(Object.values(gMap).filter(g=>g.cols.length>=2));
-            },
-              style:{display:'inline-block',background:'#FF9800',color:'#fff',padding:'14px 28px',borderRadius:'10px',border:'none',cursor:'pointer',fontSize:'14px',fontWeight:'bold',boxShadow:'0 4px 14px rgba(255,152,0,0.3)'}},
-              '🧪 샘플 데이터로 검증 (200명 가상)'),
-            h('p',{style:{color:'#bbb',fontSize:'12px',marginTop:'18px'}},'키워드 매칭으로 변수 그룹을 자동 감지합니다 (검증 필요)'),
-            h('p',{style:{color:'#FF9800',fontSize:'11px',marginTop:'4px',fontWeight:'bold'}},
-              '💡 샘플 데이터: 변혁적리더십→직무만족→조직몰입 + 조직후원인식 조절 모형 (200명 가상 응답)으로 통계 엔진을 미리 검증할 수 있습니다.')
+            h('p',{style:{color:'#bbb',fontSize:'12px',marginTop:'18px'}},'키워드 매칭으로 변수 그룹을 자동 감지합니다 (검증 필요)')
           )
         :
           h('div',null,
@@ -21174,6 +21176,91 @@ const StatsAnalyzer = ({ onBack }) => {
                 `${mods.length>0?', '+mods.map(v=>v.name).join(', ')+'에 의해 조절되는':''} 것을 실증적으로 보여준다.\n\n` +
                 `이러한 결과의 학술적·실무적 의의와 시사점에 대해서는 ***제5장 결론*** 에서 보다 상세히 논의한다.`
         });
+
+        // ★ Phase 2.9: 제5장 결론 5개 절 자동 작성 (학술표준)
+        const acceptedCnt = allHyp.filter(h => h.includes('채택') && !h.includes('부분')).length;
+        const partialCnt = allHyp.filter(h => h.includes('부분 채택')).length;
+        const rejectedCnt = allHyp.filter(h => h.includes('기각')).length;
+        const overallSupport = (acceptedCnt + partialCnt * 0.5) / Math.max(allHyp.length, 1);
+        const ivNamesStr = ivs.map(v=>v.name).join(', ');
+        const dvNamesStr = dvs.map(v=>v.name).join(', ');
+        const medNamesStr = meds.map(v=>v.name).join(', ');
+        const modNamesStr = mods.map(v=>v.name).join(', ');
+        const ctx = (industryContext || '').trim();
+        const ctxName = ctx || '본 연구가 수행된 산업';
+
+        // 제5장 제1절. 연구결과의 요약
+        let ch5Summary = [
+          `본 연구는 ${ivNamesStr}이(가) ${dvNamesStr}에 미치는 영향을 ` +
+          `${meds.length>0?`${medNamesStr}의 매개효과를 중심으로 `:''}` +
+          `${mods.length>0?`그리고 ${modNamesStr}의 조절효과를 함께 `:''}` +
+          `실증적으로 검증하고자 하였다. 이를 위해 ${ctxName} 종사자 ${result.N}명을 대상으로 수집된 자료를 ` +
+          `SPSS 통계 패키지${result.reg && result.reg.modMed7 ? '와 PROCESS Macro Model 7':result.reg && result.reg.mediation && result.reg.mediation[0] && result.reg.mediation[0].bootEffect != null ? '와 PROCESS Macro Model 4':''}을(를) 활용하여 분석하였으며, 분석 결과 도출된 주요 발견은 다음과 같다.`
+        ];
+        if (result.reg && result.reg.h1) {
+          const r2 = result.reg.h1.raw && result.reg.h1.raw.r2;
+          ch5Summary.push(`첫째, ${ivNamesStr}이(가) ${dvNamesStr}에 미치는 직접효과를 검증한 결과, ${ivNamesStr}은(는) ${dvNamesStr}에 ${r2!=null && r2 > 0.1 ? '통계적으로 유의한 정(+)의 영향을 미치는 것으로 나타났다':'영향을 미치는 것으로 나타났다'}(R²=${r2!=null?r2.toFixed(3):'–'}). 이는 ${ivNamesStr}이(가) ${dvNamesStr}을(를) 형성하는 ***핵심 선행요인***임을 의미한다.`);
+        }
+        if (result.reg && result.reg.mediation && result.reg.mediation.length > 0) {
+          const sigMed = result.reg.mediation.filter(m=>m.bootSig||m.medType!=='기각').length;
+          ch5Summary.push(`둘째, ${medNamesStr}의 매개효과를 검증한 결과, Hayes(2018)의 부트스트랩 절차에 따라 95% 신뢰구간이 0을 포함하지 않아 ***매개효과가 통계적으로 유의***한 것으로 확인되었다(${sigMed}/${result.reg.mediation.length} 경로 유의). 이는 ${ivNamesStr}이(가) ${dvNamesStr}에 직접 영향을 미칠 뿐 아니라 ${medNamesStr}을(를) 경유하여 간접적으로도 영향을 미친다는 것을 실증적으로 보여준다.`);
+        }
+        if (result.reg && result.reg.modMed7 && result.reg.modMed7.length > 0) {
+          const sigMM = result.reg.modMed7.filter(m=>m.indexSig).length;
+          ch5Summary.push(`셋째, Hayes Model 7을 활용한 조절된 매개효과 분석 결과, ${modNamesStr}의 수준에 따라 매개효과가 유의하게 달라지는 것으로 ${sigMM>0?'확인되었다':'나타났다'}(Index of Moderated Mediation 유의: ${sigMM}/${result.reg.modMed7.length}). 이러한 결과는 ${ivNamesStr}→${medNamesStr}→${dvNamesStr}의 경로가 ***경계조건(boundary condition)***을 가짐을 의미한다.`);
+        }
+        ch5Summary.push(`종합하면, 본 연구의 가설 ${allHyp.length}개 중 ${acceptedCnt}개가 채택, ${partialCnt}개가 부분 채택, ${rejectedCnt}개가 기각되었으며, 본 연구의 연구모형은 ${overallSupport>=0.7?'***대체로 지지***되는':'***부분적으로 지지***되는'} 것으로 평가된다.`);
+
+        sections.push({
+          title: '제5장 제1절. 연구결과의 요약',
+          body: ch5Summary.join('\n\n')
+        });
+
+        // 제5장 제2절. 학술적 시사점
+        const ch5Acad = [
+          `본 연구는 다음과 같은 학술적 시사점을 제공한다.`,
+          `첫째, 본 연구는 ${ivNamesStr}과(와) ${dvNamesStr} 간의 관계를 ${meds.length>0?`***${medNamesStr}이라는 심리·행동적 메커니즘***을 통해 `:''}실증적으로 규명함으로써, 기존 ${ivNamesStr} 연구의 ***이론적 외연을 확장***하였다. 특히 변수 간의 직접적 인과관계를 넘어 ${meds.length>0?'매개경로의 작동 원리를 밝힘으로써 ':''}${ivNamesStr}이(가) ${dvNamesStr}에 영향을 미치는 ***이론적 메커니즘***을 정교하게 구축하는 데 기여하였다.`,
+          mods.length>0 ? `둘째, ${modNamesStr}을(를) 조절변수로 도입하여 ${ivNamesStr}→${dvNamesStr} 관계의 ***경계조건(boundary conditions)***을 검증함으로써, 변수 간 관계가 보편적이지 않으며 ***특정 맥락에서 강화 또는 약화될 수 있음***을 보여주었다. 이는 단순 인과 모형을 넘어선 ***상황 의존적 이론(contingency theory)***의 정교화에 기여한다.` : `둘째, 본 연구는 ${ivNamesStr}이(가) ${dvNamesStr}에 영향을 미치는 ***구체적 경로(path)***를 실증함으로써, 향후 후속 연구가 추가적인 매개·조절변수를 탐색할 수 있는 ***이론적 토대***를 제공하였다.`,
+          ctx ? `셋째, 본 연구는 ${ctx} 맥락에서 변수 간 관계를 검증함으로써, ***산업 특수성(industry specificity)을 반영한 실증적 증거***를 축적하였다. 이는 향후 다양한 산업 맥락에서의 ***비교 연구***와 ***일반화 가능성***을 검토하는 후속 연구의 출발점이 될 수 있다.` : `셋째, 본 연구의 결과는 ${ivNamesStr}과(와) ${dvNamesStr} 간의 관계가 ***단일 산업 맥락을 넘어 다양한 조직 환경에서 검증될 수 있는 가능성***을 시사하며, 향후 산업 간 비교 연구의 토대를 마련한다.`
+        ];
+        sections.push({
+          title: '제5장 제2절. 학술적 시사점',
+          body: ch5Acad.join('\n\n')
+        });
+
+        // 제5장 제3절. 실무적 시사점
+        const practicalKw = (practicalKeywords || '').trim();
+        const ch5Pract = [
+          `본 연구의 결과는 ${ctxName}의 실무 현장에서 다음과 같은 함의를 제공한다.`,
+          `첫째, ${ivNamesStr}을(를) 강화하기 위한 ***체계적 관리 방안***이 필요하다. 본 연구의 결과에 따르면 ${ivNamesStr}은(는) ${dvNamesStr}에 직접적인 정(+)의 영향을 미치므로, 조직 차원에서 ${ivNamesStr}을(를) 향상시키기 위한 ${practicalKw?practicalKw+', ':''}***교육 프로그램·제도적 지원·문화 형성*** 등 다각적 노력이 요구된다.`,
+          meds.length>0 ? `둘째, ${medNamesStr}의 매개효과가 확인된 만큼, ${ivNamesStr}만을 강조하기보다는 ${medNamesStr}을(를) 함께 제고하는 ***이중 전략***이 효과적이다. 즉, ${ivNamesStr}이(가) ${dvNamesStr}으로 이어지는 과정에서 ${medNamesStr}이(가) ***결정적 매개 역할***을 하므로, ${medNamesStr}의 형성과 유지에 실무적 자원을 집중적으로 투입할 필요가 있다.` : `둘째, ${ivNamesStr}이(가) ${dvNamesStr}에 미치는 영향력의 크기를 고려할 때, 조직은 ${ivNamesStr}에 대한 투자 우선순위를 ***전략적으로 재배치***할 필요가 있다.`,
+          mods.length>0 ? `셋째, ${modNamesStr}의 조절효과가 ${result.reg && result.reg.modMed7 && result.reg.modMed7.some(m=>m.indexSig)?'유의하게 확인된 만큼':'부분적으로 확인된 만큼'}, 모든 구성원에게 동일한 정책을 적용하기보다는 ${modNamesStr}의 수준에 따라 ***차별화된 접근***이 필요하다. 특히 ${modNamesStr}이(가) 낮은 집단에는 별도의 ***보완적 지원 체계***를 마련하는 것이 효과적일 것이다.` : `셋째, 본 연구의 실무적 시사점은 ${ctxName}의 ***인사관리·조직개발·구성원 동기부여*** 정책 설계에 직접적으로 활용될 수 있다.`
+        ];
+        sections.push({
+          title: '제5장 제3절. 실무적 시사점',
+          body: ch5Pract.join('\n\n')
+        });
+
+        // 제5장 제4절. 연구의 한계
+        sections.push({
+          title: '제5장 제4절. 연구의 한계',
+          body: `본 연구의 의미와 시사점에도 불구하고 다음과 같은 한계점을 가지고 있다.\n\n` +
+                `첫째, 본 연구는 ***특정 시점의 횡단적(cross-sectional) 자료***에 기반하여 인과관계를 검증하였다. 따라서 변수 간의 ***시간적 선후관계***를 엄밀히 입증하는 데에는 한계가 있다. 향후 종단적(longitudinal) 연구설계를 통해 인과관계의 강건성을 보완할 필요가 있다.\n\n` +
+                `둘째, 본 연구의 자료는 ***자기보고식(self-report) 설문***을 통해 수집되어 ***공통방법편향(Common Method Bias)***의 가능성이 존재한다. 향후 연구에서는 다중 정보원(multiple sources)·다중 시점(multiple time points)을 활용하여 측정의 객관성을 제고할 필요가 있다.\n\n` +
+                `셋째, 본 연구의 표본은 ${ctxName}의 종사자 ${result.N}명으로 한정되어, 연구결과를 ***다른 산업이나 직군에 일반화***하는 데에는 신중을 기해야 한다. 특히 ${ctx?ctx+'의 ':''}산업 특성이 반영된 결과이므로, 향후 다양한 산업·직군을 포괄하는 ***다집단 비교 연구(Multi-group Analysis)***가 요구된다.\n\n` +
+                `넷째, 본 연구는 ${ivNamesStr}, ${dvNamesStr}${meds.length>0?', '+medNamesStr:''}${mods.length>0?', '+modNamesStr:''} 등 핵심 변수에 초점을 맞추었으나, ${dvNamesStr}에 영향을 미치는 ***다양한 잠재적 변수들이 모두 포함되지는 못했다***. 향후 연구에서는 보다 ***포괄적인 통합모형(integrative model)***을 구축하여 검증할 필요가 있다.`
+        });
+
+        // 제5장 제5절. 향후 연구방향
+        sections.push({
+          title: '제5장 제5절. 향후 연구방향',
+          body: `본 연구의 한계를 보완하기 위한 향후 연구방향은 다음과 같이 제안된다.\n\n` +
+                `첫째, ***종단연구(longitudinal study)***의 수행이 필요하다. 본 연구의 횡단설계로는 변수 간의 시간적 인과관계를 엄밀히 검증하기 어려우므로, 동일 응답자에 대해 2~3시점의 패널 자료를 수집하여 ***시간적 선후관계***를 입증하는 후속 연구가 요구된다.\n\n` +
+                `둘째, ***다집단 분석(Multi-group Analysis)***을 통해 본 연구의 결과가 다양한 집단(예: 성별·세대·직급·산업)에 따라 어떻게 달라지는지를 검증할 필요가 있다. 이는 본 연구모형의 ***일반화 가능성***을 평가하는 데 기여할 것이다.\n\n` +
+                `셋째, 본 연구에서 검증한 모형에 ***추가적인 매개·조절변수***를 도입하여 ***다중매개모형(serial mediation)*** 또는 ***이중조절매개모형(dual moderated mediation)***으로 확장하는 후속 연구가 의미 있을 것이다. 특히 ${meds.length>0?medNamesStr+'과(와) 인접한 ':''}심리·행동적 변수들의 ***순차적 매개경로***를 규명하는 연구가 필요하다.\n\n` +
+                `넷째, ***질적 연구방법(qualitative research)***을 병행하는 ***혼합방법론(mixed methods)*** 접근이 권장된다. 본 연구의 양적 결과를 보완할 수 있는 심층 인터뷰·사례연구를 통해 변수 간 관계의 ***구체적 작동 메커니즘***을 풍부하게 해석할 수 있을 것이다.\n\n` +
+                `다섯째, 본 연구는 ${ctxName}을(를) 중심으로 수행되었으나, ***국제 비교연구(cross-cultural study)***를 통해 본 연구의 결과가 문화·국가·제도 차이에 따라 어떻게 달라지는지를 규명하는 후속 연구가 필요하다.`
+        });
         // ★ Phase 2.8: 전처리 절 (제1절) 삽입 — 역채점/결측/이상치 처리가 있을 때만
         const ppR = result.preprocessReport;
         if(ppR && (ppR.reversedItems.length>0 || ppR.removedByMissing>0 || ppR.removedByStraightLine>0 || ppR.imputedCells>0)){
@@ -21215,7 +21302,7 @@ const StatsAnalyzer = ({ onBack }) => {
         const downloadWord = () => {
           const dateStr = new Date().toISOString().slice(0,10);
           const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-<head><meta charset='utf-8'><title>제4장 연구결과</title>
+<head><meta charset='utf-8'><title>제4장·제5장 연구결과 및 결론</title>
 <style>
   @page { size: A4 portrait; margin: 2.5cm 2cm; }
   body { font-family: '맑은 고딕', sans-serif; font-size: 11pt; line-height: 1.7; }
@@ -21230,7 +21317,7 @@ const StatsAnalyzer = ({ onBack }) => {
   .note { background: #FFF8E1; padding: 8pt 12pt; border-left: 3px solid #F57C00; font-size: 10pt; color: #5D4037; margin: 8pt 0; }
   .body-text { font-size: 11pt; line-height: 1.8; padding: 8pt 0; text-align: justify; }
 </style></head><body>
-<h1>제4장 연구결과</h1>
+<h1>제4·5장 연구결과 및 결론</h1>
 ${sections.map((s,i)=>`<h2>${s.title}</h2><div class="body-text">${s.body.replace(/\n/g,'<br>')}</div>`).join('')}
 <h2>★ 부록. 통계 분석 결과표</h2>
 <h3>표 IV-1. 인구통계학적 특성 (N=${result.N})</h3>
@@ -21295,7 +21382,7 @@ ${result.reg.modMed7.map(m=>`<table>
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = `제4장_통계분석결과_${dateStr}.doc`;
+          a.download = `제4·5장_통계분석결과_${dateStr}.doc`;
           a.click();
           URL.revokeObjectURL(url);
           setCopyMsg('Word 다운로드 완료!');
@@ -21305,11 +21392,11 @@ ${result.reg.modMed7.map(m=>`<table>
           if(!window.XLSX){alert('XLSX.js 로딩 필요');return;}
           const wb = XLSX.utils.book_new();
           // Sheet 1: 4장 본문
-          const bodyData = [['학위논문 제4장 본문 자동 작성'],[]];
+          const bodyData = [['학위논문 제4·5장 본문 자동 작성'],[]];
           sections.forEach(s=>{bodyData.push([s.title]);bodyData.push([s.body]);bodyData.push([]);});
           const ws1 = XLSX.utils.aoa_to_sheet(bodyData);
           ws1['!cols']=[{wch:120}];
-          XLSX.utils.book_append_sheet(wb,ws1,'4장 본문');
+          XLSX.utils.book_append_sheet(wb,ws1,'4·5장 본문');
           // Sheet 2: 기술통계
           const desc = [['변수','N','M','SD','왜도','첨도','정규성'],
             ...result.descriptive.map(d=>[d.name,d.n,d.mean,d.sd,d.skew,d.kurt,d.normal?'충족':'검토'])];
@@ -21358,15 +21445,457 @@ ${result.reg.modMed7.map(m=>`<table>
             });
             XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(mmData),'표 IV-N 조절된 매개');
           }
-          XLSX.writeFile(wb,`통계분석결과_${new Date().toISOString().slice(0,10)}.xlsx`);
+          XLSX.writeFile(wb,`제4·5장_통계분석결과_${new Date().toISOString().slice(0,10)}.xlsx`);
           setCopyMsg('Excel 다운로드 완료!');
           setTimeout(()=>setCopyMsg(''),2500);
         };
+
+        // ★ Phase 2.10: 1차 초안 통합 Word 다운로드 (1~5장 + 참고문헌 + 부록)
+        const downloadFullThesis = () => {
+          // localStorage에서 논문나침반 1~3장 정보 읽기
+          let pcData = null;
+          try {
+            const saved = localStorage.getItem('paperCompass_thesisData');
+            if(saved) pcData = JSON.parse(saved);
+          } catch(e) {}
+
+          if(!pcData || (!pcData.ivs?.length && !pcData.dvs?.length)) {
+            const proceed = confirm('논문나침반(메인)에서 작성한 1~3장 정보가 없습니다.\n\n현재 통계 결과만으로 진행할까요? (1~3장은 빈 양식으로 출력됩니다)\n\n취소를 누르고 메인 → 논문 작성 모듈에서 1~3장을 먼저 채우시면 더 풍부한 초안이 생성됩니다.');
+            if(!proceed) return;
+            pcData = {ivs:[], dvs:[], meds:[], mods:[], surveyTarget:'', researcherName:'', researcherAffil:'', advisorName:'', surveyMonth:'', surveyScale:5, sampleSize:result.N};
+          }
+
+          const dateStr = new Date().toISOString().slice(0,10);
+          const ivStr = (pcData.ivs||[]).join(', ') || ivs.map(v=>v.name).join(', ');
+          const dvStr = (pcData.dvs||[]).join(', ') || dvs.map(v=>v.name).join(', ');
+          const medStr = (pcData.meds||[]).join(', ') || meds.map(v=>v.name).join(', ');
+          const modStr = (pcData.mods||[]).join(', ') || mods.map(v=>v.name).join(', ');
+          const titleAuto = thesisTitle || (ivStr && dvStr ? `${ivStr}이(가) ${dvStr}에 미치는 영향${medStr?` : ${medStr}의 매개효과`:''}${modStr?` 및 ${modStr}의 조절효과`:''}` : '학위논문');
+
+          // ── 학위논문 표준 앞부분 양식 자동 생성 ──
+          const titleEn = `${(pcData.thesisInfo?.titleEn) || ''}`; // 영문 제목 (없으면 빈칸)
+          const programLabel = pcData.thesisType==='doctoral'?'박사학위논문':pcData.thesisType==='master'?'석사학위논문':'학위논문';
+          const programLabelEn = pcData.thesisType==='doctoral'?'Doctor of Philosophy':pcData.thesisType==='master'?'Master Thesis':'Thesis';
+          const yearMonth = `${dateStr.slice(0,4)}년 ${parseInt(dateStr.slice(5,7),10)}월`;
+
+          // 속표지 (Inner Cover) — 한글 + 영문 제목 병기
+          const innerCover = `<div class="cover">
+  <p style="font-size:14pt; color:#666;">${pcData.researcherAffil || '서울벤처대학원대학교'}</p>
+  <p style="font-size:18pt; color:#444; margin-top:20pt;">${programLabel}</p>
+  <p class="title" style="margin-top:50pt;">${titleAuto}</p>
+  <p style="font-size:13pt; color:#555; font-style:italic; margin-top:14pt;">${titleEn || '<span style="color:#bbb">[영문 제목 — 직접 작성]</span>'}</p>
+  <p class="info">
+    ${pcData.researcherProgram || ''}<br>
+    ${pcData.researcherName || '연구자명'}<br><br>
+    ${pcData.advisorName?`지도교수: ${pcData.advisorName}<br>`:''}
+    ${yearMonth}
+  </p>
+</div>`;
+
+          // 인준서 (Approval Form) — 심사위원 5인 양식
+          const approval = `<div class="preface">
+  <h2>${programLabel} 인준서</h2>
+  <p class="abstract-body" style="text-align:center; text-indent:0; margin:30pt 0 20pt;">
+    <strong>${titleAuto}</strong>
+  </p>
+  <p style="text-align:center; font-size:11pt; color:#555; margin-bottom:30pt;">
+    위 ${programLabel}을 ${pcData.researcherName||'_____________'}의 ${programLabel}으로 인준함
+  </p>
+  <div class="approval-box">
+    <div class="approval-row"><span class="approval-label">심사위원장</span><span class="approval-name">_______________</span><span class="approval-seal">(인)</span></div>
+    <div class="approval-row"><span class="approval-label">심사위원</span><span class="approval-name">_______________</span><span class="approval-seal">(인)</span></div>
+    <div class="approval-row"><span class="approval-label">심사위원</span><span class="approval-name">_______________</span><span class="approval-seal">(인)</span></div>
+    <div class="approval-row"><span class="approval-label">심사위원</span><span class="approval-name">_______________</span><span class="approval-seal">(인)</span></div>
+    <div class="approval-row"><span class="approval-label">심사위원</span><span class="approval-name">_______________</span><span class="approval-seal">(인)</span></div>
+  </div>
+  <p style="text-align:center; font-size:13pt; margin-top:30pt;">${pcData.researcherAffil || '서울벤처대학원대학교'}</p>
+  <p style="text-align:center; font-size:13pt; margin-top:6pt;">${yearMonth}</p>
+</div>`;
+
+          // 국문초록 (4장 결과 기반 자동 작성)
+          const r2Disp = result.reg && result.reg.h1 && result.reg.h1.raw ? result.reg.h1.raw.r2.toFixed(3) : '–';
+          const medDispKr = result.reg && result.reg.mediation && result.reg.mediation[0] && result.reg.mediation[0].bootSig ? '유의한 것으로 확인되어 매개효과가 부분적으로 지지되었다' : '추가 검증이 필요한 것으로 나타났다';
+          const koAbstractBody = `본 연구는 ${ivStr}이(가) ${dvStr}에 미치는 영향을 ${medStr?`${medStr}의 매개효과를 중심으로 `:''}${modStr?`그리고 ${modStr}의 조절효과를 함께 `:''}실증적으로 검증하고자 하였다. 이를 위해 ${ctxName} 종사자 ${result.N}명을 대상으로 ${pcData.surveyScale || 5}점 Likert 척도 설문조사를 실시하였으며, 수집된 자료는 SPSS 통계 패키지${result.reg && result.reg.modMed7 ? '와 PROCESS Macro Model 7':result.reg && result.reg.mediation && result.reg.mediation[0] && result.reg.mediation[0].bootEffect != null ? '와 PROCESS Macro Model 4':''}을 활용하여 분석하였다. 분석 방법은 빈도분석, 신뢰도 분석, 탐색적 요인분석(EFA), 상관분석, 회귀분석${result.reg && result.reg.mediation ? ', 매개효과 분석(부트스트랩 5,000회)':''}${result.reg && result.reg.modMed7 ? ', 조절된 매개효과 분석':''}을 수행하였다.
+
+주요 분석 결과는 다음과 같다. 첫째, ${ivStr}은(는) ${dvStr}에 통계적으로 유의한 정(+)의 영향을 미치는 것으로 나타났다(R²=${r2Disp}). ${medStr?`둘째, ${medStr}의 매개효과를 검증한 결과, 95% 신뢰구간이 0을 포함하지 않아 ${medDispKr}. `:''}${modStr?`셋째, ${modStr}의 조절효과 검증을 통해 ${ivStr}→${medStr||dvStr} 경로의 경계조건을 확인하였다. `:''}
+
+본 연구는 ${ivStr}과(와) ${dvStr} 간의 관계를 ${medStr?`${medStr}이라는 메커니즘을 통해 `:''}실증적으로 규명하였다는 점에서 학술적 의의가 있으며, ${ctxName}의 인사·조직 운영에 시사하는 바가 크다. 본 연구의 한계와 향후 연구방향에 대해서는 본문 제5장에서 상세히 논의하였다.`;
+          const keywords = [ivStr, medStr, modStr, dvStr].filter(Boolean).map(s=>s.split(',')[0].trim()).join(', ');
+          const koAbstract = `<div class="preface">
+  <h2>국 문 초 록</h2>
+  <p class="abstract-meta"><strong>${titleAuto}</strong><br>${pcData.researcherAffil||'서울벤처대학원대학교'} ${pcData.researcherProgram||''}<br>${pcData.researcherName||'연구자명'}<br>${pcData.advisorName?`지도교수: ${pcData.advisorName}`:''}</p>
+  <div class="abstract-body">${koAbstractBody.replace(/\n\n/g,'</div><div class="abstract-body">')}</div>
+  <p class="abstract-keywords"><strong>주제어</strong>: ${keywords || '주제어를 입력하세요'}</p>
+</div>`;
+
+          // 영문초록 (Abstract) — 표준 양식
+          const enAbstract = `<div class="preface">
+  <h2>Abstract</h2>
+  <p class="abstract-meta"><strong>${titleEn || titleAuto}</strong><br>${pcData.researcherAffil ? pcData.researcherAffil + ' (Seoul Venture University)' : 'Seoul Venture University'}<br>${pcData.researcherName||'Researcher Name'}<br>${pcData.advisorName?`Advisor: ${pcData.advisorName}`:''}</p>
+  <div class="abstract-body" style="color:#888;">[The English abstract should mirror the Korean abstract above. Translate the following key elements:<br><br>
+  <strong>Purpose:</strong> This study aims to empirically examine the effect of ${ivStr} on ${dvStr}${medStr?`, focusing on the mediating effect of ${medStr}`:''}${modStr?` and the moderating effect of ${modStr}`:''}.<br><br>
+  <strong>Method:</strong> Data were collected from ${result.N} employees in ${ctxName} using a ${pcData.surveyScale || 5}-point Likert scale survey. Statistical analyses were conducted using SPSS${result.reg && result.reg.modMed7 ? ' and PROCESS Macro Model 7':result.reg && result.reg.mediation ? ' and PROCESS Macro Model 4':''}.<br><br>
+  <strong>Findings:</strong> ${ivStr} had a statistically significant positive effect on ${dvStr} (R²=${r2Disp}). ${medStr?`The mediating effect of ${medStr} was supported. `:''}${modStr?`The moderating role of ${modStr} was examined. `:''}<br><br>
+  <strong>Implications:</strong> This study contributes to the literature by clarifying the mechanism through which ${ivStr} influences ${dvStr}.]</div>
+  <p class="abstract-keywords"><strong>Keywords</strong>: ${keywords || '[insert keywords]'}</p>
+</div>`;
+
+          // 목차 (Table of Contents)
+          const ppPrefacePresent = ppR && (ppR.reversedItems.length>0 || ppR.removedByMissing>0 || ppR.removedByStraightLine>0 || ppR.imputedCells>0);
+          const ch4SectionsCount = ppPrefacePresent ? 11 : 10; // 전처리 절 포함 시 +1
+          const tocItems = [
+            ['l1','제1장 서론','1'],
+            ['l2','제1절. 연구의 배경 및 필요성','1'],
+            ['l2','제2절. 연구의 목적','3'],
+            ['l2','제3절. 연구의 범위 및 방법','4'],
+            ['l2','제4절. 논문의 구성','5'],
+            ['l1','제2장 이론적 배경','6'],
+            ['l2',`제1절. ${ivStr || '독립변수'}`,'6'],
+            ...(medStr?[['l2',`제2절. ${medStr}`,'10']]:[]),
+            ...(modStr?[['l2',`제${medStr?'3':'2'}절. ${modStr}`,'13']]:[]),
+            ['l2',`제${(medStr?1:0)+(modStr?1:0)+2}절. ${dvStr || '종속변수'}`,'15'],
+            ['l2',`제${(medStr?1:0)+(modStr?1:0)+3}절. 변수 간 관계 및 가설 도출`,'18'],
+            ['l1','제3장 연구방법','20'],
+            ['l2','제1절. 연구모형','20'],
+            ['l2','제2절. 연구가설','21'],
+            ['l2','제3절. 변수의 조작적 정의 및 측정도구','22'],
+            ['l2','제4절. 자료 수집','24'],
+            ['l2','제5절. 자료 분석 방법','25'],
+            ['l1','제4장 연구결과','27'],
+            ...sections.filter(s=>!s.title.startsWith('제5장')).map(s=>['l2',s.title,'']),
+            ['l1','제5장 결론','55'],
+            ...sections.filter(s=>s.title.startsWith('제5장')).map(s=>['l2',s.title.replace(/^제5장\s+/,''),'']),
+            ['l1','참고문헌','65'],
+            ['l1','부록','70'],
+            ['l2','부록 1. 설문지','70'],
+          ];
+          const toc = `<div class="preface">
+  <h2>목 차</h2>
+  ${tocItems.map(([cls,title,page])=>`<div class="toc-line toc-${cls}"><span class="toc-title">${title}</span><span class="toc-page">${page}</span></div>`).join('')}
+  <p style="margin-top:20pt; font-size:9pt; color:#999; text-align:center;">※ 페이지 번호는 참고용이며 Word에서 [참조 → 목차 업데이트]로 자동 갱신할 수 있습니다.</p>
+</div>`;
+
+          // 표 / 그림 목차 (List of Tables and Figures)
+          const tablesList = [
+            '표 IV-1. 인구통계학적 특성 (N=' + result.N + ')',
+            '표 IV-2~5. 탐색적 요인분석 (EFA) 결과',
+            "표 IV-6. 신뢰도 검증 (Cronbach's α)",
+            '표 IV-7. 기술통계 (M·SD·왜도·첨도·정규성)',
+            '표 IV-11. 상관관계 매트릭스',
+            '표 IV-12. 다중회귀분석 (직접효과)',
+            ...(result.reg?.mediation?['표 IV-17. 매개효과 (Hayes Model 4 — Bootstrap 95% CI)']:[]),
+            ...(result.reg?.modMed7&&result.reg.modMed7.length>0?['표 IV-N. 조절된 매개효과 (Hayes Model 7)']:[]),
+          ];
+          const figuresList = [
+            '그림 1. 연구모형',
+          ];
+          const listOfTables = `<div class="preface">
+  <h2>표 목 차</h2>
+  ${tablesList.map(t=>`<div class="toc-line toc-l2"><span class="toc-title">${t}</span><span class="toc-page">―</span></div>`).join('')}
+  <h2 style="margin-top:40pt;">그림 목 차</h2>
+  ${figuresList.map(f=>`<div class="toc-line toc-l2"><span class="toc-title">${f}</span><span class="toc-page">―</span></div>`).join('')}
+</div>`;
+
+          // ── 1장 서론 ──
+          const ch1 = `<h1>제1장 서론</h1>
+<h2>제1절. 연구의 배경 및 필요성</h2>
+<p class="body-text">현대 ${ctxName}은(는) 환경 변화·경쟁 심화·디지털 전환 등 복합적 도전에 직면해 있다. 이러한 환경에서 ${dvStr || '조직 효과성'}을(를) 확보하기 위한 ${ivStr || '핵심 선행요인'}의 중요성이 부각되고 있다. 그러나 ${ivStr || '본 연구의 독립변수'}이(가) ${dvStr || '종속변수'}에 미치는 영향을 ${medStr?`${medStr}이라는 매개적 메커니즘과 함께 `:''}${modStr?`${modStr}의 조절효과를 고려하여 `:''}체계적으로 규명한 연구는 상대적으로 부족한 실정이다.</p>
+<p class="body-text">이에 본 연구는 ${ctxName} 종사자를 대상으로 ${ivStr}→${medStr?medStr+'→':''}${dvStr} 관계${modStr?` 및 ${modStr}의 조절효과`:''}를 실증적으로 검증함으로써, 학술적·실무적 시사점을 제공하고자 한다.</p>
+
+<h2>제2절. 연구의 목적</h2>
+<p class="body-text">본 연구의 구체적 목적은 다음과 같다.<br>
+첫째, ${ivStr}이(가) ${dvStr}에 미치는 직접적 영향을 검증한다.<br>
+${medStr?`둘째, ${ivStr}과(와) ${dvStr} 관계에서 ${medStr}의 매개효과를 검증한다.<br>`:''}
+${modStr?`${medStr?'셋째':'둘째'}, ${ivStr}→${medStr||dvStr} 경로에서 ${modStr}의 조절효과를 검증한다.<br>`:''}
+${medStr&&modStr?'넷째, 매개효과와 조절효과를 통합한 조절된 매개효과를 검증한다.':''}</p>
+
+<h2>제3절. 연구의 범위 및 방법</h2>
+<p class="body-text">본 연구의 공간적 범위는 ${ctxName}이며, 시간적 범위는 ${pcData.surveyMonth || dateStr.slice(0,7)} 시점의 횡단면 자료에 기반한다. 연구방법은 ${ctxName} 종사자 ${pcData.sampleSize || result.N}명을 대상으로 한 ${pcData.surveyScale || 5}점 Likert 척도 설문조사를 통해 자료를 수집하였으며, SPSS 통계 패키지${result.reg && result.reg.modMed7 ? '와 PROCESS Macro Model 7':''}${result.reg && result.reg.mediation && result.reg.mediation[0] && result.reg.mediation[0].bootEffect != null ? '와 PROCESS Macro Model 4':''}을 활용하여 신뢰도 분석·탐색적 요인분석·상관분석·회귀분석·매개효과 분석을 수행하였다.</p>
+
+<h2>제4절. 논문의 구성</h2>
+<p class="body-text">본 논문은 총 5개 장으로 구성된다. 제1장 서론에서는 연구의 배경·필요성·목적·범위와 방법을 제시하였다. 제2장 이론적 배경에서는 본 연구의 핵심 변수에 대한 개념적 정의와 선행연구를 검토한다. 제3장 연구방법에서는 연구모형·연구가설·변수의 조작적 정의·측정도구·자료 수집 및 분석 방법을 기술한다. 제4장 연구결과에서는 실증분석 결과를 제시하고, 제5장 결론에서는 연구결과를 요약하고 학술적·실무적 시사점, 연구의 한계 및 향후 연구방향을 논의한다.</p>`;
+
+          // ── 2장 이론적 배경 ──
+          const ch2 = `<h1>제2장 이론적 배경</h1>
+<h2>제1절. ${ivStr || '독립변수'}</h2>
+<p class="body-text"><span style="color:#888">[${ivStr}의 개념적 정의·선행연구 검토 — 논문나침반 메인의 선행연구 DB 또는 본 연구자가 직접 보완 작성하시기 바랍니다.]</span></p>
+${medStr?`<h2>제2절. ${medStr}</h2>
+<p class="body-text"><span style="color:#888">[${medStr}의 개념적 정의·선행연구 검토 — 논문나침반 메인 → Step 3에서 작성된 내용을 활용하시기 바랍니다.]</span></p>`:''}
+${modStr?`<h2>제${medStr?'3':'2'}절. ${modStr}</h2>
+<p class="body-text"><span style="color:#888">[${modStr}의 개념적 정의·선행연구 검토 — 논문나침반 메인 → Step 4에서 작성된 내용을 활용하시기 바랍니다.]</span></p>`:''}
+<h2>제${(medStr?1:0)+(modStr?1:0)+2}절. ${dvStr || '종속변수'}</h2>
+<p class="body-text"><span style="color:#888">[${dvStr}의 개념적 정의·선행연구 검토 — 논문나침반 메인 → Step 2에서 작성된 내용을 활용하시기 바랍니다.]</span></p>
+<h2>제${(medStr?1:0)+(modStr?1:0)+3}절. 변수 간 관계 및 가설 도출</h2>
+<p class="body-text">선행연구를 종합한 결과, 본 연구는 다음과 같은 가설을 도출하였다.<br>
+H1. ${ivStr}은(는) ${dvStr}에 정(+)의 영향을 미칠 것이다.<br>
+${medStr?`H2. ${medStr}은(는) ${ivStr}과(와) ${dvStr}의 관계를 매개할 것이다.<br>`:''}
+${modStr?`H3. ${modStr}은(는) ${ivStr}이(가) ${medStr||dvStr}에 미치는 영향을 조절할 것이다.<br>`:''}</p>`;
+
+          // ── 3장 연구방법 ──
+          const ch3 = `<h1>제3장 연구방법</h1>
+<h2>제1절. 연구모형</h2>
+<p class="body-text"><span style="color:#888">[연구모형 도식 — 논문나침반 메인의 연구모형 그림을 본 위치에 삽입하시기 바랍니다.]</span></p>
+<h2>제2절. 연구가설</h2>
+<p class="body-text">${ivStr}→${medStr?medStr+'→':''}${dvStr}${modStr?` (조절: ${modStr})`:''} 관계에 대한 연구가설은 다음과 같다.<br>
+H1. ${ivStr}은(는) ${dvStr}에 정(+)의 영향을 미칠 것이다.<br>
+${medStr?`H2. ${medStr}은(는) ${ivStr}과(와) ${dvStr}의 관계를 매개할 것이다.<br>`:''}
+${modStr?`H3. ${modStr}은(는) 조절효과를 가질 것이다.<br>`:''}</p>
+<h2>제3절. 변수의 조작적 정의 및 측정도구</h2>
+<p class="body-text">본 연구의 측정도구는 선행연구에서 검증된 ${pcData.surveyScale || 5}점 Likert 척도(1=전혀 그렇지 않다 ~ ${pcData.surveyScale || 5}=매우 그렇다)를 활용하여 측정하였다. <span style="color:#888">[설문지구성표 — 논문나침반 메인 → Step 6의 설문지 구성표를 본 위치에 삽입하시기 바랍니다.]</span></p>
+<h2>제4절. 자료 수집</h2>
+<p class="body-text">본 연구의 자료는 ${pcData.surveyTarget || ctxName + ' 종사자'}을(를) 대상으로 ${pcData.surveyMonth || dateStr.slice(0,7)}에 ${pcData.formViewUrl ? '온라인 Google Forms를':'설문지를'} 통해 수집되었다. 총 ${pcData.sampleSize || result.preprocessReport?.originalN || result.N}부의 응답이 회수되었으며, 이 중 ${result.N}부가 최종 분석에 사용되었다.</p>
+<h2>제5절. 자료 분석 방법</h2>
+<p class="body-text">수집된 자료는 SPSS 통계 패키지를 활용하여 다음과 같이 분석하였다. 첫째, 응답자의 인구통계학적 특성을 파악하기 위해 빈도분석을 실시하였다. 둘째, 측정도구의 내적 일관성을 검증하기 위해 Cronbach's α 계수를 산출하였다. 셋째, 측정도구의 구성타당도를 검증하기 위해 탐색적 요인분석(EFA)을 실시하였다. 넷째, 변수 간 관계를 파악하기 위해 Pearson 상관분석을 수행하였다. 다섯째, 가설 검증을 위해 다중회귀분석을 실시하였다. ${result.reg && result.reg.mediation ? '여섯째, 매개효과 검증을 위해 Baron과 Kenny(1986)의 3단계 절차와 Hayes(2018)의 PROCESS Macro Model 4를 활용한 부트스트랩(5,000회) 분석을 병행하였다. ':''}${result.reg && result.reg.modMed7 ? '일곱째, 조절된 매개효과 검증을 위해 Hayes(2018)의 PROCESS Macro Model 7을 활용하였다. ':''}모든 통계적 유의성은 양측검정 p < .05 수준에서 판정하였다.</p>`;
+
+          // ── 4·5장 분리 + 통계 결과표 본문 삽입 (정용희 2024 양식 참조) ──
+          const ch4Sections = sections.filter(s => !s.title.startsWith('제5장'));
+          const ch5Sections = sections.filter(s => s.title.startsWith('제5장'));
+
+          const fmtN = (v, d=3) => (v==null||isNaN(v))?'-':Number(v).toFixed(d);
+          const pStar = p => p<.001?'***':p<.01?'**':p<.05?'*':'';
+          const pStr = p => p<.001?'<.001':fmtN(p);
+          const buildTbl = (caption, headers, rows, footnote='') => `<table style="border-collapse:collapse;width:100%;margin:10pt 0;font-size:10pt;">
+  <caption style="caption-side:top;font-weight:bold;color:#1F3864;text-align:left;padding:6pt 0;font-size:11pt;">${caption}</caption>
+  <thead><tr>${headers.map(h=>`<th style="background:#1F3864;color:#fff;padding:5pt 8pt;border:1px solid #1F3864;text-align:center;font-weight:bold;">${h}</th>`).join('')}</tr></thead>
+  <tbody>${rows.map((r,ri)=>`<tr>${r.map(c=>`<td style="border:1px solid #999;padding:4pt 8pt;text-align:center;background:${ri%2?'#F2F6FB':'#fff'};">${c}</td>`).join('')}</tr>`).join('')}</tbody>${footnote?`<tfoot><tr><td colspan="${headers.length}" style="border:none;padding:5pt 0;font-size:9pt;color:#666;">${footnote}</td></tr></tfoot>`:''}
+</table>`;
+
+          // 절 제목 → 해당 통계표 HTML 매핑
+          let tblIdx = 1; // 표 IV-N 카운터
+          const tableForSection = (title) => {
+            const t = title.replace(/^제\d+절\.\s*/,'');
+            // 인구통계 빈도분석 → 표 IV-1
+            if (/인구통계|조사대상/.test(t)) {
+              if (!demoVars || demoVars.length === 0) return '';
+              return demoVars.map(dv => {
+                const total = dv.categories.reduce((s,c)=>s+c.count,0);
+                return buildTbl(`<표 IV-${tblIdx++}> ${dv.name} 빈도분석 (N=${result.N})`,
+                  [dv.name, '빈도(명)', '백분율(%)'],
+                  [...dv.categories.map(c=>[c.val, c.count, ((c.count/total)*100).toFixed(1)+'%']),
+                   ['<strong>합계</strong>',`<strong>${total}</strong>`,'<strong>100.0%</strong>']]);
+              }).join('');
+            }
+            // 신뢰도 → 표 IV-N
+            if (/신뢰도/.test(t) && !/타당/.test(t)) {
+              return buildTbl(`<표 IV-${tblIdx++}> 측정도구의 신뢰도 검증 (Cronbach's α)`,
+                ['변수','항목수',"Cronbach's α",'판정'],
+                result.reliability.map(r=>[r.name, r.k, fmtN(r.alpha), r.alpha==null?'-':r.alpha>=.8?'★ 양호':r.alpha>=.7?'수용':r.alpha>=.6?'경계':'낮음']),
+                "신뢰도 기준: .8 이상 양호, .7 이상 수용 (Nunnally, 1978)");
+            }
+            // EFA → 표 IV-N (변수별)
+            if (/타당|요인분석|EFA/.test(t)) {
+              if (!result.efa) return '';
+              return result.efa.filter(e=>e.kmo!=null).map(e => {
+                const tbl = buildTbl(`<표 IV-${tblIdx++}> ${e.name}의 탐색적 요인분석`,
+                  ['항목','요인적재량','공통성(h²)'],
+                  e.loadings.map(l=>[l.item, fmtN(l.loading), fmtN(l.common)]),
+                  `KMO=${fmtN(e.kmo)}, Bartlett χ²=${fmtN(e.bartlett.chi)} (p${pStr(e.bartlett.p)}), 분산설명력=${fmtN(e.varExplained,2)}%`);
+                return tbl;
+              }).join('');
+            }
+            // 기술통계 → 표 IV-N
+            if (/기술통계|정규성/.test(t)) {
+              return buildTbl(`<표 IV-${tblIdx++}> 기술통계 및 정규성 검증`,
+                ['변수','N','평균(M)','표준편차(SD)','왜도','첨도','정규성'],
+                result.descriptive.map(d=>[d.name, d.n, fmtN(d.mean,2), fmtN(d.sd,2), fmtN(d.skew), fmtN(d.kurt), d.normal?'✓ 충족':'⚠ 검토']),
+                "정규성 기준: |왜도| < 2, |첨도| < 7 (Hayes, 2018)");
+            }
+            // 상관관계 → 표 IV-N
+            if (/상관관계/.test(t)) {
+              const names = result.corrNames;
+              const symbols = ['①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩'];
+              return buildTbl(`<표 IV-${tblIdx++}> 변수 간 상관관계 검증`,
+                [''].concat(names.map((_,i)=>symbols[i]||(i+1))),
+                names.map((n,i)=>[`${symbols[i]||i+1} ${n}`].concat(
+                  result.corr[i].map((c,j)=>j===i?'1.000':j>i?'':fmtN(c.r)+pStar(c.p)))),
+                "***p<.001, **p<.01, *p<.05");
+            }
+            // 회귀분석 (H1) → 표 IV-N
+            if (/가설검증.*H1|H1.*가설|회귀분석|직접효과/.test(t) && result.reg?.h1) {
+              const h1 = result.reg.h1;
+              const r2disp = `<strong>R² = ${fmtN(h1.raw.r2)}, adj.R² = ${fmtN(h1.raw.adjR2)}, F = ${fmtN(h1.raw.f)}${pStar(0)}</strong>`;
+              return buildTbl(`<표 IV-${tblIdx++}> ${(h1.ivNames||[]).join('·')} → ${h1.dvName||'종속변수'} 다중회귀분석`,
+                ['독립변수','B','SE','β','t','p'],
+                [['(상수)', fmtN(h1.raw.beta[0]), fmtN(h1.raw.se[0]), '–', fmtN(h1.raw.t[0]), pStr(h1.raw.p[0])],
+                 ...h1.ivNames.map((n,i)=>[n, fmtN(h1.raw.beta[i+1]), fmtN(h1.raw.se[i+1]), fmtN(h1.std.beta[i+1]), fmtN(h1.raw.t[i+1]), pStr(h1.raw.p[i+1])+pStar(h1.raw.p[i+1])])],
+                r2disp);
+            }
+            // 매개효과 → 표 IV-N
+            if (/매개효과/.test(t) && !/조절/.test(t) && result.reg?.mediation) {
+              const baronTbl = buildTbl(`<표 IV-${tblIdx++}> Baron & Kenny(1986) 매개효과 검증`,
+                ['IV','c (전체)','a (IV→Med)','b (Med→DV)',"c' (직접)",'Sobel Z','매개유형'],
+                result.reg.mediation.map(m=>[m.iv, fmtN(m.c)+pStar(m.cP||0), fmtN(m.a)+pStar(m.aP||0), fmtN(m.b), fmtN(m.cPrime)+pStar(m.cPrimeP||0), fmtN(m.sobelZ), m.medType]));
+              const bootTbl = result.reg.mediation[0]?.bootEffect != null ? buildTbl(`<표 IV-${tblIdx++}> Hayes Model 4 부트스트랩 매개효과 (5,000회, 95% CI)`,
+                ['IV','간접효과 ab','BootSE','95% LLCI','95% ULCI','판정'],
+                result.reg.mediation.map(m=>[m.iv, fmtN(m.bootEffect), fmtN(m.bootSE), fmtN(m.bootLLCI), fmtN(m.bootULCI), m.bootSig?'★ 유의':'비유의']),
+                "95% Percentile Bootstrap (Hayes, 2018). LLCI~ULCI에 0 미포함 시 매개효과 유의") : '';
+              return baronTbl + bootTbl;
+            }
+            // 조절효과 (Model 1) → 표 IV-N
+            if (/조절효과/.test(t) && !/매개/.test(t) && result.reg?.moderation && result.reg.moderation.length>0) {
+              return result.reg.moderation.map(m=>buildTbl(`<표 IV-${tblIdx++}> 조절효과: ${m.iv} × ${m.mod} → ${m.dv}`,
+                ['단계','R²','ΔR²','F변화량','유의'],
+                [['Step 1: '+m.iv, fmtN(m.step1R2), '–','–','–'],
+                 ['Step 2: '+m.iv+', '+m.mod, fmtN(m.step2R2), fmtN(m.deltaR2_2),'–','–'],
+                 [`Step 3: ${m.iv}, ${m.mod}, ${m.iv}×${m.mod}`, fmtN(m.step3R2), fmtN(m.deltaR2_3), fmtN(m.fChange3), pStr(m.pChange3)+pStar(m.pChange3)]],
+                `상호작용 β=${fmtN(m.interactionBeta)}, p=${pStr(m.interactionP)} → ${m.modType}`)).join('');
+            }
+            // 조절된 매개 → 표 IV-N
+            if (/조절된 매개|Hayes Model 7/.test(t) && result.reg?.modMed7 && result.reg.modMed7.length>0) {
+              return result.reg.modMed7.map(m=>buildTbl(`<표 IV-${tblIdx++}> 조절된 매개효과 (Hayes Model 7): ${m.iv}→${m.med}→${m.dv}, ${m.mod} 조절`,
+                ['지표','값','BootSE','95% LLCI','95% ULCI','판정'],
+                [['Index of Moderated Mediation', fmtN(m.indexMM), fmtN(m.indexBootSE), fmtN(m.indexLLCI), fmtN(m.indexULCI), m.indexSig?'★ 유의':'비유의']],
+                `${m.modMedType} | 조건부 간접효과: ${m.conditional?.map(c=>`${c.level}=${fmtN(c.indirect)}`).join(', ')}`)).join('');
+            }
+            // 인구통계 차이 → 표 IV-N
+            if (/인구통계.*차이|차이분석|t-test|ANOVA/.test(t) && result.demoTests) {
+              return Object.entries(result.demoTests).map(([k,tests])=>buildTbl(
+                `<표 IV-${tblIdx++}> ${k} 차이분석 (${tests[0]?.type==='t-test'?'독립표본 t-test':'One-way ANOVA'})`,
+                ['변수', tests[0]?.type==='t-test'?'t값':'F값','df','p','유의'],
+                tests.map(x=>[x.variable, fmtN(x.t!=null?x.t:x.f), x.df||x.df2||'–', pStr(x.p), x.sig||pStar(x.p)]))).join('');
+            }
+            // 가설검증 결과 종합 → 표 IV-N
+            if (/가설검증 결과 종합|가설.*종합/.test(t)) {
+              const allHypTbl = [];
+              if (result.reg?.h1) {
+                const sigCount = result.reg.h1.std.beta.slice(1).filter((b,i)=>result.reg.h1.raw.p[i+1]<.05).length;
+                allHypTbl.push(['H1 (직접효과)', `${result.reg.h1.ivNames.join(', ')} → ${result.reg.h1.dvName}`, sigCount===result.reg.h1.ivNames.length?'채택':sigCount>0?'부분 채택':'기각']);
+              }
+              if (result.reg?.mediation) {
+                result.reg.mediation.forEach((m,i)=>allHypTbl.push([`H${2+i} (매개)`, `${m.iv} → ${m.med || 'Med'} → ${result.reg.mediation[0].dv||'DV'}`, m.bootSig?'채택':m.medType==='기각'?'기각':'부분 채택']));
+              }
+              if (result.reg?.moderation) {
+                result.reg.moderation.forEach((m,i)=>allHypTbl.push([`H${2+(result.reg.mediation?.length||0)+i} (조절)`, `${m.iv} × ${m.mod} → ${m.dv}`, m.modType==='조절효과 있음'?'채택':'기각']));
+              }
+              if (result.reg?.modMed7) {
+                result.reg.modMed7.forEach((m,i)=>allHypTbl.push([`H${2+(result.reg.mediation?.length||0)+(result.reg.moderation?.length||0)+i} (조절된 매개)`, `${m.iv}→${m.med}→${m.dv} (${m.mod} 조절)`, m.indexSig?'채택':'기각']));
+              }
+              return allHypTbl.length>0 ? buildTbl(`<표 IV-${tblIdx++}> 가설검증 결과 종합`,
+                ['가설','경로','채택여부'], allHypTbl) : '';
+            }
+            return '';
+          };
+
+          const ch4Body = ch4Sections.map(s => `<h2>${s.title}</h2><div class="body-text">${s.body.replace(/\n/g,'<br>')}</div>${tableForSection(s.title)}`).join('');
+          const ch4 = `<h1>제4장 연구결과</h1>${ch4Body}`;
+
+          const ch5Body = ch5Sections.map(s => `<h2>${s.title.replace(/^제5장\s+/,'')}</h2><div class="body-text">${s.body.replace(/\n/g,'<br>')}</div>`).join('');
+          const ch5 = `<h1>제5장 결론</h1>${ch5Body}`;
+
+          // ── 참고문헌 ──
+          const ch6 = `<h1>참고문헌</h1>
+<p class="body-text"><span style="color:#888">[본문에 인용한 모든 참고문헌을 APA 양식으로 정리하시기 바랍니다. 논문나침반 메인 → Step 9 결과물 탭에서 자동 추출 가능합니다.]</span></p>
+<p class="body-text">주요 통계 분석 인용 문헌:</p>
+<p class="body-text">Baron, R. M., & Kenny, D. A. (1986). The moderator-mediator variable distinction in social psychological research. <em>Journal of Personality and Social Psychology, 51</em>(6), 1173-1182.<br>
+Hair, J. F., Black, W. C., Babin, B. J., & Anderson, R. E. (2010). <em>Multivariate data analysis</em> (7th ed.). Prentice Hall.<br>
+Hayes, A. F. (2018). <em>Introduction to mediation, moderation, and conditional process analysis</em> (2nd ed.). Guilford Press.<br>
+Kaiser, H. F. (1974). An index of factorial simplicity. <em>Psychometrika, 39</em>(1), 31-36.<br>
+${result.preprocessReport?.removedByMissing>0 ? 'Meade, A. W., & Craig, S. B. (2012). Identifying careless responses in survey data. <em>Psychological Methods, 17</em>(3), 437-455.<br>':''}
+Nunnally, J. C. (1978). <em>Psychometric theory</em> (2nd ed.). McGraw-Hill.<br>
+${result.preprocessReport?.imputedCells>0 ? 'Schafer, J. L., & Graham, J. W. (2002). Missing data: Our view of the state of the art. <em>Psychological Methods, 7</em>(2), 147-177.<br>':''}
+</p>`;
+
+          // ── 부록: 설문지 ──
+          const ch7 = `<h1>부록</h1>
+<h2>부록 1. 설문지</h2>
+<p class="body-text"><span style="color:#888">[설문지 본문 — 논문나침반 메인 → Step 6의 설문지를 본 위치에 삽입하시기 바랍니다.${pcData.formViewUrl?` 또는 온라인 Google Forms 링크: ${pcData.formViewUrl}`:''}]</span></p>`;
+
+          const fullHtml = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'><title>${titleAuto}</title>
+<style>
+  @page { size: A4 portrait; margin: 2.5cm 2cm; }
+  body { font-family: '맑은 고딕', sans-serif; font-size: 11pt; line-height: 1.7; }
+  h1 { font-size: 20pt; color: #1F3864; border-bottom: 3px solid #1F3864; padding-bottom: 8px; margin-top: 32pt; page-break-before: always; }
+  h1:first-of-type { page-break-before: avoid; }
+  h2 { font-size: 14pt; color: #2E75B6; margin-top: 18pt; }
+  h3 { font-size: 12pt; color: #1F3864; }
+  table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 10pt; }
+  th { background: #1F3864; color: #fff; padding: 6pt; border: 1px solid #1F3864; text-align: center; font-weight: bold; }
+  td { border: 1px solid #999; padding: 5pt 8pt; }
+  .body-text { font-size: 11pt; line-height: 1.8; padding: 6pt 0; text-align: justify; }
+  .cover { text-align: center; padding: 60pt 0 40pt 0; page-break-after: always; }
+  .cover .title { font-size: 22pt; font-weight: bold; color: #1F3864; margin: 30pt 0; line-height: 1.4; }
+  .cover .info { font-size: 14pt; color: #444; margin-top: 60pt; }
+  .preface { page-break-after: always; padding: 30pt 0; }
+  .preface h2 { font-size: 18pt; color: #1F3864; text-align: center; border: none; margin: 20pt 0 30pt 0; padding: 0; }
+  .approval-box { border: 1.5pt solid #333; padding: 30pt; margin: 30pt auto; max-width: 14cm; }
+  .approval-row { display: table; width: 100%; margin: 18pt 0; border-bottom: 1pt dotted #999; padding-bottom: 8pt; }
+  .approval-label { display: table-cell; width: 30%; font-weight: bold; vertical-align: bottom; }
+  .approval-name { display: table-cell; width: 50%; }
+  .approval-seal { display: table-cell; width: 20%; text-align: right; color: #999; font-size: 10pt; }
+  .abstract-meta { font-size: 11pt; color: #555; text-align: center; margin-bottom: 20pt; line-height: 1.8; }
+  .abstract-body { font-size: 11pt; line-height: 1.9; text-align: justify; padding: 0 12pt; text-indent: 1em; }
+  .abstract-keywords { margin-top: 24pt; padding-top: 14pt; border-top: 1pt solid #ccc; font-size: 11pt; }
+  .toc-line { display: table; width: 100%; padding: 4pt 0; font-size: 11pt; border-bottom: 1pt dotted #ccc; }
+  .toc-title { display: table-cell; }
+  .toc-page { display: table-cell; text-align: right; width: 60pt; color: #666; }
+  .toc-l1 { font-weight: bold; color: #1F3864; padding-top: 10pt; font-size: 12pt; }
+  .toc-l2 { padding-left: 24pt; color: #444; }
+  .toc-l3 { padding-left: 48pt; color: #666; font-size: 10pt; }
+</style></head><body>
+<div class="cover">
+  <p style="font-size:14pt; color:#666;">${pcData.researcherAffil || '서울벤처대학원대학교'}</p>
+  <p style="font-size:18pt; color:#444; margin-top:20pt;">${pcData.thesisType==='doctoral'?'박사학위논문':pcData.thesisType==='master'?'석사학위논문':'학위논문'}</p>
+  <p class="title">${titleAuto}</p>
+  <p class="info">
+    ${pcData.researcherProgram || ''}<br>
+    ${pcData.researcherName || '연구자명'}<br><br>
+    ${pcData.advisorName?`지도교수: ${pcData.advisorName}<br>`:''}
+    ${dateStr.slice(0,4)}년 ${parseInt(dateStr.slice(5,7),10)}월
+  </p>
+</div>
+${innerCover}
+${approval}
+${koAbstract}
+${enAbstract}
+${toc}
+${listOfTables}
+${ch1}
+${ch2}
+${ch3}
+${ch4}
+${ch5}
+${ch6}
+${ch7}
+</body></html>`;
+
+          const blob = new Blob(['\ufeff'+fullHtml], {type:'application/msword;charset=utf-8'});
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `학위논문_1차초안_${dateStr}.doc`;
+          a.click();
+          URL.revokeObjectURL(url);
+          setCopyMsg('🎓 1차 초안 통합 다운로드 완료!');
+          setTimeout(()=>setCopyMsg(''),3500);
+        };
+
         return h('div',null,
           h('div',{style:{marginBottom:'16px',padding:'12px',background:'#FFF8E1',borderRadius:'8px',border:'1px solid #FFD54F'}},
             h('p',{style:{fontSize:'13px',color:'#5D4037',marginBottom:'6px'}},
-              h('strong',null,'📝 학위논문 제4장 본문 자동 작성'),' — 본 분석 결과를 학위논문 양식으로 자동 작성한 본문입니다. 복사 후 본 논문에 그대로 인용 가능합니다.'),
+              h('strong',null,'📝 학위논문 제4·5장 본문 자동 작성'),' — 본 분석 결과를 학위논문 양식으로 자동 작성한 본문입니다 (4장 연구결과 + 5장 결론). 복사 후 본 논문에 그대로 인용 가능합니다.'),
             h('p',{style:{fontSize:'11px',color:'#888'}},'※ 빈칸·연구 맥락 부분은 직접 보완하시고, 표 번호는 본 논문 형식에 맞춰 조정하세요.')
+          ),
+          // ★ Phase 2.9: 5장 결론을 위한 산업 맥락·실무 키워드 입력
+          h('div',{style:{marginBottom:'14px',padding:'14px 16px',background:'#EEF7EE',borderRadius:'8px',border:'1px solid #A5D6A7'}},
+            h('p',{style:{fontSize:'12px',fontWeight:'bold',color:'#1B5E20',marginBottom:'8px'}},
+              '🎯 5장 결론 자동 작성 — 연구 맥락 입력 (선택)'),
+            h('p',{style:{fontSize:'11px',color:'#444',marginBottom:'10px'}},
+              '아래 입력 시 학술적·실무적 시사점이 본 연구 맥락에 맞게 작성됩니다. 비워두면 일반 양식으로 생성됩니다.'),
+            h('div',{style:{display:'flex',gap:'10px',flexWrap:'wrap'}},
+              h('div',{style:{flex:'1 1 220px'}},
+                h('label',{style:{fontSize:'11px',color:'#1B5E20',fontWeight:'bold',display:'block',marginBottom:'3px'}},'연구 산업/조직 맥락'),
+                h('input',{value:industryContext,onChange:e=>setIndustryContext(e.target.value),
+                  placeholder:'예: 기술혁신스타트업, 축산물가공산업, 중소ICT기업',
+                  style:{width:'100%',padding:'8px 10px',border:'1px solid #C8E6C9',borderRadius:'6px',fontSize:'12px',outline:'none'}})
+              ),
+              h('div',{style:{flex:'1 1 260px'}},
+                h('label',{style:{fontSize:'11px',color:'#1B5E20',fontWeight:'bold',display:'block',marginBottom:'3px'}},'실무 시사점 키워드 (쉼표 구분)'),
+                h('input',{value:practicalKeywords,onChange:e=>setPracticalKeywords(e.target.value),
+                  placeholder:'예: 코칭 프로그램, 구성원 임파워먼트, 리더십 교육',
+                  style:{width:'100%',padding:'8px 10px',border:'1px solid #C8E6C9',borderRadius:'6px',fontSize:'12px',outline:'none'}})
+              )
+            )
           ),
           h('div',{style:{display:'flex',gap:'10px',flexWrap:'wrap',marginBottom:'14px'}},
             h('button',{onClick:()=>{
@@ -21376,9 +21905,54 @@ ${result.reg.modMed7.map(m=>`<table>
               });
             },style:{padding:'10px 18px',background:'#1F3864',color:'#fff',border:'none',borderRadius:6,fontSize:13,fontWeight:'bold',cursor:'pointer'}},'📋 전체 본문 복사'),
             h('button',{onClick:downloadWord,
-              style:{padding:'10px 18px',background:'#2B579A',color:'#fff',border:'none',borderRadius:6,fontSize:13,fontWeight:'bold',cursor:'pointer'}},'📄 Word 다운로드 (.doc)'),
+              style:{padding:'10px 18px',background:'#2B579A',color:'#fff',border:'none',borderRadius:6,fontSize:13,fontWeight:'bold',cursor:'pointer'}},'📄 4·5장만 Word 다운로드'),
             h('button',{onClick:downloadExcel,
-              style:{padding:'10px 18px',background:'#217346',color:'#fff',border:'none',borderRadius:6,fontSize:13,fontWeight:'bold',cursor:'pointer'}},'📊 Excel 다운로드 (.xlsx)')
+              style:{padding:'10px 18px',background:'#217346',color:'#fff',border:'none',borderRadius:6,fontSize:13,fontWeight:'bold',cursor:'pointer'}},'📊 Excel 다운로드'),
+            h('label',{style:{padding:'10px 18px',background:'#7B1FA2',color:'#fff',border:'none',borderRadius:6,fontSize:13,fontWeight:'bold',cursor:'pointer',display:'inline-flex',alignItems:'center',gap:'4px'},title:'논문나침반 메인 → Step 9에서 다운로드한 .json 파일을 업로드'},
+              '📁 논문나침반 1·2·3장 불러오기',
+              h('input',{type:'file',accept:'.json',style:{display:'none'},onChange:e=>{
+                const f = e.target.files[0]; if(!f) return;
+                const reader = new FileReader();
+                reader.onload = ev => {
+                  try {
+                    const d = JSON.parse(ev.target.result);
+                    if (!d._meta || d._meta.format !== 'PaperCompass_1차초안데이터') {
+                      alert('논문나침반 1차초안데이터 형식의 JSON 파일이 아닙니다.\n\nPaperCompass 메인 → Step 9 결과물 → [📦 1~3장 데이터(.json)] 버튼으로 다운로드한 파일을 사용해주세요.');
+                      return;
+                    }
+                    const ls = {
+                      savedAt: new Date().toISOString(),
+                      ivs: d.variables?.ivs || [], dvs: d.variables?.dvs || [], meds: d.variables?.meds || [], mods: d.variables?.mods || [],
+                      surveyTarget: d.survey?.target || '', customDemographics: d.survey?.demographics || [],
+                      researcherName: d.thesisInfo?.researcher?.name || '', researcherAffil: d.thesisInfo?.researcher?.affil || '',
+                      advisorName: d.thesisInfo?.advisor || '', researcherProgram: d.thesisInfo?.researcher?.program || '',
+                      researcherEmail: d.thesisInfo?.researcher?.email || '',
+                      thesisType: d.thesisInfo?.type || 'master', surveyScale: d.survey?.scale || 5,
+                      surveyMonth: d.thesisInfo?.surveyMonth || '', sampleSize: d.survey?.sampleSize || 300,
+                      formViewUrl: d.deployment?.formViewUrl || '', contactFormViewUrl: d.deployment?.contactFormViewUrl || '',
+                      customFormTitle: d.thesisInfo?.title || '', customFormIntro: ''
+                    };
+                    localStorage.setItem('paperCompass_thesisData', JSON.stringify(ls));
+                    const summary = `✅ 논문나침반 1·2·3장 정보를 불러왔습니다.\n\n` +
+                      `· 논문 제목: ${d.thesisInfo?.title || '(미입력)'}\n` +
+                      `· 독립변수: ${(d.variables?.ivs||[]).join(', ') || '(없음)'}\n` +
+                      `· 종속변수: ${(d.variables?.dvs||[]).join(', ') || '(없음)'}\n` +
+                      `· 매개변수: ${(d.variables?.meds||[]).join(', ') || '(없음)'}\n` +
+                      `· 조절변수: ${(d.variables?.mods||[]).join(', ') || '(없음)'}\n` +
+                      `· 연구자: ${d.thesisInfo?.researcher?.name || '(미입력)'}\n` +
+                      `· 표본크기: ${d.survey?.sampleSize || '(미입력)'}부\n\n` +
+                      `이제 [🎓 1차 초안 통합 다운로드] 버튼을 눌러 1~5장 통합 .docx를 생성하세요.`;
+                    alert(summary);
+                  } catch(err) {
+                    alert('JSON 파일 파싱 오류: ' + err.message);
+                  }
+                };
+                reader.readAsText(f);
+                e.target.value = ''; // 같은 파일 재선택 가능
+              }})
+            ),
+            h('button',{onClick:downloadFullThesis,
+              style:{padding:'10px 18px',background:'linear-gradient(135deg,#E65100,#FF8F00)',color:'#fff',border:'none',borderRadius:6,fontSize:13,fontWeight:'bold',cursor:'pointer',boxShadow:'0 3px 10px rgba(230,81,0,0.3)'}},'🎓 1차 초안 통합 다운로드 (1~5장)')
           ),
           ...sections.map((s,i)=>h('div',{key:i,style:{marginBottom:'18px',padding:'14px 18px',background:'#fff',borderRadius:'8px',border:'1px solid #e0e0e0'}},
             h('h4',{style:{fontSize:'14px',fontWeight:'bold',color:'#1F3864',marginBottom:'8px'}},s.title),
@@ -23116,11 +23690,11 @@ const PaperDBBuilder = ({ onBack }) => {
 const HomeScreen = ({ onSelect }) => {
   const cards = [
     {id:'thesis',icon:'📄',title:'일반 논문 작성',sub:'석사·박사·학술지',
-      desc:'연구주제 자동분석 → 연구모형 설계 → 설문지 자동생성 → 구글폼 연동까지 9단계 가이드.',
-      features:[`총 ${dbStats.total||204}편 논문 DB 기반 (SVU+타학교+인용)`,'연구변수·경로 자동 추천','설문지 자동 생성','구글폼 내보내기'],color:'#1F3864',bg:'#EEF3FB'},
-    {id:'stats',icon:'📊',title:'설문 결과 통계 검토',sub:'SPSS·SmartPLS·AMOS',
-      desc:'엑셀 데이터 업로드 → 빈도·기술통계·신뢰도·상관·회귀·매개효과를 논문 결과표 형식으로 자동 출력.',
-      features:['xlsx/xls 파일 업로드','Cronbach α 자동계산','회귀·매개효과 자동분석','논문 결과표 형식 + 복사 기능'],color:'#1a6b3a',bg:'#EDF7EF'},
+      desc:'연구주제 자동분석 → 연구모형 설계 → 설문지 자동생성 → 구글폼 연동까지 9단계 가이드. 통계 분석과 자동 연동되어 1~5장 통합 .docx 출력.',
+      features:[`총 ${dbStats.total||204}편 논문 DB 기반 (SVU+타학교+인용)`,'연구변수·경로 자동 추천','설문지 자동 생성','구글폼 내보내기','📊 통계 분석과 자동 연동 (1~5장 통합 출력)'],color:'#1F3864',bg:'#EEF3FB'},
+    {id:'stats',icon:'📊',title:'설문 결과 통계 검토',sub:'박사논문급 통계 + 4·5장 자동 작성',
+      desc:'엑셀 업로드 → 전처리·신뢰도·EFA·상관·회귀·매개·조절·조절된매개까지 박사논문급 분석. 4·5장 본문 자동 작성 + 학위논문 1차 초안 통합 다운로드까지 한 번에.',
+      features:['전처리 자동화 (역채점·결측·직선응답)','EFA·신뢰도·상관·회귀 (SPSS급)','Hayes Model 4·7 부트스트랩 (PROCESS Macro급)','📝 4·5장 본문 자동 작성 (학위논문 양식)','🎓 1차 초안 통합 다운로드 (1~5장 .docx)'],color:'#1a6b3a',bg:'#EDF7EF'},
     {id:'paperdb',icon:'🏗️',title:'논문 DB 구축',sub:'공사중 🚧',
       desc:'현재 추출 정확도 고도화 작업 중입니다. 안정화 후 공개됩니다. 그 전까지는 논문 PDF를 관리자에게 전달하면 정확하게 DB에 등록해 드립니다.',
       features:['🚧 추출 엔진 정확도 고도화','📚 변수·설문항·선행연구표 자동화','📄 PDF 양식 다양성 대응','🔜 안정화 후 오픈'],color:'#999',bg:'#f5f5f5',disabled:true},
