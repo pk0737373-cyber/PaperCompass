@@ -9627,11 +9627,16 @@ const PaperCompass = ({ onBack }) => {
 
   // ── 개별 설문 문항 선택 함수들 ──
   const getItemKey = (varName, factorName) => `${varName}__${factorName}`;
+  // ★ 단일차원 판별: factor 이름에 '단일차원'/'단일요인'/'단일요소'가 포함되면 true
+  //   (교수 지침: 단일차원 척도는 원전 그대로 전체 문항 사용 — 학위논문 척도 신뢰도·타당도 검증을 위한 표준 방식)
+  const _isUnidimensional = (factorName) => /단일\s*차원|단일\s*요인|단일\s*요소/.test(String(factorName || ''));
   const getSelectedItemIndices = (varName, factorName, totalItems) => {
     const key = getItemKey(varName, factorName);
     if (selectedItems[key]) return selectedItems[key];
-    // AI 기본 추천: 첫 5개 (또는 전체가 5개 이하면 전부)
-    const defaultCount = Math.min(5, totalItems);
+    // ★ 기본 선택 규칙:
+    //   - 단일차원: 전체 문항 (원전 척도 그대로 — 신뢰도/타당도 검증용)
+    //   - 하위요인: 첫 5개 추천 (또는 전체가 5개 이하면 전부)
+    const defaultCount = _isUnidimensional(factorName) ? totalItems : Math.min(5, totalItems);
     return Array.from({length: defaultCount}, (_, i) => i);
   };
   const toggleItem = (varName, factorName, itemIdx, totalItems) => {
@@ -9649,7 +9654,8 @@ const PaperCompass = ({ onBack }) => {
   };
   const resetItemsToDefault = (varName, factorName, totalItems) => {
     const key = getItemKey(varName, factorName);
-    const defaultCount = Math.min(5, totalItems);
+    // ★ 단일차원이면 전체 / 하위요인이면 첫 5개로 재설정
+    const defaultCount = _isUnidimensional(factorName) ? totalItems : Math.min(5, totalItems);
     setSelectedItems({...selectedItems, [key]: Array.from({length: defaultCount}, (_, i) => i)});
   };
 
@@ -21983,41 +21989,43 @@ const PaperCompass = ({ onBack }) => {
                 );
               })))
         ),
-        // ── 기존 논문 중복 경고 (매개변수 선택 직후 표시) ──
+        // ── 기존 논문 중복 경고 (매개변수 선택 직후 표시) — 폰트·가시성 강화 ──
         (() => {
           const dups = checkDuplicateWithExisting();
           if (dups.length === 0) return null;
           const exactDups = dups.filter(d => d.isExact);
           const partialDups = dups.filter(d => !d.isExact);
-          return React.createElement("div", {className: "mt-4"},
-            exactDups.length > 0 && React.createElement("div", {className: "p-4 rounded-lg border-2 mb-3", style: { backgroundColor: '#FFF0F0', borderColor: '#EF5350' }},
-              React.createElement("div", {className: "flex items-start gap-2"},
-                React.createElement("span", {className: "text-lg flex-shrink-0"}, "\u{1F6A8}"),
-                React.createElement("div", null,
-                  React.createElement("p", {className: "font-bold text-sm", style: { color: '#D32F2F' }}, "기존 논문과 동일한 변수 구성입니다!"),
-                  React.createElement("div", {className: "mt-2 space-y-1"}, exactDups.map(d =>
-                    React.createElement("div", {key: d.paper, className: "p-2 bg-white rounded text-sm"},
-                      React.createElement("p", {className: "font-semibold text-gray-800"}, renderAuthorLinks(d.paper) || d.paper, d.source === 'SVU' ? ' [SVU]' : ''),
-                      d.title && React.createElement("p", {className: "text-xs text-gray-500 mt-0.5"}, d.title)
+          return React.createElement("div", {className: "mt-5"},
+            exactDups.length > 0 && React.createElement("div", {className: "p-5 rounded-xl border-2 mb-4", style: { backgroundColor: '#FFEBEE', borderColor: '#D32F2F', borderWidth: '3px', boxShadow: '0 4px 12px rgba(211, 47, 47, 0.18)' }},
+              React.createElement("div", {className: "flex items-start gap-3"},
+                React.createElement("span", {className: "flex-shrink-0", style: { fontSize: '32px', lineHeight: '1' }}, "\u{1F6A8}"),
+                React.createElement("div", {style: { flex: 1 }},
+                  React.createElement("p", {className: "font-bold", style: { color: '#C62828', fontSize: '17px', lineHeight: '1.4' }}, "기존 논문과 동일한 변수 구성입니다!"),
+                  React.createElement("p", {style: { color: '#C62828', fontSize: '13px', marginTop: '4px', fontWeight: '600' }}, "(독립·매개·종속변수가 모두 일치 — 변경 권장)"),
+                  React.createElement("div", {className: "mt-3 space-y-2"}, exactDups.map(d =>
+                    React.createElement("div", {key: d.paper, className: "p-3 bg-white rounded-lg", style: { border: '1px solid #FFCDD2' }},
+                      React.createElement("p", {className: "font-bold", style: { color: '#1F3864', fontSize: '15px' }}, renderAuthorLinks(d.paper) || d.paper, d.source === 'SVU' ? React.createElement("span", {style: {marginLeft: '6px', padding: '2px 6px', backgroundColor: '#1F3864', color: '#fff', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold'}}, 'SVU') : null),
+                      d.title && React.createElement("p", {style: { color: '#555', fontSize: '13px', marginTop: '4px', lineHeight: '1.5' }}, d.title)
                     )
                   )),
-                  React.createElement("p", {className: "mt-2 text-xs", style: { color: '#D32F2F' }}, "독립변수·매개변수·종속변수가 모두 동일합니다. 매개변수를 바꾸거나, '새로운 조합 제안'에서 선택해주세요.")
+                  React.createElement("p", {className: "mt-3 p-3 rounded-lg font-semibold", style: { color: '#B71C1C', fontSize: '14px', lineHeight: '1.5', backgroundColor: '#FFCDD2', borderLeft: '4px solid #D32F2F' }}, "\u{1F4A1} 매개변수를 바꾸거나, '새로운 조합 제안'에서 선택해 차별화하시기 바랍니다.")
                 )
               )
             ),
-            partialDups.length > 0 && React.createElement("div", {className: "p-4 rounded-lg border-2", style: { backgroundColor: '#FFF8E1', borderColor: '#FFA726' }},
-              React.createElement("div", {className: "flex items-start gap-2"},
-                React.createElement("span", {className: "text-lg flex-shrink-0"}, "\u26A0\uFE0F"),
-                React.createElement("div", null,
-                  React.createElement("p", {className: "font-bold text-sm", style: { color: '#E65100' }}, "기존 논문과 일부 변수가 겹칩니다"),
-                  React.createElement("div", {className: "mt-2 space-y-1"}, partialDups.map(d =>
-                    React.createElement("div", {key: d.paper, className: "p-2 bg-white rounded text-sm"},
-                      React.createElement("p", {className: "font-semibold text-gray-800"}, renderAuthorLinks(d.paper) || d.paper, d.source === 'SVU' ? ' [SVU]' : ''),
-                      React.createElement("p", {className: "text-xs text-gray-600 mt-0.5"}, "겹치는 매개변수: ", d.matchedMVs.join(', ')),
-                      d.title && React.createElement("p", {className: "text-xs text-gray-500 mt-0.5"}, d.title)
+            partialDups.length > 0 && React.createElement("div", {className: "p-5 rounded-xl border-2", style: { backgroundColor: '#FFF8E1', borderColor: '#F57C00', borderWidth: '3px', boxShadow: '0 4px 12px rgba(245, 124, 0, 0.15)' }},
+              React.createElement("div", {className: "flex items-start gap-3"},
+                React.createElement("span", {className: "flex-shrink-0", style: { fontSize: '32px', lineHeight: '1' }}, "\u26A0\uFE0F"),
+                React.createElement("div", {style: { flex: 1 }},
+                  React.createElement("p", {className: "font-bold", style: { color: '#E65100', fontSize: '17px', lineHeight: '1.4' }}, "기존 논문과 일부 변수가 겹칩니다"),
+                  React.createElement("p", {style: { color: '#E65100', fontSize: '13px', marginTop: '4px', fontWeight: '600' }}, "(매개변수 일부 일치 — 차별화 가능)"),
+                  React.createElement("div", {className: "mt-3 space-y-2"}, partialDups.map(d =>
+                    React.createElement("div", {key: d.paper, className: "p-3 bg-white rounded-lg", style: { border: '1px solid #FFE082' }},
+                      React.createElement("p", {className: "font-bold", style: { color: '#1F3864', fontSize: '15px' }}, renderAuthorLinks(d.paper) || d.paper, d.source === 'SVU' ? React.createElement("span", {style: {marginLeft: '6px', padding: '2px 6px', backgroundColor: '#1F3864', color: '#fff', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold'}}, 'SVU') : null),
+                      React.createElement("p", {style: { color: '#E65100', fontSize: '13px', marginTop: '4px', fontWeight: '600' }}, "\u{1F517} 겹치는 매개변수: ", React.createElement("span", {style: {color: '#BF360C'}}, d.matchedMVs.join(', '))),
+                      d.title && React.createElement("p", {style: { color: '#555', fontSize: '13px', marginTop: '4px', lineHeight: '1.5' }}, d.title)
                     )
                   )),
-                  React.createElement("p", {className: "mt-2 text-xs text-gray-600"}, "일부 매개변수가 겹치지만, 다른 매개변수가 추가되어 있어 차별화가 가능합니다.")
+                  React.createElement("p", {className: "mt-3 p-3 rounded-lg font-semibold", style: { color: '#6D4C00', fontSize: '14px', lineHeight: '1.5', backgroundColor: '#FFECB3', borderLeft: '4px solid #F57C00' }}, "\u2728 일부 매개변수가 겹치지만, 다른 매개변수가 추가되어 있어 차별화가 가능합니다.")
                 )
               )
             )
@@ -22322,7 +22330,7 @@ const PaperCompass = ({ onBack }) => {
                     React.createElement("div", {className: "mb-4 pt-3", style: { borderTop: '2px solid #1565C0' }},
                       React.createElement("div", {className: "flex items-center gap-2 mb-1"},
                         React.createElement("span", {className: "text-xs font-bold", style: { color: '#1565C0' }}, "📝 설문 문항 선택"),
-                        React.createElement("span", {className: "text-xs text-gray-400"}, "(각 요인당 기본 5개가 자동 선택됩니다. 추가/삭제 가능)")
+                        React.createElement("span", {className: "text-xs text-gray-400"}, "(단일차원: 원전 전체 자동 선택 / 하위요인: 기본 5개 추천. 모두 추가·삭제 가능)")
                       ),
                       // ── 산업 매칭 출처 표시 ──
                       (() => {
@@ -22409,7 +22417,9 @@ const PaperCompass = ({ onBack }) => {
                           const isItemExpanded = expandedItemFactor === getItemKey(v, factorData.factor);
                           const selectedCount = selIndices.length;
                           const totalCount = allItems.length;
-                          const aiDefaultCount = Math.min(5, totalCount);
+                          // ★ 단일차원이면 전체 / 하위요인이면 첫 5개를 기본 추천으로 표시
+                          const isUnidim = _isUnidimensional(factorData.factor);
+                          const aiDefaultCount = isUnidim ? totalCount : Math.min(5, totalCount);
 
                           return React.createElement("div", {key: factorData.factor, className: "rounded-lg border", style: { borderColor: '#E3F2FD', backgroundColor: '#FAFBFF' }},
                             // Factor header - clickable
@@ -22431,13 +22441,15 @@ const PaperCompass = ({ onBack }) => {
                             // Expanded items
                             isItemExpanded && React.createElement("div", {className: "px-3 pb-3"},
                               // Quick action buttons
-                              React.createElement("div", {className: "flex gap-2 mb-2"},
+                              React.createElement("div", {className: "flex gap-2 mb-2 items-center"},
                                 React.createElement("button", {onClick: (e) => { e.stopPropagation(); resetItemsToDefault(v, factorData.factor, totalCount); },
-                                  className: "text-xs px-2 py-1 rounded border", style: { borderColor: '#2E75B6', color: '#2E75B6', background: '#fff' }}, "기본 5개로 재설정"),
+                                  className: "text-xs px-2 py-1 rounded border", style: { borderColor: '#2E75B6', color: '#2E75B6', background: '#fff' }},
+                                  isUnidim ? "기본값(전체)으로 재설정" : "기본 5개로 재설정"),
                                 React.createElement("button", {onClick: (e) => { e.stopPropagation(); selectAllItems(v, factorData.factor, totalCount); },
-                                  className: "text-xs px-2 py-1 rounded border", style: { borderColor: '#aaa', color: '#555', background: '#fff' }}, "전체 선택")
+                                  className: "text-xs px-2 py-1 rounded border", style: { borderColor: '#aaa', color: '#555', background: '#fff' }}, "전체 선택"),
+                                isUnidim && React.createElement("span", {className: "text-xs", style: { color: '#1B5E20', fontWeight: 'bold' }}, "🎓 단일차원: 원전 전체 문항 사용 (지도교수 권장)")
                               ),
-                              // AI recommended items (first 5)
+                              // 추천 문항 (단일차원=전체 / 하위요인=첫 5개)
                               React.createElement("div", {className: "space-y-1"},
                                 ...allItems.map((item, itemIdx) => {
                                   const isSelected = selIndices.includes(itemIdx);
