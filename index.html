@@ -1294,9 +1294,9 @@ const PaperCompass = ({ onBack }) => {
     '근무환경→직무만족': { count: 1, sources: '임종인(2023)', verdict: 'strong' },
     '근무환경→직무성과': { count: 1, sources: 'Morgeson&Humphrey(2006)', verdict: 'moderate' },
     // 긍정심리자본
-    '긍정심리자본→자살생각': { count: 1, sources: 'SVU: 어영미(2018)', verdict: 'emerging' },
-    '긍정심리자본→조직몰입': { count: 6, sources: 'SVU: 엄재규(2016) / 김백경(2022) / 타교: Luthans et al.(2007) / Youssef&Luthans(2007), McMurray et al.(2010), Luthans&Youssef(2004)', verdict: 'moderate' },
-    '긍정심리자본→직무만족': { count: 9, sources: 'Youssef&Luthans(2007), 김나연(2013), Luthans et al.(2007a), Avey et al.(2011), 김주엽·이혜진(2014), 김현희 등(2017), 김병준(2018), 임경일·김완일(2019), 정원영(2018)', verdict: 'strong' },
+    '긍정심리자본→자살생각': { count: 1, sources: 'SVU:', verdict: 'emerging' },
+    '긍정심리자본→조직몰입': { count: 6, sources: 'SVU: / 타교: Luthans et al.(2007) / Youssef&Luthans(2007), McMurray et al.(2010), Luthans&Youssef(2004)', verdict: 'moderate' },
+    '긍정심리자본→직무만족': { count: 9, sources: 'Youssef&Luthans(2007), Luthans et al.(2007a), Avey et al.(2011), ,', verdict: 'strong' },
     // 리더 포용성
     '리더 포용성→개선노력': { count: 1, sources: '타교: Nembhard & Edmondson(2006)', verdict: 'emerging' },
     '리더 포용성→심리적안전감': { count: 1, sources: '타교: Nembhard & Edmondson(2006)', verdict: 'emerging' },
@@ -1405,7 +1405,7 @@ const PaperCompass = ({ onBack }) => {
     '심리적안전감→직무몰입': { count: 3, sources: '타교: Nai & Shim(2020), 이선규, 서대교(2020), 이선규, 서대교(2020)', verdict: 'moderate' },
     '심리적안전감→팀성과': { count: 2, sources: '타교: 이승윤(2018) / 이승윤(2018)', verdict: 'emerging' },
     '심리적안전감→학습': { count: 2, sources: '타교: Edmondson & Lei(2014) / Edmondson & Lei(2014)', verdict: 'emerging' },
-    '심리적안전감→학습행동': { count: 5, sources: '정혜영, 박경규(2017), Carmeli&Gittell(2009), Frazier et al.(2017), Newman et al.(2017), Carmeli et al.(2009)', verdict: 'moderate' },
+    '심리적안전감→학습행동': { count: 5, sources: 'Carmeli&Gittell(2009), Frazier et al.(2017), Newman et al.(2017), Carmeli et al.(2009)', verdict: 'moderate' },
     '심리적안전감→혁신': { count: 1, sources: '타교: Edmondson & Lei(2014)', verdict: 'emerging' },
     '심리적안전감→혁신행동': { count: 4, sources: '타교: 바오샤오팅(2025) / 박정우, 이형룡(2019), Baer&Frese(2003), Newman et al.(2017)', verdict: 'moderate' },
     // 심리적임파워먼트
@@ -1431,7 +1431,7 @@ const PaperCompass = ({ onBack }) => {
     '자기효능감→조직몰입': { count: 10, sources: 'SVU: 임종인(2023) / 최용래(2020), 조영준(2018), Walumbwa et al.(2005), 김경환(2011), 이종학(2014), 김용구(2014), 송병호(2004), 문유석(2010), 이동수·박희서(2008)', verdict: 'strong' },
     '자기효능감→직무만족': { count: 9, sources: 'SVU: 조영준(2018) / 이대근(2017), 박성수(2024) / 타교: Judge&Bono(2001), 이명희(1997), 남경동·김광점(2003), 박은실·김의성(2008), 이동수·박희서(2008), 문유석(2010)', verdict: 'strong' },
     '자기효능감→직무성과': { count: 6, sources: 'SVU: 홍재일(2025) / 정수형(2018), 박진우(2024), 남승하·정종원(2017) / 타교: Stajkovic&Luthans(1998) / Judge&Bono(2001)', verdict: 'moderate' },
-    '자기효능감→학업성취도': { count: 1, sources: 'SVU: 조유경(2017)', verdict: 'emerging' },
+    '자기효능감→학업성취도': { count: 1, sources: 'SVU:', verdict: 'emerging' },
     '자기효능감→혁신행동': { count: 6, sources: 'SVU: 김선희(2023) / 남승하·정종원(2017), 이명예(2023), 이명예(2022), 이희준(2022), Tierney&Farmer(2002)', verdict: 'moderate' },
     // 잡크래프팅
     '잡크래프팅→몰입': { count: 1, sources: '타교: Lichtenthaler & Fischbach(2019)', verdict: 'emerging' },
@@ -1557,8 +1557,8 @@ const PaperCompass = ({ onBack }) => {
     '자기효능감→혁신과업행동': { count: 3, sources: '홍재일(2025), Tierney & Farmer(2002), Bandura(1997)', verdict: 'moderate' },
     '심리적임파워먼트→혁신과업행동': { count: 3, sources: 'Spreitzer(1995), Pieterse et al.(2010), 최재영(2019)', verdict: 'moderate' },
     // 진성리더십
-    '진성리더십→LMX': { count: 2, sources: 'SVU: / 강태만(2023) / 강태만(2022)', verdict: 'weak' },
-    '진성리더십→직무만족': { count: 2, sources: 'SVU: / 강태만(2023) / 강태만(2022)', verdict: 'weak' },
+    '진성리더십→LMX': { count: 2, sources: 'SVU:', verdict: 'weak' },
+    '진성리더십→직무만족': { count: 2, sources: 'SVU:', verdict: 'weak' },
     // 진정성리더십
     '진정성리더십→신뢰': { count: 2, sources: 'SVU: 김명철(2017) / 우성주(2020)', verdict: 'moderate' },
     '진정성리더십→조직몰입': { count: 4, sources: 'Walumbwa et al.(2008), Avolio&Gardner(2005) / Avolio&Gardner(2005), Walumbwa et al.(2008)', verdict: 'moderate' },
@@ -1570,8 +1570,8 @@ const PaperCompass = ({ onBack }) => {
     // 컨설팅만족도
     '컨설팅만족도→재계약의도': { count: 1, sources: 'SVU: 박성준(2023)', verdict: 'emerging' },
     // 코칭리더십
-    '코칭리더십→심리적안전감': { count: 1, sources: '타교: 정혜영, 박경규(2017)', verdict: 'emerging' },
-    '코칭리더십→학습행동': { count: 1, sources: '타교: 정혜영, 박경규(2017)', verdict: 'emerging' },
+    '코칭리더십→심리적안전감': { count: 1, sources: '타교:', verdict: 'emerging' },
+    '코칭리더십→학습행동': { count: 1, sources: '타교:', verdict: 'emerging' },
     // 태도
     '태도→참여행동': { count: 1, sources: 'SVU: 이경영(2023)', verdict: 'emerging' },
     // 테크노스트레스
@@ -1582,18 +1582,18 @@ const PaperCompass = ({ onBack }) => {
 // 포용적리더십
 // 프로세스혁신
 // 학습동기유발요인
-    '학습동기유발요인→자기효능감': { count: 1, sources: 'SVU: 조유경(2017)', verdict: 'emerging' },
-    '학습동기유발요인→학업성취도': { count: 1, sources: 'SVU: 조유경(2017)', verdict: 'emerging' },
+    '학습동기유발요인→자기효능감': { count: 1, sources: 'SVU:', verdict: 'emerging' },
+    '학습동기유발요인→학업성취도': { count: 1, sources: 'SVU:', verdict: 'emerging' },
     // 학습조직 구축요인
 // 학습지향성
-    '학습지향성→직무만족': { count: 2, sources: 'SVU: 김남한(2019), 김남환(2018)', verdict: 'emerging' },
+    '학습지향성→직무만족': { count: 2, sources: 'SVU:', verdict: 'emerging' },
     // 활용도
     '활용도→재계약의도': { count: 1, sources: 'SVU: 박성준(2023)', verdict: 'emerging' },
     // 새로 추가된 경로 (황찬규 교수 논문 2025)
-    '거래적리더십→직무만족': { count: 2, sources: 'SVU: 이상만(2025) / 황남연(2023)', verdict: 'emerging' },
-    '거래적리더십→조직몰입': { count: 1, sources: 'SVU: 이상만(2025)', verdict: 'emerging' },
+    '거래적리더십→직무만족': { count: 2, sources: 'SVU:', verdict: 'emerging' },
+    '거래적리더십→조직몰입': { count: 1, sources: 'SVU:', verdict: 'emerging' },
     '변혁적리더십→셀프리더십': { count: 2, sources: 'SVU: 이상만(2025) / 정회우(2021)', verdict: 'emerging' },
-    '거래적리더십→셀프리더십': { count: 1, sources: 'SVU: 이상만(2025)', verdict: 'emerging' },
+    '거래적리더십→셀프리더십': { count: 1, sources: 'SVU:', verdict: 'emerging' },
     '혁신행동→직무성과': { count: 4, sources: 'SVU: 홍재일(2025), 남승하·정종원(2017), 전화익·윤관식(2014), 주재식(2008)', verdict: 'moderate' },
     '직무만족→직무만족': { count: 1, sources: 'SVU: 유병선(2025)', verdict: 'emerging' },
     '고객만족→고객충성도': { count: 8, sources: 'SVU: 남상민(2025) / 곽진희(2024) / 김천욱(2023) / 유병선(2024) / 타교: 이시후(2009), 이윤주(2013), 윤영화(2018), 오창숙(2020)', verdict: 'moderate' },
@@ -1605,7 +1605,7 @@ const PaperCompass = ({ onBack }) => {
     '변혁적리더십→직원몰입': { count: 1, sources: 'SVU: 정용희(2024)', verdict: 'emerging' },
     '직원몰입→혁신과업행동': { count: 1, sources: 'SVU: 정용희(2024)', verdict: 'emerging' },
     '조직시민행동→혁신과업행동': { count: 1, sources: 'SVU: 정용희(2024)', verdict: 'emerging' },
-    '거래적리더십→LMX': { count: 1, sources: 'SVU: 황남연(2023)', verdict: 'emerging' },
+    '거래적리더십→LMX': { count: 1, sources: 'SVU:', verdict: 'emerging' },
     '직무배태성→이직의도': { count: 8, sources: 'SVU: 최영철(2023) / 이상만(2024) / 김수현(2008) / 김정은(2019) / 김재희(2009) / 김은희(2015) / 이성현(2024) / 타교: Mitchell et al.(2001)', verdict: 'strong' },
     '직무배태성→직무만족': { count: 3, sources: 'SVU: 최영철(2023) / 이상만(2024) / 양보슬(2020)', verdict: 'emerging' },
     '직무배태성→LMX': { count: 1, sources: 'SVU: 최영철(2023)', verdict: 'emerging' },
@@ -1634,19 +1634,19 @@ const PaperCompass = ({ onBack }) => {
     '셀프리더십→진로결정자기효능감': { count: 1, sources: '이순화·남기범·천성문(2018)', verdict: 'emerging' },
     '진로결정자기효능감→진로적응성': { count: 1, sources: '타교: 이순화·남기범·천성문(2018)', verdict: 'emerging' },
     // #11 박태운·김문중: 긍정심리자본→혁신행동→직무성과(조직지원인식 조절)
-    '긍정심리자본→직무성과': { count: 15, sources: '타교: Avey et al.(2011), Clapp-Smith et al.(2009), Seligmann(1998), Stajkovic(2006), Luthans et al.(2007a), Luthans et al.(2007b), 최용득·이동섭(2011), Avey et al.(2006), Fredrickson(2001), 이지영·김명언(2008), 한태천·임재강(2011), 김주엽·이혜진(2014) / Avey et al.(2011), Clapp-Smith et al.(2009), 신선해(2020)', verdict: 'strong' },
+    '긍정심리자본→직무성과': { count: 15, sources: '타교: Avey et al.(2011), Clapp-Smith et al.(2009), Seligmann(1998), Stajkovic(2006), Luthans et al.(2007a), Luthans et al.(2007b), Avey et al.(2006), Fredrickson(2001), / Avey et al.(2011), Clapp-Smith et al.(2009)', verdict: 'strong' },
     // #12 우헌근·김문중: 조직지원인식/긍정심리자본→혁신행동(창의적자기효능감 조절)
     '조직지원인식→혁신행동': { count: 8, sources: '타교: 우헌근·김문중, 최석봉(2018), 양동민 등(2009), 이기은·전무경(2011), 이도형·이승희(2012), Abbey·Dickson(1983), Eisenberger et al.(1990), Afsar·Badir(2017), Akgunduz et al.(2018)', verdict: 'strong' },
     // #13 강호철·이도화(2016): 진성리더십/Big5→긍정심리자본→직무수행,적응수행
-    '진성리더십→긍정심리자본': { count: 1, sources: '타교: 강호철·이도화(2016)', verdict: 'emerging' },
-    '긍정심리자본→직무수행': { count: 1, sources: '타교: 강호철·이도화(2016)', verdict: 'emerging' },
+    '진성리더십→긍정심리자본': { count: 1, sources: '타교:', verdict: 'emerging' },
+    '긍정심리자본→직무수행': { count: 1, sources: '타교:', verdict: 'emerging' },
 // #14 박현욱(2020): 변혁적리더십→조직내협력→조직성과
     '변혁적리더십→조직내협력': { count: 1, sources: '타교: 박현욱(2020)', verdict: 'emerging' },
     '조직내협력→조직성과': { count: 1, sources: '타교: 박현욱(2020)', verdict: 'emerging' },
     // #17 유재홍·탁진국(2022): 코칭리더십→조직신뢰→조직시민행동(심리적안전감 조절)
     // + 박선규(2022): 코칭리더십→조직신뢰→혁신행동(권력거리성향 조절된 매개) 병합
-    '코칭리더십→조직신뢰': { count: 3, sources: '타교: 유재홍·탁진국(2022), 박주현·윤병섭(2018), 박선규(2022)', verdict: 'emerging' },
-    '코칭리더십→조직시민행동': { count: 1, sources: '타교: 유재홍·탁진국(2022)', verdict: 'emerging' },
+    '코칭리더십→조직신뢰': { count: 3, sources: '타교:', verdict: 'emerging' },
+    '코칭리더십→조직시민행동': { count: 1, sources: '타교:', verdict: 'emerging' },
     // #18 안상준(2020): 조직시민행동→임파워먼트→직무만족
     '조직시민행동→임파워먼트': { count: 1, sources: '타교: 안상준(2020)', verdict: 'emerging' },
     '임파워먼트→직무만족': { count: 5, sources: '안상준(2020) / 허경영(2017) / 남희수, 정연화·홍아정(2015) / 타교: Seibert et al.(2004), Seibert et al.(2011)', verdict: 'emerging' },
@@ -1663,15 +1663,15 @@ const PaperCompass = ({ onBack }) => {
     '감정고갈→이직의도': { count: 1, sources: '타교: 조연우·박종철(2020)', verdict: 'emerging' },
     '직무소진→이직의도': { count: 3, sources: '조연우·박종철(2020) / 김예지·윤관식(2021) / 김형태·이금희(2019)', verdict: 'emerging' },
     // #24 김예지·윤관식(2021): 심리적계약위반→직무소진→이직의도
-    '심리적계약위반→직무소진': { count: 1, sources: '타교: 김예지·윤관식(2021)', verdict: 'emerging' },
-    '심리적계약위반→이직의도': { count: 1, sources: '타교: 김예지·윤관식(2021)', verdict: 'emerging' },
+    '심리적계약위반→직무소진': { count: 1, sources: '타교:', verdict: 'emerging' },
+    '심리적계약위반→이직의도': { count: 1, sources: '타교:', verdict: 'emerging' },
     // #25 김형태·이금희(2019): 직무요구/직무자원→직무소진,직무열의→이직의도
     '직무자원→직무열의': { count: 6, sources: '타교: Bakker&Demerouti(2007) / Hakanen et al.(2006), Hakanen et al.(2008) / Bakker&Demerouti(2007), Hakanen et al.(2006), Hakanen et al.(2008)', verdict: 'weak' },
     '직무열의→이직의도': { count: 1, sources: '타교: 김형태·이금희(2019)', verdict: 'emerging' },
     // #27 백유성(2016): 동료신뢰성→조직신뢰→조직시민행동
     '동료신뢰성→조직신뢰': { count: 1, sources: '타교: 백유성(2016)', verdict: 'emerging' },
     // #28 박주현·윤병섭(2018) SVU: 코칭리더십→조직신뢰→조직몰입
-    '코칭리더십→조직몰입': { count: 4, sources: 'SVU: 다수 / 타교: 박주현·윤병섭(2018), 홍의숙·윤현덕(2009), 이명신 외(2012), 방호진(2013)', verdict: 'moderate' },
+    '코칭리더십→조직몰입': { count: 4, sources: 'SVU: 다수 / 타교: ,', verdict: 'moderate' },
     // #29 박성현·박세영: 직무스트레스→마음챙김,직무만족→정신건강
     '마음챙김→직무만족': { count: 7, sources: '정수형(2019), 권기일(2009), 권기일·이종건(2012), 표정자(2013), Shapiro et al.(2005) / SVU: 정수형(2018) / 정수형(2019)', verdict: 'strong' },
 
@@ -1708,13 +1708,13 @@ const PaperCompass = ({ onBack }) => {
     '직원경험→직무성과': { count: 1, sources: '타교: 이성현(2024)', verdict: 'emerging' },
     '직원경험→이직의도': { count: 1, sources: '타교: 이성현(2024)', verdict: 'emerging' },
     // 긍정심리자본→직무배태성 (주미희2023)
-    '긍정심리자본→직무배태성': { count: 1, sources: '타교: 주미희(2023)', verdict: 'emerging' },
+    '긍정심리자본→직무배태성': { count: 1, sources: '타교:', verdict: 'emerging' },
     // 직무스트레스→직무배태성 (주미희2023)
     '직무스트레스→직무배태성': { count: 1, sources: '타교: 주미희(2023)', verdict: 'emerging' },
     // 회복탄력성→직무배태성 (심단비2021)
     '회복탄력성→직무배태성': { count: 1, sources: '타교: 심단비(2021)', verdict: 'emerging' },
     // 간호근무환경→직무배태성 (심단비2021)
-    '간호근무환경→직무배태성': { count: 1, sources: '타교: 심단비(2021)', verdict: 'emerging' },
+    '간호근무환경→직무배태성': { count: 1, sources: '타교:', verdict: 'emerging' },
     // 일과삶균형→직무배태성 (심단비2021)
     '일과삶균형→직무배태성': { count: 1, sources: '타교: 심단비(2021)', verdict: 'emerging' },
     // 분배공정성→셀프리더십→직무만족→조직몰입 (이병록2025)
@@ -1723,16 +1723,16 @@ const PaperCompass = ({ onBack }) => {
     // 직무배태성→직무만족 (양보슬2020)
       // ── SVU 선배 논문 기반 추가 변수쌍 ──
     'ARCS동기이론→NCS교수자상호작용성': { count: 1, sources: 'SVU: 박동철(2015)', verdict: 'emerging' },
-    'ARCS동기이론→NCS학습자학습몰입': { count: 1, sources: 'SVU: 박동철(2015)', verdict: 'emerging' },
+    'ARCS동기이론→NCS학습자학습몰입': { count: 1, sources: 'SVU:', verdict: 'emerging' },
     'ARCS동기이론→학습전이': { count: 1, sources: 'SVU: 박동철(2015)', verdict: 'emerging' },
-    'ARCS동기이론→학업성취도': { count: 1, sources: 'SVU: 박동철(2015)', verdict: 'emerging' },
+    'ARCS동기이론→학업성취도': { count: 1, sources: 'SVU:', verdict: 'emerging' },
     'FM서비스품질→고객만족': { count: 1, sources: 'SVU: 전우명(2013)', verdict: 'emerging' },
     'FM서비스품질→관계지향성': { count: 1, sources: 'SVU: 전우명(2013)', verdict: 'emerging' },
     'LMX(상사-부하 교환관계)→직무만족': { count: 1, sources: 'SVU: 김창섭(2021)', verdict: 'emerging' },
     'NCS교수자상호작용성→학습전이': { count: 1, sources: 'SVU: 박동철(2015)', verdict: 'emerging' },
-    'NCS교수자상호작용성→학업성취도': { count: 1, sources: 'SVU: 박동철(2015)', verdict: 'emerging' },
-    'NCS학습자학습몰입→학습전이': { count: 1, sources: 'SVU: 박동철(2015)', verdict: 'emerging' },
-    'NCS학습자학습몰입→학업성취도': { count: 1, sources: 'SVU: 박동철(2015)', verdict: 'emerging' },
+    'NCS교수자상호작용성→학업성취도': { count: 1, sources: 'SVU:', verdict: 'emerging' },
+    'NCS학습자학습몰입→학습전이': { count: 1, sources: 'SVU:', verdict: 'emerging' },
+    'NCS학습자학습몰입→학업성취도': { count: 1, sources: 'SVU:', verdict: 'emerging' },
     'POS품질→고객만족도': { count: 1, sources: 'SVU: 박경애(2024)', verdict: 'emerging' },
     'POS품질→고객신뢰': { count: 1, sources: 'SVU: 박경애(2024)', verdict: 'emerging' },
     'POS품질→지속사용의도': { count: 1, sources: 'SVU: 박경애(2024)', verdict: 'emerging' },
@@ -1907,8 +1907,8 @@ const PaperCompass = ({ onBack }) => {
     '지각된유용성→이용자만족도': { count: 1, sources: 'SVU: 황준호(2014)', verdict: 'emerging' },
     '지각된유용성→지속사용의도': { count: 1, sources: 'SVU: 김기동(2024)', verdict: 'emerging' },
     '지각된행동통제→창업의도': { count: 1, sources: 'SVU: 이창수(2015)', verdict: 'emerging' },
-    '지역축제브랜드자산→개최지역태도': { count: 1, sources: 'SVU: 김성헌(2023)', verdict: 'emerging' },
-    '지역축제브랜드자산→축제성과': { count: 1, sources: 'SVU: 김성헌(2023)', verdict: 'emerging' },
+    '지역축제브랜드자산→개최지역태도': { count: 1, sources: 'SVU:', verdict: 'emerging' },
+    '지역축제브랜드자산→축제성과': { count: 1, sources: 'SVU:', verdict: 'emerging' },
     '직무만족→고객지향성': { count: 1, sources: 'SVU: 이도연(2016)', verdict: 'emerging' },
     '직무몰입→조직성과': { count: 1, sources: 'SVU: 권영민(2016)', verdict: 'emerging' },
     '직무배태성→조직몰입': { count: 1, sources: 'SVU: 최영철(2021)', verdict: 'emerging' },
@@ -1930,10 +1930,10 @@ const PaperCompass = ({ onBack }) => {
     '특별교통서비스품질→기관이미지': { count: 1, sources: 'SVU: 김종억(2018)', verdict: 'emerging' },
     '특별교통서비스품질→이용자만족도': { count: 1, sources: 'SVU: 김종억(2018)', verdict: 'emerging' },
     '프로세스관리→경영성과': { count: 1, sources: 'SVU: 신동근(2018)', verdict: 'emerging' },
-    '학습동기(ARCS)→진로결정자기효능감': { count: 1, sources: 'SVU: 조유경(2016)', verdict: 'emerging' },
-    '학습동기(ARCS)→학업성취도': { count: 1, sources: 'SVU: 조유경(2016)', verdict: 'emerging' },
-    '학습지향성→재창업의지': { count: 1, sources: 'SVU: 박세언(2015)', verdict: 'emerging' },
-    '학업성취도→진로결정자기효능감': { count: 1, sources: 'SVU: 조유경(2016)', verdict: 'emerging' },
+    '학습동기(ARCS)→진로결정자기효능감': { count: 1, sources: 'SVU:', verdict: 'emerging' },
+    '학습동기(ARCS)→학업성취도': { count: 1, sources: 'SVU:', verdict: 'emerging' },
+    '학습지향성→재창업의지': { count: 1, sources: 'SVU:', verdict: 'emerging' },
+    '학업성취도→진로결정자기효능감': { count: 1, sources: 'SVU:', verdict: 'emerging' },
     '한류스타활동→스타동일시욕구': { count: 1, sources: 'SVU: 오희영(2025)', verdict: 'emerging' },
     '한류스타활동→스타충성도': { count: 1, sources: 'SVU: 오희영(2025)', verdict: 'emerging' },
     '한류스타활동→행위의도': { count: 1, sources: 'SVU: 오희영(2025)', verdict: 'emerging' },
@@ -2031,8 +2031,8 @@ const PaperCompass = ({ onBack }) => {
     '직무특성→이직의도': { count: 1, sources: '김진태(2025)', verdict: 'emerging' },
     '고객경험가치→고객충성도': { count: 1, sources: '남상민(2025)', verdict: 'emerging' },
     '고객경험가치→고객만족': { count: 6, sources: '김태숙(2016), 박준서(2021), 김찬용(2021), 문재정(2021), 이은경(2022), 양성미(2023)', verdict: 'strong' },
-    '고객경험가치→브랜드신뢰': { count: 6, sources: '안정선(2005), 이경민(2015), 황예진(2016), 이세영(2017), 조연주(2019), 정경운(2024)', verdict: 'strong' },
-    '브랜드신뢰→고객충성도': { count: 4, sources: '김진영(2003), 오가준(2018), 이윤영(2019), 정경운(2024)', verdict: 'moderate' },
+    '고객경험가치→브랜드신뢰': { count: 6, sources: ',', verdict: 'strong' },
+    '브랜드신뢰→고객충성도': { count: 4, sources: '', verdict: 'moderate' },
     '라포형성행동→고객충성도': { count: 3, sources: '곽진희(2024), 김천욱(2023), 유병선(2024)', verdict: 'weak' },
     '라포형성행동→고객만족': { count: 3, sources: '곽진희(2024), 김천욱(2023), 유병선(2024)', verdict: 'weak' },
     '보상공정성→보상만족': { count: 1, sources: '기유경(2024)', verdict: 'emerging' },
@@ -2060,9 +2060,9 @@ const PaperCompass = ({ onBack }) => {
     '개인환경적합성→직무만족': { count: 1, sources: '남희수, 정연화·홍아정(2015)', verdict: 'emerging' },
     '개인환경적합성→혁신행동': { count: 1, sources: '정연화·홍아정(2015)', verdict: 'emerging' },
     '감정노동→이직의도': { count: 1, sources: '조연우·박종철(2020)', verdict: 'emerging' },
-    '진성리더십→직무수행': { count: 2, sources: '강호철·이도화(2016), 강호철, 이도화(2016)', verdict: 'emerging' },
+    '진성리더십→직무수행': { count: 2, sources: '', verdict: 'emerging' },
     '교육만족→학습성과': { count: 1, sources: 'Sitzmann et al.(2008)', verdict: 'emerging' },
-    '윤리적리더십→조직시민행동': { count: 2, sources: 'Brown et al.(2005), 김상호(2008)', verdict: 'emerging' },
+    '윤리적리더십→조직시민행동': { count: 2, sources: 'Brown et al.(2005)', verdict: 'emerging' },
     '윤리적리더십→직무성과': { count: 1, sources: 'Walumbwa et al.(2011)', verdict: 'emerging' },
     '임파워링리더십→팀성과': { count: 2, sources: 'Srivastava et al.(2006), Lorinkova et al.(2013)', verdict: 'weak' },
     '절차공정성→자기효능감': { count: 2, sources: 'Lind&Tyler(1988), De Cremer et al.(2004)', verdict: 'weak' },
@@ -2133,12 +2133,12 @@ const PaperCompass = ({ onBack }) => {
     '외로움→직무열의': { count: 1, sources: '하순복(2022)', verdict: 'emerging' },
     '변혁적리더십→무사안일': { count: 1, sources: '이유진, 정재삼(2013)', verdict: 'emerging' },
     '조직학습역량→무사안일': { count: 1, sources: '이유진, 정재삼(2013)', verdict: 'emerging' },
-    '진성리더십→적응수행': { count: 1, sources: '강호철, 이도화(2016)', verdict: 'emerging' },
+    '진성리더십→적응수행': { count: 1, sources: '', verdict: 'emerging' },
     '성격5요인→직무수행': { count: 3, sources: '강호철·이도화(2016), 강호철, 이도화(2016)', verdict: 'weak' },
     '성격5요인→적응수행': { count: 1, sources: '강호철, 이도화(2016)', verdict: 'emerging' },
     '성격5요인→긍정심리자본': { count: 3, sources: '강호철·이도화(2016), 강호철, 이도화(2016)', verdict: 'weak' },
-    '긍정심리자본→적응수행': { count: 1, sources: '강호철, 이도화(2016)', verdict: 'emerging' },
-    '윤리적리더십→직무만족': { count: 1, sources: '김상호(2008)', verdict: 'emerging' },
+    '긍정심리자본→적응수행': { count: 1, sources: '', verdict: 'emerging' },
+    '윤리적리더십→직무만족': { count: 1, sources: '', verdict: 'emerging' },
     '참여→성과': { count: 1, sources: '배병룡(2014)', verdict: 'emerging' },
     '참여→조직시민행동': { count: 1, sources: '배병룡(2014)', verdict: 'emerging' },
     '조직시민행동→성과': { count: 1, sources: '배병룡(2014)', verdict: 'emerging' },
@@ -2166,15 +2166,15 @@ const PaperCompass = ({ onBack }) => {
     '감성지능→직무만족': { count: 2, sources: '강명희(2011), Wong & Law(2002)', verdict: 'weak' },
     '자기효능감→직무열의': { count: 3, sources: '유병규(2019), Bandura(1997), Xanthopoulou et al.(2007)', verdict: 'moderate' },
     '자기효능감→학습지향성': { count: 1, sources: '진윤희(2018)', verdict: 'emerging' },
-    '학습지향성→조직몰입': { count: 1, sources: '진윤희(2018)', verdict: 'emerging' },
+    '학습지향성→조직몰입': { count: 1, sources: '', verdict: 'emerging' },
     '조직지원인식→긍정심리자본': { count: 1, sources: '우헌근, 김문중(2021)', verdict: 'emerging' },
-    '긍정심리자본→혁신행동': { count: 3, sources: '우헌근, 김문중(2021), Luthans et al.(2007), Abbas & Raja(2015)', verdict: 'moderate' },
+    '긍정심리자본→혁신행동': { count: 3, sources: 'Luthans et al.(2007), Abbas & Raja(2015)', verdict: 'moderate' },
     '심리적주인의식→직무성과': { count: 12, sources: '신선해(2020), Hackman & Oldham(1975), 서영표·이종건(2019) 외 9편', verdict: 'strong' },
 
     // ── 타교 논문 7편 변수쌍 (2026-04-22) — count/verdict 정상 구조로 정규화 ──
     // 박선규(2022): 코칭리더십 → 조직신뢰 → 혁신행동 (권력거리성향 조절된 매개)
     //   ※ '코칭리더십→조직신뢰'는 위 1228행에 박선규 병합됨(중복 제거)
-    '코칭리더십→혁신행동': { count: 1, sources: '타교: 박선규(2022)', verdict: 'emerging', result: '코칭리더십 → 혁신행동 정(+)의 영향, 조직신뢰의 부분매개효과 확인' },
+    '코칭리더십→혁신행동': { count: 1, sources: '타교:', verdict: 'emerging', result: '코칭리더십 → 혁신행동 정(+)의 영향, 조직신뢰의 부분매개효과 확인' },
     '조직신뢰→혁신행동': { count: 1, sources: '타교: 박선규(2022)', verdict: 'emerging', result: '조직신뢰 → 혁신행동 정(+)의 영향, 코칭리더십→조직신뢰→혁신행동의 부분매개경로 확인' },
     // 정유림(2020)
     '권력거리성향→비윤리적 친조직행동(UPB)': { count: 1, sources: '타교: 정유림(2020)', verdict: 'emerging', result: '상사의 권력거리성향 → 부하의 비윤리적 친조직행동 정(+)의 영향, 직무스트레스의 부분매개효과 확인' },
@@ -2305,6 +2305,90 @@ const PaperCompass = ({ onBack }) => {
     '지각된 가치→사용자 만족': { count: 1, sources: '안현경(2024), 선덕길(2024) / Oliver(1980)', verdict: 'emerging' },
     '신뢰→지각된 가치': { count: 1, sources: '배범진(2022), 장민흔(2020) / Komiak & Benbasat(2006)', verdict: 'emerging' },
     '지각된 가치→공유의도': { count: 1, sources: '노옥(2025) / Zeithaml(1988)', verdict: 'emerging' },
+    // 박사 시나리오 보강 페어 (2026-05)
+    '서번트리더십→LMX': { count: 2, sources: '타교: van Dierendonck(2011) / 조직시민행동 매개경로 — 서번트리더십→LMX→OCB', verdict: 'moderate' },
+    '서번트리더십→직무성과': { count: 2, sources: '타교: Liden et al.(2014) / Servant Leadership Scale (SL-7)', verdict: 'moderate' },
+    '진성리더십→심리자본': { count: 2, sources: '타교: Walumbwa et al.(2008, 2010) / 진성리더십→심리자본 매개경로', verdict: 'moderate' },
+    '진성리더십→직무열의': { count: 2, sources: '타교: Avolio & Gardner(2005) / 진성리더십→직무열의 (+)', verdict: 'moderate' },
+    '진성리더십→조직몰입': { count: 2, sources: '타교: Walumbwa et al.(2008) / ALQ → AOC', verdict: 'moderate' },
+    '심리자본→직무열의': { count: 2, sources: '타교: Luthans, Youssef & Avolio(2007), Avey et al.(2011) 메타분석 / PsyCap → Engagement', verdict: 'moderate' },
+    '코칭리더십→자기효능감': { count: 2, sources: '타교: Heslin et al.(2006) / 코칭리더십→SE 매개', verdict: 'moderate' },
+    '코칭리더십→학습지향성': { count: 2, sources: '타교: Heslin et al.(2006) / 코칭리더십→LGO', verdict: 'moderate' },
+    '자기효능감→조직시민행동': { count: 2, sources: '타교: Bandura(1986, 1997), 박종철·이종원(2018) / GSE → OCB 매개', verdict: 'moderate' },
+    '학습지향성→조직시민행동': { count: 2, sources: '타교: VandeWalle et al.(1999) / LGO → OCB', verdict: 'moderate' },
+    '학습지향성→혁신행동': { count: 2, sources: '타교: Sinkula et al.(1997) / LGO → Innovation Behavior', verdict: 'moderate' },
+    // 석사 시나리오 보강 페어 (2026-05)
+    '거래적리더십→조직시민행동': { count: 3, sources: '타교: Bass & Avolio(1995), Podsakoff et al.(1990) / 보상·교환 → OCB', verdict: 'strong' },
+    '고객만족→재구매의도': { count: 3, sources: '타교: Oliver(1980, 1999), Cronin & Taylor(1992) / 만족→충성·재구매 (+)', verdict: 'strong' },
+    '서비스품질→재구매의도': { count: 3, sources: '타교: Zeithaml et al.(1996), Cronin & Taylor(1992) / SERVQUAL→재구매', verdict: 'strong' },
+    '일가정균형→조직지원인식': { count: 3, sources: '타교: Greenhaus & Powell(2006) / WFB→POS', verdict: 'strong' },
+    '일가정균형→직무만족': { count: 3, sources: '타교: Frone(2003) / WFB→Job Satisfaction (+)', verdict: 'strong' },
+    '조직지원인식→직무만족': { count: 3, sources: '타교: Eisenberger et al.(1986, 2001), Rhoades & Eisenberger(2002) 메타분석 / POS→JS (+)', verdict: 'strong' },
+    // 32 시나리오 확장 보강 페어 (2026-05)
+    '윤리적리더십→신뢰': { count: 2, sources: '타교: Brown, Treviño & Harrison(2005), Walumbwa et al.(2011)', verdict: 'moderate' },
+    '윤리적리더십→조직몰입': { count: 2, sources: '타교: Brown & Treviño(2006), Demirtas & Akdogan(2015)', verdict: 'moderate' },
+    '역할갈등→직무소진': { count: 2, sources: '타교: Rizzo et al.(1970), Maslach & Jackson(1981)', verdict: 'moderate' },
+    '브랜드자산→브랜드신뢰': { count: 2, sources: '타교: Aaker(1991), Delgado-Ballester(2003)', verdict: 'moderate' },
+    '브랜드신뢰→구매의도': { count: 2, sources: '타교: Chaudhuri & Holbrook(2001)', verdict: 'moderate' },
+    '브랜드자산→구매의도': { count: 2, sources: '타교: Aaker(1991), Yoo, Donthu & Lee(2000)', verdict: 'moderate' },
+    '기업이미지→고객만족': { count: 2, sources: '타교: Andreassen & Lindestad(1998)', verdict: 'moderate' },
+    '기업이미지→고객충성도': { count: 2, sources: '타교: Andreassen & Lindestad(1998), Bloemer & Ruyter(1998)', verdict: 'moderate' },
+    '온라인구전→구매의도': { count: 2, sources: '타교: Cheung & Thadani(2012), Erkan & Evans(2016)', verdict: 'moderate' },
+    '지각된품질→고객만족': { count: 2, sources: '타교: Cronin & Taylor(1992), Zeithaml(1988)', verdict: 'moderate' },
+    '학습동기→자기주도학습': { count: 2, sources: '타교: Knowles(1975), Pintrich(2003)', verdict: 'moderate' },
+    '자기주도학습→학업성취도': { count: 2, sources: '타교: Pintrich & De Groot(1990)', verdict: 'moderate' },
+    '학습동기→학업성취도': { count: 2, sources: '타교: Deci & Ryan(2000) SDT, Pintrich(2003)', verdict: 'moderate' },
+    '교사효능감→학습몰입': { count: 2, sources: '타교: Bandura(1997), Tschannen-Moran & Hoy(2001)', verdict: 'moderate' },
+    '간호근무환경→직무열의': { count: 2, sources: '타교: Lake(2002) PES-NWI', verdict: 'moderate' },
+    '간호근무환경→직무만족': { count: 2, sources: '타교: Aiken et al.(2002)', verdict: 'moderate' },
+    '환자안전문화→의료서비스품질': { count: 2, sources: '타교: Sorra & Nieva(2004)', verdict: 'moderate' },
+    '지각된 유용성→만족도': { count: 2, sources: '타교: Bhattacherjee(2001) ECM-IS, Davis(1989)', verdict: 'moderate' },
+    '지각된 유용성→신뢰': { count: 2, sources: '타교: Gefen, Karahanna & Straub(2003) TAM-Trust', verdict: 'moderate' },
+    '지각된 유용성→이용의도': { count: 2, sources: '타교: Davis(1989), Venkatesh et al.(2003)', verdict: 'moderate' },
+    '창업가정신→시장지향성': { count: 2, sources: '타교: Covin & Slevin(1989), Miles & Arnold(1991)', verdict: 'moderate' },
+    '시장지향성→경영성과': { count: 2, sources: '타교: Narver & Slater(1990), Kohli & Jaworski(1993)', verdict: 'moderate' },
+    '창업가정신→경영성과': { count: 2, sources: '타교: Lumpkin & Dess(1996), Wiklund & Shepherd(2005)', verdict: 'moderate' },
+    '기업가지향성→혁신성과': { count: 2, sources: '타교: Covin & Slevin(1989), Wiklund(1999)', verdict: 'moderate' },
+    '공공봉사동기→직무만족': { count: 2, sources: '타교: Perry & Wise(1990), Vandenabeele(2009)', verdict: 'moderate' },
+    '공공봉사동기→조직몰입': { count: 2, sources: '타교: Perry(1996), Crewson(1997)', verdict: 'moderate' },
+    '관광지매력→지각된 가치': { count: 2, sources: '타교: Chen & Tsai(2007), Petrick(2004)', verdict: 'moderate' },
+    '지각된 가치→방문의도': { count: 2, sources: '타교: Petrick & Backman(2002), Chen & Tsai(2007)', verdict: 'moderate' },
+    '관광지매력→방문의도': { count: 2, sources: '타교: Hu & Ritchie(1993), Vengesayi(2003)', verdict: 'moderate' },
+    '고객만족→재방문의도': { count: 2, sources: '타교: Oliver(1999), Baker & Crompton(2000)', verdict: 'moderate' },
+    '서비스품질→재방문의도': { count: 2, sources: '타교: Parasuraman et al.(1988), Cronin & Taylor(1992)', verdict: 'moderate' },
+    '서비스품질→고객충성도': { count: 2, sources: '타교: Cronin & Taylor(1992), Zeithaml et al.(1996)', verdict: 'moderate' },
+    '운동참여만족→지속운동의도': { count: 2, sources: '타교: Ajzen(1991), Beard & Ragheb(1980)', verdict: 'moderate' },
+    '직무소진→직무만족': { count: 2, sources: '타교: Maslach & Jackson(1981), Lee & Ashforth(1996) 메타분석, 박원우(2017)', verdict: 'moderate' },
+    '자아탄력성→긍정정서': { count: 2, sources: '타교: Tugade & Fredrickson(2004), Block & Kremen(1996)', verdict: 'moderate' },
+    '긍정정서→삶의만족': { count: 2, sources: '타교: Diener et al.(1985) SWLS, Fredrickson(2001)', verdict: 'moderate' },
+    '자아탄력성→삶의만족': { count: 2, sources: '타교: Klohnen(1996)', verdict: 'moderate' },
+    '안전문화→안전행동': { count: 2, sources: '타교: Neal & Griffin(2006), Cooper(2000)', verdict: 'moderate' },
+    '팀워크→팀성과': { count: 2, sources: '타교: Hoegl & Gemuenden(2001), Salas et al.(2005)', verdict: 'moderate' },
+    // 신규 4개 도메인 보강 페어 (2026-05)
+    '신뢰→사용의도': { count: 2, sources: '타교: Gefen et al.(2003), McKnight et al.(2002)', verdict: 'moderate' },
+    '보안성→사용의도': { count: 2, sources: '타교: Featherman & Pavlou(2003), Salisbury et al.(2001)', verdict: 'moderate' },
+    '금융리터러시→재무관리행동': { count: 2, sources: '타교: Lusardi & Mitchell(2014), Dew & Xiao(2011)', verdict: 'moderate' },
+    '프라이버시 위험→이용저항': { count: 2, sources: '타교: Ram & Sheth(1989)', verdict: 'moderate' },
+    '편리성→고객만족': { count: 2, sources: '타교: Berry et al.(2002)', verdict: 'moderate' },
+    '고객만족→지속사용의도': { count: 2, sources: '타교: Bhattacherjee(2001), Anderson & Sullivan(1993)', verdict: 'moderate' },
+    '편리성→지속사용의도': { count: 2, sources: '타교: Berry, Seiders & Grewal(2002)', verdict: 'moderate' },
+    '스마트팩토리도입→생산성': { count: 2, sources: '타교: Kagermann et al.(2013)', verdict: 'moderate' },
+    'IoT수용→운영효율성': { count: 2, sources: '타교: Atzori et al.(2010)', verdict: 'moderate' },
+    '디지털전환→혁신성과': { count: 2, sources: '타교: Vial(2019), Westerman et al.(2014)', verdict: 'moderate' },
+    '디지털전환→경영성과': { count: 2, sources: '타교: Vial(2019), Bharadwaj et al.(2013)', verdict: 'moderate' },
+    '안전인식→안전문화': { count: 2, sources: '타교: Cox & Cox(1991), Neal & Griffin(2006)', verdict: 'moderate' },
+    '안전인식→안전행동': { count: 2, sources: '타교: Neal & Griffin(2006)', verdict: 'moderate' },
+    '자동화수용→직무만족': { count: 2, sources: '타교: Parasuraman & Riley(1997)', verdict: 'moderate' },
+    'ESG경영→기업이미지': { count: 2, sources: '타교: Eccles et al.(2014), Porter & Kramer(2006)', verdict: 'moderate' },
+    'ESG경영→고객충성도': { count: 2, sources: '타교: Du et al.(2010)', verdict: 'moderate' },
+    '환경의식→친환경행동의도': { count: 2, sources: '타교: Stern(2000), Dunlap et al.(2000), Ajzen(1991)', verdict: 'moderate' },
+    '지속가능소비태도→구매의도': { count: 2, sources: '타교: Roberts(1996), Ajzen(1991)', verdict: 'moderate' },
+    '기후변화인식→환경행동': { count: 2, sources: '타교: Leiserowitz(2006), Kaiser et al.(1999)', verdict: 'moderate' },
+    '구직불안→진로결정': { count: 2, sources: '타교: Saks & Ashforth(2000), Spielberger(1983)', verdict: 'moderate' },
+    '결혼의도→출산의도': { count: 2, sources: '타교: Willoughby(2010), Miller(1994), Ajzen(1991)', verdict: 'moderate' },
+    '일가정균형→이직의도': { count: 2, sources: '타교: Greenhaus & Powell(2006), Frone(2003)', verdict: 'moderate' },
+    '세대다양성→팀성과': { count: 2, sources: '타교: Lyons & Kuron(2014)', verdict: 'moderate' },
+    '디지털 리터러시→이용의도': { count: 2, sources: '타교: Ng(2012), Gilster(1997), Venkatesh et al.(2003)', verdict: 'moderate' },
   };
 
   // ── researchPairDB에서 독립변수 목록 동적 계산 ──
@@ -8129,6 +8213,326 @@ const PaperCompass = ({ onBack }) => {
       ],
       korean: ['장희은(2024)']
     },
+    '일가정균형': {
+      title_en: 'Work-Family Balance',
+      foreign: [
+        { author: 'Greenhaus, J. H., & Powell, G. N.', year: 2006, def: '일·가정 풍요 이론 — 한 영역의 자원이 다른 영역에서 긍정적 영향', dim: '단일차원', scale: 'Work-Family Enrichment Scale', verified: true, ref: 'Greenhaus, J. H., & Powell, G. N. (2006). When work and family are allies. AMR, 31(1), 72-92.' },
+        { author: 'Grzywacz, J. G., & Carlson, D. S.', year: 2007, def: '일·가정 균형의 다차원적 측정', dim: '다차원', scale: 'WFB Scale', verified: true, ref: 'Grzywacz, J. G., & Carlson, D. S. (2007). Conceptualizing work-family balance. AMQ, 9(4), 455-471.' },
+        { author: 'Frone, M. R.', year: 2003, def: '일·가정 균형 vs 갈등 — 양면 측정', dim: '다차원', scale: 'Frone WFB Scale', verified: true, ref: 'Frone, M. R. (2003). Work-family balance. Handbook of Occupational Health Psychology, 143-162.' }
+      ],
+      korean: []
+    },
+    '재구매의도': {
+      title_en: 'Repurchase Intention',
+      foreign: [
+        { author: 'Zeithaml, V. A., Berry, L. L., & Parasuraman, A.', year: 1996, def: '서비스 행동의도 — 충성·전환·외부반응·내부반응·가격민감', dim: '5차원', scale: 'Behavioral Intentions Scale', verified: true, ref: 'Zeithaml, V. A., et al. (1996). The behavioral consequences of service quality. Journal of Marketing, 60(2), 31-46.' },
+        { author: 'Cronin, J. J., & Taylor, S. A.', year: 1992, def: 'SERVPERF 모형 — 서비스품질·만족·재구매의도 인과관계', dim: '단일차원', scale: 'Repurchase Intention Scale', verified: true, ref: 'Cronin, J. J., & Taylor, S. A. (1992). Measuring service quality. Journal of Marketing, 56(3), 55-68.' },
+        { author: 'Oliver, R. L.', year: 1999, def: '고객 충성도와 재구매의도', dim: '단일차원', scale: 'Loyalty Scale', verified: true, ref: 'Oliver, R. L. (1999). Whence consumer loyalty? Journal of Marketing, 63(Special Issue), 33-44.' }
+      ],
+      korean: ['이형백(2018)', '이정환(2017)', '박상범(2017)']
+    },
+    '브랜드자산': {
+      title_en: 'Brand Equity',
+      foreign: [
+        { author: 'Aaker, D. A.', year: 1991, def: '브랜드 자산 — 인지·연상·지각된 품질·충성도 4차원', dim: '4차원', scale: 'Brand Equity Scale', verified: true, ref: 'Aaker, D. A. (1991). Managing Brand Equity. Free Press.' },
+        { author: 'Keller, K. L.', year: 1993, def: '고객 기반 브랜드 자산 모형 — 인지·이미지·반응·관계', dim: '4차원 (CBBE)', scale: 'CBBE Scale', verified: true, ref: 'Keller, K. L. (1993). Conceptualizing, Measuring, and Managing Customer-Based Brand Equity. JMR, 57(1), 1-22.' }
+      ],
+      korean: []
+    },
+    '기업이미지': {
+      title_en: 'Corporate Image',
+      foreign: [
+        { author: 'Dowling, G. R.', year: 1986, def: '기업 이미지·평판 — 다양한 이해관계자의 인식 종합', dim: '단일차원', scale: 'Corporate Image Scale', verified: true, ref: 'Dowling, G. R. (1986). Managing your corporate images. Industrial Marketing Management, 15(2), 109-115.' },
+        { author: 'Fombrun, C., & Shanley, M.', year: 1990, def: '기업 평판 — 재무·경영·사회적 책임 다차원', dim: '다차원', scale: 'Reputation Scale', verified: true, ref: 'Fombrun, C., & Shanley, M. (1990). What\'s in a name? AMJ, 33(2), 233-258.' }
+      ],
+      korean: []
+    },
+    '온라인구전': {
+      title_en: 'eWOM (Electronic Word of Mouth)',
+      foreign: [
+        { author: 'Hennig-Thurau, T., Gwinner, K. P., Walsh, G., & Gremler, D. D.', year: 2004, def: '온라인 입소문 — 동기·플랫폼·효과', dim: '8차원 동기', scale: 'eWOM Motives Scale', verified: true, ref: 'Hennig-Thurau, T., et al. (2004). Electronic word-of-mouth via consumer-opinion platforms. Journal of Interactive Marketing, 18(1), 38-52.' },
+        { author: 'Cheung, C. M. K., & Thadani, D. R.', year: 2012, def: 'eWOM 영향력 통합 모형', dim: '다차원', scale: 'eWOM Influence Scale', verified: true, ref: 'Cheung, C. M. K., & Thadani, D. R. (2012). The impact of electronic word-of-mouth communication. Decision Support Systems, 54(1), 461-470.' }
+      ],
+      korean: []
+    },
+    '환자안전문화': {
+      title_en: 'Patient Safety Culture',
+      foreign: [
+        { author: 'Sorra, J., & Nieva, V. F.', year: 2004, def: 'AHRQ 환자안전문화 척도 — HSOPSC', dim: '12차원', scale: 'HSOPSC Scale', verified: true, ref: 'Sorra, J., & Nieva, V. F. (2004). Hospital Survey on Patient Safety Culture. AHRQ Publication.' },
+        { author: 'Pronovost, P., & Sexton, B.', year: 2005, def: '환자안전문화 측정 — Safety Attitudes Questionnaire', dim: '6차원', scale: 'SAQ Scale', verified: true, ref: 'Pronovost, P., & Sexton, B. (2005). Assessing safety culture. Quality and Safety in Health Care, 14(4), 231-233.' }
+      ],
+      korean: []
+    },
+    '의료서비스품질': {
+      title_en: 'Medical Service Quality',
+      foreign: [
+        { author: 'Parasuraman, A., Zeithaml, V. A., & Berry, L. L.', year: 1988, def: 'SERVQUAL — 의료 서비스 적용', dim: '5차원', scale: 'SERVQUAL Scale', verified: true, ref: 'Parasuraman, A., et al. (1988). SERVQUAL. Journal of Retailing, 64(1), 12-40.' },
+        { author: 'Donabedian, A.', year: 1980, def: '의료 품질 — 구조·과정·결과', dim: '3차원', scale: 'Donabedian Model', verified: true, ref: 'Donabedian, A. (1980). The Definition of Quality and Approaches to its Assessment. Health Administration Press.' }
+      ],
+      korean: []
+    },
+    '창업가정신': {
+      title_en: 'Entrepreneurship',
+      foreign: [
+        { author: 'Schumpeter, J. A.', year: 1934, def: '창업가정신 — 창조적 파괴와 혁신', dim: '단일차원', scale: '— (이론서)', verified: true, ref: 'Schumpeter, J. A. (1934). The Theory of Economic Development. Harvard University Press.' },
+        { author: 'Miller, D.', year: 1983, def: '기업가지향성 3차원 — 혁신성·위험감수성·진취성', dim: '3차원', scale: 'EO Scale', verified: true, ref: 'Miller, D. (1983). The correlates of entrepreneurship in three types of firms. Management Science, 29(7), 770-791.' }
+      ],
+      korean: []
+    },
+    '기업가지향성': {
+      title_en: 'Entrepreneurial Orientation',
+      foreign: [
+        { author: 'Covin, J. G., & Slevin, D. P.', year: 1989, def: '전략적 자세 — 기업가지향성과 환경 적합', dim: '3차원', scale: 'EO Scale', verified: true, ref: 'Covin, J. G., & Slevin, D. P. (1989). Strategic management of small firms in hostile and benign environments. SMJ, 10(1), 75-87.' },
+        { author: 'Lumpkin, G. T., & Dess, G. G.', year: 1996, def: 'EO 5차원 모형 — 혁신·위험·진취·자율·경쟁공격성', dim: '5차원', scale: 'EO-5 Scale', verified: true, ref: 'Lumpkin, G. T., & Dess, G. G. (1996). Clarifying the entrepreneurial orientation construct. AMR, 21(1), 135-172.' }
+      ],
+      korean: []
+    },
+    '관광지매력': {
+      title_en: 'Tourism Destination Attractiveness',
+      foreign: [
+        { author: 'Hu, Y., & Ritchie, J. R. B.', year: 1993, def: '관광지 매력 평가 — 다차원 모형', dim: '다차원', scale: 'Destination Attractiveness Scale', verified: true, ref: 'Hu, Y., & Ritchie, J. R. B. (1993). Measuring destination attractiveness. Journal of Travel Research, 32(2), 25-34.' },
+        { author: 'Vengesayi, S.', year: 2003, def: '관광지 경쟁력·매력성 통합 모형', dim: '다차원', scale: 'Destination Competitiveness Model', verified: true, ref: 'Vengesayi, S. (2003). A conceptual model of tourism destination competitiveness and attractiveness. ANZMAC Conference.' }
+      ],
+      korean: []
+    },
+    '방문의도': {
+      title_en: 'Visit Intention',
+      foreign: [
+        { author: 'Ajzen, I.', year: 1991, def: 'TPB 기반 행동의도 — 방문 의도', dim: '단일차원', scale: 'Visit Intention Scale', verified: true, ref: 'Ajzen, I. (1991). The theory of planned behavior. OBHDP, 50(2), 179-211.' },
+        { author: 'Baker, D. A., & Crompton, J. L.', year: 2000, def: '관광 만족·충성·방문의도', dim: '단일차원', scale: 'Visit Intention Scale', verified: true, ref: 'Baker, D. A., & Crompton, J. L. (2000). Quality, satisfaction and behavioral intentions. Annals of Tourism Research, 27(3), 785-804.' }
+      ],
+      korean: []
+    },
+    '재방문의도': {
+      title_en: 'Revisit Intention',
+      foreign: [
+        { author: 'Oliver, R. L.', year: 1999, def: '고객 충성과 재방문 의도', dim: '단일차원', scale: 'Loyalty Scale', verified: true, ref: 'Oliver, R. L. (1999). Whence consumer loyalty? Journal of Marketing, 63(Special Issue), 33-44.' },
+        { author: 'Baker, D. A., & Crompton, J. L.', year: 2000, def: '관광객 재방문 의도', dim: '단일차원', scale: 'Revisit Intention Scale', verified: true, ref: 'Baker, D. A., & Crompton, J. L. (2000). Quality, satisfaction and behavioral intentions. ATR, 27(3), 785-804.' }
+      ],
+      korean: []
+    },
+    '운동참여만족': {
+      title_en: 'Sport Participation Satisfaction',
+      foreign: [
+        { author: 'Beard, J. G., & Ragheb, M. G.', year: 1980, def: '여가 만족 척도 — Leisure Satisfaction Scale', dim: '6차원', scale: 'LSS Scale', verified: true, ref: 'Beard, J. G., & Ragheb, M. G. (1980). Measuring leisure satisfaction. Journal of Leisure Research, 12(1), 20-33.' }
+      ],
+      korean: []
+    },
+    '지속운동의도': {
+      title_en: 'Exercise Continuation Intention',
+      foreign: [
+        { author: 'Ajzen, I.', year: 1991, def: 'TPB 기반 행동의도', dim: '단일차원', scale: 'Exercise Intention Scale', verified: true, ref: 'Ajzen, I. (1991). OBHDP, 50(2), 179-211.' }
+      ],
+      korean: []
+    },
+    '자아탄력성': {
+      title_en: 'Ego Resilience',
+      foreign: [
+        { author: 'Block, J., & Kremen, A. M.', year: 1996, def: '자아 탄력성 — 스트레스 적응력', dim: '단일차원', scale: 'Ego Resilience Scale (ER89)', verified: true, ref: 'Block, J., & Kremen, A. M. (1996). IQ and ego-resiliency. Journal of Personality and Social Psychology, 70(2), 349-361.' },
+        { author: 'Klohnen, E. C.', year: 1996, def: '자아 탄력성 다차원', dim: '다차원', scale: 'Klohnen Resilience Scale', verified: true, ref: 'Klohnen, E. C. (1996). Conceptual analysis and measurement of the construct of ego-resiliency. JPSP, 70(5), 1067-1079.' }
+      ],
+      korean: []
+    },
+    '긍정정서': {
+      title_en: 'Positive Affect',
+      foreign: [
+        { author: 'Watson, D., Clark, L. A., & Tellegen, A.', year: 1988, def: 'PANAS — 긍정·부정 정서 척도', dim: '2차원', scale: 'PANAS Scale', verified: true, ref: 'Watson, D., et al. (1988). Development and validation of brief measures of positive and negative affect. JPSP, 54(6), 1063-1070.' },
+        { author: 'Fredrickson, B. L.', year: 2001, def: 'Broaden-and-Build 이론 — 긍정 정서 확장 효과', dim: '단일차원', scale: '— (이론)', verified: true, ref: 'Fredrickson, B. L. (2001). The role of positive emotions in positive psychology. American Psychologist, 56(3), 218-226.' }
+      ],
+      korean: []
+    },
+    '안전문화': {
+      title_en: 'Safety Culture',
+      foreign: [
+        { author: 'Cooper, M. D.', year: 2000, def: '안전문화 — 안전풍토와 안전행동의 통합', dim: '다차원', scale: 'Cooper Safety Culture Model', verified: true, ref: 'Cooper, M. D. (2000). Towards a model of safety culture. Safety Science, 36(2), 111-136.' },
+        { author: 'Zohar, D.', year: 1980, def: '안전풍토 — 조직의 안전 우선순위 인식', dim: '단일차원', scale: 'Safety Climate Scale', verified: true, ref: 'Zohar, D. (1980). Safety climate in industrial organizations. JAP, 65(1), 96-102.' }
+      ],
+      korean: []
+    },
+    '안전행동': {
+      title_en: 'Safety Behavior',
+      foreign: [
+        { author: 'Neal, A., & Griffin, M. A.', year: 2006, def: '안전행동 — 안전 준수와 안전 참여', dim: '2차원', scale: 'Safety Behavior Scale', verified: true, ref: 'Neal, A., & Griffin, M. A. (2006). A study of the lagged relationships among safety climate, safety motivation, safety behavior, and accidents. JAP, 91(4), 946-953.' }
+      ],
+      korean: []
+    },
+    '팀워크': {
+      title_en: 'Teamwork',
+      foreign: [
+        { author: 'Salas, E., Sims, D. E., & Burke, C. S.', year: 2005, def: '팀워크 5C 모형 — Big Five', dim: '5차원', scale: 'Big Five Teamwork Scale', verified: true, ref: 'Salas, E., Sims, D. E., & Burke, C. S. (2005). Is there a big five in teamwork? Small Group Research, 36(5), 555-599.' },
+        { author: 'Hoegl, M., & Gemuenden, H. G.', year: 2001, def: '팀워크 품질 — 6차원 통합 모형', dim: '6차원', scale: 'TWQ Scale', verified: true, ref: 'Hoegl, M., & Gemuenden, H. G. (2001). Teamwork quality and the success of innovative projects. Organization Science, 12(4), 435-449.' }
+      ],
+      korean: []
+    },
+    '역할갈등': {
+      title_en: 'Role Conflict',
+      foreign: [
+        { author: 'Rizzo, J. R., House, R. J., & Lirtzman, S. I.', year: 1970, def: '역할갈등·역할모호성 척도 — 직무 스트레서', dim: '2차원', scale: 'Rizzo Role Scale', verified: true, ref: 'Rizzo, J. R., House, R. J., & Lirtzman, S. I. (1970). Role conflict and ambiguity in complex organizations. ASQ, 15(2), 150-163.' }
+      ],
+      korean: []
+    },
+    '지각된품질': {
+      title_en: 'Perceived Quality',
+      foreign: [
+        { author: 'Zeithaml, V. A.', year: 1988, def: '지각된 품질 — 가치 모형의 핵심', dim: '단일차원', scale: 'Perceived Quality Scale', verified: true, ref: 'Zeithaml, V. A. (1988). Consumer perceptions of price, quality, and value. Journal of Marketing, 52(3), 2-22.' },
+        { author: 'Parasuraman, A., Zeithaml, V. A., & Berry, L. L.', year: 1985, def: '서비스 품질 갭 모형', dim: '5갭', scale: 'SERVQUAL', verified: true, ref: 'Parasuraman, A., Zeithaml, V. A., & Berry, L. L. (1985). A conceptual model of service quality. Journal of Marketing, 49(4), 41-50.' }
+      ],
+      korean: []
+    },
+    '사용의도': {
+      title_en: '사용의도',
+      foreign: [
+        { author: 'Ajzen, I.', year: 1991, def: 'TPB 기반 행동의도', dim: '단일차원', scale: 'Intention Scale', verified: true, ref: 'Ajzen, I. (1991). OBHDP, 50(2), 179-211.' }
+      ],
+      korean: []
+    },
+    '금융리터러시': {
+      title_en: '금융리터러시',
+      foreign: [
+        { author: 'Lusardi, A., & Mitchell, O. S.', year: 2014, def: '금융 리터러시 — 경제적 의사결정 핵심 역량', dim: '단일차원', scale: 'Financial Literacy Scale', verified: true, ref: 'Lusardi, A., & Mitchell, O. S. (2014). The economic importance of financial literacy. Journal of Economic Literature, 52(1), 5-44.' }
+      ],
+      korean: []
+    },
+    '재무관리행동': {
+      title_en: '재무관리행동',
+      foreign: [
+        { author: 'Dew, J., & Xiao, J. J.', year: 2011, def: '재무관리 행동 척도 — 예산·저축·신용·투자', dim: '다차원', scale: 'Financial Management Behavior Scale', verified: true, ref: 'Dew, J., & Xiao, J. J. (2011). The financial management behavior scale. Journal of Financial Counseling and Planning, 22(1), 43-59.' }
+      ],
+      korean: []
+    },
+    '이용저항': {
+      title_en: '이용저항',
+      foreign: [
+        { author: 'Ram, S., & Sheth, J. N.', year: 1989, def: '혁신 저항 — 사용·가치·위험·전통·이미지 5장벽', dim: '5차원', scale: 'Innovation Resistance Scale', verified: true, ref: 'Ram, S., & Sheth, J. N. (1989). Consumer resistance to innovations. Journal of Consumer Marketing, 6(2), 5-14.' }
+      ],
+      korean: []
+    },
+    '편리성': {
+      title_en: '편리성',
+      foreign: [
+        { author: 'Berry, L. L., Seiders, K., & Grewal, D.', year: 2002, def: '서비스 편의성 — 결정·접근·거래·혜택·사후 5차원', dim: '5차원', scale: 'Service Convenience Scale', verified: true, ref: 'Berry, L. L., Seiders, K., & Grewal, D. (2002). Understanding service convenience. Journal of Marketing, 66(3), 1-17.' }
+      ],
+      korean: []
+    },
+    '스마트팩토리도입': {
+      title_en: '스마트팩토리도입',
+      foreign: [
+        { author: 'Kagermann, H., Wahlster, W., & Helbig, J.', year: 2013, def: 'Industrie 4.0 — 스마트팩토리 개념', dim: '단일차원', scale: '— (이론서)', verified: true, ref: 'Kagermann, H., Wahlster, W., & Helbig, J. (2013). Recommendations for Implementing the Strategic Initiative INDUSTRIE 4.0. Acatech.' }
+      ],
+      korean: []
+    },
+    '생산성': {
+      title_en: '생산성',
+      foreign: [
+        { author: 'Pritchard, R. D.', year: 1995, def: '조직·작업 생산성 측정', dim: '다차원', scale: 'ProMES Scale', verified: true, ref: 'Pritchard, R. D. (1995). Productivity Measurement and Improvement. Praeger.' }
+      ],
+      korean: []
+    },
+    'IoT수용': {
+      title_en: 'IoT수용',
+      foreign: [
+        { author: 'Atzori, L., Iera, A., & Morabito, G.', year: 2010, def: 'IoT 개념과 응용', dim: '단일차원', scale: '— (이론)', verified: true, ref: 'Atzori, L., Iera, A., & Morabito, G. (2010). The Internet of Things: A survey. Computer Networks, 54(15), 2787-2805.' }
+      ],
+      korean: []
+    },
+    '운영효율성': {
+      title_en: '운영효율성',
+      foreign: [
+        { author: 'Stalk, G., Evans, P., & Shulman, L. E.', year: 1992, def: '역량 기반 경쟁 — 운영 효율성', dim: '다차원', scale: 'Operational Efficiency Scale', verified: true, ref: 'Stalk, G., Evans, P., & Shulman, L. E. (1992). Competing on capabilities. HBR, 70(2), 57-69.' }
+      ],
+      korean: []
+    },
+    '안전인식': {
+      title_en: '안전인식',
+      foreign: [
+        { author: 'Cox, S., & Cox, T.', year: 1991, def: '안전 태도·인식 — 안전풍토 기반', dim: '다차원', scale: 'Safety Awareness Scale', verified: true, ref: 'Cox, S., & Cox, T. (1991). The structure of employee attitudes to safety. Work & Stress, 5(2), 93-106.' }
+      ],
+      korean: []
+    },
+    '자동화수용': {
+      title_en: '자동화수용',
+      foreign: [
+        { author: 'Parasuraman, R., & Riley, V.', year: 1997, def: '자동화 사용 — 신뢰·수용·역효과', dim: '다차원', scale: 'Automation Acceptance Scale', verified: true, ref: 'Parasuraman, R., & Riley, V. (1997). Humans and automation. Human Factors, 39(2), 230-253.' }
+      ],
+      korean: []
+    },
+    'ESG경영': {
+      title_en: 'ESG경영',
+      foreign: [
+        { author: 'Eccles, R. G., Ioannou, I., & Serafeim, G.', year: 2014, def: 'ESG 성과와 기업 성과의 관계 실증', dim: '3차원', scale: 'ESG Performance Scale', verified: true, ref: 'Eccles, R. G., Ioannou, I., & Serafeim, G. (2014). The impact of corporate sustainability on organizational processes and performance. Management Science, 60(11), 2835-2857.' }
+      ],
+      korean: []
+    },
+    '환경의식': {
+      title_en: '환경의식',
+      foreign: [
+        { author: 'Dunlap, R. E., Van Liere, K. D., Mertig, A. G., & Jones, R. E.', year: 2000, def: '신환경 패러다임(NEP) 척도', dim: '단일차원', scale: 'NEP Scale', verified: true, ref: 'Dunlap, R. E., Van Liere, K. D., Mertig, A. G., & Jones, R. E. (2000). New ecological paradigm. Journal of Social Issues, 56(3), 425-442.' }
+      ],
+      korean: []
+    },
+    '친환경행동의도': {
+      title_en: '친환경행동의도',
+      foreign: [
+        { author: 'Stern, P. C.', year: 2000, def: '환경적으로 의미 있는 행동 분류', dim: '4차원', scale: 'Pro-environmental Behavior Scale', verified: true, ref: 'Stern, P. C. (2000). Toward a coherent theory of environmentally significant behavior. Journal of Social Issues, 56(3), 407-424.' }
+      ],
+      korean: []
+    },
+    '지속가능소비태도': {
+      title_en: '지속가능소비태도',
+      foreign: [
+        { author: 'Roberts, J. A.', year: 1996, def: '지속가능소비 — 환경친화적 구매 행동', dim: '단일차원', scale: 'Sustainable Consumption Scale', verified: true, ref: 'Roberts, J. A. (1996). Green consumers in the 1990s. Journal of Business Research, 36(3), 217-231.' }
+      ],
+      korean: []
+    },
+    '기후변화인식': {
+      title_en: '기후변화인식',
+      foreign: [
+        { author: 'Leiserowitz, A.', year: 2006, def: '기후변화 인식·우려·정책지지', dim: '단일차원', scale: 'Climate Change Awareness Scale', verified: true, ref: 'Leiserowitz, A. (2006). Climate change risk perception and policy preferences. Climatic Change, 77(1-2), 45-72.' }
+      ],
+      korean: []
+    },
+    '환경행동': {
+      title_en: '환경행동',
+      foreign: [
+        { author: 'Kaiser, F. G., Wölfing, S., & Fuhrer, U.', year: 1999, def: '환경 친화 행동 척도', dim: '다차원', scale: 'GEB Scale', verified: true, ref: 'Kaiser, F. G., Wölfing, S., & Fuhrer, U. (1999). Environmental attitude and ecological behaviour. Journal of Environmental Psychology, 19(1), 1-19.' }
+      ],
+      korean: []
+    },
+    '구직불안': {
+      title_en: '구직불안',
+      foreign: [
+        { author: 'Spielberger, C. D.', year: 1983, def: '상태-특성 불안 척도 — 구직 맥락 적용', dim: '단일차원', scale: 'STAI Scale', verified: true, ref: 'Spielberger, C. D. (1983). Manual for the State-Trait Anxiety Inventory (Form Y). Consulting Psychologists Press.' }
+      ],
+      korean: []
+    },
+    '진로결정': {
+      title_en: '진로결정',
+      foreign: [
+        { author: 'Crites, J. O.', year: 1978, def: '진로 결정성·태도', dim: '다차원', scale: 'Career Maturity Inventory', verified: true, ref: 'Crites, J. O. (1978). Career Maturity Inventory. McGraw-Hill.' }
+      ],
+      korean: []
+    },
+    '결혼의도': {
+      title_en: '결혼의도',
+      foreign: [
+        { author: 'Willoughby, B. J.', year: 2010, def: '결혼 태도와 의도', dim: '단일차원', scale: 'Marriage Intention Scale', verified: true, ref: 'Willoughby, B. J. (2010). Marital attitude trajectories across adolescence. Journal of Youth and Adolescence, 39(11), 1305-1317.' }
+      ],
+      korean: []
+    },
+    '출산의도': {
+      title_en: '출산의도',
+      foreign: [
+        { author: 'Miller, W. B.', year: 1994, def: '출산 동기·욕구·의도 모형', dim: '단일차원', scale: 'Childbearing Intention Scale', verified: true, ref: 'Miller, W. B. (1994). Childbearing motivations, desires, and intentions. Demography, 31(2), 271-296.' }
+      ],
+      korean: []
+    },
+    '세대다양성': {
+      title_en: '세대다양성',
+      foreign: [
+        { author: 'Lyons, S., & Kuron, L.', year: 2014, def: '세대 다양성과 직장 — 가치·태도·행동 차이', dim: '다차원', scale: 'Generational Diversity Scale', verified: true, ref: 'Lyons, S., & Kuron, L. (2014). Generational differences in the workplace. Journal of Organizational Behavior, 35(S1), S139-S157.' }
+      ],
+      korean: []
+    }
   };
 
     const subFactorTheory = {
@@ -10287,6 +10691,294 @@ const PaperCompass = ({ onBack }) => {
     '전시회 디지털 사이니지 특성': {
       options: [
         { name: '전시회 디지털 사이니지 특성(단일차원)', scholar: 'Burke(2009), Roggeveen et al.(2016), LI XIAOQIAN(2025)', scale: 'Digital Signage Scale', answer: 'Burke(2009)와 Roggeveen et al.(2016)의 디지털 사이니지 척도에 기반하여 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '재구매의도': {
+      options: [
+        { name: '재구매의도(단일차원)', scholar: 'Zeithaml, Berry & Parasuraman(1996), Cronin & Taylor(1992), Oliver(1999)', scale: 'Behavioral Intentions Scale', answer: 'Zeithaml et al.(1996)의 행동의도 척도와 Cronin & Taylor(1992)의 재구매의도 척도를 기반으로 단일차원으로 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '일가정균형': {
+      options: [
+        { name: '일가정균형(단일차원)', scholar: 'Greenhaus & Powell(2006), Grzywacz & Carlson(2007), 김혜원(2009)', scale: 'Work-Family Balance Scale', answer: 'Grzywacz & Carlson(2007)의 일·가정 균형 척도를 한국 맥락(김혜원, 2009)에 맞춰 적용하여 단일차원으로 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '브랜드자산': {
+      options: [
+        { name: '브랜드자산(단일차원)', scholar: 'Aaker(1991), Keller(1993)', scale: 'Aaker(1991) Brand Equity Scale 또는 Keller(1993) CBB', answer: 'Aaker(1991), Keller(1993)의 척도에 기반하여 브랜드자산을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '기업이미지': {
+      options: [
+        { name: '기업이미지(단일차원)', scholar: 'Dowling(1986), Fombrun & Shanley(1990)', scale: 'Dowling(1986) 기업이미지 척도 기반.', answer: 'Dowling(1986), Fombrun & Shanley(1990)의 척도에 기반하여 기업이미지을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '온라인구전': {
+      options: [
+        { name: '온라인구전(단일차원)', scholar: 'Hennig-Thurau et al.(2004), Cheung & Thadani(2012)', scale: 'Hennig-Thurau et al.(2004) eWOM 동기 척도.', answer: 'Hennig-Thurau et al.(2004), Cheung & Thadani(2012)의 척도에 기반하여 온라인구전을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '환자안전문화': {
+      options: [
+        { name: '환자안전문화(단일차원)', scholar: 'Sorra & Nieva(2004), Pronovost & Sexton(2005)', scale: 'AHRQ HSOPSC 척도(12차원) 또는 SAQ 척도 기반.', answer: 'Sorra & Nieva(2004), Pronovost & Sexton(2005)의 척도에 기반하여 환자안전문화을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '의료서비스품질': {
+      options: [
+        { name: '의료서비스품질(단일차원)', scholar: 'Parasuraman et al.(1988), Donabedian(1980)', scale: 'SERVQUAL 척도(5차원 22문항) 또는 Donabedian 3차원 모형.', answer: 'Parasuraman et al.(1988), Donabedian(1980)의 척도에 기반하여 의료서비스품질을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '창업가정신': {
+      options: [
+        { name: '창업가정신(단일차원)', scholar: 'Schumpeter(1934), Miller(1983)', scale: 'Miller(1983) EO 척도 또는 변형.', answer: 'Schumpeter(1934), Miller(1983)의 척도에 기반하여 창업가정신을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '기업가지향성': {
+      options: [
+        { name: '기업가지향성(단일차원)', scholar: 'Covin & Slevin(1989), Lumpkin & Dess(1996)', scale: 'Covin & Slevin(1989) EO 척도(9문항) 또는 Lumpkin & Dess(', answer: 'Covin & Slevin(1989), Lumpkin & Dess(1996)의 척도에 기반하여 기업가지향성을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '관광지매력': {
+      options: [
+        { name: '관광지매력(단일차원)', scholar: 'Hu & Ritchie(1993), Vengesayi(2003)', scale: 'Hu & Ritchie(1993) 관광지 매력 척도 기반.', answer: 'Hu & Ritchie(1993), Vengesayi(2003)의 척도에 기반하여 관광지매력을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '방문의도': {
+      options: [
+        { name: '방문의도(단일차원)', scholar: 'Ajzen(1991), Baker & Crompton(2000)', scale: 'TPB 기반 방문의도 척도(3-4문항).', answer: 'Ajzen(1991), Baker & Crompton(2000)의 척도에 기반하여 방문의도을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '재방문의도': {
+      options: [
+        { name: '재방문의도(단일차원)', scholar: 'Oliver(1999), Baker & Crompton(2000)', scale: '재방문의도 척도(3-4문항).', answer: 'Oliver(1999), Baker & Crompton(2000)의 척도에 기반하여 재방문의도을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '운동참여만족': {
+      options: [
+        { name: '운동참여만족(단일차원)', scholar: 'Beard & Ragheb(1980), 김민정(2014)', scale: 'Beard & Ragheb(1980) Leisure Satisfaction Scale 기반', answer: 'Beard & Ragheb(1980), 김민정(2014)의 척도에 기반하여 운동참여만족을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '지속운동의도': {
+      options: [
+        { name: '지속운동의도(단일차원)', scholar: 'Ajzen(1991)', scale: 'TPB 기반 운동 지속의도 척도(3-4문항).', answer: 'Ajzen(1991)의 척도에 기반하여 지속운동의도을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '자아탄력성': {
+      options: [
+        { name: '자아탄력성(단일차원)', scholar: 'Block & Kremen(1996), Klohnen(1996)', scale: 'ER89 척도(14문항) 또는 Klohnen 척도.', answer: 'Block & Kremen(1996), Klohnen(1996)의 척도에 기반하여 자아탄력성을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '긍정정서': {
+      options: [
+        { name: '긍정정서(단일차원)', scholar: 'Watson, Clark & Tellegen(1988), Fredrickson(2001)', scale: 'PANAS 긍정 정서 10문항.', answer: 'Watson, Clark & Tellegen(1988), Fredrickson(2001)의 척도에 기반하여 긍정정서을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '안전문화': {
+      options: [
+        { name: '안전문화(단일차원)', scholar: 'Cooper(2000), Zohar(1980)', scale: 'Cooper(2000) 안전문화 모형 또는 Zohar 안전풍토 척도.', answer: 'Cooper(2000), Zohar(1980)의 척도에 기반하여 안전문화을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '안전행동': {
+      options: [
+        { name: '안전행동(단일차원)', scholar: 'Neal & Griffin(2006)', scale: 'Neal & Griffin(2006) 안전행동 척도(6문항).', answer: 'Neal & Griffin(2006)의 척도에 기반하여 안전행동을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '팀워크': {
+      options: [
+        { name: '팀워크(단일차원)', scholar: 'Salas, Sims & Burke(2005), Hoegl & Gemuenden(2001)', scale: 'Salas et al.(2005) Big Five Teamwork 또는 Hoegl TWQ ', answer: 'Salas, Sims & Burke(2005), Hoegl & Gemuenden(2001)의 척도에 기반하여 팀워크을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '역할갈등': {
+      options: [
+        { name: '역할갈등(단일차원)', scholar: 'Rizzo, House & Lirtzman(1970)', scale: 'Rizzo et al.(1970) 역할갈등 척도(8문항).', answer: 'Rizzo, House & Lirtzman(1970)의 척도에 기반하여 역할갈등을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '지각된품질': {
+      options: [
+        { name: '지각된품질(단일차원)', scholar: 'Zeithaml(1988), Parasuraman et al.(1985)', scale: 'Zeithaml(1988) 지각된 품질 척도.', answer: 'Zeithaml(1988), Parasuraman et al.(1985)의 척도에 기반하여 지각된품질을 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '구매의도': {
+      options: [
+        { name: '구매의도(단일차원)', scholar: 'Dodds et al.(1991), Ajzen(1991)', scale: 'Purchase Intention Scale', answer: 'Dodds et al.(1991), Ajzen(1991)의 척도에 기반하여 구매의도을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '자기주도학습': {
+      options: [
+        { name: '자기주도학습(단일차원)', scholar: 'Knowles(1975), Pintrich & De Groot(1990)', scale: 'SRL Scale', answer: 'Knowles(1975), Pintrich & De Groot(1990)의 척도에 기반하여 자기주도학습을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '학습몰입': {
+      options: [
+        { name: '학습몰입(단일차원)', scholar: 'Csikszentmihalyi(1990)', scale: 'Flow Scale', answer: 'Csikszentmihalyi(1990)의 척도에 기반하여 학습몰입을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '시장지향성': {
+      options: [
+        { name: '시장지향성(단일차원)', scholar: 'Narver & Slater(1990), Kohli & Jaworski(1993)', scale: 'MARKOR', answer: 'Narver & Slater(1990), Kohli & Jaworski(1993)의 척도에 기반하여 시장지향성을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '사용의도': {
+      options: [
+        { name: '사용의도(단일차원)', scholar: 'Ajzen(1991)', scale: 'TPB 행동의도 척도', answer: 'Ajzen(1991)의 척도에 기반하여 사용의도을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '금융리터러시': {
+      options: [
+        { name: '금융리터러시(단일차원)', scholar: 'Lusardi & Mitchell(2014)', scale: 'Lusardi-Mitchell 척도', answer: 'Lusardi & Mitchell(2014)의 척도에 기반하여 금융리터러시을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '재무관리행동': {
+      options: [
+        { name: '재무관리행동(단일차원)', scholar: 'Dew & Xiao(2011)', scale: 'FMBS 척도', answer: 'Dew & Xiao(2011)의 척도에 기반하여 재무관리행동을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '이용저항': {
+      options: [
+        { name: '이용저항(단일차원)', scholar: 'Ram & Sheth(1989)', scale: '혁신저항 척도', answer: 'Ram & Sheth(1989)의 척도에 기반하여 이용저항을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '편리성': {
+      options: [
+        { name: '편리성(단일차원)', scholar: 'Berry, Seiders & Grewal(2002)', scale: 'Service Convenience Scale', answer: 'Berry, Seiders & Grewal(2002)의 척도에 기반하여 편리성을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '스마트팩토리도입': {
+      options: [
+        { name: '스마트팩토리도입(단일차원)', scholar: 'Kagermann, Wahlster & Helbig(2013)', scale: 'Industrie 4.0 도입 척도', answer: 'Kagermann, Wahlster & Helbig(2013)의 척도에 기반하여 스마트팩토리도입을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '생산성': {
+      options: [
+        { name: '생산성(단일차원)', scholar: 'Pritchard(1995)', scale: 'ProMES 생산성 척도', answer: 'Pritchard(1995)의 척도에 기반하여 생산성을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    'IoT수용': {
+      options: [
+        { name: 'IoT수용(단일차원)', scholar: 'Atzori, Iera & Morabito(2010)', scale: 'IoT 수용 척도', answer: 'Atzori, Iera & Morabito(2010)의 척도에 기반하여 IoT수용을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '운영효율성': {
+      options: [
+        { name: '운영효율성(단일차원)', scholar: 'Stalk, Evans & Shulman(1992)', scale: '운영효율성 척도', answer: 'Stalk, Evans & Shulman(1992)의 척도에 기반하여 운영효율성을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '디지털전환': {
+      options: [
+        { name: '디지털전환(단일차원)', scholar: 'Vial(2019)', scale: 'DT 척도', answer: 'Vial(2019)의 척도에 기반하여 디지털전환을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '안전인식': {
+      options: [
+        { name: '안전인식(단일차원)', scholar: 'Cox & Cox(1991), Neal & Griffin(2006)', scale: '안전인식 척도', answer: 'Cox & Cox(1991), Neal & Griffin(2006)의 척도에 기반하여 안전인식을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '자동화수용': {
+      options: [
+        { name: '자동화수용(단일차원)', scholar: 'Parasuraman & Riley(1997)', scale: '자동화 수용 척도', answer: 'Parasuraman & Riley(1997)의 척도에 기반하여 자동화수용을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    'ESG경영': {
+      options: [
+        { name: 'ESG경영(단일차원)', scholar: 'Eccles, Ioannou & Serafeim(2014)', scale: 'ESG 성과 척도', answer: 'Eccles, Ioannou & Serafeim(2014)의 척도에 기반하여 ESG경영을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '환경의식': {
+      options: [
+        { name: '환경의식(단일차원)', scholar: 'Dunlap et al.(2000) NEP', scale: '신환경 패러다임 척도(15문항)', answer: 'Dunlap et al.(2000) NEP의 척도에 기반하여 환경의식을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '친환경행동의도': {
+      options: [
+        { name: '친환경행동의도(단일차원)', scholar: 'Stern(2000), Ajzen(1991)', scale: 'TPB 기반 친환경행동의도 척도', answer: 'Stern(2000), Ajzen(1991)의 척도에 기반하여 친환경행동의도을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '지속가능소비태도': {
+      options: [
+        { name: '지속가능소비태도(단일차원)', scholar: 'Roberts(1996)', scale: 'GCB 척도', answer: 'Roberts(1996)의 척도에 기반하여 지속가능소비태도을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '기후변화인식': {
+      options: [
+        { name: '기후변화인식(단일차원)', scholar: 'Leiserowitz(2006)', scale: '기후변화 인식 척도', answer: 'Leiserowitz(2006)의 척도에 기반하여 기후변화인식을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '환경행동': {
+      options: [
+        { name: '환경행동(단일차원)', scholar: 'Kaiser, Wölfing & Fuhrer(1999)', scale: 'GEB(General Ecological Behavior) 척도', answer: 'Kaiser, Wölfing & Fuhrer(1999)의 척도에 기반하여 환경행동을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '구직불안': {
+      options: [
+        { name: '구직불안(단일차원)', scholar: 'Spielberger(1983), Saks & Ashforth(2000)', scale: 'Job Search Anxiety Scale', answer: 'Spielberger(1983), Saks & Ashforth(2000)의 척도에 기반하여 구직불안을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '진로결정': {
+      options: [
+        { name: '진로결정(단일차원)', scholar: 'Crites(1978), Holland(1985)', scale: 'Career Decision Scale', answer: 'Crites(1978), Holland(1985)의 척도에 기반하여 진로결정을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '결혼의도': {
+      options: [
+        { name: '결혼의도(단일차원)', scholar: 'Willoughby(2010), Ajzen(1991) TPB', scale: '결혼의도 척도', answer: 'Willoughby(2010), Ajzen(1991) TPB의 척도에 기반하여 결혼의도을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '출산의도': {
+      options: [
+        { name: '출산의도(단일차원)', scholar: 'Miller(1994), Ajzen(1991)', scale: '출산의도 척도', answer: 'Miller(1994), Ajzen(1991)의 척도에 기반하여 출산의도을(를) 측정하였습니다.' }
+      ],
+      defaultSelected: [0],
+    },
+    '세대다양성': {
+      options: [
+        { name: '세대다양성(단일차원)', scholar: 'Lyons & Kuron(2014)', scale: '세대다양성 척도', answer: 'Lyons & Kuron(2014)의 척도에 기반하여 세대다양성을(를) 측정하였습니다.' }
       ],
       defaultSelected: [0],
     },
@@ -15813,41 +16505,42 @@ const PaperCompass = ({ onBack }) => {
     },
     // ── 설문항 추가 등록 (2026-04-19, PDF 추출 기반) ──
     '성격5요인': {
-      // 출처: McCrae & Costa(1987), 김남환(2019) 수정, 김창섭(2021) 활용, 25문항 5점 Likert
+      // ★ 출처: Goldberg(1993) BFI / Costa & McCrae(1992) NEO-PI-R, 김명환·고종욱·강대상(1998), 이경임(1996), 안창규(1996) 한국적용
+      // ★ 응답자 본인 성격 측정 — "나는..." 1인칭 시점 (2026-05 수정: 이전 '나의 상사는...' 오류 데이터 교체)
       '외향성': [
-        '나의 상사는 사람을 늘 따뜻하게 대한다',
-        '나의 상사는 사람들과 잘 어울린다',
-        '나의 상사는 매사에 좋은 생각만 하려고 노력한다',
-        '나의 상사는 모든 일에 적극적으로 최선을 다한다',
-        '나의 상사는 다른 사람들을 잘 이끄는 편이다',
+        '나는 사교적이고 다른 사람들과 어울리기를 좋아한다',
+        '나는 활기차고 적극적인 편이다',
+        '나는 새로운 사람을 만나는 것을 즐긴다',
+        '나는 모임이나 대화에서 주도적인 역할을 하는 편이다',
+        '나는 에너지가 넘치고 활동적이다',
       ],
       '친화성': [
-        '나의 상사는 사람을 잘 믿는 편이다',
-        '나의 상사는 모든 일에 정직하다',
-        '나의 상사는 자기 보다는 남을 먼저 생각한다',
-        '나의 상사는 모든 현상(사물)을 받아들이려 노력한다',
-        '나의 상사는 남을 존중하고 자기를 높이지 않는다',
+        '나는 다른 사람을 신뢰하는 편이다',
+        '나는 다른 사람의 감정을 이해하고 공감한다',
+        '나는 협력적이고 다른 사람과 잘 지낸다',
+        '나는 다른 사람을 배려하고 도와주려 한다',
+        '나는 갈등보다는 조화를 추구한다',
       ],
       '성실성': [
-        '나의 상사는 유능하다고 생각한다',
-        '나의 상사는 사람을 잘 조직·관리한다고 생각한다',
-        '나의 상사는 설정된 목표를 달성하기 위해 노력한다',
-        '나의 상사는 자기 자신을 스스로 통제하고자 노력한다',
-        '나의 상사는 맡은 바 임무를 확실히 처리한다',
+        '나는 책임감이 강하고 신중한 편이다',
+        '나는 계획적이고 체계적으로 일을 처리한다',
+        '나는 맡은 일을 끝까지 완수한다',
+        '나는 시간 약속을 잘 지킨다',
+        '나는 목표를 향해 꾸준히 노력한다',
       ],
       '신경증': [
-        '나의 상사는 항상 무엇인가에 쫓기지는 않는 것 같다(역코딩)',
-        '나의 상사는 작은 일에는 쉽게 흥분하지 않는다(역코딩)',
-        '나의 상사는 슬프고 무력감에 빠져있지 않다(역코딩)',
-        '나의 상사는 열등감, 강박감이 없다(역코딩)',
-        '나의 상사는 조그마한 일에는 민감하지 않는다(역코딩)',
+        '나는 사소한 일에 쉽게 걱정하는 편이다',
+        '나는 스트레스를 받으면 쉽게 흔들린다',
+        '나는 우울하거나 기분이 가라앉을 때가 있다',
+        '나는 감정 기복이 있는 편이다',
+        '나는 긴장하거나 불안할 때가 많다',
       ],
       '개방성': [
-        '나의 상사는 늘 새로운 것을 생각한다',
-        '나의 상사는 문화생활 및 여가를 즐긴다',
-        '나의 상사는 감수성이 풍부한 편이다',
-        '나의 상사는 새로운 체험을 좋아한다',
-        '나의 상사는 자기와 다른 타인의 의견을 존중한다',
+        '나는 새로운 경험과 아이디어를 좋아한다',
+        '나는 상상력이 풍부하고 창의적이다',
+        '나는 예술적 감수성이 풍부하다',
+        '나는 다양한 분야에 호기심이 많다',
+        '나는 새로운 관점이나 사고방식에 개방적이다',
       ],
     },
     '감성지능': {
@@ -19325,6 +20018,431 @@ const PaperCompass = ({ onBack }) => {
         '디지털 사이니지는 동선 안내에 도움이 된다'
       ],
     },
+    '재구매의도': {
+      '재구매의도(단일차원)': [
+        '나는 앞으로도 이 제품·서비스를 계속 이용할 의향이 있다',
+        '나는 다른 사람에게 이 제품·서비스를 추천할 것이다',
+        '필요할 때 이 제품·서비스를 우선적으로 고려할 것이다',
+        '이 제품·서비스에 대해 긍정적으로 이야기할 것이다'
+      ],
+    },
+    '일가정균형': {
+      '일가정균형(단일차원)': [
+        '나는 일과 가정 사이에서 균형을 잘 유지하고 있다',
+        '나는 일과 가정 모두에 충분한 시간을 할애하고 있다',
+        '나의 직장 생활과 가정 생활은 서로 긍정적 영향을 주고받는다',
+        '나는 일과 가정에서의 역할을 효과적으로 수행하고 있다',
+        '나는 일과 가정 어느 한쪽도 소홀히 하지 않는다'
+      ],
+    },
+    '브랜드자산': {
+      '브랜드자산(단일차원)': [
+        '나는 이 브랜드를 잘 알고 있다',
+        '이 브랜드는 좋은 이미지를 가지고 있다',
+        '이 브랜드의 품질은 우수하다',
+        '나는 이 브랜드를 선호한다',
+        '나는 이 브랜드를 다른 사람에게 추천하겠다'
+      ],
+    },
+    '기업이미지': {
+      '기업이미지(단일차원)': [
+        '이 기업은 신뢰할 수 있는 기업이다',
+        '이 기업은 사회적 책임을 다한다',
+        '이 기업은 혁신적이다',
+        '이 기업은 좋은 평판을 가지고 있다',
+        '이 기업의 제품·서비스는 우수하다'
+      ],
+    },
+    '온라인구전': {
+      '온라인구전(단일차원)': [
+        '나는 온라인 후기를 자주 확인한다',
+        '온라인 평가는 구매 결정에 영향을 준다',
+        '나는 SNS의 제품 리뷰를 신뢰한다',
+        '나는 좋은 후기를 본 제품을 구매하고 싶다',
+        '온라인 입소문은 신뢰할 만하다'
+      ],
+    },
+    '환자안전문화': {
+      '환자안전문화(단일차원)': [
+        '우리 의료기관은 환자안전을 최우선으로 한다',
+        '환자안전 사고를 자유롭게 보고할 수 있다',
+        '경영진은 환자안전에 관심을 가진다',
+        '동료들과 환자안전 정보를 공유한다',
+        '환자안전 교육이 정기적으로 실시된다'
+      ],
+    },
+    '의료서비스품질': {
+      '의료서비스품질(단일차원)': [
+        '의료진의 진료 능력이 우수하다',
+        '의료기관의 시설이 깨끗하고 쾌적하다',
+        '의료진은 친절하게 응대한다',
+        '진료 절차가 신속하다',
+        '의료기관은 환자의 요구에 잘 응답한다'
+      ],
+    },
+    '창업가정신': {
+      '창업가정신(단일차원)': [
+        '나는 새로운 사업 기회를 적극적으로 찾는다',
+        '나는 위험을 감수하더라도 도전한다',
+        '나는 혁신적인 아이디어를 추구한다',
+        '나는 변화를 주도하는 편이다',
+        '나는 새로운 시장에 진출할 의향이 있다'
+      ],
+    },
+    '기업가지향성': {
+      '기업가지향성(단일차원)': [
+        '우리 조직은 새로운 제품·서비스 개발에 적극적이다',
+        '우리 조직은 위험을 감수하더라도 새로운 시장에 진출한다',
+        '우리 조직은 경쟁사보다 먼저 행동한다',
+        '우리 조직은 혁신적인 사업 방식을 추구한다',
+        '우리 조직은 도전적인 목표를 설정한다'
+      ],
+    },
+    '관광지매력': {
+      '관광지매력(단일차원)': [
+        '이 관광지는 매력적이다',
+        '이 관광지의 자연환경이 우수하다',
+        '이 관광지의 문화시설이 다양하다',
+        '이 관광지는 접근성이 좋다',
+        '이 관광지의 서비스는 만족스럽다'
+      ],
+    },
+    '방문의도': {
+      '방문의도(단일차원)': [
+        '나는 이 관광지를 방문할 의향이 있다',
+        '나는 가까운 시일 내에 방문할 계획이다',
+        '나는 다른 사람에게도 이 관광지를 추천하고 싶다',
+        '나는 이 관광지에 대한 정보를 더 찾아볼 것이다'
+      ],
+    },
+    '재방문의도': {
+      '재방문의도(단일차원)': [
+        '나는 다시 방문할 의향이 있다',
+        '기회가 된다면 또 방문하고 싶다',
+        '나는 다른 사람에게 추천할 것이다',
+        '이곳은 재방문할 가치가 있다'
+      ],
+    },
+    '운동참여만족': {
+      '운동참여만족(단일차원)': [
+        '운동 참여는 즐겁다',
+        '운동을 통해 건강이 좋아진다',
+        '운동은 스트레스 해소에 도움이 된다',
+        '운동을 통해 사람들과 어울릴 수 있다',
+        '운동 참여에 만족한다'
+      ],
+    },
+    '지속운동의도': {
+      '지속운동의도(단일차원)': [
+        '나는 운동을 계속할 의향이 있다',
+        '나는 앞으로도 정기적으로 운동할 것이다',
+        '나는 운동을 생활화할 것이다',
+        '나는 다른 운동도 시도해 볼 것이다'
+      ],
+    },
+    '자아탄력성': {
+      '자아탄력성(단일차원)': [
+        '나는 새로운 상황에 잘 적응한다',
+        '나는 어려움을 극복하는 능력이 있다',
+        '나는 실패해도 다시 일어설 수 있다',
+        '나는 스트레스 상황에서 유연하게 대처한다',
+        '나는 변화에 잘 적응한다'
+      ],
+    },
+    '긍정정서': {
+      '긍정정서(단일차원)': [
+        '요즘 나는 즐겁다',
+        '요즘 나는 열정적이다',
+        '요즘 나는 자부심을 느낀다',
+        '요즘 나는 관심·흥미를 느낀다',
+        '요즘 나는 활기차다'
+      ],
+    },
+    '안전문화': {
+      '안전문화(단일차원)': [
+        '우리 조직은 안전을 최우선으로 한다',
+        '경영진은 안전에 대해 관심을 가진다',
+        '안전 교육이 정기적으로 실시된다',
+        '안전 절차가 명확하다',
+        '안전 위반에 대한 조치가 이루어진다'
+      ],
+    },
+    '안전행동': {
+      '안전행동(단일차원)': [
+        '나는 작업 시 안전 규칙을 잘 지킨다',
+        '나는 안전 장비를 항상 착용한다',
+        '나는 위험 상황을 발견하면 보고한다',
+        '나는 동료의 안전을 위해 조언한다',
+        '나는 안전 교육에 적극 참여한다'
+      ],
+    },
+    '팀워크': {
+      '팀워크(단일차원)': [
+        '우리 팀은 효과적으로 의사소통한다',
+        '우리 팀은 서로 협력한다',
+        '우리 팀은 공동 목표를 향해 일한다',
+        '우리 팀은 갈등을 잘 해결한다',
+        '우리 팀은 신뢰가 있다'
+      ],
+    },
+    '지각된품질': {
+      '지각된품질(단일차원)': [
+        '이 제품·서비스의 품질은 우수하다',
+        '이 제품·서비스는 신뢰할 만하다',
+        '이 제품·서비스는 기대를 충족한다',
+        '이 제품·서비스의 성능은 좋다',
+        '이 제품·서비스는 가치 있다'
+      ],
+    },
+    '구매의도': {
+      '구매의도(단일차원)': [
+        '나는 이 제품을 구매할 의향이 있다',
+        '나는 이 제품을 구매할 가능성이 높다',
+        '기회가 된다면 이 제품을 살 것이다',
+        '나는 가까운 시일 내에 이 제품을 구매할 계획이다'
+      ],
+    },
+    '자기주도학습': {
+      '자기주도학습(단일차원)': [
+        '나는 학습 목표를 스스로 설정한다',
+        '나는 학습 계획을 세우고 실행한다',
+        '나는 학습 자원을 적극적으로 찾는다',
+        '나는 학습 결과를 스스로 평가한다',
+        '나는 어려움이 있어도 학습을 지속한다'
+      ],
+    },
+    '학습몰입': {
+      '학습몰입(단일차원)': [
+        '나는 학습할 때 시간 가는 줄 모른다',
+        '나는 학습에 깊이 집중한다',
+        '나는 학습 자체가 즐겁다',
+        '나는 학습 활동에 몰입한다'
+      ],
+    },
+    '시장지향성': {
+      '시장지향성(단일차원)': [
+        '우리 조직은 고객 정보를 적극적으로 수집한다',
+        '우리 조직은 경쟁사 정보를 분석한다',
+        '우리 조직은 시장 변화에 신속히 대응한다',
+        '우리 조직은 부서 간 정보 공유가 활발하다',
+        '우리 조직은 고객 가치 창출에 집중한다'
+      ],
+    },
+    '역할갈등': {
+      '역할갈등(단일차원)': [
+        '나는 동시에 양립 불가능한 지시를 받는다',
+        '내가 받은 지시가 서로 충돌한다',
+        '나는 우선순위가 다른 일을 동시에 처리해야 한다',
+        '나의 가치관과 업무 요구가 충돌한다',
+        '여러 사람으로부터 상충하는 요구를 받는다'
+      ],
+    },
+    '사용의도': {
+      '사용의도(단일차원)': [
+        '나는 이를 사용할 의향이 있다',
+        '나는 이를 사용할 계획이다',
+        '나는 적극적으로 사용할 것이다',
+        '나는 다른 사람에게도 추천하겠다'
+      ],
+    },
+    '금융리터러시': {
+      '금융리터러시(단일차원)': [
+        '나는 금융 상품을 이해한다',
+        '나는 이자율과 인플레이션을 이해한다',
+        '나는 투자 위험을 판단할 수 있다',
+        '나는 자산 분배 원칙을 안다',
+        '나는 금융 의사결정에 자신이 있다'
+      ],
+    },
+    '재무관리행동': {
+      '재무관리행동(단일차원)': [
+        '나는 매달 예산을 세운다',
+        '나는 정기적으로 저축한다',
+        '나는 신용카드 잔액을 관리한다',
+        '나는 투자 계획을 세운다',
+        '나는 비상금을 마련해 둔다'
+      ],
+    },
+    '이용저항': {
+      '이용저항(단일차원)': [
+        '나는 이 서비스를 사용하기 꺼린다',
+        '나는 기존 방식이 더 편하다',
+        '이 서비스의 위험이 걱정된다',
+        '나는 새로운 기술 도입에 신중하다',
+        '굳이 바꿀 필요를 느끼지 않는다'
+      ],
+    },
+    '편리성': {
+      '편리성(단일차원)': [
+        '이 서비스는 사용하기 편리하다',
+        '이 서비스는 시간을 절약해 준다',
+        '이 서비스는 접근이 쉽다',
+        '이 서비스는 절차가 간단하다',
+        '언제든지 이용할 수 있다'
+      ],
+    },
+    '스마트팩토리도입': {
+      '스마트팩토리도입(단일차원)': [
+        '우리 공장은 스마트팩토리 시스템을 도입했다',
+        '우리 공장은 자동화 수준이 높다',
+        '생산 데이터를 실시간으로 수집한다',
+        '설비가 IoT로 연결되어 있다',
+        'AI·빅데이터를 활용한다'
+      ],
+    },
+    '생산성': {
+      '생산성(단일차원)': [
+        '우리 조직의 생산성이 높다',
+        '단위 시간당 산출량이 증가했다',
+        '자원 활용 효율이 우수하다',
+        '품질 대비 생산비용이 적절하다',
+        '경쟁사 대비 생산성이 우수하다'
+      ],
+    },
+    'IoT수용': {
+      'IoT수용(단일차원)': [
+        '우리 조직은 IoT 기술을 적극 도입한다',
+        'IoT는 우리 업무에 유용하다',
+        'IoT 기기 사용이 익숙하다',
+        'IoT를 통한 데이터가 의사결정에 도움이 된다',
+        'IoT 확대 도입 의사가 있다'
+      ],
+    },
+    '운영효율성': {
+      '운영효율성(단일차원)': [
+        '우리 조직은 운영 효율이 높다',
+        '비용 절감 성과가 좋다',
+        '업무 처리 시간이 단축되었다',
+        '낭비가 적다',
+        '경쟁사 대비 효율이 우수하다'
+      ],
+    },
+    '디지털전환': {
+      '디지털전환(단일차원)': [
+        '우리 조직은 디지털 전환을 추진하고 있다',
+        '디지털 기술을 적극 활용한다',
+        '디지털 비즈니스 모델을 개발한다',
+        '구성원의 디지털 역량을 강화한다',
+        '데이터 기반 의사결정을 한다'
+      ],
+    },
+    '안전인식': {
+      '안전인식(단일차원)': [
+        '나는 작업 위험을 잘 인식한다',
+        '나는 안전 규칙의 중요성을 안다',
+        '나는 안전 절차에 익숙하다',
+        '나는 위험 상황을 예측할 수 있다',
+        '안전이 최우선이라고 생각한다'
+      ],
+    },
+    '자동화수용': {
+      '자동화수용(단일차원)': [
+        '나는 자동화 시스템을 신뢰한다',
+        '자동화는 나의 업무에 도움이 된다',
+        '자동화를 적극 활용한다',
+        '자동화는 안전하다고 느낀다',
+        '자동화 확대에 긍정적이다'
+      ],
+    },
+    'ESG경영': {
+      'ESG경영(단일차원)': [
+        '이 기업은 환경 보호에 적극적이다',
+        '이 기업은 사회적 책임을 다한다',
+        '이 기업의 지배구조는 투명하다',
+        '이 기업은 ESG 정보를 충실히 공시한다',
+        '이 기업은 지속가능경영을 실천한다'
+      ],
+    },
+    '환경의식': {
+      '환경의식(단일차원)': [
+        '나는 환경 문제에 관심이 많다',
+        '환경 보호가 중요하다고 생각한다',
+        '인간은 자연과 조화롭게 살아야 한다',
+        '환경 오염은 심각한 문제다',
+        '환경 보호를 위해 노력해야 한다'
+      ],
+    },
+    '친환경행동의도': {
+      '친환경행동의도(단일차원)': [
+        '나는 재활용을 실천한다',
+        '나는 친환경 제품을 구매한다',
+        '나는 에너지 절약을 한다',
+        '나는 환경 단체를 후원하고 싶다',
+        '나는 친환경 라이프스타일을 추구한다'
+      ],
+    },
+    '지속가능소비태도': {
+      '지속가능소비태도(단일차원)': [
+        '나는 친환경 제품을 선호한다',
+        '윤리적 기업의 제품을 구매한다',
+        '과대 포장된 제품을 피한다',
+        '지역 생산품을 우선 구매한다',
+        '동물복지 제품을 선택한다'
+      ],
+    },
+    '기후변화인식': {
+      '기후변화인식(단일차원)': [
+        '기후변화는 실재한다',
+        '기후변화는 심각한 문제다',
+        '기후변화는 인간 활동의 결과다',
+        '기후변화는 미래에 영향을 줄 것이다',
+        '기후변화 대응은 시급하다'
+      ],
+    },
+    '환경행동': {
+      '환경행동(단일차원)': [
+        '나는 분리수거를 철저히 한다',
+        '나는 대중교통을 이용한다',
+        '나는 에너지 절약을 실천한다',
+        '나는 환경 캠페인에 참여한다',
+        '나는 일회용품 사용을 줄인다'
+      ],
+    },
+    '구직불안': {
+      '구직불안(단일차원)': [
+        '나는 취업에 대한 불안을 느낀다',
+        '구직 결과에 대한 걱정이 많다',
+        '면접 상황이 두렵다',
+        '취업 실패에 대한 두려움이 있다',
+        '구직 과정에서 스트레스를 많이 받는다'
+      ],
+    },
+    '진로결정': {
+      '진로결정(단일차원)': [
+        '나는 진로 방향이 명확하다',
+        '나는 진로 선택에 확신이 있다',
+        '나의 진로 계획이 구체적이다',
+        '나는 진로 정보를 충분히 가지고 있다',
+        '나는 진로 목표를 향해 노력하고 있다'
+      ],
+    },
+    '결혼의도': {
+      '결혼의도(단일차원)': [
+        '나는 결혼할 의향이 있다',
+        '나는 가까운 시일 내에 결혼하고 싶다',
+        '나에게 결혼은 중요하다',
+        '나는 결혼 계획을 가지고 있다',
+        '결혼은 인생의 중요한 목표다'
+      ],
+    },
+    '출산의도': {
+      '출산의도(단일차원)': [
+        '나는 자녀를 가질 계획이 있다',
+        '나는 가까운 시일 내에 출산하고 싶다',
+        '나에게 자녀는 중요하다',
+        '나는 출산 계획을 구체화하고 있다',
+        '나는 가족을 이루고 싶다'
+      ],
+    },
+    '세대다양성': {
+      '세대다양성(단일차원)': [
+        '우리 조직은 다양한 세대로 구성되어 있다',
+        '세대 간 가치관 차이가 있다',
+        '세대 간 소통이 활발하다',
+        '세대 다양성은 우리 팀에 긍정적이다',
+        '세대 간 상호 존중이 이루어진다'
+      ],
+    },
   };
 
   // 인구통계학적 문항: customDemographics state로 관리
@@ -19993,6 +21111,450 @@ const PaperCompass = ({ onBack }) => {
       scholar: 'Bhattacherjee(2001)',
       measurement: 'ECM-IS Scale',
       factors: '단일차원으로 구성하였다.',
+    },
+    '권력거리성향': {
+      definition: '권력거리성향이란 조직 구성원들이 권력의 불평등한 분배를 받아들이고 기대하는 정도에 대한 개인의 가치관적 성향을 의미한다.',
+      scholar: 'Hofstede(1980), Dorfman & Howell(1988), Kirkman et al.(2009)',
+      measurement: 'Dorfman & Howell(1988)의 권력거리성향 척도(6문항)를 기반으로 측정하였다. Likert 5점 척도.',
+      factors: '단일차원으로 구성하였다.',
+    },
+    '진성리더십': {
+      definition: '진성리더십이란 리더가 자기인식, 균형 잡힌 정보처리, 관계적 투명성, 내면화된 도덕관을 바탕으로 부하 직원과 진실되고 윤리적으로 상호작용하는 리더십을 의미한다.',
+      scholar: 'Avolio & Gardner(2005), Walumbwa et al.(2008)',
+      measurement: 'Walumbwa et al.(2008)의 진성리더십 척도 ALQ(Authentic Leadership Questionnaire, 16문항)를 기반으로 측정하였다.',
+      factors: '자기인식, 균형 잡힌 정보처리, 관계적 투명성, 내면화된 도덕관의 4개 하위요인으로 구성하였다.',
+    },
+    '심리자본': {
+      definition: '심리자본이란 자기효능감, 희망, 낙관주의, 회복탄력성으로 구성된 긍정적 심리 상태로, 개인이 도전적 상황에서 발휘하는 긍정적 심리 역량을 의미한다.',
+      scholar: 'Luthans, Youssef & Avolio(2007)',
+      measurement: 'Luthans et al.(2007)의 심리자본 척도 PCQ-24(Psychological Capital Questionnaire, 24문항)를 기반으로 측정하였다.',
+      factors: '자기효능감, 희망, 낙관주의, 회복탄력성의 4개 하위요인으로 구성하였다.',
+    },
+    '성격5요인': {
+      definition: '성격5요인이란 외향성, 친화성, 성실성, 신경증, 개방성으로 인간의 성격 특성을 설명하는 모델로, Big Five 또는 OCEAN 모형으로 알려져 있다.',
+      scholar: 'Goldberg(1993), Costa & McCrae(1992)',
+      measurement: 'Goldberg(1993)의 Big Five Inventory(BFI) 또는 Costa & McCrae(1992)의 NEO-PI-R 척도를 기반으로 측정하였다. Likert 5점 척도 25문항.',
+      factors: '외향성, 친화성, 성실성, 신경증, 개방성의 5개 하위요인으로 구성하였다.',
+    },
+    '코칭리더십': {
+      definition: '코칭리더십이란 리더가 구성원의 잠재력 개발과 성장을 위해 질문·경청·피드백을 통해 자기주도적 학습과 성과 향상을 지원하는 리더십을 의미한다.',
+      scholar: 'Stowell(1986), 조은현(2010), Heslin et al.(2006)',
+      measurement: '조은현(2010)이 한국 맥락에서 개발한 코칭리더십 척도(24문항) 또는 Heslin et al.(2006)의 코칭 행동 척도를 기반으로 측정하였다.',
+      factors: '방향제시, 개발, 수행평가, 관계의 4개 하위요인으로 구성하였다.',
+    },
+    '학습지향성': {
+      definition: '학습지향성이란 새로운 지식과 기술을 습득하고자 하는 개인의 동기적 성향으로, 자신의 능력 향상을 위한 도전과 노력을 추구하는 태도를 의미한다.',
+      scholar: 'Dweck(1986), VandeWalle(1997), Sinkula, Baker & Noordewier(1997)',
+      measurement: 'VandeWalle(1997)의 학습목표지향성 척도(5문항) 또는 Sinkula et al.(1997)의 학습지향성 척도를 기반으로 측정하였다.',
+      factors: '단일차원으로 구성하였다.',
+    },
+    '거래적리더십': {
+      definition: '거래적리더십이란 리더가 보상·처벌·예외관리 등 교환관계를 통해 부하의 행동을 통제하고 기대 수준의 성과를 이끌어내는 리더십을 의미한다.',
+      scholar: 'Bass(1985), Bass & Avolio(1995)',
+      measurement: 'Bass & Avolio(1995)의 MLQ-5X(Multifactor Leadership Questionnaire)를 기반으로 측정하였다. Likert 5점 척도.',
+      factors: '조건적 보상, 예외관리(능동/수동)의 2-3개 하위요인으로 구성하였다.',
+    },
+    '감정노동': {
+      definition: '감정노동이란 직무 수행 과정에서 조직이 요구하는 감정을 표현하기 위해 자신의 실제 감정을 관리하고 조절하는 노력을 의미한다.',
+      scholar: 'Hochschild(1983), Morris & Feldman(1996), Grandey(2000)',
+      measurement: 'Grandey(2000)의 감정노동 척도 또는 Brotheridge & Lee(2003)의 ELS(Emotional Labor Scale)를 기반으로 측정하였다.',
+      factors: '표면행위(surface acting), 내면행위(deep acting), 진실행위(genuine acting)의 2-3개 하위요인으로 구성하였다.',
+    },
+    '직무소진': {
+      definition: '직무소진(번아웃)이란 직무 요구가 지속되어 발생하는 정서적 고갈, 비인격화, 개인적 성취감 저하의 3차원적 심리·신체적 탈진 상태를 의미한다.',
+      scholar: 'Maslach & Jackson(1981), Maslach, Schaufeli & Leiter(2001)',
+      measurement: 'Maslach & Jackson(1981)의 MBI(Maslach Burnout Inventory, 22문항)를 기반으로 측정하였다.',
+      factors: '정서적 고갈, 비인격화, 개인적 성취감 저하의 3개 하위요인으로 구성하였다.',
+    },
+    '서비스품질': {
+      definition: '서비스품질이란 고객이 기대한 서비스와 실제 제공받은 서비스의 차이에 대한 평가로, 서비스 제공의 우수성에 대한 전반적 판단을 의미한다.',
+      scholar: 'Parasuraman, Zeithaml & Berry(1988) SERVQUAL',
+      measurement: 'Parasuraman et al.(1988)의 SERVQUAL 척도(22문항)를 기반으로 측정하였다.',
+      factors: '유형성, 신뢰성, 반응성, 확신성, 공감성의 5개 하위요인으로 구성하였다.',
+    },
+    '고객만족': {
+      definition: '고객만족이란 고객이 제품·서비스 이용 후 사전 기대와 실제 성과를 비교하여 느끼는 정서적·인지적 평가의 결과를 의미한다.',
+      scholar: 'Oliver(1980), Anderson & Sullivan(1993)',
+      measurement: 'Oliver(1980)의 ECT(Expectation-Confirmation Theory) 기반 만족 척도 또는 Anderson & Sullivan(1993)의 고객만족 척도를 기반으로 측정하였다.',
+      factors: '단일차원 또는 누적만족과 거래만족의 2개 차원으로 구성하였다.',
+    },
+    '재구매의도': {
+      definition: '재구매의도란 고객이 동일 제품·서비스 또는 동일 브랜드의 제품·서비스를 향후에도 계속 구매하고자 하는 행동 의도를 의미한다.',
+      scholar: 'Cronin & Taylor(1992), Zeithaml, Berry & Parasuraman(1996)',
+      measurement: 'Zeithaml et al.(1996)의 행동의도 척도 또는 Cronin & Taylor(1992)의 재구매의도 척도를 기반으로 측정하였다.',
+      factors: '단일차원으로 구성하였다.',
+    },
+    '일가정균형': {
+      definition: '일·가정 균형이란 일과 가정 영역의 역할 요구가 양립 가능하며 서로 긍정적 영향을 주고받는 상태에 대한 개인의 지각을 의미한다.',
+      scholar: 'Greenhaus & Powell(2006), Grzywacz & Carlson(2007)',
+      measurement: 'Grzywacz & Carlson(2007)의 일·가정 균형 척도 또는 한국 맥락 적용 척도(김혜원 2009)를 기반으로 측정하였다.',
+      factors: '단일차원 또는 일→가정 균형, 가정→일 균형의 2개 차원으로 구성하였다.',
+    },
+    '조직지원인식': {
+      definition: '조직지원인식이란 조직이 구성원의 기여를 인정하고 복지에 관심을 갖는다고 구성원이 지각하는 정도를 의미한다.',
+      scholar: 'Eisenberger, Huntington, Hutchison & Sowa(1986)',
+      measurement: 'Eisenberger et al.(1986)의 SPOS(Survey of Perceived Organizational Support) 척도(36문항 또는 단축형 8/16문항)를 기반으로 측정하였다.',
+      factors: '단일차원으로 구성하였다.',
+    },
+    '브랜드자산': {
+      definition: '브랜드자산이란 브랜드의 이름과 상징에 연관되어 제품·서비스의 가치를 증감시키는 자산과 부채의 집합을 의미한다.',
+      scholar: 'Aaker(1991), Keller(1993)',
+      measurement: 'Aaker(1991) Brand Equity Scale 또는 Keller(1993) CBBE 척도 기반.',
+      factors: '브랜드 인지, 브랜드 연상, 지각된 품질, 브랜드 충성도 4개 차원.',
+    },
+    '기업이미지': {
+      definition: '기업이미지란 소비자와 이해관계자가 기업에 대해 가지는 전반적 인식과 평가의 총체를 의미한다.',
+      scholar: 'Dowling(1986), Fombrun & Shanley(1990)',
+      measurement: 'Dowling(1986) 기업이미지 척도 기반.',
+      factors: '단일차원 또는 신뢰성·전문성·사회적책임 등 다차원.',
+    },
+    '온라인구전': {
+      definition: '온라인구전(eWOM)이란 인터넷을 통해 소비자가 제품·서비스에 대한 평가·경험·의견을 다른 소비자와 공유하는 정보 교환을 의미한다.',
+      scholar: 'Hennig-Thurau et al.(2004), Cheung & Thadani(2012)',
+      measurement: 'Hennig-Thurau et al.(2004) eWOM 동기 척도.',
+      factors: '단일차원 또는 정보품질·정보량·발신자 신뢰성 등 다차원.',
+    },
+    '환자안전문화': {
+      definition: '환자안전문화란 의료기관에서 환자의 안전을 우선시하는 공유된 가치·신념·규범으로, 안전한 진료 환경을 위한 조직 문화를 의미한다.',
+      scholar: 'Sorra & Nieva(2004), Pronovost & Sexton(2005)',
+      measurement: 'AHRQ HSOPSC 척도(12차원) 또는 SAQ 척도 기반.',
+      factors: '경영진 지원·팀워크·의사소통·보고체계 등 12차원.',
+    },
+    '의료서비스품질': {
+      definition: '의료서비스품질이란 환자가 기대한 의료서비스와 실제 제공받은 서비스의 차이에 대한 평가로, 의료 우수성에 대한 전반적 판단을 의미한다.',
+      scholar: 'Parasuraman et al.(1988), Donabedian(1980)',
+      measurement: 'SERVQUAL 척도(5차원 22문항) 또는 Donabedian 3차원 모형.',
+      factors: '유형성·신뢰성·반응성·확신성·공감성 5차원.',
+    },
+    '창업가정신': {
+      definition: '창업가정신이란 새로운 사업 기회를 발견하고 자원을 동원하여 가치를 창출하려는 개인의 혁신적·도전적 성향을 의미한다.',
+      scholar: 'Schumpeter(1934), Miller(1983)',
+      measurement: 'Miller(1983) EO 척도 또는 변형.',
+      factors: '혁신성·위험감수성·진취성 3차원.',
+    },
+    '기업가지향성': {
+      definition: '기업가지향성이란 조직 차원의 전략적 자세로 혁신성·위험감수성·진취성을 통해 새로운 기회를 추구하는 성향을 의미한다.',
+      scholar: 'Covin & Slevin(1989), Lumpkin & Dess(1996)',
+      measurement: 'Covin & Slevin(1989) EO 척도(9문항) 또는 Lumpkin & Dess(1996) EO-5.',
+      factors: '혁신성·위험감수성·진취성 3차원 또는 자율성·경쟁공격성 추가 5차원.',
+    },
+    '관광지매력': {
+      definition: '관광지매력이란 관광객이 관광지의 자원·서비스·이미지에 대해 느끼는 흡인력과 만족도의 종합적 평가를 의미한다.',
+      scholar: 'Hu & Ritchie(1993), Vengesayi(2003)',
+      measurement: 'Hu & Ritchie(1993) 관광지 매력 척도 기반.',
+      factors: '자연환경·문화시설·서비스품질·접근성 등 다차원.',
+    },
+    '방문의도': {
+      definition: '방문의도란 관광객이 특정 관광지를 방문하고자 하는 미래 행동 의도를 의미한다.',
+      scholar: 'Ajzen(1991), Baker & Crompton(2000)',
+      measurement: 'TPB 기반 방문의도 척도(3-4문항).',
+      factors: '단일차원.',
+    },
+    '재방문의도': {
+      definition: '재방문의도란 고객이 동일 장소·시설을 향후 다시 방문하고자 하는 행동 의도를 의미한다.',
+      scholar: 'Oliver(1999), Baker & Crompton(2000)',
+      measurement: '재방문의도 척도(3-4문항).',
+      factors: '단일차원.',
+    },
+    '운동참여만족': {
+      definition: '운동참여만족이란 스포츠·운동 참여 활동에서 얻는 심리적·신체적·사회적 만족도를 의미한다.',
+      scholar: 'Beard & Ragheb(1980), 김민정(2014)',
+      measurement: 'Beard & Ragheb(1980) Leisure Satisfaction Scale 기반.',
+      factors: '심리·교육·사회·심미·생리·환경 6차원.',
+    },
+    '지속운동의도': {
+      definition: '지속운동의도란 운동·체육 활동을 향후에도 지속적으로 참여하고자 하는 행동 의도를 의미한다.',
+      scholar: 'Ajzen(1991)',
+      measurement: 'TPB 기반 운동 지속의도 척도(3-4문항).',
+      factors: '단일차원.',
+    },
+    '자아탄력성': {
+      definition: '자아탄력성이란 스트레스 상황에서 유연하게 적응하고 회복할 수 있는 개인의 심리적 자원을 의미한다.',
+      scholar: 'Block & Kremen(1996), Klohnen(1996)',
+      measurement: 'ER89 척도(14문항) 또는 Klohnen 척도.',
+      factors: '단일차원 또는 자기효능·낙관성·대인관계 등 다차원.',
+    },
+    '긍정정서': {
+      definition: '긍정정서란 즐거움·열정·관심·자부심 등 긍정적인 감정 상태의 강도와 빈도를 의미한다.',
+      scholar: 'Watson, Clark & Tellegen(1988), Fredrickson(2001)',
+      measurement: 'PANAS 긍정 정서 10문항.',
+      factors: '단일차원.',
+    },
+    '안전문화': {
+      definition: '안전문화란 조직 내 안전에 대한 공유된 가치·신념·규범으로 안전한 작업 환경을 위한 조직 풍토를 의미한다.',
+      scholar: 'Cooper(2000), Zohar(1980)',
+      measurement: 'Cooper(2000) 안전문화 모형 또는 Zohar 안전풍토 척도.',
+      factors: '경영자 의지·안전 우선순위·안전 교육·안전 절차 등 다차원.',
+    },
+    '안전행동': {
+      definition: '안전행동이란 작업 현장에서 안전 규칙 준수와 안전 향상 활동에 자발적으로 참여하는 행동을 의미한다.',
+      scholar: 'Neal & Griffin(2006)',
+      measurement: 'Neal & Griffin(2006) 안전행동 척도(6문항).',
+      factors: '안전 준수, 안전 참여 2차원.',
+    },
+    '팀워크': {
+      definition: '팀워크란 팀 구성원이 공동 목표 달성을 위해 협력하고 효과적으로 상호작용하는 능력과 행동을 의미한다.',
+      scholar: 'Salas, Sims & Burke(2005), Hoegl & Gemuenden(2001)',
+      measurement: 'Salas et al.(2005) Big Five Teamwork 또는 Hoegl TWQ 척도.',
+      factors: '의사소통·조정·협력·신뢰·응집력 등 다차원.',
+    },
+    '역할갈등': {
+      definition: '역할갈등이란 직무 수행 과정에서 양립할 수 없는 요구나 기대에 동시에 직면하는 상황으로 발생하는 심리적 부담을 의미한다.',
+      scholar: 'Rizzo, House & Lirtzman(1970)',
+      measurement: 'Rizzo et al.(1970) 역할갈등 척도(8문항).',
+      factors: '단일차원 또는 역할-개인 갈등·역할-역할 갈등 등.',
+    },
+    '지각된품질': {
+      definition: '지각된품질이란 소비자가 제품·서비스의 우수성에 대해 느끼는 주관적 평가를 의미한다.',
+      scholar: 'Zeithaml(1988), Parasuraman et al.(1985)',
+      measurement: 'Zeithaml(1988) 지각된 품질 척도.',
+      factors: '단일차원.',
+    },
+    '심리적계약위반': {
+      definition: '심리적계약위반이란 조직이 약속한 의무를 이행하지 않았다고 구성원이 지각하는 것으로 발생하는 인지·정서적 반응을 의미한다.',
+      scholar: 'Robinson & Rousseau(1994), Morrison & Robinson(1997)',
+      measurement: 'Robinson & Rousseau(1994) 심리적계약위반 척도',
+      factors: '단일차원 또는 인지적·정서적 위반의 2차원.',
+    },
+    '브랜드신뢰': {
+      definition: '브랜드신뢰란 소비자가 브랜드의 능력·진실성·선의를 믿고 의지할 수 있다고 느끼는 정도를 의미한다.',
+      scholar: 'Delgado-Ballester & Munuera-Alemán(2001), Chaudhuri & Holbrook(2001)',
+      measurement: 'Delgado-Ballester(2003) 브랜드 신뢰 척도',
+      factors: '단일차원 또는 신뢰성·의도의 2차원.',
+    },
+    '구매의도': {
+      definition: '구매의도란 소비자가 특정 제품·서비스를 향후 구매하고자 하는 행동 의도를 의미한다.',
+      scholar: 'Dodds, Monroe & Grewal(1991), Ajzen(1991)',
+      measurement: 'Dodds et al.(1991) 구매의도 척도',
+      factors: '단일차원.',
+    },
+    '고객충성도': {
+      definition: '고객충성도란 고객이 특정 브랜드·기업에 대해 반복 구매와 긍정적 구전 등 일관된 호의적 행동을 보이는 정도를 의미한다.',
+      scholar: 'Oliver(1999), Dick & Basu(1994)',
+      measurement: 'Oliver(1999) 충성도 척도',
+      factors: '단일차원 또는 인지·정서·행동적 충성도.',
+    },
+    '학습동기': {
+      definition: '학습동기란 학습자가 학습 활동에 참여하고 지속하려는 내적·외적 동기 상태를 의미한다.',
+      scholar: 'Deci & Ryan(2000), Pintrich(2003)',
+      measurement: 'Pintrich(2003) MSLQ 척도',
+      factors: '내재적·외재적 동기 2차원.',
+    },
+    '자기주도학습': {
+      definition: '자기주도학습이란 학습자가 자신의 학습 목표 설정, 자원 활용, 결과 평가를 스스로 주도하는 학습 능력을 의미한다.',
+      scholar: 'Knowles(1975), Pintrich & De Groot(1990)',
+      measurement: 'Pintrich & De Groot(1990) SRL 척도',
+      factors: '인지·메타인지·동기·행동 다차원.',
+    },
+    '학업성취도': {
+      definition: '학업성취도란 학습자의 학업 성과를 평가하는 지표로 시험점수·GPA·자가보고 등으로 측정된다.',
+      scholar: 'Bloom(1956)',
+      measurement: 'GPA 또는 자가보고 척도',
+      factors: '단일차원.',
+    },
+    '교사효능감': {
+      definition: '교사효능감이란 교사가 학생의 학업 성취를 향상시킬 수 있다고 믿는 자신의 능력에 대한 신념을 의미한다.',
+      scholar: 'Tschannen-Moran & Hoy(2001), Bandura(1997)',
+      measurement: 'Tschannen-Moran & Hoy(2001) TSES 척도',
+      factors: '교수효능·관리효능·참여효능 3차원.',
+    },
+    '학습몰입': {
+      definition: '학습몰입이란 학습 활동에 깊이 빠져들어 시간 감각을 잃고 즐거움을 느끼는 심리 상태를 의미한다.',
+      scholar: 'Csikszentmihalyi(1990) Flow 이론',
+      measurement: 'Csikszentmihalyi(1990) Flow Scale',
+      factors: '단일차원 또는 도전·기술·집중 등 다차원.',
+    },
+    '간호근무환경': {
+      definition: '간호근무환경이란 간호사가 효과적인 간호를 제공할 수 있도록 지원하는 조직 환경·자원·관계의 특성을 의미한다.',
+      scholar: 'Lake(2002) PES-NWI',
+      measurement: 'Lake(2002) PES-NWI 척도(31문항)',
+      factors: '5차원: 간호참여·간호기반·관리자지원·인력자원·간호의사 협력.',
+    },
+    '시장지향성': {
+      definition: '시장지향성이란 조직이 고객 가치 창출을 위해 시장 정보를 수집·확산·반응하는 전략적 지향성을 의미한다.',
+      scholar: 'Narver & Slater(1990), Kohli & Jaworski(1993)',
+      measurement: 'Narver & Slater(1990) MARKOR 척도',
+      factors: '고객지향·경쟁자지향·기능간 조정 3차원.',
+    },
+    '경영성과': {
+      definition: '경영성과란 조직의 재무·시장·운영 등 다양한 측면에서 달성한 성과의 종합적 지표를 의미한다.',
+      scholar: 'Venkatraman & Ramanujam(1986)',
+      measurement: 'Venkatraman & Ramanujam(1986) 경영성과 척도',
+      factors: '재무성과·운영성과·시장성과 다차원.',
+    },
+    '공공봉사동기': {
+      definition: '공공봉사동기란 공공 부문에서 일하며 사회에 기여하고자 하는 동기와 가치관을 의미한다.',
+      scholar: 'Perry & Wise(1990), Perry(1996)',
+      measurement: 'Perry(1996) PSM 척도(24문항)',
+      factors: '공공정책 매력·공익 헌신·동정심·자기희생 4차원.',
+    },
+    '삶의만족': {
+      definition: '삶의만족이란 개인이 자신의 삶 전반에 대해 인지적으로 평가하여 느끼는 만족도를 의미한다.',
+      scholar: 'Diener, Emmons, Larsen & Griffin(1985)',
+      measurement: 'Diener et al.(1985) SWLS 척도(5문항)',
+      factors: '단일차원.',
+    },
+    '학습행동': {
+      definition: '학습행동이란 팀·조직 내에서 새로운 지식·기술을 습득하고 적용하기 위한 적극적인 활동을 의미한다.',
+      scholar: 'Edmondson(1999)',
+      measurement: 'Edmondson(1999) Team Learning Scale (7문항)',
+      factors: '단일차원.',
+    },
+    '팀성과': {
+      definition: '팀성과란 팀이 설정한 목표를 효과적·효율적으로 달성하는 정도를 의미한다.',
+      scholar: 'Hackman(1987), Cohen & Bailey(1997)',
+      measurement: 'Hackman(1987) 팀 효과성 척도',
+      factors: '효과성·생산성·만족 다차원.',
+    },
+    '혁신성과': {
+      definition: '혁신성과란 조직이 새로운 제품·서비스·프로세스 개발을 통해 달성한 경영 성과의 정도를 의미한다.',
+      scholar: 'Damanpour(1991), Subramanian & Nilakanta(1996)',
+      measurement: 'Damanpour(1991) 혁신성과 척도 또는 자가보고형 신제품 매출 비중·특허 수.',
+      factors: '제품혁신·공정혁신·관리혁신 등 다차원 또는 단일차원.',
+    },
+    '사용의도': {
+      definition: '사용의도란 사용자가 특정 시스템·서비스를 사용하고자 하는 행동 의도를 의미한다.',
+      scholar: 'Ajzen(1991)',
+      measurement: 'TPB 행동의도 척도',
+      factors: '단일차원.',
+    },
+    '금융리터러시': {
+      definition: '금융리터러시란 개인이 금융 정보·상품·서비스를 이해하고 합리적 의사결정을 할 수 있는 능력을 의미한다.',
+      scholar: 'Lusardi & Mitchell(2014)',
+      measurement: 'Lusardi-Mitchell 척도',
+      factors: '지식·태도·행동 3차원.',
+    },
+    '재무관리행동': {
+      definition: '재무관리행동이란 예산 수립·저축·신용 관리·투자 등 개인의 재정적 의사결정과 실행 행동을 의미한다.',
+      scholar: 'Dew & Xiao(2011)',
+      measurement: 'FMBS 척도',
+      factors: '예산·저축·신용·투자 4차원.',
+    },
+    '이용저항': {
+      definition: '이용저항이란 새로운 기술·서비스를 이용하지 않으려는 소비자의 부정적 반응을 의미한다.',
+      scholar: 'Ram & Sheth(1989)',
+      measurement: '혁신저항 척도',
+      factors: '사용·가치·위험·전통·이미지 5차원.',
+    },
+    '편리성': {
+      definition: '편리성이란 사용자가 시간·노력을 최소화하면서 서비스를 이용할 수 있는 정도를 의미한다.',
+      scholar: 'Berry, Seiders & Grewal(2002)',
+      measurement: 'Service Convenience Scale',
+      factors: '결정·접근·거래·혜택·사후 5차원.',
+    },
+    '스마트팩토리도입': {
+      definition: '스마트팩토리도입이란 제조 현장에 IoT·AI·빅데이터 등 디지털 기술을 통합 적용하여 생산 시스템을 지능화하는 정도를 의미한다.',
+      scholar: 'Kagermann, Wahlster & Helbig(2013)',
+      measurement: 'Industrie 4.0 도입 척도',
+      factors: '단일차원 또는 자동화·연결성·데이터 활용 차원.',
+    },
+    '생산성': {
+      definition: '생산성이란 투입 대비 산출의 비율로, 자원을 활용하여 가치를 창출하는 효율성을 의미한다.',
+      scholar: 'Pritchard(1995)',
+      measurement: 'ProMES 생산성 척도',
+      factors: '효율성·산출량·품질 다차원.',
+    },
+    'IoT수용': {
+      definition: 'IoT수용이란 사물인터넷 기술을 조직·개인이 받아들이고 활용하는 정도를 의미한다.',
+      scholar: 'Atzori, Iera & Morabito(2010)',
+      measurement: 'IoT 수용 척도',
+      factors: '단일차원.',
+    },
+    '운영효율성': {
+      definition: '운영효율성이란 조직이 자원·시간·비용을 최소화하면서 최대 산출을 달성하는 능력을 의미한다.',
+      scholar: 'Stalk, Evans & Shulman(1992)',
+      measurement: '운영효율성 척도',
+      factors: '비용·시간·품질 다차원.',
+    },
+    '디지털전환': {
+      definition: '디지털전환이란 디지털 기술을 활용하여 조직의 비즈니스 모델·프로세스·문화를 근본적으로 변화시키는 과정을 의미한다.',
+      scholar: 'Vial(2019)',
+      measurement: 'DT 척도',
+      factors: '기술·전략·문화·고객경험 다차원.',
+    },
+    '안전인식': {
+      definition: '안전인식이란 작업자가 작업 환경의 위험과 안전 절차의 중요성을 인지하고 평가하는 정도를 의미한다.',
+      scholar: 'Cox & Cox(1991), Neal & Griffin(2006)',
+      measurement: '안전인식 척도',
+      factors: '위험인식·안전중요성·자기효능감 다차원.',
+    },
+    '자동화수용': {
+      definition: '자동화수용이란 작업자가 자동화 시스템·로봇 등 기술 도입을 받아들이고 활용하는 정도를 의미한다.',
+      scholar: 'Parasuraman & Riley(1997)',
+      measurement: '자동화 수용 척도',
+      factors: '신뢰·유용성·통제 다차원.',
+    },
+    'ESG경영': {
+      definition: 'ESG경영이란 환경(Environment)·사회(Social)·지배구조(Governance) 측면의 책임을 통합적으로 추구하는 경영 활동을 의미한다.',
+      scholar: 'Eccles, Ioannou & Serafeim(2014)',
+      measurement: 'ESG 성과 척도',
+      factors: '환경·사회·지배구조 3차원.',
+    },
+    '환경의식': {
+      definition: '환경의식이란 환경 문제에 대한 인지와 환경 보호의 가치·중요성에 대한 개인의 태도와 신념을 의미한다.',
+      scholar: 'Dunlap et al.(2000) NEP',
+      measurement: '신환경 패러다임 척도(15문항)',
+      factors: '단일차원.',
+    },
+    '친환경행동의도': {
+      definition: '친환경행동의도란 환경 보호를 위해 친환경적으로 행동하고자 하는 개인의 의도를 의미한다.',
+      scholar: 'Stern(2000), Ajzen(1991)',
+      measurement: 'TPB 기반 친환경행동의도 척도',
+      factors: '단일차원.',
+    },
+    '지속가능소비태도': {
+      definition: '지속가능소비태도란 환경·사회적 책임을 고려한 소비 행동을 추구하는 개인의 태도를 의미한다.',
+      scholar: 'Roberts(1996)',
+      measurement: 'GCB 척도',
+      factors: '단일차원.',
+    },
+    '기후변화인식': {
+      definition: '기후변화인식이란 기후변화의 현실성·심각성·인간 책임에 대한 개인의 인지와 평가를 의미한다.',
+      scholar: 'Leiserowitz(2006)',
+      measurement: '기후변화 인식 척도',
+      factors: '단일차원.',
+    },
+    '환경행동': {
+      definition: '환경행동이란 환경 보호를 위한 일상적·정치적·소비적 행동을 의미한다.',
+      scholar: 'Kaiser, Wölfing & Fuhrer(1999)',
+      measurement: 'GEB(General Ecological Behavior) 척도',
+      factors: '단일차원 또는 일상·정치·소비 다차원.',
+    },
+    '사회적책임': {
+      definition: '사회적책임이란 기업이 경제적·법적·윤리적·자선적 책임을 종합적으로 이행해야 한다는 책무를 의미한다.',
+      scholar: 'Carroll(1991)',
+      measurement: 'CSR Pyramid',
+      factors: '경제·법·윤리·자선 4차원.',
+    },
+    '구직불안': {
+      definition: '구직불안이란 취업·구직 과정에서 미래에 대한 불확실성과 실패 가능성에 대해 느끼는 심리적 긴장과 우려를 의미한다.',
+      scholar: 'Spielberger(1983), Saks & Ashforth(2000)',
+      measurement: 'Job Search Anxiety Scale',
+      factors: '단일차원.',
+    },
+    '진로결정': {
+      definition: '진로결정이란 개인이 자신의 진로 방향을 명확히 정하고 실행하려는 의사결정 수준을 의미한다.',
+      scholar: 'Crites(1978), Holland(1985)',
+      measurement: 'Career Decision Scale',
+      factors: '단일차원 또는 결정성·확신성.',
+    },
+    '결혼의도': {
+      definition: '결혼의도란 향후 결혼을 하고자 하는 개인의 행동 의도와 계획성을 의미한다.',
+      scholar: 'Willoughby(2010), Ajzen(1991) TPB',
+      measurement: '결혼의도 척도',
+      factors: '단일차원.',
+    },
+    '출산의도': {
+      definition: '출산의도란 향후 자녀를 갖고자 하는 개인의 행동 의도와 계획을 의미한다.',
+      scholar: 'Miller(1994), Ajzen(1991)',
+      measurement: '출산의도 척도',
+      factors: '단일차원.',
+    },
+    '세대다양성': {
+      definition: '세대다양성이란 조직 내 다양한 연령·세대 구성원이 공존하며 발생하는 가치·관점·행동의 차이와 그 효과를 의미한다.',
+      scholar: 'Lyons & Kuron(2014)',
+      measurement: '세대다양성 척도',
+      factors: '단일차원 또는 가치·태도·행동 다차원.',
     },
   };
 
@@ -24054,12 +25616,14 @@ const PaperCompass = ({ onBack }) => {
       script += `  var form = FormApp.create('${safeTitle}');\n`;
       script += `  form.setDescription('${safeIntro}');\n\n`;
 
-      vars.forEach(v => {
+      vars.forEach((v, vi) => {
         const byFactor = getCustomizedSurveyItems(v);
         const isNoScholarly = byFactor.length > 0 && byFactor[0].noScholarly;
         const safeV = _esc(v);
         script += `  // ${safeV}\n`;
-        script += `  form.addSectionHeaderItem().setTitle('${safeV}');\n`;
+        // ★ 페이지 나누기: 각 변수가 별도 페이지로 표시되어 응답자가 변수 맥락 명확히 인식
+        // (선배 박사 논문 구글폼 스타일 — '다음' 클릭 시 새 변수명이 페이지 제목으로 노출)
+        script += `  form.addPageBreakItem().setTitle('${safeV}').setHelpText('아래 문항은 \\'${safeV}\\'에 관한 질문입니다. 평소 귀하께서 느끼시는 바를 솔직하게 응답해 주세요.');\n`;
         if (isNoScholarly) {
           script += `  // 선행연구 기반 설문항 미등록 — 연구자가 직접 추가 필요\n`;
           for (let wi = 1; wi <= 5; wi++) {
@@ -24084,7 +25648,8 @@ const PaperCompass = ({ onBack }) => {
 
       // ── Demographics: 사용자가 Step 7에서 수정한 customDemographics 동적 반영 ──
       script += `  // 인구통계학적 정보 (사용자 정의)\n`;
-      script += `  form.addSectionHeaderItem().setTitle('인구통계학적 정보');\n`;
+      // ★ 인구통계학 정보도 별도 페이지로 — '다음' 클릭 시 응답자가 마지막 단계임을 인식
+      script += `  form.addPageBreakItem().setTitle('인구통계학적 정보').setHelpText('마지막 단계입니다. 응답자 분포 분석을 위한 기본 정보를 입력해 주세요. (개인 식별 정보는 수집하지 않습니다)');\n`;
       customDemographics.forEach(rawItem => {
         // "항목명: 옵션1 / 옵션2 / 옵션3" 또는 "항목명: _______________" 형식 파싱
         const item = String(rawItem || '').trim();
@@ -32699,18 +34264,4 @@ const HomeScreen = ({ onSelect }) => {
 const App = () => {
   const [mode, setMode] = useState(null);
   if(!mode) return h(HomeScreen, {onSelect:setMode});
-  if(mode==='thesis') return h(PaperCompass, {onBack:()=>setMode(null)});
-  if(mode==='phd') return h(PhdCompass, {onBack:()=>setMode(null)});
-  if(mode==='stats') return h(StatsAnalyzer, {onBack:()=>setMode(null)});
-  if(mode==='paperdb') return h(PaperDBBuilder, {onBack:()=>setMode(null)});
-  if(mode==='dbcheck') return h(DBChecker, {onBack:()=>setMode(null)});
-  return null;
-};
-
-      ReactDOM.render(React.createElement(App), document.getElementById('root'));
-    } catch(e) {
-      document.getElementById('root').innerHTML = '<pre style="color:red;padding:20px;white-space:pre-wrap">Error: ' + e.message + '\n\n' + e.stack + '</pre>';
-    }
-  </script>
-</body>
-</html>
+  if(mode==='thesis') retur
