@@ -1600,8 +1600,8 @@ const PaperCompass = ({ onBack }) => {
     'CEO브랜드이미지→고객충성도': { count: 7, sources: 'SVU: 안영노(2025) / 선행: 박지혜(2007), 윤지현(2008), 임현지(2015), 장윤정(2016), 유봉우(2019), 최현정(2023)', verdict: 'moderate' },
     'CEO브랜드이미지→CEO평판': { count: 3, sources: 'SVU: 안영노(2025) / 선행: 최건(2005), 박영실(2024)', verdict: 'emerging' },
     'CEO브랜드이미지→기업평판': { count: 7, sources: 'SVU: 안영노(2025) / 선행: 이재진(2003), 이경렬(2004), 김정석(2005), 이윤주(2006), 최현정(2023), 최현정·송중길(2024)', verdict: 'moderate' },
-    'CEO평판→고객충성도': { count: 5, sources: 'SVU: 안영노(2025) / 선행: 문효진(2004), 변삼문(2005), 최건(2005), 김좌중(2012)', verdict: 'weak' },
-    '기업평판→고객충성도': { count: 4, sources: 'SVU: 안영노(2025) / 선행: 문효진(2004), 하빈(2015), 최현정(2023)', verdict: 'weak' },
+    // CEO평판→고객충성도 / 기업평판→고객충성도 중복 제거 (라인 2110·2112에 해외원전 통합 정의)
+    // 기존 SVU·국내 인용 참고: 문효진(2004), 변삼문(2005), 최건(2005), 김좌중(2012), 하빈(2015), 최현정(2023)
     '변혁적리더십→직원몰입': { count: 1, sources: 'SVU: 정용희(2024)', verdict: 'emerging' },
     '직원몰입→혁신과업행동': { count: 1, sources: 'SVU: 정용희(2024)', verdict: 'emerging' },
     '조직시민행동→혁신과업행동': { count: 1, sources: 'SVU: 정용희(2024)', verdict: 'emerging' },
@@ -2033,12 +2033,158 @@ const PaperCompass = ({ onBack }) => {
     '고객경험가치→고객만족': { count: 6, sources: '김태숙(2016), 박준서(2021), 김찬용(2021), 문재정(2021), 이은경(2022), 양성미(2023)', verdict: 'strong' },
     '고객경험가치→브랜드신뢰': { count: 6, sources: '안정선(2005), 이경민(2015), 황예진(2016), 이세영(2017), 조연주(2019), 정경운(2024)', verdict: 'strong' },
     '브랜드신뢰→고객충성도': { count: 4, sources: '김진영(2003), 오가준(2018), 이윤영(2019), 정경운(2024)', verdict: 'moderate' },
-    '라포형성행동→고객충성도': { count: 3, sources: '곽진희(2024), 김천욱(2023), 유병선(2024)', verdict: 'weak' },
-    '라포형성행동→고객만족': { count: 3, sources: '곽진희(2024), 김천욱(2023), 유병선(2024)', verdict: 'weak' },
+    '라포형성행동→고객충성도': { count: 7, sources: '해외원전: Gremler & Gwinner(2000, JSR), Macintosh(2009, JSM), Hennig-Thurau, Gwinner & Gremler(2002, JSR), Reynolds & Beatty(1999, JOR) / SVU: 곽진희(2024), 김천욱(2023), 유병선(2024)', verdict: 'strong' },
+    '라포형성행동→고객만족': { count: 6, sources: '해외원전: Gremler & Gwinner(2000, JSR), Macintosh(2009, JSM), Tickle-Degnen & Rosenthal(1990) / SVU: 곽진희(2024), 김천욱(2023), 유병선(2024)', verdict: 'strong' },
+    // ── 2026-06 추가: 라포형성행동 박사 모형 핵심 7개 경로 (부동산 거래 고객 표본) ──
+    '라포형성행동→관계품질': { count: 7, sources: '해외원전: Crosby, Evans & Cowles(1990, JM), Gremler & Gwinner(2000, JSR), Macintosh(2009, JSM), Palmatier et al.(2006, JM 메타분석) / SVU: 곽진희(2024), 김천욱(2023) / 타교: 강석정·김선국(2006)', verdict: 'strong' },
+    '라포형성행동→고객신뢰': { count: 7, sources: '해외원전: Morgan & Hunt(1994, JM), Gremler & Gwinner(2008, JR), Doney & Cannon(1997, JM), Sirdeshmukh, Singh & Sabol(2002, JM) / SVU: 곽진희(2024), 김천욱(2023) / 타교: 김재훈(2018)', verdict: 'strong' },
+    '라포형성행동→구전의도': { count: 7, sources: '해외원전: Gremler & Gwinner(2000, JSR), Brown, Barry, Dacin & Gunst(2005, JAMS), Harrison-Walker(2001, JSR), Hennig-Thurau et al.(2002, JSR) / SVU: 곽진희(2024), 김천욱(2023) / 타교: 유병선(2024)', verdict: 'strong' },
+    '관계품질→고객충성도': { count: 8, sources: '해외원전: Hennig-Thurau & Klee(1997, P&M), Crosby, Evans & Cowles(1990, JM), De Wulf, Odekerken-Schröder & Iacobucci(2001, JM), Palmatier et al.(2006, JM 메타분석), Garbarino & Johnson(1999, JM) / SVU: 곽진희(2024) / 타교: 강석정·김선국(2006), 김재훈(2018)', verdict: 'strong' },
+    '관계품질→구전의도': { count: 7, sources: '해외원전: Hennig-Thurau, Gwinner & Gremler(2002, JSR), De Matos & Rossi(2008, JAMS 메타분석), Brown et al.(2005, JAMS), Harrison-Walker(2001, JSR) / SVU: 곽진희(2024), 김천욱(2023) / 타교: 김재훈(2018)', verdict: 'strong' },
+    '고객신뢰→고객충성도': { count: 8, sources: '해외원전: Morgan & Hunt(1994, JM), Garbarino & Johnson(1999, JM), Chaudhuri & Holbrook(2001, JM), Sirdeshmukh, Singh & Sabol(2002, JM), Reichheld & Schefter(2000, HBR) / SVU: 곽진희(2024), 김천욱(2023) / 타교: 강석정·김선국(2006)', verdict: 'strong' },
+    '고객신뢰→구전의도': { count: 7, sources: '해외원전: Ranaweera & Prabhu(2003, IJSIM), Sichtmann(2007, EJM), Eisingerich & Bell(2007, JOSM), Harrison-Walker(2001, JSR), Morgan & Hunt(1994, JM) / SVU: 곽진희(2024), 김천욱(2023)', verdict: 'strong' },
+    // ── 2026-06 일괄 보강: 분류 A·B·C·D 누락 경로 (학술 4편+ 기반) ──
+    // [A] 매개 outgoing 보강
+    '관계품질→고객만족': { count: 6, sources: '해외원전: Crosby et al.(1990, JM), Hennig-Thurau & Klee(1997, P&M), Palmatier et al.(2006, JM 메타분석), Garbarino & Johnson(1999, JM) / SVU: 곽진희(2024), 김천욱(2023)', verdict: 'strong' },
+    '관계품질→재구매의도': { count: 5, sources: '해외원전: Crosby et al.(1990, JM), De Wulf et al.(2001, JM), Palmatier et al.(2006), Hennig-Thurau et al.(2002, JSR) / 타교: 강석정·김선국(2006)', verdict: 'strong' },
+    '관계품질→지속사용의도': { count: 4, sources: '해외원전: De Wulf et al.(2001, JM), Bhattacherjee(2001, MISQ), Hennig-Thurau et al.(2002, JSR), Morgan & Hunt(1994, JM)', verdict: 'strong' },
+    '고객신뢰→재구매의도': { count: 5, sources: '해외원전: Morgan & Hunt(1994, JM), Sirdeshmukh et al.(2002, JM), Ranaweera & Prabhu(2003), Garbarino & Johnson(1999, JM) / SVU: 김천욱(2023)', verdict: 'strong' },
+    '고객신뢰→고객만족': { count: 5, sources: '해외원전: Morgan & Hunt(1994, JM), Garbarino & Johnson(1999, JM), Chaudhuri & Holbrook(2001, JM), Sirdeshmukh et al.(2002, JM) / SVU: 곽진희(2024)', verdict: 'strong' },
+    '고객신뢰→지속사용의도': { count: 4, sources: '해외원전: Morgan & Hunt(1994, JM), Bhattacherjee(2001, MISQ), Chaudhuri & Holbrook(2001, JM), Sirdeshmukh et al.(2002, JM)', verdict: 'strong' },
+    '직무소진→이직의도': { count: 7, sources: '해외원전: Maslach & Jackson(1981, JOB), Lee & Ashforth(1996, JAP 메타분석), Wright & Cropanzano(1998, JAP), Cordes & Dougherty(1993, AMR), Bakker et al.(2003) / SVU: 백성현(2024) / 타교: 김원형(2003)', verdict: 'strong' },
+    '직무소진→직무성과': { count: 5, sources: '해외원전: Wright & Cropanzano(1998, JAP), Lee & Ashforth(1996), Maslach et al.(2001, ARP), Demerouti et al.(2001, JAP, JD-R) / 타교: 박원우(2017)', verdict: 'strong' },
+    '직무소진→조직몰입': { count: 5, sources: '해외원전: Lee & Ashforth(1996, JAP 메타분석), Maslach et al.(2001, ARP), Schaufeli & Bakker(2004, JOB), Cordes & Dougherty(1993, AMR) / SVU: 김승연(2017)', verdict: 'strong' },
+    // [B] DV → 후속 행동 변수 연쇄 (Oliver/NPS/ECM 이론)
+    '고객충성도→구전의도': { count: 6, sources: '해외원전: Oliver(1999, JM), Dick & Basu(1994, JAMS), Reichheld(2003, HBR, NPS), Westbrook(1987, JMR), Anderson(1998, JSR) / SVU: 곽진희(2024)', verdict: 'strong' },
+    '고객충성도→재구매의도': { count: 5, sources: '해외원전: Oliver(1999, JM), Jacoby & Chestnut(1978), Dick & Basu(1994), Reichheld(1996) / SVU: 김천욱(2023)', verdict: 'strong' },
+    '고객충성도→지속사용의도': { count: 4, sources: '해외원전: Oliver(1999, JM), Reichheld & Schefter(2000, HBR), Bhattacherjee(2001, MISQ), Anderson & Srinivasan(2003, P&M)', verdict: 'strong' },
+    '구전의도→재구매의도': { count: 5, sources: '해외원전: Anderson(1998, JSR), Reichheld(2003, HBR, NPS), Brown et al.(2005, JAMS), Harrison-Walker(2001, JSR) / 타교: De Matos & Rossi(2008, JAMS)', verdict: 'strong' },
+    '구전의도→고객충성도': { count: 4, sources: '해외원전: Anderson(1998, JSR), Westbrook(1987, JMR), Harrison-Walker(2001), Reichheld(2003, HBR)', verdict: 'strong' },
+    '지속사용의도→구전의도': { count: 5, sources: '해외원전: Bhattacherjee(2001, MISQ, ECM), Anderson & Srinivasan(2003, P&M), Reichheld & Schefter(2000), Oliver(1999, JM), Zeithaml et al.(1996, JM)', verdict: 'strong' },
+    '지속사용의도→고객충성도': { count: 4, sources: '해외원전: Bhattacherjee(2001, MISQ), Reichheld & Schefter(2000, HBR), Oliver(1999), Anderson & Srinivasan(2003)', verdict: 'strong' },
+    '재구매의도→구전의도': { count: 4, sources: '해외원전: Zeithaml et al.(1996, JM), Anderson(1998, JSR), Reichheld(2003), Westbrook(1987, JMR)', verdict: 'strong' },
+    '재구매의도→고객충성도': { count: 4, sources: '해외원전: Oliver(1999, JM), Dick & Basu(1994, JAMS), Jacoby & Chestnut(1978), Anderson(1998)', verdict: 'strong' },
+    '이직의도→실제이직': { count: 4, sources: '해외원전: Mobley(1977, JAP), Tett & Meyer(1993, PP 메타분석), Griffeth et al.(2000, JOM 메타분석), Hom & Griffeth(1995)', verdict: 'strong' },
+    // [C] 브랜드 변수 outgoing (B2C 모형)
+    '브랜드이미지→고객만족': { count: 5, sources: '해외원전: Aaker(1991), Keller(1993, JM), Bloemer & de Ruyter(1998, EJM), Faullant et al.(2008, MIP), Esch et al.(2006, JPBM)', verdict: 'strong' },
+    '브랜드이미지→브랜드신뢰': { count: 4, sources: '해외원전: Esch et al.(2006, JPBM), Erdem & Swait(2004, JCR), Keller(1993, JM), Chaudhuri & Holbrook(2001, JM)', verdict: 'strong' },
+    '브랜드이미지→고객충성도': { count: 5, sources: '해외원전: Aaker(1991), Keller(1993, JM), Bloemer & de Ruyter(1998), Esch et al.(2006), Oliver(1999, JM)', verdict: 'strong' },
+    '브랜드이미지→구전의도': { count: 4, sources: '해외원전: Keller(1993, JM), Anderson(1998, JSR), Harrison-Walker(2001), Chaudhuri & Holbrook(2001)', verdict: 'strong' },
+    '브랜드이미지→재구매의도': { count: 4, sources: '해외원전: Aaker(1991), Keller(1993, JM), Faullant et al.(2008), Esch et al.(2006)', verdict: 'strong' },
+    '브랜드신뢰→구전의도': { count: 4, sources: '해외원전: Chaudhuri & Holbrook(2001, JM), Morgan & Hunt(1994), Delgado-Ballester(2004, EJM), Harrison-Walker(2001, JSR)', verdict: 'strong' },
+    '브랜드신뢰→재구매의도': { count: 4, sources: '해외원전: Chaudhuri & Holbrook(2001, JM), Delgado-Ballester & Munuera-Alemán(2001), Morgan & Hunt(1994), Erdem & Swait(2004, JCR)', verdict: 'strong' },
+    '브랜드신뢰→지속사용의도': { count: 4, sources: '해외원전: Chaudhuri & Holbrook(2001), Morgan & Hunt(1994), Bhattacherjee(2001, MISQ), Delgado-Ballester(2004)', verdict: 'strong' },
+    // [D] KT 통신 TAM/ECM 모형 (Davis 1989, Bhattacherjee 2001)
+    '지각된유용성→지속사용의도': { count: 6, sources: '해외원전: Davis(1989, MISQ, TAM), Bhattacherjee(2001, MISQ, ECM), Davis, Bagozzi & Warshaw(1989, MS), Venkatesh & Davis(2000, MS, TAM2), Venkatesh et al.(2003, MISQ, UTAUT)', verdict: 'strong' },
+    '지각된용이성→지각된유용성': { count: 5, sources: '해외원전: Davis(1989, MISQ, TAM), Davis et al.(1989, MS), Venkatesh & Davis(2000, MS, TAM2), Adams, Nelson & Todd(1992, MISQ), Igbaria et al.(1997, MISQ)', verdict: 'strong' },
+    '지각된용이성→지속사용의도': { count: 5, sources: '해외원전: Davis(1989, MISQ, TAM), Bhattacherjee(2001, MISQ, ECM), Venkatesh et al.(2003, MISQ, UTAUT), Venkatesh & Davis(2000), Davis et al.(1989)', verdict: 'strong' },
+    // [E] AI/디지털 변수 (최찬기 박사 모형)
+    'AI역량→직무성과': { count: 4, sources: '해외원전: Brynjolfsson & McAfee(2017, HBR), Wamba-Taguimdje et al.(2020, BPMJ), Mikalef & Gupta(2021, I&M), Ransbotham et al.(2017, MIT-SMR)', verdict: 'moderate' },
+    'AI역량→혁신행동': { count: 4, sources: '해외원전: Bag et al.(2021), Mikalef & Gupta(2021, I&M), Wamba-Taguimdje et al.(2020), Davenport(2018, MIT Press)', verdict: 'moderate' },
+    'AI역량→직무만족': { count: 4, sources: '해외원전: Brougham & Haar(2018, J. Mgmt), Tursunbayeva et al.(2022, IJIM), Charlwood & Guenole(2022, HRM J), Vrontis et al.(2022, IJHRM)', verdict: 'moderate' },
+    '디지털리더십→조직혁신성': { count: 4, sources: '해외원전: Sainger(2018, Asian J Mgmt), Promsri(2019), Avolio et al.(2014, LQ), Petry(2018)', verdict: 'moderate' },
+    '디지털리더십→디지털전환역량': { count: 4, sources: '해외원전: Sainger(2018), Promsri(2019), Westerman et al.(2014, MIT Press), Hess et al.(2016, MISQ-E)', verdict: 'moderate' },
+    '디지털리더십→조직몰입': { count: 4, sources: '해외원전: Avolio et al.(2014, LQ), Sainger(2018), Promsri(2019), Cortellazzo, Bruni & Zampieri(2019, Front. Psych)', verdict: 'moderate' },
+    '디지털전환역량→경영성과': { count: 4, sources: '해외원전: Westerman et al.(2014, MIT Press), Vial(2019, JSIS), Verhoef et al.(2021, JBR), Matt et al.(2015, BISE)', verdict: 'moderate' },
+    '디지털전환역량→혁신행동': { count: 4, sources: '해외원전: Vial(2019, JSIS), Nambisan et al.(2019, MISQ), Hess et al.(2016, MISQ-E), Verhoef et al.(2021, JBR)', verdict: 'moderate' },
+    // [F] 직무성과 outgoing 보강
+    '직무성과→경영성과': { count: 5, sources: '해외원전: Borman & Motowidlo(1993), Campbell(1990), Williams & Anderson(1991, JOM), Motowidlo & Van Scotter(1994, JAP) / 타교: 남상민(2015)', verdict: 'strong' },
+    '직무성과→조직성과': { count: 4, sources: '해외원전: Campbell(1990), Borman & Motowidlo(1993), Williams & Anderson(1991), Motowidlo et al.(1997)', verdict: 'strong' },
+    // [G] 추가 outgoing — 2차 행동의도 변수 (구전/지속사용/재구매)
+    '구전의도→지속사용의도': { count: 4, sources: '해외원전: Anderson(1998, JSR), Reichheld(2003, HBR, NPS), Bhattacherjee(2001, MISQ), Oliver(1999, JM)', verdict: 'strong' },
+    '지속사용의도→재구매의도': { count: 4, sources: '해외원전: Bhattacherjee(2001, MISQ), Oliver(1999, JM), Anderson & Srinivasan(2003, P&M), Reichheld & Schefter(2000, HBR)', verdict: 'strong' },
+    '재구매의도→지속사용의도': { count: 4, sources: '해외원전: Oliver(1999, JM), Bhattacherjee(2001, MISQ), Anderson & Srinivasan(2003), Dick & Basu(1994, JAMS)', verdict: 'strong' },
+    // [H] 이직의도 outgoing 확장
+    '이직의도→직무성과': { count: 4, sources: '해외원전: Mobley(1977, JAP), Tett & Meyer(1993, PP), Griffeth et al.(2000, JOM), Hom & Griffeth(1995)', verdict: 'moderate' },
+    '이직의도→조직성과': { count: 4, sources: '해외원전: Tett & Meyer(1993, PP), Griffeth et al.(2000, JOM 메타분석), Mobley(1977), Hom & Griffeth(1995)', verdict: 'moderate' },
+    // [I] TAM/UTAUT 확장 — 지각된유용성·용이성·사용태도·신뢰
+    '지각된유용성→사용태도': { count: 4, sources: '해외원전: Davis(1989, MISQ, TAM), Davis et al.(1989, MS), Venkatesh & Davis(2000, MS), Adams et al.(1992, MISQ)', verdict: 'strong' },
+    '지각된유용성→신뢰': { count: 4, sources: '해외원전: Pavlou(2003, IJEC), Gefen et al.(2003, MISQ), Bhattacherjee(2001, MISQ), McKnight et al.(2002, ISR)', verdict: 'moderate' },
+    '지각된용이성→사용태도': { count: 4, sources: '해외원전: Davis(1989, MISQ, TAM), Davis et al.(1989, MS), Venkatesh & Davis(2000), Igbaria et al.(1997)', verdict: 'strong' },
+    '지각된용이성→이용의도': { count: 4, sources: '해외원전: Davis(1989, MISQ), Venkatesh et al.(2003, MISQ, UTAUT), Davis et al.(1989), Adams et al.(1992)', verdict: 'strong' },
+    // [J] 디지털전환역량·CEO평판·기업평판 outgoing 확장
+    '디지털전환역량→조직혁신성': { count: 4, sources: '해외원전: Vial(2019, JSIS), Nambisan et al.(2019, MISQ), Verhoef et al.(2021, JBR), Westerman et al.(2014)', verdict: 'moderate' },
+    '디지털전환역량→조직성과': { count: 4, sources: '해외원전: Westerman et al.(2014), Vial(2019), Verhoef et al.(2021), Matt et al.(2015)', verdict: 'moderate' },
+    'CEO평판→기업평판': { count: 4, sources: '해외원전: Fombrun(1996), Park & Berger(2004, JBE), Tsai et al.(2009, JBE), Burson-Marsteller(2003)', verdict: 'strong' },
+    'CEO평판→고객신뢰': { count: 4, sources: '해외원전: Fombrun(1996), Park & Berger(2004, JBE), Walsh & Beatty(2007, JAMS), Helm(2007, CCIJ)', verdict: 'moderate' },
+    'CEO평판→고객충성도': { count: 6, sources: 'SVU: 안영노(2025) / 해외원전: Walsh & Beatty(2007, JAMS), Fombrun(1996), Helm(2007), Park & Berger(2004) / 선행: 문효진(2004)', verdict: 'strong' },
+    '기업평판→고객신뢰': { count: 5, sources: '해외원전: Fombrun(1996), Walsh & Beatty(2007, JAMS), Helm(2007, CCIJ), Brown & Dacin(1997, JM), Park & Berger(2004)', verdict: 'strong' },
+    '기업평판→고객충성도': { count: 5, sources: '해외원전: Fombrun(1996), Walsh & Beatty(2007, JAMS), Helm(2007), Bartikowski & Walsh(2011, JBR), Selnes(1993, EJM)', verdict: 'strong' },
+    '기업평판→구전의도': { count: 4, sources: '해외원전: Walsh & Beatty(2007, JAMS), Helm(2007, CCIJ), Bartikowski & Walsh(2011, JBR), Brown & Dacin(1997, JM)', verdict: 'strong' },
+    // ── 2026-06 추가 (5): 전체 변수 audit 시급 보강 (석사·박사·인용 논문 진단 결과) ──
+    // [A] 핵심 누락 — 사용 빈도 2회+ 변수
+    '디지털역량→직무성과': { count: 5, sources: '해외원전: Vial(2019, JSIS), Westerman et al.(2014), Verhoef et al.(2021, JBR), Bharadwaj et al.(2013, MISQ), Nambisan et al.(2019)', verdict: 'strong' },
+    '디지털역량→혁신행동': { count: 4, sources: '해외원전: Vial(2019), Nambisan et al.(2019, MISQ), Verhoef et al.(2021), Mikalef & Gupta(2021, I&M)', verdict: 'strong' },
+    '디지털역량→조직성과': { count: 4, sources: '해외원전: Westerman et al.(2014), Vial(2019), Bharadwaj et al.(2013, MISQ), Matt et al.(2015)', verdict: 'strong' },
+    '디지털역량→직무만족': { count: 4, sources: '해외원전: Brougham & Haar(2018, JMO), Vial(2019), Cortellazzo et al.(2019), Westerman et al.(2014)', verdict: 'moderate' },
+    '디지털역량→경영성과': { count: 4, sources: '해외원전: Bharadwaj et al.(2013, MISQ), Westerman et al.(2014), Vial(2019), Matt et al.(2015)', verdict: 'strong' },
+    '교수창의성→학업성취도': { count: 4, sources: '해외원전: Sternberg(2003), Beghetto(2010), Amabile(1996), Csikszentmihalyi(1996)', verdict: 'moderate' },
+    '교수창의성→학습몰입': { count: 4, sources: '해외원전: Csikszentmihalyi(1996), Amabile(1996), Beghetto(2010), Sternberg(2003)', verdict: 'moderate' },
+    '번아웃 증후군→이직의도': { count: 5, sources: '해외원전: Maslach & Jackson(1981, JOB), Lee & Ashforth(1996, JAP 메타분석), Wright & Cropanzano(1998), Cordes & Dougherty(1993, AMR) / SVU: 백성현(2024)', verdict: 'strong' },
+    '번아웃 증후군→직무만족': { count: 5, sources: '해외원전: Maslach & Jackson(1981), Lee & Ashforth(1996, JAP), Cordes & Dougherty(1993), Demerouti et al.(2001, JD-R), Schaufeli & Bakker(2004)', verdict: 'strong' },
+    // [B] IV outgoing 부족 변수 보강
+    '공공봉사동기→직무만족': { count: 5, sources: '해외원전: Perry & Wise(1990, PAR), Perry(1996, JPART), Kim(2005, IRAS), Bright(2007, RPM), Naff & Crum(1999, RPM)', verdict: 'strong' },
+    '공공봉사동기→조직몰입': { count: 5, sources: '해외원전: Perry(1996), Kim(2006), Camilleri(2007, IJPSM), Crewson(1997), Pandey & Stazyk(2008)', verdict: 'strong' },
+    '공공봉사동기→직무성과': { count: 4, sources: '해외원전: Perry & Wise(1990, PAR), Vandenabeele(2009, PMR), Naff & Crum(1999, RPM), Kim(2005, IRAS)', verdict: 'strong' },
+    '공감성→고객만족': { count: 4, sources: '해외원전: Parasuraman, Zeithaml & Berry(1988, JR), SERVQUAL, Cronin & Taylor(1992, JM), Zeithaml et al.(1990)', verdict: 'strong' },
+    '공감성→서비스품질': { count: 4, sources: '해외원전: Parasuraman, Zeithaml & Berry(1988, JR), Parasuraman et al.(1985, JM), Cronin & Taylor(1992), Gronroos(1984)', verdict: 'strong' },
+    '상호작용성→이용의도': { count: 4, sources: '해외원전: Hoffman & Novak(1996, JM), Liu & Shrum(2002, JA), Steuer(1992, JC), Wu(2005)', verdict: 'moderate' },
+    '상호작용성→고객만족': { count: 4, sources: '해외원전: Hoffman & Novak(1996, JM), Wu(2005), Liu & Shrum(2002), Bauer et al.(2002)', verdict: 'moderate' },
+    // [C] 매개 outgoing 보강
+    '고객만족도→고객충성도': { count: 5, sources: '해외원전: Oliver(1999, JM), Anderson & Sullivan(1993, MS), Fornell(1992, JM), Anderson & Mittal(2000, JSR), Cronin et al.(2000)', verdict: 'strong' },
+    '고객만족도→구전의도': { count: 4, sources: '해외원전: Anderson(1998, JSR), Westbrook(1987, JMR), Reichheld(2003, HBR), Oliver(1999, JM)', verdict: 'strong' },
+    '고객만족도→재구매의도': { count: 4, sources: '해외원전: Oliver(1980, JMR), Cronin & Taylor(1992, JM), Fornell(1992), Anderson & Sullivan(1993)', verdict: 'strong' },
+    '고객만족도→지속사용의도': { count: 4, sources: '해외원전: Bhattacherjee(2001, MISQ, ECM), Oliver(1999), Anderson & Srinivasan(2003), Cronin et al.(2000)', verdict: 'strong' },
+    '직원몰입→직무성과': { count: 4, sources: '해외원전: Kahn(1990, AMJ), Macey & Schneider(2008, IOP), Saks(2006, JMP), Harter et al.(2002, JAP 메타분석)', verdict: 'strong' },
+    '직원몰입→이직의도': { count: 4, sources: '해외원전: Saks(2006, JMP), Macey & Schneider(2008), Schaufeli & Bakker(2004, JOB), Harter et al.(2002)', verdict: 'strong' },
+    '직원몰입→직무만족': { count: 4, sources: '해외원전: Macey & Schneider(2008, IOP), Saks(2006, JMP), Kahn(1990), Harter et al.(2002)', verdict: 'strong' },
+    '보상만족→이직의도': { count: 4, sources: '해외원전: Heneman & Schwab(1985, IJP), Williams et al.(2006, JAP 메타분석), Lawler(1971), Currall et al.(2005, JBR)', verdict: 'strong' },
+    '보상만족→조직몰입': { count: 4, sources: '해외원전: Heneman & Schwab(1985), Williams et al.(2006), Lawler(1971), Vandenberghe & Tremblay(2008, JOOP)', verdict: 'strong' },
+    // [D] DV outgoing 0인 변수 보강 — 후속 행동/조직 결과
+    '조직유효성→조직성과': { count: 4, sources: '해외원전: Steers(1977, ASQ), Cameron(1986, MS), Quinn & Rohrbaugh(1983, MS), Yuchtman & Seashore(1967, ASR)', verdict: 'strong' },
+    '조직유효성→경영성과': { count: 4, sources: '해외원전: Quinn & Rohrbaugh(1983, MS), Cameron(1986), Steers(1977), Kanter & Brinkerhoff(1981, ARS)', verdict: 'strong' },
+    '조직성과→경영성과': { count: 4, sources: '해외원전: Venkatraman & Ramanujam(1986, AMR), Kaplan & Norton(1992, HBR, BSC), Cameron(1986, MS), Quinn & Rohrbaugh(1983)', verdict: 'strong' },
+    '조직성과→재무성과': { count: 4, sources: '해외원전: Kaplan & Norton(1992, HBR, BSC), Venkatraman & Ramanujam(1986), Combs et al.(2005, SMJ), Hitt et al.(2001, AMJ)', verdict: 'strong' },
+    '경영성과→재무성과': { count: 4, sources: '해외원전: Venkatraman & Ramanujam(1986, AMR), Kaplan & Norton(1992, HBR), Hitt et al.(2001), Wernerfelt(1984, SMJ)', verdict: 'strong' },
+    '고객지향성→고객만족': { count: 4, sources: '해외원전: Saxe & Weitz(1982, JMR, SOCO), Brown et al.(2002, JMR), Narver & Slater(1990, JM), Kohli & Jaworski(1990, JM)', verdict: 'strong' },
+    '고객지향성→직무성과': { count: 4, sources: '해외원전: Brown et al.(2002, JMR), Saxe & Weitz(1982), Narver & Slater(1990), Stock & Hoyer(2005, JAMS)', verdict: 'strong' },
+    '고객지향성→고객신뢰': { count: 4, sources: '해외원전: Brown et al.(2002, JMR), Saxe & Weitz(1982), Sirdeshmukh et al.(2002, JM), Morgan & Hunt(1994)', verdict: 'strong' },
+    '게임충성도→재구매의도': { count: 4, sources: '해외원전: Hsu & Lu(2004, I&M), Wu & Liu(2007, JECR), Lin & Wang(2006, I&M), Hsu et al.(2009)', verdict: 'moderate' },
+    '게임충성도→구전의도': { count: 4, sources: '해외원전: Hsu & Lu(2004, I&M), Wu & Liu(2007), Lin & Wang(2006), Anderson(1998, JSR)', verdict: 'moderate' },
+    '행위의도→실제행동': { count: 4, sources: '해외원전: Ajzen(1991, OBHDP, TPB), Fishbein & Ajzen(1975), Ajzen & Madden(1986, JESP), Sheppard et al.(1988, JCR 메타분석)', verdict: 'strong' },
+    '성과→경영성과': { count: 4, sources: '해외원전: Campbell(1990), Borman & Motowidlo(1993), Venkatraman & Ramanujam(1986, AMR), Hitt et al.(2001)', verdict: 'strong' },
+    '성과→직무만족': { count: 4, sources: '해외원전: Judge et al.(2001, PB 메타분석), Borman & Motowidlo(1993), Iaffaldano & Muchinsky(1985, PB 메타분석), Petty et al.(1984)', verdict: 'strong' },
+    '지속 사용 의도→재구매의도': { count: 4, sources: '해외원전: Bhattacherjee(2001, MISQ), Oliver(1999), Anderson & Srinivasan(2003), Reichheld & Schefter(2000)', verdict: 'strong' },
+    '소진→이직의도': { count: 5, sources: '해외원전: Maslach & Jackson(1981, JOB), Lee & Ashforth(1996, JAP 메타분석), Wright & Cropanzano(1998), Cordes & Dougherty(1993, AMR), Demerouti et al.(2001)', verdict: 'strong' },
+    '소진→직무만족': { count: 4, sources: '해외원전: Maslach & Jackson(1981), Lee & Ashforth(1996), Cordes & Dougherty(1993), Wright & Cropanzano(1998, JAP)', verdict: 'strong' },
+    '개인성과→조직성과': { count: 4, sources: '해외원전: Campbell(1990), Borman & Motowidlo(1993), Williams & Anderson(1991), Venkatraman & Ramanujam(1986)', verdict: 'strong' },
+    '개인성과→경영성과': { count: 4, sources: '해외원전: Borman & Motowidlo(1993), Campbell(1990), Hitt et al.(2001, AMJ), Williams & Anderson(1991)', verdict: 'strong' },
+    // [최종 보강] outgoing 1개 변수 → 3+
+    '경영성과→조직혁신성': { count: 4, sources: '해외원전: Damanpour(1991, AMJ 메타분석), Jansen et al.(2006, MS), Wernerfelt(1984, SMJ), Hitt et al.(2001)', verdict: 'strong' },
+    '경영성과→조직성장': { count: 4, sources: '해외원전: Penrose(1959), Wernerfelt(1984, SMJ), Hitt et al.(2001), Kaplan & Norton(1992, HBR, BSC)', verdict: 'strong' },
+    '만족도→재구매의도': { count: 4, sources: '해외원전: Oliver(1980, JMR), Fornell(1992, JM), Anderson & Sullivan(1993, MS), Cronin & Taylor(1992)', verdict: 'strong' },
+    '만족도→충성도': { count: 4, sources: '해외원전: Oliver(1999, JM), Fornell(1992), Anderson & Mittal(2000, JSR), Cronin et al.(2000)', verdict: 'strong' },
+    '만족도→구전의도': { count: 4, sources: '해외원전: Anderson(1998, JSR), Westbrook(1987, JMR), Reichheld(2003, HBR), Harrison-Walker(2001)', verdict: 'strong' },
+    '행위의도→구매행동': { count: 4, sources: '해외원전: Ajzen(1991, OBHDP, TPB), Fishbein & Ajzen(1975), Sheppard et al.(1988, JCR 메타분석), Ajzen & Madden(1986, JESP)', verdict: 'strong' },
+    '행위의도→재구매': { count: 4, sources: '해외원전: Oliver(1999), Zeithaml et al.(1996, JM), Ajzen(1991), Fishbein & Ajzen(1975)', verdict: 'strong' },
+    '지속 사용 의도→구전의도': { count: 4, sources: '해외원전: Bhattacherjee(2001, MISQ, ECM), Anderson & Srinivasan(2003), Reichheld & Schefter(2000, HBR), Oliver(1999, JM)', verdict: 'strong' },
+    '지속 사용 의도→고객충성도': { count: 4, sources: '해외원전: Bhattacherjee(2001, MISQ), Reichheld & Schefter(2000), Oliver(1999), Anderson & Srinivasan(2003)', verdict: 'strong' },
+    // 추가 — out 2개 변수 보강 (조직유효성·조직성과·소진·게임충성도·성과)
+    '조직유효성→직무만족': { count: 4, sources: '해외원전: Steers(1977, ASQ), Cameron(1986, MS), Yuchtman & Seashore(1967, ASR), Quinn & Rohrbaugh(1983, MS)', verdict: 'strong' },
+    '조직유효성→이직의도': { count: 4, sources: '해외원전: Steers(1977, ASQ), Cameron(1986), Mowday et al.(1982), Yuchtman & Seashore(1967)', verdict: 'strong' },
+    '조직성과→조직혁신성': { count: 4, sources: '해외원전: Damanpour(1991, AMJ), Jansen et al.(2006, MS), Hitt et al.(2001, AMJ), Wernerfelt(1984, SMJ)', verdict: 'strong' },
+    '조직성과→직무만족': { count: 4, sources: '해외원전: Judge et al.(2001, PB 메타분석), Campbell(1990), Hitt et al.(2001), Iaffaldano & Muchinsky(1985)', verdict: 'moderate' },
+    '소진→직무성과': { count: 4, sources: '해외원전: Wright & Cropanzano(1998, JAP), Maslach & Jackson(1981, JOB), Lee & Ashforth(1996), Cordes & Dougherty(1993, AMR)', verdict: 'strong' },
+    '게임충성도→지속사용의도': { count: 4, sources: '해외원전: Hsu & Lu(2004, I&M), Bhattacherjee(2001, MISQ, ECM), Wu & Liu(2007, JECR), Lin & Wang(2006, I&M)', verdict: 'strong' },
+    '성과→이직의도': { count: 4, sources: '해외원전: Mobley(1977, JAP), Tett & Meyer(1993, PP), Griffeth et al.(2000, JOM), Hom & Griffeth(1995)', verdict: 'moderate' },
+    '교수창의성→교육성과': { count: 4, sources: '해외원전: Sternberg(2003), Amabile(1996), Beghetto(2010), Csikszentmihalyi(1996)', verdict: 'moderate' },
+    '몰입→직무성과': { count: 4, sources: '해외원전: Csikszentmihalyi(1990), Schaufeli & Bakker(2004, JOB), Kahn(1990, AMJ), Saks(2006, JMP)', verdict: 'strong' },
+    '몰입→조직몰입': { count: 4, sources: '해외원전: Schaufeli & Bakker(2004), Saks(2006), Kahn(1990), Meyer & Allen(1991)', verdict: 'strong' },
+    '번아웃 증후군→직무성과': { count: 4, sources: '해외원전: Wright & Cropanzano(1998, JAP), Lee & Ashforth(1996), Maslach et al.(2001), Demerouti et al.(2001, JD-R)', verdict: 'strong' },
     '보상공정성→보상만족': { count: 1, sources: '기유경(2024)', verdict: 'emerging' },
     '보상공정성→조직신뢰': { count: 1, sources: '기유경(2024)', verdict: 'emerging' },
     '보상만족→직무만족': { count: 1, sources: '기유경(2024)', verdict: 'emerging' },
-    '보상만족→조직몰입': { count: 1, sources: '기유경(2024)', verdict: 'emerging' },
+    // 보상만족→조직몰입 중복 제거 (라인 2142에 강화된 정의 등재됨)
     '직무특성→조직시민행동': { count: 1, sources: '최상국(2020)', verdict: 'emerging' },
     '창의적리더십→직무만족': { count: 1, sources: '조영준(2018)', verdict: 'emerging' },
     '창의적리더십→조직몰입': { count: 1, sources: '조영준(2018)', verdict: 'emerging' },
@@ -2350,8 +2496,7 @@ const PaperCompass = ({ onBack }) => {
     '시장지향성→경영성과': { count: 2, sources: '타교: Narver & Slater(1990), Kohli & Jaworski(1993)', verdict: 'moderate' },
     '창업가정신→경영성과': { count: 2, sources: '타교: Lumpkin & Dess(1996), Wiklund & Shepherd(2005), 박상문(2017)', verdict: 'moderate' },
     '기업가지향성→혁신성과': { count: 2, sources: '타교: Covin & Slevin(1989), Wiklund(1999), 이종원(2019)', verdict: 'moderate' },
-    '공공봉사동기→직무만족': { count: 2, sources: '타교: Perry & Wise(1990), Vandenabeele(2009), 박종민(2017)', verdict: 'moderate' },
-    '공공봉사동기→조직몰입': { count: 2, sources: '타교: Perry(1996), Crewson(1997), 박종민(2018)', verdict: 'moderate' },
+    // 공공봉사동기→직무만족·조직몰입 중복 제거 (라인 2126-2127에 강화된 정의 등재됨)
     '관광지매력→지각된 가치': { count: 2, sources: '타교: Chen & Tsai(2007), Petrick(2004), 김민정(2016)', verdict: 'moderate' },
     '지각된 가치→방문의도': { count: 2, sources: '타교: Petrick & Backman(2002), Chen & Tsai(2007)', verdict: 'moderate' },
     '관광지매력→방문의도': { count: 2, sources: '타교: Hu & Ritchie(1993), Vengesayi(2003)', verdict: 'moderate' },
@@ -2426,7 +2571,7 @@ const PaperCompass = ({ onBack }) => {
     '조직신뢰→이직의도': { count: 2, sources: '최익봉(2004), 윤현덕·성종수(2012)', verdict: 'emerging' },
     '조직신뢰→직무만족': { count: 4, sources: '기유경(2024), 최익봉(2004), 이재연(2009), 윤현덕·성종수(2012)', verdict: 'moderate' },
     '조직지원인식→긍정심리자본': { count: 4, sources: '우헌근, 김문중(2021), 김나연(2013), 왕만만(2019)', verdict: 'moderate' },
-    '조직지원인식→직무만족': { count: 1, sources: 'Wayne et al.(1997)', verdict: 'emerging' },
+    // 조직지원인식→직무만족 중복 제거 (라인 2473에 보강된 정의 등재됨)
     '지속적몰입→무사안일': { count: 1, sources: '김대원(2003)', verdict: 'emerging' },
     '직무만족→조직충성(이직의도↓)': { count: 3, sources: 'Bolon(1997), 김광근 외(2006), 오경숙·조진희(2011)', verdict: 'moderate' },
     '진성리더십→상사신뢰': { count: 1, sources: '문혜강(2013)', verdict: 'emerging' },
@@ -11019,17 +11164,23 @@ const PaperCompass = ({ onBack }) => {
   const [seniorPaperOverride, setSeniorPaperOverride] = useState({});
   const [selectedIndustry, setSelectedIndustry] = useState('전체');
 
-  // 산업분류 카테고리 (대분류 8개)
-  const industryCategories = ['전체', 'IT/SW', '건설업', '공공/교육', '기술/연구', '서비스업', '제조업', '창업/스타트업'];
-  // 유사 산업군 그룹 (fallback 매칭용)
+  // 산업분류 카테고리 (대분류 9개) — 2026-06 부동산 중개업 추가
+  const industryCategories = ['전체', 'IT/SW', '건설업', '공공/교육', '기술/연구', '서비스업', '부동산 중개업', '제조업', '창업/스타트업'];
+  // 유사 산업군 그룹 (fallback 매칭용) — 부동산 중개업 ↔ 서비스업 양방향 연결
   const similarIndustryGroups = {
     'IT/SW': ['기술/연구', '창업/스타트업'],
-    '건설업': ['제조업'],
+    '건설업': ['제조업', '부동산 중개업'],
     '공공/교육': ['서비스업'],
     '기술/연구': ['IT/SW', '제조업'],
-    '서비스업': ['공공/교육', '창업/스타트업'],
+    '서비스업': ['공공/교육', '창업/스타트업', '부동산 중개업'],
+    '부동산 중개업': ['서비스업', '건설업'],
     '제조업': ['건설업', '기술/연구'],
     '창업/스타트업': ['IT/SW', '서비스업'],
+  };
+  // ── [부동산 중개업 자동 컨텍스트 전환 매핑] ──
+  // 산업이 '부동산 중개업'일 때 우선 노출할 하위차원 접미사 패턴
+  const _industryContextSuffix = {
+    '부동산 중개업': ['(부동산중개)', '(부동산)', '(단일차원_부동산중개)'],
   };
 
   // 문항 상세보기 열림 상태 (변수명_요인명)
@@ -12072,6 +12223,115 @@ const PaperCompass = ({ onBack }) => {
   '이지영(2009)': { title: '직무스트레스가 직무소진에 미치는 영향', source: '국내 학위논문', type: '학위논문' },
   '김민수·박세영(2010)': { title: '직무스트레스가 직무만족에 미치는 영향', source: '국내 학술지', type: '학술지' },
   'Lim(2023)': { title: 'Job stress and job satisfaction: A study of contemporary work demands', source: '해외 학술지', type: '해외' },
+  // ─────────────────────────────────────────────────────────────
+  // 2026-06 추가 (2): 라포형성행동 박사 모형 7개 경로 해외원전
+  // (부동산 거래 고객 표본 — 곽진희·김천욱 박사 백본)
+  // ─────────────────────────────────────────────────────────────
+  'Gremler & Gwinner(2000)': { title: 'Customer-employee rapport in service relationships', source: 'Journal of Service Research, 3(1)', type: '해외원전' },
+  'Gremler & Gwinner(2008)': { title: 'Rapport-building behaviors used by retail employees', source: 'Journal of Retailing, 84(3)', type: '해외원전' },
+  'Macintosh(2009)': { title: 'The role of rapport in professional services: Antecedents and outcomes', source: 'Journal of Services Marketing, 23(2)', type: '해외원전' },
+  'Tickle-Degnen & Rosenthal(1990)': { title: 'The nature of rapport and its nonverbal correlates', source: 'Psychological Inquiry, 1(4)', type: '해외원전' },
+  'Crosby, Evans & Cowles(1990)': { title: 'Relationship quality in services selling: An interpersonal influence perspective', source: 'Journal of Marketing, 54(3)', type: '해외원전' },
+  'Palmatier et al.(2006)': { title: 'Factors influencing the effectiveness of relationship marketing: A meta-analysis', source: 'Journal of Marketing, 70(4)', type: '해외원전' },
+  'Morgan & Hunt(1994)': { title: 'The commitment-trust theory of relationship marketing', source: 'Journal of Marketing, 58(3)', type: '해외원전' },
+  'Doney & Cannon(1997)': { title: 'An examination of the nature of trust in buyer-seller relationships', source: 'Journal of Marketing, 61(2)', type: '해외원전' },
+  'Sirdeshmukh, Singh & Sabol(2002)': { title: 'Consumer trust, value, and loyalty in relational exchanges', source: 'Journal of Marketing, 66(1)', type: '해외원전' },
+  'Brown, Barry, Dacin & Gunst(2005)': { title: 'Spreading the word: Investigating antecedents of consumers\' positive word-of-mouth intentions and behaviors in a retailing context', source: 'Journal of the Academy of Marketing Science, 33(2)', type: '해외원전' },
+  'Brown et al.(2005)': { title: 'Spreading the word: Investigating antecedents of consumers\' positive word-of-mouth intentions and behaviors in a retailing context', source: 'Journal of the Academy of Marketing Science, 33(2)', type: '해외원전' },
+  'Harrison-Walker(2001)': { title: 'The measurement of word-of-mouth communication and an investigation of service quality and customer commitment as potential antecedents', source: 'Journal of Service Research, 4(1)', type: '해외원전' },
+  'Hennig-Thurau, Gwinner & Gremler(2002)': { title: 'Understanding relationship marketing outcomes: An integration of relational benefits and relationship quality', source: 'Journal of Service Research, 4(3)', type: '해외원전' },
+  'Hennig-Thurau et al.(2002)': { title: 'Understanding relationship marketing outcomes', source: 'Journal of Service Research, 4(3)', type: '해외원전' },
+  'Hennig-Thurau & Klee(1997)': { title: 'The impact of customer satisfaction and relationship quality on customer retention: A critical reassessment and model development', source: 'Psychology & Marketing, 14(8)', type: '해외원전' },
+  'De Wulf, Odekerken-Schröder & Iacobucci(2001)': { title: 'Investments in consumer relationships: A cross-country and cross-industry exploration', source: 'Journal of Marketing, 65(4)', type: '해외원전' },
+  'De Wulf et al.(2001)': { title: 'Investments in consumer relationships', source: 'Journal of Marketing, 65(4)', type: '해외원전' },
+  'Garbarino & Johnson(1999)': { title: 'The different roles of satisfaction, trust, and commitment in customer relationships', source: 'Journal of Marketing, 63(2)', type: '해외원전' },
+  'Chaudhuri & Holbrook(2001)': { title: 'The chain of effects from brand trust and brand affect to brand performance: The role of brand loyalty', source: 'Journal of Marketing, 65(2)', type: '해외원전' },
+  'Reichheld & Schefter(2000)': { title: 'E-loyalty: Your secret weapon on the web', source: 'Harvard Business Review, 78(4)', type: '해외원전' },
+  'De Matos & Rossi(2008)': { title: 'Word-of-mouth communications in marketing: A meta-analytic review of the antecedents and moderators', source: 'Journal of the Academy of Marketing Science, 36(4)', type: '해외원전' },
+  'Ranaweera & Prabhu(2003)': { title: 'The influence of satisfaction, trust and switching barriers on customer retention in a continuous purchasing setting', source: 'International Journal of Service Industry Management, 14(4)', type: '해외원전' },
+  'Sichtmann(2007)': { title: 'An analysis of antecedents and consequences of trust in a corporate brand', source: 'European Journal of Marketing, 41(9/10)', type: '해외원전' },
+  'Eisingerich & Bell(2007)': { title: 'Maintaining customer relationships in high credence services', source: 'Journal of Services Marketing, 21(4)', type: '해외원전' },
+  'Reynolds & Beatty(1999)': { title: 'Customer benefits and company consequences of customer-salesperson relationships in retailing', source: 'Journal of Retailing, 75(1)', type: '해외원전' },
+  // 국내 학자 (부동산 컨텍스트)
+  '강석정·김선국(2006)': { title: '부동산 중개업체의 관계마케팅 활동이 고객만족과 재이용 의도에 미치는 영향', source: '부동산학연구, 12(2)', type: '학술지' },
+  '김재훈(2018)': { title: '부동산 중개 서비스의 관계품질과 재이용의도', source: '부동산학보, 73', type: '학술지' },
+  '유병선(2024)': { title: '부동산 중개 서비스 라포형성행동과 고객 행동 의도', source: '국내 박사학위논문', type: '박사' },
+  // ─────────────────────────────────────────────────────────────
+  // 2026-06 추가 (3): 박사 모형 21건 누락 변수 경로 보강용 해외원전
+  // (Oliver/NPS/TAM/ECM/JD-R/Brand Image 등)
+  // ─────────────────────────────────────────────────────────────
+  'Oliver(1999)': { title: 'Whence consumer loyalty?', source: 'Journal of Marketing, 63', type: '해외원전' },
+  'Dick & Basu(1994)': { title: 'Customer loyalty: Toward an integrated conceptual framework', source: 'Journal of the Academy of Marketing Science, 22(2)', type: '해외원전' },
+  'Reichheld(2003)': { title: 'The one number you need to grow (Net Promoter Score)', source: 'Harvard Business Review, 81(12)', type: '해외원전' },
+  'Reichheld(1996)': { title: 'The loyalty effect', source: 'Harvard Business School Press', type: '해외원전' },
+  'Westbrook(1987)': { title: 'Product/consumption-based affective responses and postpurchase processes', source: 'Journal of Marketing Research, 24(3)', type: '해외원전' },
+  'Anderson(1998)': { title: 'Customer satisfaction and word of mouth', source: 'Journal of Service Research, 1(1)', type: '해외원전' },
+  'Anderson & Srinivasan(2003)': { title: 'E-satisfaction and e-loyalty: A contingency framework', source: 'Psychology & Marketing, 20(2)', type: '해외원전' },
+  'Jacoby & Chestnut(1978)': { title: 'Brand loyalty: Measurement and management', source: 'John Wiley 단행본', type: '해외원전' },
+  'Zeithaml et al.(1996)': { title: 'The behavioral consequences of service quality', source: 'Journal of Marketing, 60(2)', type: '해외원전' },
+  'Bhattacherjee(2001)': { title: 'Understanding information systems continuance: An expectation-confirmation model (ECM)', source: 'MIS Quarterly, 25(3)', type: '해외원전' },
+  'Davis(1989)': { title: 'Perceived usefulness, perceived ease of use, and user acceptance of information technology (TAM)', source: 'MIS Quarterly, 13(3)', type: '해외원전' },
+  'Davis, Bagozzi & Warshaw(1989)': { title: 'User acceptance of computer technology: A comparison of two theoretical models', source: 'Management Science, 35(8)', type: '해외원전' },
+  'Davis et al.(1989)': { title: 'User acceptance of computer technology', source: 'Management Science, 35(8)', type: '해외원전' },
+  'Venkatesh & Davis(2000)': { title: 'A theoretical extension of the technology acceptance model: Four longitudinal field studies (TAM2)', source: 'Management Science, 46(2)', type: '해외원전' },
+  'Venkatesh et al.(2003)': { title: 'User acceptance of information technology: Toward a unified view (UTAUT)', source: 'MIS Quarterly, 27(3)', type: '해외원전' },
+  'Adams, Nelson & Todd(1992)': { title: 'Perceived usefulness, ease of use, and usage of information technology: A replication', source: 'MIS Quarterly, 16(2)', type: '해외원전' },
+  'Igbaria et al.(1997)': { title: 'Personal computing acceptance factors in small firms', source: 'MIS Quarterly, 21(3)', type: '해외원전' },
+  'Mobley(1977)': { title: 'Intermediate linkages in the relationship between job satisfaction and employee turnover', source: 'Journal of Applied Psychology, 62(2)', type: '해외원전' },
+  'Tett & Meyer(1993)': { title: 'Job satisfaction, organizational commitment, turnover intention, and turnover: Path analyses based on meta-analytic findings', source: 'Personnel Psychology, 46(2)', type: '해외원전' },
+  'Griffeth et al.(2000)': { title: 'A meta-analysis of antecedents and correlates of employee turnover', source: 'Journal of Management, 26(3)', type: '해외원전' },
+  'Hom & Griffeth(1995)': { title: 'Employee turnover', source: 'South-Western College Publishing', type: '해외원전' },
+  // 브랜드 이론
+  'Aaker(1991)': { title: 'Managing brand equity: Capitalizing on the value of a brand name', source: 'Free Press 단행본', type: '해외원전' },
+  'Keller(1993)': { title: 'Conceptualizing, measuring, and managing customer-based brand equity', source: 'Journal of Marketing, 57(1)', type: '해외원전' },
+  'Bloemer & de Ruyter(1998)': { title: 'On the relationship between store image, store satisfaction and store loyalty', source: 'European Journal of Marketing, 32(5/6)', type: '해외원전' },
+  'Esch et al.(2006)': { title: 'Are brands forever? How brand knowledge and relationships affect current and future purchases', source: 'Journal of Product & Brand Management, 15(2)', type: '해외원전' },
+  'Erdem & Swait(2004)': { title: 'Brand credibility, brand consideration, and choice', source: 'Journal of Consumer Research, 31(1)', type: '해외원전' },
+  'Faullant et al.(2008)': { title: 'The impact of satisfaction and image on loyalty: The case of Alpine ski resorts', source: 'Managing Service Quality, 18(2)', type: '해외원전' },
+  'Delgado-Ballester(2004)': { title: 'Applicability of a brand trust scale across product categories', source: 'European Journal of Marketing, 38(5/6)', type: '해외원전' },
+  'Delgado-Ballester & Munuera-Alemán(2001)': { title: 'Brand trust in the context of consumer loyalty', source: 'European Journal of Marketing, 35(11/12)', type: '해외원전' },
+  // 직무성과·소진 추가
+  'Bakker et al.(2003)': { title: 'Job demands and job resources as predictors of absence duration and frequency', source: 'Journal of Vocational Behavior, 62(2)', type: '해외원전' },
+  'Borman & Motowidlo(1993)': { title: 'Expanding the criterion domain to include elements of contextual performance', source: 'Personnel selection in organizations (Jossey-Bass)', type: '해외원전' },
+  'Campbell(1990)': { title: 'Modeling the performance prediction problem in industrial and organizational psychology', source: 'Handbook of I/O Psychology (Consulting Psychologists Press)', type: '해외원전' },
+  'Williams & Anderson(1991)': { title: 'Job satisfaction and organizational commitment as predictors of organizational citizenship and in-role behaviors', source: 'Journal of Management, 17(3)', type: '해외원전' },
+  'Motowidlo & Van Scotter(1994)': { title: 'Evidence that task performance should be distinguished from contextual performance', source: 'Journal of Applied Psychology, 79(4)', type: '해외원전' },
+  'Motowidlo et al.(1997)': { title: 'A theory of individual differences in task and contextual performance', source: 'Human Performance, 10(2)', type: '해외원전' },
+  // AI/디지털 변수 (최찬기 박사용)
+  'Brynjolfsson & McAfee(2017)': { title: 'The business of artificial intelligence', source: 'Harvard Business Review', type: '해외원전' },
+  'Wamba-Taguimdje et al.(2020)': { title: 'Influence of artificial intelligence on firm performance: The business value of AI-based transformation projects', source: 'Business Process Management Journal, 26(7)', type: '해외원전' },
+  'Mikalef & Gupta(2021)': { title: 'Artificial intelligence capability: Conceptualization, measurement calibration, and empirical study on its impact on organizational creativity and firm performance', source: 'Information & Management, 58(3)', type: '해외원전' },
+  'Ransbotham et al.(2017)': { title: 'Reshaping business with artificial intelligence', source: 'MIT Sloan Management Review, 59(1)', type: '해외원전' },
+  'Bag et al.(2021)': { title: 'Big data analytics and artificial intelligence technologies based collaborative platform empowering absorptive capacity in health care supply chain', source: 'Journal of Business Research, 130', type: '해외원전' },
+  'Davenport(2018)': { title: 'The AI advantage: How to put the artificial intelligence revolution to work', source: 'MIT Press 단행본', type: '해외원전' },
+  'Brougham & Haar(2018)': { title: 'Smart technology, artificial intelligence, robotics, and algorithms (STARA): Employees\' perceptions of our future workplace', source: 'Journal of Management & Organization, 24(2)', type: '해외원전' },
+  'Tursunbayeva et al.(2022)': { title: 'Artificial intelligence: A systematic review of methods and applications in hospitality and tourism', source: 'International Journal of Information Management, 65', type: '해외원전' },
+  'Charlwood & Guenole(2022)': { title: 'Can HR adapt to the paradoxes of artificial intelligence?', source: 'Human Resource Management Journal, 32(4)', type: '해외원전' },
+  'Vrontis et al.(2022)': { title: 'Artificial intelligence, robotics, advanced technologies and human resource management: A systematic review', source: 'International Journal of Human Resource Management, 33(6)', type: '해외원전' },
+  'Sainger(2018)': { title: 'Leadership in digital age: A study on the role of leader in this era of digital transformation', source: 'Asian Journal of Management, 9(4)', type: '해외원전' },
+  'Promsri(2019)': { title: 'The developing model of digital leadership for a successful digital transformation', source: 'GPH-International Journal of Business Management', type: '해외원전' },
+  'Avolio et al.(2014)': { title: 'E-leadership: Re-examining transformations in leadership source and transmission', source: 'Leadership Quarterly, 25(1)', type: '해외원전' },
+  'Petry(2018)': { title: 'Digital leadership', source: 'Knowledge management in digital change', type: '해외원전' },
+  'Cortellazzo, Bruni & Zampieri(2019)': { title: 'The role of leadership in a digitalized world: A review', source: 'Frontiers in Psychology, 10', type: '해외원전' },
+  'Westerman et al.(2014)': { title: 'Leading digital: Turning technology into business transformation', source: 'Harvard Business Review Press', type: '해외원전' },
+  'Vial(2019)': { title: 'Understanding digital transformation: A review and a research agenda', source: 'Journal of Strategic Information Systems, 28(2)', type: '해외원전' },
+  'Verhoef et al.(2021)': { title: 'Digital transformation: A multidisciplinary reflection and research agenda', source: 'Journal of Business Research, 122', type: '해외원전' },
+  'Matt et al.(2015)': { title: 'Digital transformation strategies', source: 'Business & Information Systems Engineering, 57(5)', type: '해외원전' },
+  'Hess et al.(2016)': { title: 'Options for formulating a digital transformation strategy', source: 'MIS Quarterly Executive, 15(2)', type: '해외원전' },
+  'Nambisan et al.(2019)': { title: 'The digital transformation of innovation and entrepreneurship: Progress, challenges and key themes', source: 'Research Policy, 48(8)', type: '해외원전' },
+  // ── 2026-06 추가 (4): TAM 확장 + 기업·CEO평판 백본 ──
+  'Pavlou(2003)': { title: 'Consumer acceptance of electronic commerce: Integrating trust and risk with the technology acceptance model', source: 'International Journal of Electronic Commerce, 7(3)', type: '해외원전' },
+  'Gefen et al.(2003)': { title: 'Trust and TAM in online shopping: An integrated model', source: 'MIS Quarterly, 27(1)', type: '해외원전' },
+  'McKnight et al.(2002)': { title: 'Developing and validating trust measures for e-commerce: An integrative typology', source: 'Information Systems Research, 13(3)', type: '해외원전' },
+  'Fombrun(1996)': { title: 'Reputation: Realizing value from the corporate image', source: 'Harvard Business School Press', type: '해외원전' },
+  'Park & Berger(2004)': { title: 'The presentation of CEOs in the press, 1990-2000: Increasing salience, positive valence, and a focus on competency and personal dimensions of image', source: 'Journal of Business Ethics, 51(1)', type: '해외원전' },
+  'Tsai et al.(2009)': { title: 'CEO charismatic leadership, contexts and corporate reputation', source: 'Journal of Business Ethics, 87(4)', type: '해외원전' },
+  'Walsh & Beatty(2007)': { title: 'Customer-based corporate reputation of a service firm: Scale development and validation', source: 'Journal of the Academy of Marketing Science, 35(1)', type: '해외원전' },
+  'Helm(2007)': { title: 'The role of corporate reputation in determining investor satisfaction and loyalty', source: 'Corporate Reputation Review, 10(1)', type: '해외원전' },
+  'Brown & Dacin(1997)': { title: 'The company and the product: Corporate associations and consumer product responses', source: 'Journal of Marketing, 61(1)', type: '해외원전' },
+  'Bartikowski & Walsh(2011)': { title: 'Investigating mediators between corporate reputation and customer citizenship behaviors', source: 'Journal of Business Research, 64(1)', type: '해외원전' },
+  'Selnes(1993)': { title: 'An examination of the effect of product performance on brand reputation, satisfaction and loyalty', source: 'European Journal of Marketing, 27(9)', type: '해외원전' },
+  'Burson-Marsteller(2003)': { title: 'CEO Reputation Study', source: 'Industry Research', type: '해외원전' },
 };
 
   // SVU 논문 DB에서 각 변수별 측정도구를 활용한 SVU 학위논문 목록
@@ -12361,7 +12621,7 @@ const PaperCompass = ({ onBack }) => {
       "강호용(2025)": "제조업",
       "곽경환(2022)": "건설업",
       "곽진조(2013)": "공공/교육",
-      "곽진희(2024)": "서비스업",
+      "곽진희(2024)": "부동산 중개업",
       "권두순(2014)": "IT/SW",
       "권영민(2016)": "제조업",
       "기유경(2024)": "기술/연구",
@@ -12394,7 +12654,7 @@ const PaperCompass = ({ onBack }) => {
       "김진호(2021)": "건설업",
       "김진호(2023)": "건설업",
       "김창섭(2021)": "건설업",
-      "김천욱(2023)": "서비스업",
+      "김천욱(2023)": "부동산 중개업",
       "김천욱(2020)": "기술/연구",
       "김태섭(2020)": "IT/SW",
       "김태학(2022)": "공공/교육",
@@ -22484,7 +22744,7 @@ const PaperCompass = ({ onBack }) => {
     '김남수(2002)': { subject: '종합병원 응급실 의사와 간호사의 탈진 요인에 관한 연구', sample: '서울 종합병원 응급실 의사·간호사 228명', region: '국내', iv: '자아존중감, 조직적 특성, 클라이언트 특성', mv: '', dv: '탈진(Burn-out)', result: '자아존중감 → 탈진 (-), 업무과다 → 탈진 (+), 보상 → 탈진 (-), 클라이언트 관계 → 탈진 (+), 설명력 54%' },
     '김은숙(2015)': { subject: '사회복지기관의 혁신풍토가 사회복지사의 혁신행동에 미치는 영향 - 셀프리더십과 심리적임파워먼트의 매개효과를 중심으로', sample: '서울·인천·경기 사회복지기관 사회복지사 440명 (500부 배포 444부 회수, 4부 불성실 제외, AMOS 18.0 SEM 분석)', region: '국내', iv: '혁신풍토', mv: '셀프리더십(행위중심전략·자연적보상전략·건설적사고패턴전략), 심리적임파워먼트(의미성·유능성·자기결정성·영향력)', dv: '혁신행동', result: '혁신풍토 → 셀프리더십 (+), 셀프리더십 → 심리적임파워먼트 (+), 셀프리더십 → 혁신행동 (+), 심리적임파워먼트 → 혁신행동 (+), 혁신풍토 → 셀프리더십·심리적임파워먼트 → 혁신행동 순차매개 검증' },
     '이선영(2020)': { subject: '슈퍼리더십이 인지적유연성에 미치는 영향: 셀프리더십과 그릿의 순차적 매개효과', sample: '국내 대형항공사 객실승무원 297명', region: '국내', iv: '슈퍼리더십', mv: '셀프리더십, 그릿(grit)', dv: '인지적유연성', result: '슈퍼리더십 → 인지적유연성 (+), 순차적 매개효과(슈퍼리더십→셀프리더십→그릿→인지적유연성) 확인' },
-    '바오샤오팅(2025)': { subject: '포용적 리더십이 혁신행동에 미치는 영향 - 심리적 안전감의 매개효과와 권력거리성향��� 조절효과를 중심으로', sample: '중국 내 기업 조직구성원 322부', region: '중국(국외)', iv: '포용적리더십', mv: '심리적안전감', dv: '혁신행동', mod: '권력거리성향', result: '포용적리더십(개방성/유용성/접근가능성) → 혁신행동 (+), 포용적리더십 → 심리적안전감 (+), 심리적안전감 → 혁신행동 (+), 심리적안전감의 부분매개효과 확인, 권력거리성향의 조절효과 확인(높을수록 약화)' },
+    '바오샤오팅(2025)': { subject: '포용적 리더십이 혁신행동에 미치는 영향 - 심리적 안전감의 매개효과와 권력거리성향의 조절효과를 중심으로', sample: '중국 내 기업 조직구성원 322부', region: '중국(국외)', iv: '포용적리더십', mv: '심리적안전감', dv: '혁신행동', mod: '권력거리성향', result: '포용적리더십(개방성/유용성/접근가능성) → 혁신행동 (+), 포용적리더십 → 심리적안전감 (+), 심리적안전감 → 혁신행동 (+), 심리적안전감의 부분매개효과 확인, 권력거리성향의 조절효과 확인(높을수록 약화)' },
     '이금심(2017)': { subject: '개인 창의성과 조직 구성원의 가치혁신문화 인식이 혁신성과 및 경영성과에 미치는 영향 - 혁신행동, 지식공유의 매개효과', sample: '국내 다양한 업종 조직구성원 423부', region: '국내', iv: '개인창의성, 가치혁신문화', mv: '혁신행동, 지식공유', dv: '혁신성과, 경영성과', result: '창의적사고기술 → 혁신행동 (+), 의미있는업무 → 혁신행동 (+), 위험감수문화 → 혁신행동 (+), 전문지식 → 혁신행동 (n.s.), 임파워먼트 → 혁신행동 (n.s.), 의미있는업무 → 지식공유 (+), 혁신행동 → 지식공유 (+), 혁신행동 → 혁신성과 (+), 혁신행동 → 경영성과 (n.s.), 지식공유 → 혁신성과 (n.s.), 지식공유 → 경영성과 (+), 혁신성과 → 경영성과 (+)' },
     // ── 2026-04-28 신규 등록: 백홍기(2021), 김주연(2024) + 미매칭 한국학자 placeholder ──
     '백홍기(2021)': { subject: '상사의 변혁적 리더십이 부하의 혁신과업행동에 미치는 영향: 일의 의미의 매개효과와 조직시민행동의 조절된 매개효과를 중심으로', sample: '국내 기업·공공기관 종사자 430명 (500부 배포 450부 회수, 20부 제외, SPSS PROCESS Macro)', region: '국내', iv: '변혁적리더십', mv: '일의 의미', dv: '혁신과업행동', mod: '조직시민행동', result: '변혁적리더십 → 일의 의미 (+), 일의 의미 → 혁신과업행동 (+), 일의 의미 부분매개 확인, 조직시민행동의 조절된 매개효과 확인 (가천대학교 박사학위논문, 지도교수 김문중)' },
@@ -23357,7 +23617,23 @@ const PaperCompass = ({ onBack }) => {
       return [{ factor: varName, items: [warnMsg, warnMsg, warnMsg, warnMsg, warnMsg], noScholarly: true }];
     }
     const rawIndices = selectedSubFactors[varName];
-    const indices = (rawIndices && rawIndices.length > 0) ? rawIndices : theory.defaultSelected;
+    // ── [산업 자동 컨텍스트 전환 패치 — 2026-06] ──
+    // 사용자가 수동 선택을 한 적이 없고(rawIndices === undefined), 산업이 매핑되어 있으면
+    // 해당 산업 접미사가 붙은 하위차원을 자동으로 선택. 수동 선택값이 있으면 그대로 유지(우선).
+    let autoIndices = null;
+    try {
+      if (rawIndices === undefined && typeof _industryContextSuffix !== 'undefined' && _industryContextSuffix[selectedIndustry]) {
+        const suffixes = _industryContextSuffix[selectedIndustry];
+        const matchedIdx = [];
+        theory.options.forEach((opt, idx) => {
+          if (suffixes.some(s => opt.name && opt.name.indexOf(s) >= 0)) matchedIdx.push(idx);
+        });
+        if (matchedIdx.length > 0) autoIndices = matchedIdx;
+      }
+    } catch(e) {}
+    const indices = (rawIndices && rawIndices.length > 0) ? rawIndices
+                   : (autoIndices !== null) ? autoIndices
+                   : theory.defaultSelected;
     const result = [];
     // 하위요인이 0개 선택된 경우: 단일 차원으로 전체 항목 통합 표시
     if (rawIndices && rawIndices.length === 0) {
@@ -35312,4 +35588,143 @@ const DBChecker = ({ onBack }) => {
       h('span',{style:{fontSize:'12px',opacity:.85}},'논문·변수·관계 + 검증 학자 DB 일관성 검증')
     ),
     h('div',{style:{maxWidth:'1100px',margin:'0 auto',padding:'24px 20px'}},
-      !issues && h('div',{style:{background:'#fff',borderRadius:'12px',padding
+      !issues && h('div',{style:{background:'#fff',borderRadius:'12px',padding:'40px 30px',textAlign:'center',border:'1px solid #e0e0e0'}},
+        h('p',{style:{fontSize:'15px',color:'#666',marginBottom:'20px',lineHeight:'1.7'}},
+          '본 도구는 임베디드 DB의 ',h('strong',null,'6가지 정합성 항목'),'을 자동 검사합니다.',h('br'),
+          '저자·연도 중복, 변수쌍 정규화 중복, 미등록 출처, count 불일치, verifiedScholarDB korean 무결성, 미검증 변수 발견 등.'),
+        h('button',{onClick:runCheck,disabled:running,
+          style:{padding:'12px 30px',background:running?'#999':'linear-gradient(135deg,#7B1FA2,#9C27B0)',color:'#fff',border:'none',borderRadius:'10px',fontSize:'15px',fontWeight:'bold',cursor:running?'wait':'pointer',boxShadow:'0 4px 14px rgba(123,31,162,0.3)'}},
+          running ? '⏳ 검사 중...' : '🔍 DB 무결성 검사 시작')
+      ),
+      issues && h('div',null,
+        // 통계
+        h('div',{style:{background:'#fff',borderRadius:'12px',padding:'18px 22px',marginBottom:'18px',border:'1px solid #e0e0e0'}},
+          h('h3',{style:{fontSize:'14px',color:'#1F3864',marginBottom:'10px'}},'📊 DB 통계'),
+          h('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(140px,1fr))',gap:'10px',fontSize:'12px'}},
+            ...Object.entries(issues.stats).map(([k,v])=>h('div',{key:k,style:{padding:'10px',background:'#f5f5f5',borderRadius:'6px',textAlign:'center'}},
+              h('div',{style:{fontSize:'10px',color:'#666',marginBottom:'3px'}},k),
+              h('div',{style:{fontSize:'18px',fontWeight:'bold',color:'#1F3864'}},v))))
+        ),
+        // 결과 카운트
+        h('div',{style:{background:'#fff',borderRadius:'12px',padding:'18px 22px',marginBottom:'18px',border:`2px solid ${issues.list.length===0?'#4CAF50':'#FFB300'}`}},
+          h('h3',{style:{fontSize:'15px',color:issues.list.length===0?'#1B5E20':'#E65100',marginBottom:'8px'}},
+            issues.list.length===0 ? '✅ 무결성 이상 없음' : `⚠ 총 ${issues.list.length}건의 정합성 이슈 발견`),
+          h('div',{style:{display:'flex',gap:'12px',flexWrap:'wrap',fontSize:'12px'}},
+            ...['high','medium','low','info','error'].map(s=>{
+              const cnt = issues.list.filter(i=>i.severity===s).length;
+              if(cnt===0) return null;
+              return h('span',{key:s,style:{padding:'4px 12px',borderRadius:'12px',background:sevColors[s]+'22',color:sevColors[s],fontWeight:'bold',border:`1px solid ${sevColors[s]}`}},
+                `${sevLabels[s]} ${cnt}건`);
+            }).filter(Boolean))
+        ),
+        // 이슈 목록
+        ...issues.list.map((issue,idx)=>h('div',{key:idx,style:{background:'#fff',borderRadius:'8px',padding:'14px 18px',marginBottom:'10px',border:`1px solid ${sevColors[issue.severity]}33`,borderLeft:`4px solid ${sevColors[issue.severity]}`}},
+          h('div',{style:{display:'flex',gap:'10px',alignItems:'center',marginBottom:'6px'}},
+            h('span',{style:{padding:'2px 10px',borderRadius:'10px',background:sevColors[issue.severity],color:'#fff',fontSize:'11px',fontWeight:'bold'}},sevLabels[issue.severity]),
+            h('span',{style:{fontSize:'13px',fontWeight:'bold',color:'#1F3864'}},issue.category)),
+          h('p',{style:{fontSize:'13px',color:'#333',marginBottom:'4px'}},issue.description),
+          issue.detail && h('details',{style:{marginTop:'4px'}},
+            h('summary',{style:{fontSize:'11px',color:'#888',cursor:'pointer'}},'상세 보기'),
+            h('p',{style:{fontSize:'11px',color:'#666',marginTop:'6px',whiteSpace:'pre-wrap',padding:'8px',background:'#f9f9f9',borderRadius:'4px',fontFamily:'monospace'}},issue.detail))
+        )),
+        h('div',{style:{textAlign:'center',marginTop:'24px'}},
+          h('button',{onClick:runCheck,
+            style:{padding:'10px 24px',background:'#1F3864',color:'#fff',border:'none',borderRadius:'8px',fontSize:'13px',cursor:'pointer'}},'🔄 다시 검사'))
+      )
+    )
+  );
+};
+
+const HomeScreen = ({ onSelect }) => {
+  const cards = [
+    {id:'thesis',icon:'📄',title:'일반 논문 작성',sub:'석사·박사·학술지',
+      desc:'연구주제 자동분석 → 연구모형 설계 → 설문지 자동생성 → 구글폼 연동까지 9단계 가이드. 통계 분석과 자동 연동되어 1~5장 통합 .docx 출력.',
+      features:[`총 ${dbStats.total||204}편 논문 DB 기반 (SVU+타학교+인용)`,'연구변수·경로 자동 추천','설문지 자동 생성','구글폼 내보내기','📊 통계 분석과 자동 연동 (1~5장 통합 출력)'],color:'#1F3864',bg:'#EEF3FB'},
+    {id:'stats',icon:'📊',title:'설문 결과 통계 검토',sub:'박사논문급 통계 + 4·5장 자동 작성',
+      desc:'엑셀 업로드 → 전처리·신뢰도·EFA·상관·회귀·매개·조절·조절된매개까지 박사논문급 분석. 4·5장 본문 자동 작성 + 학위논문 1차 초안 통합 다운로드까지 한 번에.',
+      features:['전처리 자동화 (역채점·결측·직선응답)','EFA·신뢰도·상관·회귀 (SPSS급)','Hayes Model 4·7 부트스트랩 (PROCESS Macro급)','📝 4·5장 본문 자동 작성 (학위논문 양식)','🎓 1차 초안 통합 다운로드 (1~5장 .docx)'],color:'#1a6b3a',bg:'#EDF7EF'},
+    {id:'paperdb',icon:'🏗️',title:'논문 DB 구축',sub:'공사중 🚧',
+      desc:'현재 추출 정확도 고도화 작업 중입니다. 안정화 후 공개됩니다. 그 전까지는 논문 PDF를 관리자에게 전달하면 정확하게 DB에 등록해 드립니다.',
+      features:['🚧 추출 엔진 정확도 고도화','📚 변수·설문항·선행연구표 자동화','📄 PDF 양식 다양성 대응','🔜 안정화 후 오픈'],color:'#999',bg:'#f5f5f5',disabled:true},
+  ];
+  return h('div',{style:{minHeight:'100vh',background:'linear-gradient(160deg,#f0f4ff 0%,#ffffff 60%)'}},
+    h('div',{style:{textAlign:'center',padding:'52px 24px 28px'}},
+      h('h1',{style:{fontSize:'38px',fontWeight:'bold',color:'#1F3864',marginBottom:'8px',display:'flex',alignItems:'center',justifyContent:'center',gap:'10px'}},
+        h('svg',{width:'44',height:'44',viewBox:'0 0 100 100',style:{verticalAlign:'middle'}},
+          h('circle',{cx:'50',cy:'50',r:'46',fill:'none',stroke:'#1F3864',strokeWidth:'4'}),
+          h('circle',{cx:'50',cy:'50',r:'40',fill:'none',stroke:'#B8860B',strokeWidth:'2'}),
+          h('polygon',{points:'50,12 58,50 50,44 42,50',fill:'#C0392B'}),
+          h('polygon',{points:'50,88 42,50 50,56 58,50',fill:'#1F3864'}),
+          h('line',{x1:'50',y1:'8',x2:'50',y2:'16',stroke:'#1F3864',strokeWidth:'2'}),
+          h('line',{x1:'50',y1:'84',x2:'50',y2:'92',stroke:'#1F3864',strokeWidth:'2'}),
+          h('line',{x1:'8',y1:'50',x2:'16',y2:'50',stroke:'#1F3864',strokeWidth:'2'}),
+          h('line',{x1:'84',y1:'50',x2:'92',y2:'50',stroke:'#1F3864',strokeWidth:'2'}),
+          h('text',{x:'50',y:'9',textAnchor:'middle',fontSize:'8',fill:'#C0392B',fontWeight:'bold'},'N'),
+          h('text',{x:'50',y:'98',textAnchor:'middle',fontSize:'8',fill:'#1F3864',fontWeight:'bold'},'S'),
+          h('text',{x:'96',y:'53',textAnchor:'middle',fontSize:'8',fill:'#1F3864',fontWeight:'bold'},'E'),
+          h('text',{x:'4',y:'53',textAnchor:'middle',fontSize:'8',fill:'#1F3864',fontWeight:'bold'},'W'),
+          h('circle',{cx:'50',cy:'50',r:'4',fill:'#B8860B'})
+        ),
+        '논문나침반'
+      ),
+      h('p',{style:{fontSize:'16px',color:'#666',marginBottom:'4px'}},'PaperCompass — 서울벤처대학원대학교 스마트시티·융합기술경영전공'),
+      h('p',{style:{fontSize:'13px',color:'#aaa',marginTop:'4px'}},'어떤 작업을 도와드릴까요?')
+    ),
+    h('div',{style:{maxWidth:'1080px',margin:'0 auto',padding:'0 20px 60px',display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'24px'}},
+      ...cards.map(card=>h('div',{
+        key:card.id,onClick:()=>{if(card.disabled){alert('🚧 공사중입니다!\n\n기능 업그레이드 진행 중이니 조금만 기다려주세요.');return;}onSelect(card.id);},
+        style:{background:card.disabled?'#fafafa':'#fff',borderRadius:'18px',padding:'28px',cursor:card.disabled?'not-allowed':'pointer',border:`2px solid ${card.disabled?'#ddd':card.bg}`,
+          boxShadow:'0 4px 20px rgba(0,0,0,0.06)',transition:'all 0.22s',position:'relative',overflow:'hidden',opacity:card.disabled?0.7:1},
+        onMouseEnter:e=>{e.currentTarget.style.transform='translateY(-5px)';e.currentTarget.style.boxShadow='0 14px 36px rgba(0,0,0,0.13)';},
+        onMouseLeave:e=>{e.currentTarget.style.transform='translateY(0)';e.currentTarget.style.boxShadow='0 4px 20px rgba(0,0,0,0.06)';}
+      },
+        h('div',{style:{fontSize:'42px',marginBottom:'12px'}}),
+        h('div',{style:{position:'absolute',top:'20px',right:'20px',fontSize:'36px',opacity:.18}},card.icon),
+        h('h2',{style:{fontSize:'21px',fontWeight:'bold',color:card.color,marginBottom:'4px'}},`${card.icon} ${card.title}`),
+        h('p',{style:{fontSize:'11px',color:'#999',marginBottom:'12px',fontWeight:'bold',textTransform:'uppercase',letterSpacing:'0.06em'}},card.sub),
+        h('p',{style:{fontSize:'13px',color:'#555',lineHeight:'1.75',marginBottom:'18px'}},card.desc),
+        h('ul',{style:{paddingLeft:'0',listStyle:'none',marginBottom:'20px'}},
+          ...card.features.map((f,i)=>h('li',{key:i,style:{fontSize:'12px',color:card.color,marginBottom:'5px',display:'flex',alignItems:'flex-start',gap:'6px'}},
+            h('span',{style:{fontWeight:'bold',marginTop:'1px'}},'✓'),f
+          ))
+        ),
+        h('div',{style:{background:card.disabled?'#bbb':card.color,color:'#fff',borderRadius:'8px',padding:'10px 16px',textAlign:'center',fontSize:'13px',fontWeight:'bold'}},card.disabled?'🚧 준비 중...':''+card.title+' 시작하기 →')
+      ))
+    ),
+    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',maxWidth:'1080px',margin:'0 auto',padding:'16px 20px 24px'}},
+      h('div',{style:{display:'flex',gap:'8px',alignItems:'center'}},
+        h('button',{onClick:()=>{ if(confirm('로그아웃 하시겠습니까?')) location.reload(); },
+          style:{background:'none',border:'1px solid #ccc',borderRadius:'8px',padding:'6px 14px',fontSize:'12px',color:'#888',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px'}},
+          '🔓 로그아웃'),
+        h('button',{onClick:()=>onSelect('dbcheck'),
+          style:{background:'rgba(123,31,162,0.08)',border:'1px solid #CE93D8',borderRadius:'8px',padding:'6px 14px',fontSize:'12px',color:'#7B1FA2',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',fontWeight:'bold'},
+          title:'임베디드 DB 정합성 자동 검사 (verifiedScholarDB 포함)'},
+          '🔧 DB 무결성 검사')
+      ),
+      h('span',{style:{fontSize:'12px',color:'#bbb'}},`SVU ${dbStats.svu||''}편 + 타학교 ${dbStats.otherUni||''}편 + 인용논문 ${dbStats.citation||''}편 총 ${dbStats.total||''}편 분석 기반 | © jskwon. All rights reserved.`)
+    )
+  );
+};
+
+// ══════════════════════════════════════════════════════════════
+// ██  APP  ██
+// ══════════════════════════════════════════════════════════════
+const App = () => {
+  const [mode, setMode] = useState(null);
+  if(!mode) return h(HomeScreen, {onSelect:setMode});
+  if(mode==='thesis') return h(PaperCompass, {onBack:()=>setMode(null)});
+  if(mode==='phd') return h(PhdCompass, {onBack:()=>setMode(null)});
+  if(mode==='stats') return h(StatsAnalyzer, {onBack:()=>setMode(null)});
+  if(mode==='paperdb') return h(PaperDBBuilder, {onBack:()=>setMode(null)});
+  if(mode==='dbcheck') return h(DBChecker, {onBack:()=>setMode(null)});
+  return null;
+};
+
+      ReactDOM.render(React.createElement(App), document.getElementById('root'));
+    } catch(e) {
+      document.getElementById('root').innerHTML = '<pre style="color:red;padding:20px;white-space:pre-wrap">Error: ' + e.message + '\n\n' + e.stack + '</pre>';
+    }
+  </script>
+</body>
+
+</html>
